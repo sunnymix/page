@@ -60,3 +60,8 @@ window.isEmpty = function (p) {
 window.isNotEmpty = function (p) {
     return !isEmpty(p);
 }
+
+$(document).on('paste', '[contenteditable]', function (event) {
+    event.preventDefault();
+    document.execCommand('inserttext', false, window.event.clipboardData.getData('text'));
+});
