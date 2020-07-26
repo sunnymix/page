@@ -44,7 +44,7 @@ function Paper(p) {
         thiz.click();
     });
 
-    this.ele.on('keydown', function (e) {
+    $(document).on('keydown', 'body', function (e) {
         if (isSaveAction(e)) {
             e.preventDefault();
             thiz.save();
@@ -75,7 +75,7 @@ Paper.prototype.getData = function () {
 };
 
 Paper.prototype.loadData = function () {
-    var paperData = localStorage.getItem(this.cacheId);
+    var paperData = localStorage.getItem(this.cacheId());
     if (isNotNone(paperData)) {
         var paperObj = JSON.parse(paperData);
         console.log(paperObj);
@@ -88,7 +88,7 @@ Paper.prototype.saveData = function (data) {
     if (isNotNone(data)) {
         var dataRaw = JSON.stringify(data);
         console.log(dataRaw);
-        localStorage.setItem(this.cacheId, dataRaw);
+        localStorage.setItem(this.cacheId(), dataRaw);
     }
 }
 

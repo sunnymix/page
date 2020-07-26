@@ -65,8 +65,8 @@ var STYLE_H1 = new Style()
     .setFontSize('15px')
     .setMinHeight('26px')
     .setLineHeight('26px')
-    .setPaddingBottom('0px')
-    .setBorderBottom('1px')
+    .setPaddingBottom('8px')
+    .setBorderBottom('2px')
     .setMarginBottom('13px');
 
 var STYLE_H2 = new Style()
@@ -74,7 +74,7 @@ var STYLE_H2 = new Style()
     .setFontSize('14px')
     .setMinHeight('24px')
     .setLineHeight('24px')
-    .setPaddingBottom('0px')
+    .setPaddingBottom('6px')
     .setBorderBottom('1px')
     .setMarginBottom('12px');
 
