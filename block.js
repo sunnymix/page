@@ -37,6 +37,12 @@ function Block(p, data, isLock) {
             }
         }
 
+        if (e.keyCode == KEYCODE.B && isCommandOrControl(e) && isShift(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            thiz.setSchema(SCHEMA.TEXT);
+        }
+
         if (e.keyCode == KEYCODE.NUM1 && isCommandOrControl(e)) {
             e.preventDefault();
             e.stopPropagation();
