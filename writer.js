@@ -22,35 +22,47 @@ Writer.prototype.focus = function () {
     }
 };
 
-Writer.prototype.createBlock = function (p, d) {
+Writer.prototype.createBlock = function (place, data) {
     var thiz = this;
 
-    var data = isNotEmpty(d) ? d : '';
-
     var tmp = $('<div></div>');
+    var previousBlock = null;
 
-    if (isBlock(p)) {
-        p.ele.after(tmp);
+    if (isBlock(place)) {
+        place.ele.after(tmp);
+        previousBlock = place;
     } else {
         this.ele.append(tmp);
     }
 
-    var block = new Block(tmp, data);
+    var newBlock = new Block(tmp, data);
 
-    block.bind('enter', function (block) {
+    newBlock.bind('enter', function (block) {
         thiz.createBlock(block);
     });
 
-    block.bind('remove', function (b) {
-        thiz.removeBlock(b);
+    newBlock.bind('remove', function (block) {
+        thiz.removeBlock(block);
     });
 
-    block.focus();
+    newBlock.focus();
 
-    this.blocks.push(block);
+    this.addBlock(newBlock, previousBlock);
 
-    return block;
-}
+    return newBlock;
+};
+
+Writer.prototype.addBlock = function (newBlock, previousBlock) {
+    if (isNotNone(previousBlock)) {
+        var previousIdx = this.getBlockIndex(previousBlock.id);
+        if (previousIdx >= 0) {
+            this.blocks.splice(previousIdx + 1, 0, newBlock);
+            return true;
+        }
+    }
+    this.blocks.push(newBlock);
+    return true;
+};
 
 Writer.prototype.getBlockIndex = function (id) {
     var idx = -1;
