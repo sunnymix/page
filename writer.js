@@ -45,7 +45,13 @@ Writer.prototype.createBlock = function (place, data) {
         thiz.removeBlock(block);
     });
 
-    newBlock.focus();
+    newBlock.bind('moveup', function (block) {
+        thiz.moveupBlock(block);
+    });
+
+    newBlock.bind('movedown', function (block) {
+        thiz.movedownBlock(block);
+    });
 
     this.addBlock(newBlock, previousBlock);
 
@@ -77,21 +83,47 @@ Writer.prototype.getBlockIndex = function (id) {
     return idx;
 };
 
-Writer.prototype.removeBlock = function (b) {
-    var idx = this.getBlockIndex(b.id);
+Writer.prototype.removeBlock = function (block, autoFocus) {
+    var idx = this.getBlockIndex(block.id);
+    var isAutoFocus = isNotNone(autoFocus) ? autoFocus : true;
 
     if (idx < 0) {
         return;
     }
 
     this.blocks.splice(idx, 1);
+    block.ele.remove();
 
-    if (this.blocks.length > 0) {
-        var focusIdx = idx - 1;
-        focusIdx = focusIdx < 0 ? 0 : focusIdx;
-        this.blocks[focusIdx].focus();
-    } else {
-        this.focus();
+    if (isAutoFocus) {
+        if (this.blocks.length > 0) {
+            var focusIdx = idx - 1;
+            focusIdx = focusIdx < 0 ? 0 : focusIdx;
+            this.blocks[focusIdx].focus();
+        } else {
+            this.focus();
+        }
+    }
+};
+
+Writer.prototype.moveupBlock = function (block) {
+    var curIdx = this.getBlockIndex(block.id);
+    var toIdx = curIdx - 1;
+    if (toIdx >= 0) {
+        var upBlock = this.blocks[toIdx];
+        this.createBlock(block, upBlock.getData());
+        this.removeBlock(upBlock, false);
+        block.focus();
+    }
+};
+
+Writer.prototype.movedownBlock = function (block) {
+    var curIdx = this.getBlockIndex(block.id);
+    var toIdx = curIdx + 1;
+    if (toIdx < this.blocks.length) {
+        var downBlock = this.blocks[toIdx];
+        var movedBlock = this.createBlock(downBlock, block.getData());
+        this.removeBlock(block, false);
+        movedBlock.focus();
     }
 };
 

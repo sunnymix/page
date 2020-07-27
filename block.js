@@ -60,10 +60,18 @@ function Block(p, data, isLock) {
             e.stopPropagation();
             thiz.setSchema(SCHEMA.H3);
         }
-    });
 
-    ele.on('keyup', function (e) {
+        if (e.keyCode == KEYCODE.UP && isOption(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            thiz.moveUp();
+        }
 
+        if (e.keyCode == KEYCODE.DOWN && isOption(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            thiz.moveDown();
+        }
     });
 
     ele.on('click', function (e) {
@@ -130,9 +138,16 @@ Block.prototype.trigger = function (e) {
     }
 };
 
+Block.prototype.moveUp = function () {
+    this.trigger('moveup');
+};
+
+Block.prototype.moveDown = function () {
+    this.trigger('movedown');
+};
+
 Block.prototype.remove = function () {
     this.trigger('remove');
-    this.ele.remove();
 };
 
 Block.prototype.getData = function () {

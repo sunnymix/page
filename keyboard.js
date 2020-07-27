@@ -5,7 +5,9 @@ var KEYCODE = {
     S: 83,
     NUM1: 49,
     NUM2: 50,
-    NUM3: 51
+    NUM3: 51,
+    UP: 38,
+    DOWN: 40
 }
 
 window.KEYCODE = KEYCODE;
@@ -21,4 +23,8 @@ window.isCommandOrControl = function (e) {
 
 window.isShift = function (e) {
     return e.shiftKey === true;
-}
+};
+
+window.isOption = function (e) {
+    return e.altKey === true;
+};
