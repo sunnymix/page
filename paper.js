@@ -9,7 +9,7 @@ function Paper(p) {
         window.location.hash = '#' + this.id;
     }
 
-    var ele = $(
+    this.ele = $(
         [
             '<div',
             '  class="paper"',
@@ -18,6 +18,7 @@ function Paper(p) {
             '    border: 1px solid #f8f8f8;',
             '    border-radius: 2px;',
             '    margin: 0 auto;',
+            '    position: relative;',
             '    "',
             '  >',
             '  <div',
@@ -34,8 +35,9 @@ function Paper(p) {
             '</div>'
         ].join('')
     );
-    $(p).replaceWith(ele);
-    this.ele = ele;
+    $(p).replaceWith(this.ele);
+
+    this.menu = new Menu(this.ele);
 
     this.title = new Title(this.ele.find('.title'));
     this.writer = new Writer(this.ele.find('.writer'));
@@ -78,7 +80,6 @@ Paper.prototype.loadData = function () {
     var paperData = localStorage.getItem(this.cacheId());
     if (isNotNone(paperData)) {
         var paperObj = JSON.parse(paperData);
-        console.log(paperObj);
         this.title.setData(paperObj.title);
         this.writer.setData(paperObj.writer);
     }
@@ -87,18 +88,31 @@ Paper.prototype.loadData = function () {
 Paper.prototype.saveData = function (data) {
     if (isNotNone(data)) {
         var dataRaw = JSON.stringify(data);
-        console.log(dataRaw);
         localStorage.setItem(this.cacheId(), dataRaw);
     }
-}
+};
 
 Paper.prototype.cacheId = function () {
-    return 'paper#' + this.id;
-}
+    return 'paper#' + this.getId();
+};
+
+Paper.prototype.getId = function () {
+    var id = window.location.hash.replace(/^#/, '');
+
+    if (id.length > 0) {
+        return id;
+    }
+    
+    window.location.hash = '#' + uuid();
+};
 
 jQuery(function () {
     resetCss();
 
     var paper = new Paper('.paper');
+
+    window.onhashchange = function() {
+        paper.loadData();
+    };
 
 });
