@@ -5,7 +5,7 @@ function Button(html) {
         '  style="',
         '    display: inline-block;',
         '    border: 0px solid #eeeeee;',
-        '    padding: 15px 20px;',
+        '    padding: 10px;',
         '  "',
         '>',
         html || 'button',

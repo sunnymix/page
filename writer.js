@@ -38,7 +38,8 @@ Writer.prototype.createBlock = function (place, data) {
     var newBlock = new Block(tmp, data);
 
     newBlock.bind('enter', function (block) {
-        thiz.createBlock(block);
+        var nextBlock = thiz.createBlock(block);
+        nextBlock.focus();
     });
 
     newBlock.bind('remove', function (block) {
