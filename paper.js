@@ -38,8 +38,6 @@ function Paper(p) {
     );
     $(p).replaceWith(this.ele);
 
-    this.menu = new Menu(this.ele);
-
     this.title = new Title(this.ele.find('.title'));
     this.writer = new Writer(this.ele.find('.writer'));
 
@@ -107,13 +105,7 @@ Paper.prototype.getId = function () {
     window.location.hash = '#' + uuid();
 };
 
-jQuery(function () {
-    resetCss();
-
-    var paper = new Paper('.paper');
-
-    window.onhashchange = function() {
-        paper.loadData();
-    };
-
-});
+Paper.prototype.appendToolbar = function (toolbar) {
+    this.toolbar = toolbar;
+    this.ele.append(this.toolbar.ele);
+}

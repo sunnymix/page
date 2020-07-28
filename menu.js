@@ -1,30 +1,29 @@
-function Menu(place) {
+function Menu() {
+    var thiz = this;
+
     this.ele = $([
         '<div',
         '  style="',
         '      position: absolute;',
+        '      left: 1px;',
         '      right: 1px;',
         '      top: 1px;',
         '      bottom: 1px;',
+        '      background-color: #ffffff;',
         '    "',
         '  >',
         '  <div',
         '    class="actions"',
         '    style="',
         '      text-align: right;',
-        '      padding-right: 10px;',
+        '      padding-right: 0px;',
         '    "',
         '  ></div>',
         '  <div',
         '    class="nodes"',
         '    style="',
-        '      border-left: 1px solid #dddddd;',
+        '      border-left: 0px solid #dddddd;',
         '      background-color: #ffffff;',
-        '      position: absolute;',
-        '      right: 0px;',
-        '      top: 40px;',
-        '      bottom: 0px;',
-        '      width: 300px;',
         '      overflow: auto;',
         '    "',
         '  ></div>',
@@ -32,54 +31,72 @@ function Menu(place) {
     ].join(''));
 
     this.nodesEle = this.ele.find('.nodes');
-    this.nodesEle.hide();
 
     this.actionsEle = this.ele.find('.actions');
     this.createActions();
-
-    if (isNotNone(place)) {
-        place.append(this.ele);
-    }
 
     var ids = Object.keys(localStorage);
 
     for (var i = 0; i < ids.length; i++) {
         var id = ids[i];
         var node = new Node(this.nodesEle, id);
+        node.bind('click', function(e, node) {
+            thiz.trigger('click');
+            thiz.trigger('hide');
+        });
         this.nodesEle.append(node.ele);
     }
+
+    this.listener = [];
 }
 
 Menu.prototype.createActions = function () {
     var thiz = this;
 
-    // create paper
+    // create
 
-    // var createPaper = new Button('<img src="new.png" style="height: 20px;">');
-    // this.actionsEle.append(createPaper.ele);
-    // createPaper.ele.on('click', function (e) {
-    //     window.location.hash = '#' + uuid();
-    //     window.location.reload();
-    // });
-
-    // finder
-
-    var finderToggle = new Button('<img src="menu.png" style="height: 20px;">');
-    this.actionsEle.append(finderToggle.ele);
-    finderToggle.ele.on('click', function (e) {
-        thiz.nodesEle.toggle();
+    var createBtn = new Button('<img src="img/plus-solid.png" style="height: 20px;">');
+    createBtn.appendTo(this.actionsEle);
+    createBtn.click(function (e, btn) {
+        window.location.hash = '#' + uuid();
+        window.location.reload();
     });
 
-    // hide trigger
+    // hide
 
-    thiz.nodesEle.on('click', function (e) {
-        thiz.nodesEle.hide();
-    });    
+    var hideBtn = new Button('<img src="img/times-solid.png" style="height: 20px;">');
+    hideBtn.appendTo(this.actionsEle);
+    hideBtn.click(function (e, btn) {
+        thiz.trigger('hide');
+    });
 
 };
+
+Menu.prototype.hide = function () {
+    this.ele.hide();
+}
+
+Menu.prototype.show = function () {
+    this.ele.show();
+}
 
 Menu.prototype.hideMenu = function () {
     this.nodesEle.hide();
 }
+
+Menu.prototype.appendTo = function (place) {
+    this.ele.appendTo(place);
+}
+
+Menu.prototype.bind = function (e, b) {
+    this.listener[e] = b;
+};
+
+Menu.prototype.trigger = function (e) {
+    var cb = this.listener[e];
+    if (cb) {
+        cb(this);
+    }
+};
 
 window.Menu = Menu;
