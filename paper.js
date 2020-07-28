@@ -24,7 +24,7 @@ function Paper(p) {
             '  <div',
             '    class="paper-box"',
             '    style="',
-            '      border: 1px solid #e0e0e0;',
+            '      border: 1px solid #dddddd;',
             '      border-radius: 1px;',
             '      padding: 50px;',
             '      min-height: 800px;',
@@ -48,8 +48,11 @@ function Paper(p) {
     $(document).on('keydown', 'body', function (e) {
         if (isSaveAction(e)) {
             e.preventDefault();
-            thiz.save();
         }
+    });
+
+    $(document).on('keyup', 'body', function (e) {
+        thiz.save();
     });
 
     this.loadData();
