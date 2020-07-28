@@ -22,7 +22,7 @@ function Menu(place) {
         '      background-color: #ffffff;',
         '      position: absolute;',
         '      right: 0px;',
-        '      top: 0px;',
+        '      top: 40px;',
         '      bottom: 0px;',
         '      width: 300px;',
         '      overflow: auto;',
@@ -74,10 +74,12 @@ Menu.prototype.createActions = function () {
 
     thiz.nodesEle.on('click', function (e) {
         thiz.nodesEle.hide();
-    });
-
-    
+    });    
 
 };
+
+Menu.prototype.hideMenu = function () {
+    this.nodesEle.hide();
+}
 
 window.Menu = Menu;

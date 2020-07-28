@@ -41,6 +41,7 @@ Style.prototype.setMarginBottom = function (marginBottom) {
 
 Style.prototype.toString = function () {
     return [
+        'word-break: break-all;',
         'font-weight: ' + this.fontWeight || 'normal',
         'font-size: ' + this.fontSize || '12px',
         'min-height: ' + this.minHeight || '20px',
