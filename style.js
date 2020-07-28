@@ -5,48 +5,66 @@ function Style() {
 Style.prototype.setFontWeight = function (fontWeight) {
     this.fontWeight = fontWeight;
     return this;
-}
+};
 
 Style.prototype.setFontSize = function (fontSize) {
     this.fontSize = Zoom(fontSize);
     return this;
-}
+};
 
 Style.prototype.setMinHeight = function (minHeight) {
     this.minHeight = Zoom(minHeight);
     return this;
-}
+};
 
 Style.prototype.setLineHeight = function (lineHeight) {
     this.lineHeight = Zoom(lineHeight);
     return this;
-}
+};
+
+Style.prototype.setPaddingTop = function (paddingTop) {
+    this.paddingTop = Zoom(paddingTop);
+    return this;
+};
 
 Style.prototype.setPaddingBottom = function (paddingBottom) {
     this.paddingBottom = Zoom(paddingBottom);
     return this;
-}
+};
+
+Style.prototype.setPaddingLeft = function (paddingLeft) {
+    this.paddingLeft = Zoom(paddingLeft);
+    return this;
+};
+
+Style.prototype.setPaddingRight = function (paddingRight) {
+    this.paddingRight = Zoom(paddingRight);
+    return this;
+};
 
 Style.prototype.setBorderBottom = function (size, style, color) {
     this.borderBottom = size + ' ' +
         (style || 'solid') + ' ' +
         (color || '#eeeeee');
     return this;
-}
+};
 
 Style.prototype.setMarginBottom = function (marginBottom) {
     this.marginBottom = Zoom(marginBottom);
     return this;
-}
+};
 
 Style.prototype.toString = function () {
     return [
-        'word-break: break-all;',
+        'word-break: break-all',
         'font-weight: ' + this.fontWeight || 'normal',
         'font-size: ' + this.fontSize || '12px',
         'min-height: ' + this.minHeight || '20px',
         'line-height: ' + this.lineHeight || '20px',
-        'padding-bottom: ' + this.paddingBottom || '10px',
+        'padding-top: ' + this.paddingTop || '10px',
+        'padding-bottom: ' + this.paddingBottom || '0px',
+        'padding-left: ' + this.paddingLeft || '0px',
+        'padding-right: ' + this.paddingRight || '0px',
         'border-bottom: ' + this.borderBottom || '0px none transparent',
         'margin-bottom: ' + this.marginBottom || '0px'
     ].join(';');
@@ -57,7 +75,10 @@ var STYLE_TEXT = new Style()
     .setFontSize('12px')
     .setMinHeight('20px')
     .setLineHeight('20px')
-    .setPaddingBottom('10px')
+    .setPaddingTop('10px')
+    .setPaddingBottom('0px')
+    .setPaddingLeft('0px')
+    .setPaddingRight('0px')
     .setBorderBottom('0px')
     .setMarginBottom('0px');
 
@@ -66,25 +87,34 @@ var STYLE_H1 = new Style()
     .setFontSize('15px')
     .setMinHeight('26px')
     .setLineHeight('26px')
+    .setPaddingTop('8px')
     .setPaddingBottom('8px')
+    .setPaddingLeft('0px')
+    .setPaddingRight('0px')
     .setBorderBottom('2px')
-    .setMarginBottom('13px');
+    .setMarginBottom('0px');
 
 var STYLE_H2 = new Style()
     .setFontWeight('bold')
     .setFontSize('14px')
     .setMinHeight('24px')
     .setLineHeight('24px')
+    .setPaddingTop('6px')
     .setPaddingBottom('6px')
+    .setPaddingLeft('0px')
+    .setPaddingRight('0px')
     .setBorderBottom('1px')
-    .setMarginBottom('12px');
+    .setMarginBottom('0px');
 
 var STYLE_H3 = new Style()
     .setFontWeight('bold')
     .setFontSize('13px')
     .setMinHeight('22px')
     .setLineHeight('22px')
-    .setPaddingBottom('11px')
+    .setPaddingTop('11px')
+    .setPaddingBottom('0px')
+    .setPaddingLeft('0px')
+    .setPaddingRight('0px')
     .setBorderBottom('0px')
     .setMarginBottom('0px');
 
