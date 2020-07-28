@@ -12,7 +12,7 @@ function Menu(place) {
         '    class="actions"',
         '    style="',
         '      text-align: right;',
-        '      padding: 0 10px;',
+        '      padding-right: 10px;',
         '    "',
         '  ></div>',
         '  <div',
