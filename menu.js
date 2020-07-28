@@ -55,12 +55,12 @@ Menu.prototype.createActions = function () {
 
     // create paper
 
-    var createPaper = new Button('<img src="new.png" style="height: 20px;">');
-    this.actionsEle.append(createPaper.ele);
-    createPaper.ele.on('click', function (e) {
-        window.location.hash = '#' + uuid();
-        window.location.reload();
-    });
+    // var createPaper = new Button('<img src="new.png" style="height: 20px;">');
+    // this.actionsEle.append(createPaper.ele);
+    // createPaper.ele.on('click', function (e) {
+    //     window.location.hash = '#' + uuid();
+    //     window.location.reload();
+    // });
 
     // finder
 
