@@ -2,6 +2,7 @@ var KEYCODE = {
     ENTER: 13,
     BACKSPACE: 8,
     B: 66,
+    C: 67,
     S: 83,
     NUM1: 49,
     NUM2: 50,

@@ -82,6 +82,12 @@ function Block(p, data, isLock) {
             thiz.setSchema(SCHEMA.H3);
         }
 
+        if (e.keyCode == KEYCODE.C && isCommandOrControl(e) && isShift(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            thiz.setSchema(SCHEMA.CODE);
+        }
+
         if (e.keyCode == KEYCODE.UP && isOption(e)) {
             e.preventDefault();
             e.stopPropagation();
