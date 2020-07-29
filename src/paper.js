@@ -12,27 +12,27 @@ function Paper(p) {
     this.ele = $(
         [
             '<div',
-            '  class="paper"',
-            '  style="',
-            '    max-width: 700px;',
-            '    border: 1px solid #f8f8f8;',
-            '    border-radius: 2px;',
-            '    margin: 0 auto;',
-            '    position: relative;',
-            '    "',
-            '  >',
-            '  <div',
-            '    class="paper-box"',
+            '    class="paper"',
             '    style="',
-            '      border: 1px solid #dddddd;',
-            '      border-radius: 1px;',
-            '      padding: 50px;',
-            '      min-height: 800px;',
-            '      "',
+            '        max-width: 700px;',
+            '        border: 1px solid #f8f8f8;',
+            '        border-radius: 2px;',
+            '        margin: 0 auto;',
+            '        position: relative;',
+            '    "',
+            '>',
+            '    <div',
+            '        class="paper-box"',
+            '        style="',
+            '            border: 1px solid #dddddd;',
+            '            border-radius: 1px;',
+            '            padding: 50px 0;',
+            '            min-height: 800px;',
+            '        "',
             '    >',
-            '    <div class="title"></div>',
-            '    <div class="writer"></div>',
-            '  </div>',
+            '        <div class="title"></div>',
+            '        <div class="writer"></div>',
+            '    </div>',
             '</div>'
         ].join('')
     );
@@ -64,9 +64,20 @@ Paper.prototype.click = function () {
     this.writer.focus();
 };
 
+Paper.prototype.throttleSave = function () {
+    var thiz = this;
+
+    if (isNone(this.throttleSaveFn)) {
+        this.throttleSaveFn = throttle(function () {
+            thiz.saveData(thiz.getData());
+        }, 1000);
+    }
+
+    thiz.throttleSaveFn();
+};
+
 Paper.prototype.save = function () {
-    var data = this.getData();
-    this.saveData(data);
+    this.throttleSave();
 };
 
 Paper.prototype.getData = function () {

@@ -1,5 +1,17 @@
 
 function Style() {
+    this.wordBreak = 'break-all';
+    this.position = 'relative';
+        this.fontWeight = 'normal';
+        this.fontSize = '12px';
+        this.minHeight = '20px';
+        this.lineHeight = '20px';
+        this.paddingTop = '10px';
+        this.paddingBottom = '0px';
+        this.paddingLeft = '20px';
+        this.paddingRight = '20px';
+        this.borderBottom = '0px solid transparent';
+        this.marginBottom = '0px';
 }
 
 Style.prototype.setFontWeight = function (fontWeight) {
@@ -57,18 +69,20 @@ Style.prototype.setMarginBottom = function (marginBottom) {
 Style.prototype.toString = function () {
     return [
         'word-break: break-all',
+        'position: relative',
+        'font-family: "PingFang SC", Aria',
         'font-weight: ' + this.fontWeight || 'normal',
         'font-size: ' + this.fontSize || '12px',
         'min-height: ' + this.minHeight || '20px',
         'line-height: ' + this.lineHeight || '20px',
         'padding-top: ' + this.paddingTop || '10px',
         'padding-bottom: ' + this.paddingBottom || '0px',
-        'padding-left: ' + this.paddingLeft || '0px',
-        'padding-right: ' + this.paddingRight || '0px',
+        'padding-left: ' + this.paddingLeft || '40px',
+        'padding-right: ' + this.paddingRight || '40px',
         'border-bottom: ' + this.borderBottom || '0px none transparent',
         'margin-bottom: ' + this.marginBottom || '0px'
     ].join(';');
-}
+};
 
 var STYLE_TEXT = new Style()
     .setFontWeight('normal')
@@ -77,8 +91,8 @@ var STYLE_TEXT = new Style()
     .setLineHeight('20px')
     .setPaddingTop('10px')
     .setPaddingBottom('0px')
-    .setPaddingLeft('0px')
-    .setPaddingRight('0px')
+    .setPaddingLeft('40px')
+    .setPaddingRight('40px')
     .setBorderBottom('0px')
     .setMarginBottom('0px');
 
@@ -89,8 +103,8 @@ var STYLE_H1 = new Style()
     .setLineHeight('26px')
     .setPaddingTop('8px')
     .setPaddingBottom('8px')
-    .setPaddingLeft('0px')
-    .setPaddingRight('0px')
+    .setPaddingLeft('40px')
+    .setPaddingRight('40px')
     .setBorderBottom('2px')
     .setMarginBottom('0px');
 
@@ -101,8 +115,8 @@ var STYLE_H2 = new Style()
     .setLineHeight('24px')
     .setPaddingTop('6px')
     .setPaddingBottom('6px')
-    .setPaddingLeft('0px')
-    .setPaddingRight('0px')
+    .setPaddingLeft('40px')
+    .setPaddingRight('40px')
     .setBorderBottom('1px')
     .setMarginBottom('0px');
 
@@ -113,8 +127,8 @@ var STYLE_H3 = new Style()
     .setLineHeight('22px')
     .setPaddingTop('11px')
     .setPaddingBottom('0px')
-    .setPaddingLeft('0px')
-    .setPaddingRight('0px')
+    .setPaddingLeft('40px')
+    .setPaddingRight('40px')
     .setBorderBottom('0px')
     .setMarginBottom('0px');
 
@@ -162,6 +176,8 @@ window.resetCss = function () {
         '}',
         'body {',
         '    line-height: 1;',
+        '    font-family: "PingFang SC", Aria;',
+        '    font-size: 12px;',
         '}',
         'ol, ul {',
         '    list-style: none;',

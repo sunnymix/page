@@ -29,6 +29,37 @@ window.selectText = function (node) {
     }
 }
 
+window.throttle = function (fn, delay, atleast) {
+    if (isFunction(fn) && isNotNone(delay)) {
+        var timer = null;
+        var previous = null;
+
+        return function () {
+            var thiz = this;
+            var args = arguments;
+
+            var now = +new Date();
+
+            if (!previous) previous = now;
+
+            if (now - previous > atleast) {
+                fn.apply(thiz, args);
+                previous = now;
+            } else {
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    fn.apply(thiz, args);
+                }, delay);
+            }
+        }
+    }
+    return null;
+}
+
+window.isFunction = function (f) {
+    return typeof f === 'function';
+};
+
 window.isUndefined = function (p) {
     return typeof p === 'undefined';
 };

@@ -9,22 +9,43 @@ function Block(p, data, isLock) {
     this.style = getStyle(this.schema);
     this.isLock = isLock || false;
 
-    var ele = $(
+    this.ele = $(
         [
             '<div',
-            '  contenteditable="true"',
-            '  style="' + this.style.toString() + '"',
+            '    class="block"',
             '>',
-            dataObj.text,
+            '    <div',
+            '        class="block-box"',
+            '        style="',
+            '            position: relative;',
+            '        "',
+            '    >',
+            '        <div',
+            '            class="block-border"',
+            '            style="',
+            '                position: absolute;',
+            '                left: 0px;',
+            '                right: 0px;',
+            '                bottom: 0px;',
+            '            "></div>',
+            '        <div class="block-content" contenteditable="true"></div>',
+            '    </div>',
             '</div>'
         ].join('')
     );
 
-    ele.on('blur', function (e) {
+    this.boxEle = this.ele.find('.block-box');
+    this.borderEle = this.ele.find('.block-border');
+    this.contentEle = this.ele.find('.block-content');
+
+    this.loadStyle();
+    this.setData(dataObj.text);
+
+    this.ele.on('blur', function (e) {
         thiz.blur();
     });
 
-    ele.on('keydown', function (e) {
+    this.ele.on('keydown', function (e) {
         if (e.keyCode == KEYCODE.ENTER) {
             e.preventDefault();
             thiz.enter();
@@ -32,7 +53,7 @@ function Block(p, data, isLock) {
         }
 
         if (e.keyCode == KEYCODE.BACKSPACE) {
-            if (ele.text().length == 0) {
+            if (thiz.contentEle.text().length == 0) {
                 thiz.remove();
             }
         }
@@ -74,18 +95,25 @@ function Block(p, data, isLock) {
         }
     });
 
-    ele.on('click', function (e) {
+    this.ele.on('click', function (e) {
         e.stopPropagation();
         thiz.focus();
     });
 
-    $(p).replaceWith(ele);
+    $(p).replaceWith(this.ele);
 
-    this.ele = ele;
     this.listener = {};
 };
 
 Block.prototype.type = ELE_TYPE.BLOCK;
+
+Block.prototype.appendTo = function (place) {
+    this.ele.appendTo(place);
+};
+
+Block.prototype.replaceTo = function (place) {
+    place.replaceWith(this.ele);
+};
 
 Block.prototype.setSchema = function (schema) {
     if (this.isLock) {
@@ -94,33 +122,34 @@ Block.prototype.setSchema = function (schema) {
 
     if (isNotEmpty(schema)) {
         this.schema = schema;
+        this.loadStyle();
+    }
+};
 
-        var style = getStyle(schema);
+Block.prototype.loadStyle = function () {
+    var style = getStyle(this.schema);
 
-        if (isNotNone(style)) {
-            this.ele.prop('style', style.toString());
-        }
+    if (isNotNone(style)) {
+        this.ele.prop('style', style.toString());
+
+        this.ele.css({
+            borderBottomWidth: 0,
+            paddingBottom: 0
+        });
+
+        this.contentEle.css({
+            borderBottom: style.borderBottom,
+            paddingBottom: style.paddingBottom
+        });
     }
 };
 
 Block.prototype.blur = function () {
-    var ele = this.ele;
-
-    if (ele.text().length == 0) {
-        ele.text('');
-    }
-
-    this.ele.prop('contenteditable', false);
+    this.contentEle.prop('contenteditable', false);
 };
 
 Block.prototype.focus = function () {
-    var ele = this.ele;
-    this.ele.prop('contenteditable', true);
-
-    setTimeout(function () {
-        // selectText(ele[0]);
-        ele.focus();
-    }, 10);
+    this.contentEle.prop('contenteditable', true).focus();
 };
 
 Block.prototype.enter = function () {
@@ -150,10 +179,14 @@ Block.prototype.remove = function () {
     this.trigger('remove');
 };
 
+Block.prototype.setData = function (content) {
+    this.contentEle.text(content);
+};
+
 Block.prototype.getData = function () {
     return {
         schema: this.schema,
-        text: this.ele.text()
+        text: this.contentEle.text()
     };
 };
 

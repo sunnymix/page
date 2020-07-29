@@ -10,6 +10,8 @@ function Menu() {
         '      top: 1px;',
         '      bottom: 1px;',
         '      background-color: #ffffff;',
+        '      border-left: 1px solid #dddddd;',
+        '      box-shadow: 0px 0px 2px rgba(0,0,0,0.2);',
         '    "',
         '  >',
         '  <div',
@@ -74,19 +76,15 @@ Menu.prototype.createActions = function () {
 
 Menu.prototype.hide = function () {
     this.ele.hide();
-}
+};
 
 Menu.prototype.show = function () {
-    this.ele.show();
-}
-
-Menu.prototype.hideMenu = function () {
-    this.nodesEle.hide();
-}
+    this.ele.fadeIn(50);
+};
 
 Menu.prototype.appendTo = function (place) {
     this.ele.appendTo(place);
-}
+};
 
 Menu.prototype.bind = function (e, b) {
     this.listener[e] = b;
