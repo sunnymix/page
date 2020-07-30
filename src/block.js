@@ -141,13 +141,15 @@ Block.prototype.loadStyle = function () {
         this.ele.css({
             borderBottomWidth: 0,
             paddingTop: 0,
-            paddingBottom: 0
+            paddingBottom: 0,
+            backgroundColor: 'transparent'
         });
 
         this.contentEle.css({
             borderBottom: style.borderBottom,
             paddingTop: style.paddingTop,
-            paddingBottom: style.paddingBottom
+            paddingBottom: style.paddingBottom,
+            backgroundColor: style.backgroundColor
         });
     }
 };
