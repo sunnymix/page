@@ -140,16 +140,15 @@ Block.prototype.loadStyle = function () {
 
         this.ele.css({
             borderBottomWidth: 0,
-            paddingTop: 0,
-            paddingBottom: 0,
-            backgroundColor: 'transparent'
+            paddingTop: Zoom(style.paddingTop, 0.5),
+            paddingBottom: Zoom(style.paddingBottom, 0.5),
+            backgroundColor: style.backgroundColor
         });
 
         this.contentEle.css({
             borderBottom: style.borderBottom,
-            paddingTop: style.paddingTop,
-            paddingBottom: style.paddingBottom,
-            backgroundColor: style.backgroundColor
+            paddingTop: Zoom(style.paddingBottom, 0.5),
+            paddingBottom: Zoom(style.paddingBottom, 0.5)
         });
     }
 };

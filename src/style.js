@@ -136,8 +136,8 @@ var STYLE_H3 = new Style()
     .setFontSize('13px')
     .setMinHeight('22px')
     .setLineHeight('22px')
-    .setPaddingTop('11px')
-    .setPaddingBottom('0px');
+    .setPaddingTop('4px')
+    .setPaddingBottom('4px');
 
 var STYLE_CODE = new Style()
     .setFontFamily('"Roboto Mono", Menlo, Monaco')
