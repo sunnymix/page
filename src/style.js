@@ -12,8 +12,8 @@ function Style() {
 
     this.paddingTop = '5px';
     this.paddingBottom = '5px';
-    this.paddingLeft = '40px';
-    this.paddingRight = '40px';
+    this.paddingLeft = '0px';
+    this.paddingRight = '0px';
 
     this.borderBottom = '0px solid transparent';
 
@@ -72,7 +72,7 @@ Style.prototype.setPaddingRight = function (paddingRight) {
 Style.prototype.setBorderBottom = function (size, style, color) {
     this.borderBottom = size + ' ' +
         (style || 'solid') + ' ' +
-        (color || '#eeeeee');
+        (color || '#000000');
     return this;
 };
 

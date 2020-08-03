@@ -3,10 +3,10 @@ function Paper(p) {
 
     var hash = window.location.hash.replace(/^#/, '');
     if (hash.length > 0) {
-        this.id = hash;
+        this.uid = hash;
     } else {
-        this.id = uuid();
-        window.location.hash = '#' + this.id;
+        this.uid = uuid();
+        window.location.hash = '#' + this.uid;
     }
 
     this.ele = $(
@@ -26,12 +26,14 @@ function Paper(p) {
             '        style="',
             '            border: 1px solid #dddddd;',
             '            border-radius: 1px;',
-            '            padding: 50px 0;',
+            '            padding: 50px;',
             '            min-height: 800px;',
             '        "',
             '    >',
-            '        <div class="title"></div>',
-            '        <div class="writer"></div>',
+            '        <div class="paper-body">',
+            '            <div class="title"></div>',
+            '            <div class="writer"></div>',
+            '        </div>',
             '    </div>',
             '</div>'
         ].join('')
@@ -84,6 +86,7 @@ Paper.prototype.getData = function () {
     var titleData = this.title.getData();
     var writerData = this.writer.getData();
     return {
+        uid: this.getUid(),
         title: titleData,
         writer: writerData
     };
@@ -106,14 +109,14 @@ Paper.prototype.saveData = function (data) {
 };
 
 Paper.prototype.cacheId = function () {
-    return 'paper#' + this.getId();
+    return 'paper#' + this.getUid();
 };
 
-Paper.prototype.getId = function () {
-    var id = window.location.hash.replace(/^#/, '');
+Paper.prototype.getUid = function () {
+    var uid = window.location.hash.replace(/^#/, '');
 
-    if (id.length > 0) {
-        return id;
+    if (uid.length > 0) {
+        return uid;
     }
     
     window.location.hash = '#' + uuid();

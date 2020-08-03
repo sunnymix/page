@@ -146,6 +146,13 @@ Block.prototype.loadStyle = function () {
         });
 
         this.contentEle.css({
+            // do not set fontfamily, will cause some issue
+            wordBreak: style.wordBreak,
+            fontWeight: style.fontWeight,
+            fontSize: style.fontSize,
+            minHeight: style.minHeight,
+            lineHeight: style.lineHeight,
+            color: style.color,
             borderBottom: style.borderBottom,
             paddingTop: Zoom(style.paddingBottom, 0.5),
             paddingBottom: Zoom(style.paddingBottom, 0.5)
