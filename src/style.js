@@ -10,10 +10,10 @@ function Style() {
     this.minHeight = '20px';
     this.lineHeight = '20px';
 
-    this.paddingTop = '5px';
-    this.paddingBottom = '5px';
-    this.paddingLeft = '0px';
-    this.paddingRight = '0px';
+    this.paddingTop = '3px';
+    this.paddingBottom = '3px';
+    this.paddingLeft = '20px';
+    this.paddingRight = '20px';
 
     this.borderBottom = '0px solid transparent';
 
@@ -21,6 +21,14 @@ function Style() {
 
     this.color = '#000000';
     this.backgroundColor = '#ffffff';
+
+    // content override
+
+    this.contentPaddingTop = '3px';
+    this.contentPaddingBottom = '3px';
+
+    this.contentPaddingLeft = '0px';
+    this.contentPaddingRight = '0px';
 }
 
 
@@ -84,12 +92,32 @@ Style.prototype.setMarginBottom = function (marginBottom) {
 Style.prototype.setColor = function (color) {
     this.color = color;
     return this;
-}
+};
 
 Style.prototype.setBackgroundColor = function (backgroundColor) {
     this.backgroundColor = backgroundColor;
     return this;
+};
+
+Style.prototype.setContentPaddingTop = function (contentPaddingTop) {
+    this.contentPaddingTop = contentPaddingTop;
+    return this;
+};
+
+Style.prototype.setContentPaddingBottom = function (contentPaddingBottom) {
+    this.contentPaddingBottom = contentPaddingBottom;
+    return this;
 }
+
+Style.prototype.setContentPaddingLeft = function (contentPaddingLeft) {
+    this.contentPaddingLeft = contentPaddingLeft;
+    return this;
+};
+
+Style.prototype.setContentPaddingRight = function (contentPaddingRight) {
+    this.contentPaddingRight = contentPaddingRight;
+    return this;
+};
 
 Style.prototype.toString = function () {
     return [
@@ -118,8 +146,6 @@ var STYLE_H1 = new Style()
     .setFontSize('15px')
     .setMinHeight('26px')
     .setLineHeight('26px')
-    .setPaddingTop('8px')
-    .setPaddingBottom('8px')
     .setBorderBottom('2px');
 
 var STYLE_H2 = new Style()
@@ -127,8 +153,6 @@ var STYLE_H2 = new Style()
     .setFontSize('14px')
     .setMinHeight('24px')
     .setLineHeight('24px')
-    .setPaddingTop('6px')
-    .setPaddingBottom('6px')
     .setBorderBottom('1px');
 
 var STYLE_H3 = new Style()
@@ -136,12 +160,16 @@ var STYLE_H3 = new Style()
     .setFontSize('13px')
     .setMinHeight('22px')
     .setLineHeight('22px')
-    .setPaddingTop('4px')
-    .setPaddingBottom('4px');
 
 var STYLE_CODE = new Style()
     .setFontFamily('"Roboto Mono", Menlo, Monaco')
-    .setBackgroundColor('#f4f4f4')
+    .setBackgroundColor('#f6f6f6')
+    .setPaddingTop('0px')
+    .setPaddingBottom('0px')
+    .setContentPaddingTop('6px')
+    .setContentPaddingBottom('6px')
+    .setContentPaddingLeft('10px')
+    .setContentPaddingRight('10px')
     ;
 
 

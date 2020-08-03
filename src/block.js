@@ -140,9 +140,12 @@ Block.prototype.loadStyle = function () {
 
         this.ele.css({
             borderBottomWidth: 0,
-            paddingTop: Zoom(style.paddingTop, 0.5),
-            paddingBottom: Zoom(style.paddingBottom, 0.5),
-            backgroundColor: style.backgroundColor
+            paddingTop: style.paddingTop,
+            paddingBottom: style.paddingBottom,
+            paddingLeft: style.paddingLeft,
+            paddingRight: style.paddingRight,
+            cursor: 'text',
+            backgroundColor: '#ffffff'
         });
 
         this.contentEle.css({
@@ -154,8 +157,11 @@ Block.prototype.loadStyle = function () {
             lineHeight: style.lineHeight,
             color: style.color,
             borderBottom: style.borderBottom,
-            paddingTop: Zoom(style.paddingBottom, 0.5),
-            paddingBottom: Zoom(style.paddingBottom, 0.5)
+            paddingTop: style.contentPaddingTop,
+            paddingBottom: style.contentPaddingBottom,
+            paddingLeft: style.contentPaddingLeft,
+            paddingRight: style.contentPaddingRight,
+            backgroundColor: style.backgroundColor
         });
     }
 };
