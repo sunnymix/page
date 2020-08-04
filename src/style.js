@@ -12,8 +12,8 @@ function Style() {
 
     this.paddingTop = '3px';
     this.paddingBottom = '3px';
-    this.paddingLeft = '20px';
-    this.paddingRight = '20px';
+    this.paddingLeft = '50px';
+    this.paddingRight = '50px';
 
     this.borderBottom = '0px solid transparent';
 
