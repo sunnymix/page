@@ -74,7 +74,7 @@ Paper.prototype.throttleSave = function () {
     if (isNone(this.throttleSaveFn)) {
         this.throttleSaveFn = throttle(function () {
             thiz.saveData(thiz.getData());
-        }, 1000);
+        }, 500);
     }
 
     thiz.throttleSaveFn();
@@ -86,26 +86,46 @@ Paper.prototype.save = function () {
 
 Paper.prototype.getData = function () {
     var titleData = this.title.getData();
-    var writerData = this.writer.getData();
+    var contentData = this.writer.getData();
     return {
         uid: this.getUid(),
         title: titleData,
-        writer: writerData
+        content: contentData
     };
 };
 
 Paper.prototype.loadData = function () {
-    var paperData = localStorage.getItem(this.cacheId());
-    if (isNotNone(paperData)) {
-        var paperObj = JSON.parse(paperData);
-        this.title.setData(paperObj.title);
-        this.writer.setData(paperObj.writer);
-    }
+    var thiz = this;
+
+    $.get('/api/paper?uid=' + this.getUid(), function (res) {
+        // load from db
+        if (isNotNone(res) && isNotNone(res.data)) {
+            thiz.renderData(res.data);
+        } else {
+            var paperRaw = localStorage.getItem(this.cacheId());
+            if (isNotNone(paperRaw)) {
+                var paperObj = JSON.parse(paperRaw);
+                thiz.renderData(paperObj);
+            }
+        }
+    });
 };
+
+Paper.prototype.renderData = function (paperObj) {
+    if (isNotNone(paperObj)) {
+        this.title.setData(paperObj.title);
+        this.writer.setData(paperObj.content);
+    }
+}
 
 Paper.prototype.saveData = function (data) {
     if (isNotNone(data)) {
         var dataRaw = JSON.stringify(data);
+
+        $.post('/api/paper', dataRaw, function (res) {
+            // save to db
+        });
+
         localStorage.setItem(this.cacheId(), dataRaw);
     }
 };
@@ -120,7 +140,7 @@ Paper.prototype.getUid = function () {
     if (uid.length > 0) {
         return uid;
     }
-    
+
     window.location.hash = '#' + uuid();
 };
 

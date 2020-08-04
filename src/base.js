@@ -10,7 +10,7 @@ window.uuid = function () {
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
 
-    return id.replace(/\-/gi, '');
+    return id.replace(/\-/gi, '').substring(0, 12);
 }
 
 window.selectText = function (node) {
