@@ -1,11 +1,15 @@
-function Writer(p) {
-    this.ele = $(p);
-    this.cursor = null;
-    this.blocks = [];
+function Writer(p, readonly) {
+    var thiz = this;
 
-    this.ele.on('click', this.click);
+    thiz.readonly = isTrue(readonly);
 
-    this.focus();
+    thiz.ele = $(p);
+    thiz.cursor = null;
+    thiz.blocks = [];
+
+    thiz.ele.on('click', this.thiz);
+
+    thiz.focus();
 };
 
 Writer.prototype.type = ELE_TYPE.WRITER;
@@ -15,10 +19,12 @@ Writer.prototype.click = function (e) {
 };
 
 Writer.prototype.focus = function () {
-    var blockLength = this.blocks.length;
+    var thiz = this;
+
+    var blockLength = thiz.blocks.length;
 
     if (blockLength == 0) {
-        this.createBlock();
+        thiz.createBlock();
     }
 };
 
@@ -32,10 +38,12 @@ Writer.prototype.createBlock = function (place, data) {
         place.ele.after(tmp);
         previousBlock = place;
     } else {
-        this.ele.append(tmp);
+        thiz.ele.append(tmp);
     }
 
-    var newBlock = new Block(tmp, data);
+    var isLock = false;
+
+    var newBlock = new Block(tmp, data, isLock, thiz.readonly);
 
     newBlock.bind('enter', function (block) {
         var nextBlock = thiz.createBlock(block);
@@ -54,7 +62,7 @@ Writer.prototype.createBlock = function (place, data) {
         thiz.movedownBlock(block);
     });
 
-    this.addBlock(newBlock, previousBlock);
+    thiz.addBlock(newBlock, previousBlock);
 
     return newBlock;
 };
@@ -139,15 +147,17 @@ Writer.prototype.getData = function () {
 };
 
 Writer.prototype.setData = function (data) {
+    var thiz = this;
+
     if (isNotEmpty(data)) {
-        this.ele.empty();
-        this.blocks = [];
+        thiz.ele.empty();
+        thiz.blocks = [];
 
         var curBlock = null;
 
         for (var i = 0; i < data.length; i++) {
             var blockData = data[i];
-            var block = this.createBlock(curBlock, blockData);
+            var block = thiz.createBlock(curBlock, blockData);
             curBlock = block;
         }
     }

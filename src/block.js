@@ -1,15 +1,17 @@
-function Block(p, data, isLock) {
+function Block(p, data, isLock, readonly) {
     var thiz = this;
 
-    this.id = uuid();
+    thiz.id = uuid();
 
-    var dataObj = this.extractData(data);
+    var dataObj = thiz.extractData(data);
 
-    this.schema = dataObj.schema;
-    this.style = getStyle(this.schema);
-    this.isLock = isLock || false;
+    thiz.schema = dataObj.schema;
+    thiz.style = getStyle(thiz.schema);
+    thiz.isLock = isTrue(isLock);
+    
+    thiz.readonly = isTrue(readonly);
 
-    this.ele = $(
+    thiz.ele = $(
         [
             '<div',
             '    class="block"',
@@ -68,7 +70,7 @@ function Block(p, data, isLock) {
             '                bottom: 0px;',
             '                left: 0px;',
             '            "></div>',
-            '        <div class="block-content" contenteditable="true"></div>',
+            '        <div class="block-content" ' + (thiz.readonly ? '' : 'contenteditable="true"') + '></div>',
             '    </div>',
             '    <div',
             '        class="block-attach"',
@@ -85,26 +87,26 @@ function Block(p, data, isLock) {
         ].join('')
     );
 
-    this.boxEle = this.ele.find('.block-box');
+    thiz.boxEle = thiz.ele.find('.block-box');
 
-    this.actionsEle = this.ele.find('.block-actions');
-    this.attachBtn = this.ele.find('.attach-btn');
-    this.attachEle = this.ele.find('.block-attach');
-    this.setAttach(dataObj.attach);
+    thiz.actionsEle = thiz.ele.find('.block-actions');
+    thiz.attachBtn = thiz.ele.find('.attach-btn');
+    thiz.attachEle = thiz.ele.find('.block-attach');
+    thiz.setAttach(dataObj.attach);
 
-    this.initActions();
+    thiz.initActions();
 
-    this.contentEle = this.ele.find('.block-content');
+    thiz.contentEle = thiz.ele.find('.block-content');
 
-    this.loadStyle();
-    this.setData(dataObj.text);
+    thiz.loadStyle();
+    thiz.setData(dataObj.text);
 
 
-    this.ele.on('blur', function (e) {
+    thiz.ele.on('blur', function (e) {
         thiz.blur();
     });
 
-    this.ele.on('keydown', function (e) {
+    thiz.ele.on('keydown', function (e) {
         if (e.keyCode == KEYCODE.ENTER) {
             e.preventDefault();
             thiz.enter();
@@ -160,14 +162,14 @@ function Block(p, data, isLock) {
         }
     });
 
-    this.ele.on('click', function (e) {
+    thiz.ele.on('click', function (e) {
         e.stopPropagation();
         thiz.focus();
     });
 
-    $(p).replaceWith(this.ele);
+    $(p).replaceWith(thiz.ele);
 
-    this.listener = {};
+    thiz.listener = {};
 };
 
 Block.prototype.type = ELE_TYPE.BLOCK;
@@ -194,13 +196,17 @@ Block.prototype.setSchema = function (schema) {
 Block.prototype.initActions = function () {
     var thiz = this;
 
-    this.ele.on('mouseenter', function (e) {
+    if (thiz.readonly) {
+        return;
+    }
+
+    thiz.ele.on('mouseenter', function (e) {
         thiz.attachBtn.show();
     }).on('mouseleave', function (e) {
         thiz.attachBtn.hide();
     });
 
-    this.attachBtn
+    thiz.attachBtn
         .on('mouseenter', function (e) {
             thiz.attachBtn.css('opacity', '1');
         }).on('mouseleave', function (e) {
@@ -212,22 +218,24 @@ Block.prototype.initActions = function () {
 };
 
 Block.prototype.loadStyle = function () {
-    var style = getStyle(this.schema);
+    var thiz = this;
+
+    var style = getStyle(thiz.schema);
 
     if (isNotNone(style)) {
-        this.ele.prop('style', style.toString());
+        thiz.ele.prop('style', style.toString());
 
-        this.ele.css({
+        thiz.ele.css({
             borderBottomWidth: 0,
             paddingTop: style.paddingTop,
             paddingBottom: style.paddingBottom,
-            paddingLeft: style.paddingLeft,
-            paddingRight: style.paddingRight,
+            paddingLeft: thiz.readonly ? '0px' : style.paddingLeft,
+            paddingRight: thiz.readonly ? '0px' : style.paddingRight,
             cursor: 'text',
             backgroundColor: '#ffffff'
         });
 
-        this.contentEle.css({
+        thiz.contentEle.css({
             // do not set fontfamily, will cause some issue
             wordBreak: style.wordBreak,
             fontWeight: style.fontWeight,
@@ -246,11 +254,10 @@ Block.prototype.loadStyle = function () {
 };
 
 Block.prototype.blur = function () {
-    this.contentEle.prop('contenteditable', false);
 };
 
 Block.prototype.focus = function () {
-    this.contentEle.prop('contenteditable', true).focus();
+    this.contentEle.focus();
 };
 
 Block.prototype.enter = function () {

@@ -1,5 +1,7 @@
-function Paper(p) {
+function Paper(p, readonly) {
     var thiz = this;
+
+    thiz.readonly = isTrue(readonly);
 
     this.ele = $(
         [
@@ -19,7 +21,7 @@ function Paper(p) {
             '        style="',
             '            border: 1px solid #dddddd;',
             '            border-radius: 1px;',
-            '            padding: 40px 0;',
+            '            padding: 40px ' + (thiz.readonly ? '60px' : '0px') +';',
             '            min-height: 800px;',
             '            background-color: #ffffff;',
             '        "',
@@ -32,12 +34,12 @@ function Paper(p) {
             '</div>'
         ].join('')
     );
-    $(p).replaceWith(this.ele);
+    $(p).replaceWith(thiz.ele);
 
-    this.title = new Title(this.ele.find('.title'));
-    this.writer = new Writer(this.ele.find('.writer'));
+    thiz.title = new Title(thiz.ele.find('.title'), thiz.readonly);
+    thiz.writer = new Writer(thiz.ele.find('.writer'), thiz.readonly);
 
-    this.ele.on('click', function (e) {
+    thiz.ele.on('click', function (e) {
         thiz.click();
     });
 
@@ -63,6 +65,10 @@ Paper.prototype.click = function () {
 
 Paper.prototype.throttleSave = function () {
     var thiz = this;
+
+    if (thiz.readonly) {
+        return;
+    }
 
     if (isNone(this.throttleSaveFn)) {
         this.throttleSaveFn = throttle(function () {
@@ -90,11 +96,12 @@ Paper.prototype.getData = function () {
 Paper.prototype.loadData = function () {
     var thiz = this;
 
-    $.get('/api/paper?uid=' + this.getUid(), function (res) {
+    $.get('/api/paper?uid=' + thiz.getUid(), function (res) {
         // load from db
         if (isNotNone(res) && isNotNone(res.data)) {
             thiz.renderData(res.data);
         } else {
+            console.error('cannot load from db');
             var paperRaw = localStorage.getItem(thiz.cacheId());
             if (isNotNone(paperRaw)) {
                 var paperObj = JSON.parse(paperRaw);
@@ -105,9 +112,11 @@ Paper.prototype.loadData = function () {
 };
 
 Paper.prototype.renderData = function (paperObj) {
+    var thiz = this;
+
     if (isNotNone(paperObj)) {
-        this.title.setData(paperObj.title);
-        this.writer.setData(paperObj.content);
+        thiz.title.setData(paperObj.title);
+        thiz.writer.setData(paperObj.content);
     }
 }
 

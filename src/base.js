@@ -97,10 +97,23 @@ window.isObject = function (p) {
 };
 
 window.isString = function (p) {
-    return typeof p === 'string';  
+    return typeof p === 'string';
 };
 
 $(document).on('paste', '[contenteditable]', function (event) {
     event.preventDefault();
     document.execCommand('inserttext', false, window.event.clipboardData.getData('text'));
 });
+
+window.getSearchParam = function (name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+};
+
+window.isTrue = function (p) {
+    return isDefined(p) && true === p;
+};
+
+window.isNotTrue = function (p) {
+    return !isTrue(p);
+};

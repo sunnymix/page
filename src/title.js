@@ -1,10 +1,14 @@
-function Title(p) {
-    this.block = new Block(null, {
+function Title(p, readonly) {
+    var thiz = this;
+    
+    thiz.readonly = isTrue(readonly);
+
+    thiz.block = new Block(null, {
         schema: SCHEMA.H1,
         text: 'Title'
-    }, true);
+    }, true, thiz.readonly);
 
-    this.block.replaceTo(p);
+    thiz.block.replaceTo(p);
 };
 
 Title.prototype.type = ELE_TYPE.TITLE;
@@ -15,6 +19,6 @@ Title.prototype.getData = function () {
 
 Title.prototype.setData = function (data) {
     this.block.setData(data || 'Title');
-}
+};
 
 window.Title = Title;

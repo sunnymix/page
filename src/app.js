@@ -1,7 +1,9 @@
 jQuery(function () {
     resetCss();
 
-    var paper = new Paper('.paper');
+    var readonly = isNotNone(getSearchParam('read'));
+
+    var paper = new Paper('.paper', readonly);
 
     var toolbar = new Toolbar(paper);
 
