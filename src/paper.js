@@ -95,7 +95,7 @@ Paper.prototype.loadData = function () {
         if (isNotNone(res) && isNotNone(res.data)) {
             thiz.renderData(res.data);
         } else {
-            var paperRaw = localStorage.getItem(this.cacheId());
+            var paperRaw = localStorage.getItem(thiz.cacheId());
             if (isNotNone(paperRaw)) {
                 var paperObj = JSON.parse(paperRaw);
                 thiz.renderData(paperObj);
