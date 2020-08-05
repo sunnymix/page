@@ -66,31 +66,39 @@ window.isUndefined = function (p) {
 
 window.isDefined = function (p) {
     return !isUndefined(p);
-}
+};
 
 window.isNull = function (p) {
     return typeof p === 'object' && null === p;
-}
+};
 
 window.isNotNull = function (p) {
     return !isNull(p);
-}
+};
 
 window.isNone = function (p) {
     return isUndefined(p) || isNull(p);
-}
+};
 
 window.isNotNone = function (p) {
     return !isNone(p);
-}
+};
 
 window.isEmpty = function (p) {
     return isNone(p) || (typeof p.length === 'number' && p.length === 0);
-}
+};
 
 window.isNotEmpty = function (p) {
     return !isEmpty(p);
-}
+};
+
+window.isObject = function (p) {
+    return typeof p === 'object';
+};
+
+window.isString = function (p) {
+    return typeof p === 'string';  
+};
 
 $(document).on('paste', '[contenteditable]', function (event) {
     event.preventDefault();

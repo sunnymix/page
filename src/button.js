@@ -1,7 +1,8 @@
-function Button(html) {
+function Button(html, padding) {
 
     this.background = '#ffffff';
     this.backgroundHover = '#f0f0f0';
+    this.padding = padding || '10px'
 
     this.ele = $([
         '<button',
@@ -10,7 +11,7 @@ function Button(html) {
         '    display: inline-block;',
         '    border: 0px solid #eeeeee;',
         '    background-color: ' + this.background + ';',
-        '    padding: 10px;',
+        '    padding: ' + this.padding + ';',
         '  "',
         '>',
         html || 'button',

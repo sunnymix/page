@@ -1,14 +1,6 @@
 function Paper(p) {
     var thiz = this;
 
-    var hash = window.location.hash.replace(/^#/, '');
-    if (hash.length > 0) {
-        this.uid = hash;
-    } else {
-        this.uid = uuid();
-        window.location.hash = '#' + this.uid;
-    }
-
     this.ele = $(
         [
             '<div',
@@ -59,6 +51,7 @@ function Paper(p) {
         thiz.save();
     });
 
+    this.getUid();
     this.loadData();
 }
 

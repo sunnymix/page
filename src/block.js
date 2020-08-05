@@ -13,33 +13,92 @@ function Block(p, data, isLock) {
         [
             '<div',
             '    class="block"',
+            '    style="',
+            '        position: relative;',
+            '    "',
             '>',
+            '    <div',
+            '        class="block-actions"',
+            '        style="',
+            '            position: absolute;',
+            '            top: 0px;',
+            '            bottom: 0px;',
+            '            left: 0px;',
+            '        ">',
+            '        <button ',
+            '            class="attach-btn"',
+            '            style="',
+            '                display: none;',
+            '                position: absolute;',
+            '                top: 0px;',
+            '                bottom: 0px;',
+            '                left: 0px;',
+            '                right: 0px;',
+            '                min-width: 30px;',
+            '                background-color: #ffffff;',
+            '                border: 0px solid #ffffff;',
+            '                border-radius: 0px;',
+            '                opacity: 0.3;',
+            '            ">',
+            '            <img',
+            '                 src="img/ellipsis-v-solid.png"',
+            '                 style="',
+            '                     display: block;',
+            '                     position: absolute;',
+            '                     width: 20px;',
+            '                     height: 20px;',
+            '                     top: 50%;',
+            '                     left: 50%;',
+            '                     margin-top: -10px;',
+            '                     margin-left: -10px;',
+            '                 ">',
+            '        </button>',
+            '    </div>',
             '    <div',
             '        class="block-box"',
             '        style="',
             '            position: relative;',
             '        "',
-            '    >',
+            '        >',
             '        <div',
             '            class="block-border"',
             '            style="',
             '                position: absolute;',
-            '                left: 0px;',
-            '                right: 0px;',
+            '                top: 0px;',
             '                bottom: 0px;',
+            '                left: 0px;',
             '            "></div>',
             '        <div class="block-content" contenteditable="true"></div>',
+            '    </div>',
+            '    <div',
+            '        class="block-attach"',
+            '        style="',
+            '            position: relative;',
+            '        ">',
+            '        <div ',
+            '            class="block-attach-box"',
+            '            style="',
+            '                display: block;',
+            '            "></div>',
             '    </div>',
             '</div>'
         ].join('')
     );
 
     this.boxEle = this.ele.find('.block-box');
-    this.borderEle = this.ele.find('.block-border');
+
+    this.actionsEle = this.ele.find('.block-actions');
+    this.attachBtn = this.ele.find('.attach-btn');
+    this.attachEle = this.ele.find('.block-attach');
+    this.setAttach(dataObj.attach);
+
+    this.initActions();
+
     this.contentEle = this.ele.find('.block-content');
 
     this.loadStyle();
     this.setData(dataObj.text);
+
 
     this.ele.on('blur', function (e) {
         thiz.blur();
@@ -132,6 +191,26 @@ Block.prototype.setSchema = function (schema) {
     }
 };
 
+Block.prototype.initActions = function () {
+    var thiz = this;
+
+    this.ele.on('mouseenter', function (e) {
+        thiz.attachBtn.show();
+    }).on('mouseleave', function (e) {
+        thiz.attachBtn.hide();
+    });
+
+    this.attachBtn
+        .on('mouseenter', function (e) {
+            thiz.attachBtn.css('opacity', '1');
+        }).on('mouseleave', function (e) {
+            thiz.attachBtn.css('opacity', '0.3');
+        }).on('click', function (e) {
+            var url = prompt('add attachement ...', '');
+            thiz.setAttach(url);
+        });
+};
+
 Block.prototype.loadStyle = function () {
     var style = getStyle(this.schema);
 
@@ -206,23 +285,31 @@ Block.prototype.setData = function (content) {
 };
 
 Block.prototype.getData = function () {
-    return {
+    var defaultData = this.defaultData();
+
+    return $.extend({}, defaultData, {
         schema: this.schema,
-        text: this.contentEle.text()
-    };
+        text: this.contentEle.text(),
+        attach: this.getAttachData()
+    });
 };
 
-Block.prototype.extractData = function (data) {
-    var defaultData = {
+Block.prototype.defaultData = function () {
+    return {
         schema: SCHEMA.TEXT,
-        text: ''
+        text: '',
+        attach: ''
     };
+}
 
-    if (typeof data === 'object') {
+Block.prototype.extractData = function (data) {
+    var defaultData = this.defaultData();
+
+    if (isObject(data)) {
         return $.extend({}, defaultData, data);
     }
 
-    if (typeof data === 'string') {
+    if (isString(data)) {
         try {
             var dataObj = JSON.parse(data);
             return $.extend({}, defaultData, dataObj);
@@ -234,6 +321,22 @@ Block.prototype.extractData = function (data) {
     }
 
     return defaultData;
+};
+
+Block.prototype.setAttach = function (url) {
+    var attachBox = this.attachEle.find('.block-attach-box');
+
+    if (isNotEmpty(url)) {
+        this.attach = new Attach(url);
+        this.attach.htmlTo(attachBox);
+    }
+};
+
+Block.prototype.getAttachData = function () {
+    if (isNotNone(this.attach)) {
+        return this.attach.getUrl();
+    }
+    return "";
 };
 
 window.Block = Block;
