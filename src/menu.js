@@ -27,6 +27,11 @@ function Menu() {
         '      border-left: 0px solid #dddddd;',
         '      background-color: #ffffff;',
         '      overflow: auto;',
+        '      position: absolute;',
+        '      left: 0px;',
+        '      right: 0px;',
+        '      top: 44px;',
+        '      bottom: 0px;',
         '    "',
         '  ></div>',
         '</div>'
