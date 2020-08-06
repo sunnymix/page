@@ -46,11 +46,12 @@ function Paper(p, readonly) {
     $(document).on('keydown', 'body', function (e) {
         if (isSaveAction(e)) {
             e.preventDefault();
+            thiz.save();
         }
     });
 
     $(document).on('keyup', 'body', function (e) {
-        thiz.save();
+        // thiz.save(); disable auto save
     });
 
     this.getPid();
