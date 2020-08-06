@@ -53,7 +53,7 @@ function Paper(p, readonly) {
         thiz.save();
     });
 
-    this.getUid();
+    this.getPid();
     this.loadData();
 }
 
@@ -87,7 +87,7 @@ Paper.prototype.getData = function () {
     var titleData = this.title.getData();
     var contentData = this.writer.getData();
     return {
-        uid: this.getUid(),
+        pid: this.getPid(),
         title: titleData,
         content: contentData
     };
@@ -96,7 +96,7 @@ Paper.prototype.getData = function () {
 Paper.prototype.loadData = function () {
     var thiz = this;
 
-    $.get('/api/paper?uid=' + thiz.getUid(), function (res) {
+    $.get('/api/paper?pid=' + thiz.getPid(), function (res) {
         // load from db
         if (isNotNone(res) && isNotNone(res.data)) {
             thiz.renderData(res.data);
@@ -133,14 +133,14 @@ Paper.prototype.saveData = function (data) {
 };
 
 Paper.prototype.cacheId = function () {
-    return 'paper#' + this.getUid();
+    return 'paper#' + this.getPid();
 };
 
-Paper.prototype.getUid = function () {
-    var uid = window.location.hash.replace(/^#/, '');
+Paper.prototype.getPid = function () {
+    var pid = window.location.hash.replace(/^#/, '');
 
-    if (uid.length > 0) {
-        return uid;
+    if (pid.length > 0) {
+        return pid;
     }
 
     window.location.hash = '#' + uuid();
