@@ -139,6 +139,12 @@ Style.prototype.toString = function () {
     ].join(';');
 };
 
+// static variable
+
+Style.Paper = {
+    paddingX: '60px'
+};
+
 var STYLE_TEXT = new Style();
 
 var STYLE_H1 = new Style()

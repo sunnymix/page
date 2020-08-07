@@ -229,8 +229,8 @@ Block.prototype.loadStyle = function () {
             borderBottomWidth: 0,
             paddingTop: style.paddingTop,
             paddingBottom: style.paddingBottom,
-            paddingLeft: thiz.readonly ? '0px' : style.paddingLeft,
-            paddingRight: thiz.readonly ? '0px' : style.paddingRight,
+            paddingLeft: thiz.readonly ? '0px' : Style.Paper.paddingX,
+            paddingRight: thiz.readonly ? '0px' : Style.Paper.paddingX,
             cursor: 'text',
             backgroundColor: '#ffffff'
         });

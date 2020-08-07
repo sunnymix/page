@@ -30,7 +30,7 @@ function Menu() {
         '      position: absolute;',
         '      left: 0px;',
         '      right: 0px;',
-        '      top: 44px;',
+        '      top: 43px;',
         '      bottom: 0px;',
         '    "',
         '  ></div>',

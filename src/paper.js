@@ -3,6 +3,8 @@ function Paper(p, readonly) {
 
     thiz.readonly = isTrue(readonly);
 
+    thiz.paddingHorizontal = thiz.readonly ? Style.Paper.paddingX : '0px';
+
     this.ele = $(
         [
             '<div',
@@ -21,7 +23,7 @@ function Paper(p, readonly) {
             '        style="',
             '            border: 1px solid #dddddd;',
             '            border-radius: 1px;',
-            '            padding: 40px ' + (thiz.readonly ? '60px' : '0px') +';',
+            '            padding: 40px ' + thiz.paddingHorizontal +';',
             '            min-height: 800px;',
             '            background-color: #ffffff;',
             '        "',
