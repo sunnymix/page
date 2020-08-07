@@ -1,10 +1,14 @@
-function Node(place, data) {
+function Node(place, paper) {
     var thiz = this;
 
-    this.id = data || uuid();
+    if (isNone(paper)) {
+        return;
+    }
 
-    var data = this.getData(this.id);
-    var paperHash = this.id.substring(this.id.indexOf('#'));
+    thiz.paper = paper;
+    
+    thiz.id = paper.pid;
+    thiz.title = paper.title;
 
     this.ele = $([
         '<div',
@@ -23,7 +27,7 @@ function Node(place, data) {
         '  >',
         '    <a',
         '      class="node-link"',
-        '      href="' + paperHash + '"',
+        '      href="#' + thiz.id + '"',
         '      style="',
         '        display: block;',
         '        color: #000000;',
@@ -35,7 +39,7 @@ function Node(place, data) {
         '        style="',
         '          padding: ' + Zoom('12px') + ';',
         '        "',
-        '      >' + data.paper.title + '</div>',
+        '      >' + thiz.title + '</div>',
         '    </a>',
         '  </div>',
         '</div>'
@@ -47,21 +51,6 @@ function Node(place, data) {
 
     this.listener = [];
 }
-
-Node.prototype.getData = function (id) {
-    var paperData = JSON.parse(localStorage.getItem(id));
-
-    var paperDefault = {
-        title: id
-    };
-
-    paperData = $.extend({}, paperDefault, paperData);
-
-    return {
-        id: id,
-        paper: paperData
-    };
-};
 
 Node.prototype.bind = function (e, b) {
     this.listener[e] = b;

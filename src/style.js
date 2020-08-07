@@ -142,7 +142,7 @@ Style.prototype.toString = function () {
 // static variable
 
 Style.Paper = {
-    paddingX: '60px'
+    paddingX: '50px'
 };
 
 var STYLE_TEXT = new Style();

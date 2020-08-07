@@ -37,25 +37,35 @@ function Menu() {
         '</div>'
     ].join(''));
 
-    this.nodesEle = this.ele.find('.nodes');
+    thiz.nodesEle = thiz.ele.find('.nodes');
 
-    this.actionsEle = this.ele.find('.actions');
-    this.createActions();
+    thiz.actionsEle = thiz.ele.find('.actions');
+    thiz.createActions();
 
-    var ids = Object.keys(localStorage);
+    thiz.fetchPapers();
 
-    for (var i = 0; i < ids.length; i++) {
-        var id = ids[i];
-        var node = new Node(this.nodesEle, id);
-        node.bind('click', function(e, node) {
-            thiz.trigger('click');
-            thiz.trigger('hide');
-        });
-        this.nodesEle.append(node.ele);
-    }
-
-    this.listener = [];
+    thiz.listener = [];
 }
+
+Menu.prototype.fetchPapers = function () {
+    var thiz = this;
+
+    $.get('/api/papers', function (res) {
+        if (isNotNone(res) && isNotEmpty(res.data)) {
+            var papers = res.data || [];
+
+            for (var i = 0; i < papers.length; i++) {
+                var paper = papers[i];
+                var node = new Node(thiz.nodesEle, paper);
+                node.bind('click', function (e, node) {
+                    thiz.trigger('click');
+                    thiz.trigger('hide');
+                });
+                thiz.nodesEle.append(node.ele);
+            }
+        }
+    });
+};
 
 Menu.prototype.createActions = function () {
     var thiz = this;
@@ -63,7 +73,7 @@ Menu.prototype.createActions = function () {
     // create
 
     var createBtn = new Button('<img src="img/plus-solid.png" style="height: 20px;">');
-    createBtn.appendTo(this.actionsEle);
+    createBtn.appendTo(thiz.actionsEle);
     createBtn.click(function (e, btn) {
         window.location.hash = '#' + uuid();
         window.location.reload();
@@ -72,7 +82,7 @@ Menu.prototype.createActions = function () {
     // hide
 
     var hideBtn = new Button('<img src="img/times-solid.png" style="height: 20px;">');
-    hideBtn.appendTo(this.actionsEle);
+    hideBtn.appendTo(thiz.actionsEle);
     hideBtn.click(function (e, btn) {
         thiz.trigger('hide');
     });
