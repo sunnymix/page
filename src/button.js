@@ -62,20 +62,20 @@ Button.prototype.initIcon = function () {
             width: thiz.height
         });
 
-        var img = $('<img style="width:0; height:0;">');
-        img.prop('src', thiz.icon);
-        thiz.iconEle.empty().append(img);
+        thiz.iconImg = $('<img style="width:0; height:0; opacity:0.6;">');
+        thiz.iconImg.prop('src', thiz.icon);
+        thiz.iconEle.empty().append(thiz.iconImg);
 
         getImgSize(thiz.icon, function (width, height) {
             var iconHeight = parsePxToNum(thiz.iconHeight);
             var iconWidth = (1.0 * width / height) * iconHeight;
 
-            img.height(iconHeight).width(iconWidth);
+            thiz.iconImg.height(iconHeight).width(iconWidth);
 
             var marginTop = '-' + (iconHeight * 0.5) + 'px';
             var marginLeft = '-' + (iconWidth * 0.5) + 'px';
 
-            img.css({
+            thiz.iconImg.css({
                 position: 'absolute',
                 top: '50%',
                 left: '50%',
@@ -105,9 +105,17 @@ Button.prototype.bindReaction = function () {
         thiz.ele.css({
             background: thiz.backgroundHover
         });
+
+        thiz.iconImg.css({
+            opacity: 1
+        });
     }).on('mouseleave', function (e) {
         thiz.ele.css({
             background: thiz.background
+        });
+
+        thiz.iconImg.css({
+            opacity: 0.6
         });
     });
 };
