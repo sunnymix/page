@@ -62,8 +62,9 @@ function Block(p, data, isLock, readonly) {
 
     thiz.actionsEle = thiz.ele.find('.block-actions');
 
-    thiz.attachBtn = new Button('img/ellipsis-v-solid.png', null, 30, 20);
+    thiz.attachBtn = new Button('img/ellipsis-v-solid.png', null, 26, 20);
     thiz.attachBtn.hide();
+    thiz.attachBtn.middle();
     thiz.attachBtn.appendTo(thiz.actionsEle);
 
     thiz.attachEle = thiz.ele.find('.block-attach');

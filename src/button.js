@@ -87,8 +87,19 @@ Button.prototype.initIcon = function () {
 };
 
 Button.prototype.appendTo = function (place) {
-    this.ele.appendTo(place);
+    var thiz = this;
+    thiz.ele.appendTo(place);
 };
+
+Button.prototype.middle = function () {
+    var thiz = this;
+    thiz.ele.css({
+        position: 'absolute',
+        left: 0,
+        top: '50%',
+        marginTop: '-' + (thiz.height * 0.5) + 'px'
+    });
+}
 
 Button.prototype.click = function (cb) {
     var thiz = this;
