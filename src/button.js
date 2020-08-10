@@ -1,9 +1,10 @@
-function Button(icon, content, height) {
+function Button(icon, content, height, iconHeight) {
     var thiz = this;
 
     thiz.icon = isNotNone(icon) ? icon : null;
     thiz.content = isNotNone(content) ? $(content) : null;
     thiz.height = isNotNone(height) ? height : '40px';
+    thiz.iconHeight = isNotNone(iconHeight) ? iconHeight : Zoom(thiz.height, 0.5);
 
     thiz.background = '#ffffff';
     thiz.backgroundHover = '#f0f0f0';
@@ -61,18 +62,18 @@ Button.prototype.initIcon = function () {
             width: thiz.height
         });
 
-        var img = $('<img>');
+        var img = $('<img style="width:0; height:0;">');
         img.prop('src', thiz.icon);
         thiz.iconEle.empty().append(img);
 
         getImgSize(thiz.icon, function (width, height) {
-            var iconHeight = parsePxToNum(thiz.height) / 2.0;
+            var iconHeight = parsePxToNum(thiz.iconHeight);
             var iconWidth = (1.0 * width / height) * iconHeight;
 
             img.height(iconHeight).width(iconWidth);
 
-            var marginLeft = '-' + (iconWidth / 2) + 'px';
-            var marginTop = '-' + (iconHeight / 2) + 'px';
+            var marginTop = '-' + (iconHeight * 0.5) + 'px';
+            var marginLeft = '-' + (iconWidth * 0.5) + 'px';
 
             img.css({
                 position: 'absolute',
@@ -109,6 +110,18 @@ Button.prototype.bindReaction = function () {
             background: thiz.background
         });
     });
-}
+};
+
+Button.prototype.show = function () {
+    var thiz = this;
+
+    thiz.ele.show();
+};
+
+Button.prototype.hide = function () {
+    var thiz = this;
+
+    thiz.ele.hide();
+};
 
 window.Button = Button;

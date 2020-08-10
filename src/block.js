@@ -8,7 +8,7 @@ function Block(p, data, isLock, readonly) {
     thiz.schema = dataObj.schema;
     thiz.style = getStyle(thiz.schema);
     thiz.isLock = isTrue(isLock);
-    
+
     thiz.readonly = isTrue(readonly);
 
     thiz.ele = $(
@@ -26,36 +26,7 @@ function Block(p, data, isLock, readonly) {
             '            top: 0px;',
             '            bottom: 0px;',
             '            left: 0px;',
-            '        ">',
-            '        <button ',
-            '            class="attach-btn"',
-            '            style="',
-            '                display: none;',
-            '                position: absolute;',
-            '                top: 0px;',
-            '                bottom: 0px;',
-            '                left: 0px;',
-            '                right: 0px;',
-            '                min-width: 30px;',
-            '                background-color: #ffffff;',
-            '                border: 0px solid #ffffff;',
-            '                border-radius: 0px;',
-            '                opacity: 0.3;',
-            '            ">',
-            '            <img',
-            '                 src="img/ellipsis-v-solid.png"',
-            '                 style="',
-            '                     display: block;',
-            '                     position: absolute;',
-            '                     width: 20px;',
-            '                     height: 20px;',
-            '                     top: 50%;',
-            '                     left: 50%;',
-            '                     margin-top: -10px;',
-            '                     margin-left: -10px;',
-            '                 ">',
-            '        </button>',
-            '    </div>',
+            '        "></div>',
             '    <div',
             '        class="block-box"',
             '        style="',
@@ -90,7 +61,11 @@ function Block(p, data, isLock, readonly) {
     thiz.boxEle = thiz.ele.find('.block-box');
 
     thiz.actionsEle = thiz.ele.find('.block-actions');
-    thiz.attachBtn = thiz.ele.find('.attach-btn');
+
+    thiz.attachBtn = new Button('img/ellipsis-v-solid.png', null, 30, 20);
+    thiz.attachBtn.hide();
+    thiz.attachBtn.appendTo(thiz.actionsEle);
+
     thiz.attachEle = thiz.ele.find('.block-attach');
     thiz.setAttach(dataObj.attach);
 
@@ -206,15 +181,10 @@ Block.prototype.initActions = function () {
         thiz.attachBtn.hide();
     });
 
-    thiz.attachBtn
-        .on('mouseenter', function (e) {
-            thiz.attachBtn.css('opacity', '1');
-        }).on('mouseleave', function (e) {
-            thiz.attachBtn.css('opacity', '0.3');
-        }).on('click', function (e) {
-            var url = prompt('add attachement ...', '');
-            thiz.setAttach(url);
-        });
+    thiz.attachBtn.click(function (e) {
+        var url = prompt('add attachement ...', '');
+        thiz.setAttach(url);
+    });
 };
 
 Block.prototype.loadStyle = function () {
