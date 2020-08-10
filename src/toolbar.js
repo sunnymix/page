@@ -40,8 +40,7 @@ Toolbar.prototype.createTools = function () {
 
 Toolbar.prototype.createMenuTool = function () {
     var thiz = this;
-
-    var showMenuBtn = new Button('<img src="img/ellipsis-h-solid.png" style="height: 20px;">');
+    var showMenuBtn = new Button('img/ellipsis-h-solid.png');
     showMenuBtn.appendTo(this.toolsEle);
     showMenuBtn.click(function (e, tool) {
         thiz.showMenu();

@@ -117,3 +117,68 @@ window.isTrue = function (p) {
 window.isNotTrue = function (p) {
     return !isTrue(p);
 };
+
+window.getImgSize = function (src, cb) {
+    var fragment = document.createDocumentFragment();
+
+    var img = $('<img>');
+    img.prop('src', src);
+
+    img.on('load', function () {
+        if (isFunction(cb)) {
+            cb(img.width() || 0, img .height() || 0);
+        }
+    });
+
+    fragment.appendChild(img[0]);
+
+    Draft().empty();
+    Draft().append(fragment);
+};
+
+window.Draft = function () {
+    var thiz = this;
+
+    thiz.ele = $([
+        '<div',
+        '    style="',
+        '        position: absolute;',
+        '        left: 0;',
+        '        top: 0;',
+        '        width: 0px;',
+        '        height: 0px;',
+        '        z-index: -1000;',
+        '        overflow: hidden;',
+        '    ">',
+        '</div>'
+    ].join(''));
+
+    $('body').append(thiz.ele);
+
+    return thiz.ele;
+};
+
+window.isNum = function (p) {
+    return typeof p === 'number';
+};
+
+window.parsePxToNum = function (p) {
+    if (isNone(p)) {
+        return 0;
+    }
+
+    if (isNum(p)) {
+        return p;
+    }
+
+    if (isString(p)) {
+        if (p.endsWith('px')) {
+            var v = p.replace(/px$/gi, '');
+            if (v.length > 0 && +v > 0) {
+                return +v;
+            }
+        }
+    }
+
+    return 0;
+};

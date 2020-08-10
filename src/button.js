@@ -1,7 +1,7 @@
 function Button(icon, content, height) {
     var thiz = this;
 
-    thiz.icon = isNotNone(icon) ? $(icon) : null;
+    thiz.icon = isNotNone(icon) ? icon : null;
     thiz.content = isNotNone(content) ? $(content) : null;
     thiz.height = isNotNone(height) ? height : '40px';
 
@@ -33,22 +33,20 @@ function Button(icon, content, height) {
 
     thiz.iconEle = thiz.ele.find('.btn-icon');
     thiz.contentEle = thiz.ele.find('.btn-content');
-    
-    thiz.init();
 
-    
+    thiz.init();
 }
 
 Button.prototype.init = function () {
     var thiz = this;
-    
+
     thiz.width = isNotNone(thiz.content) ? "auto" : thiz.height;
 
     thiz.ele.css({
         width: thiz.width,
         height: thiz.height
     });
-    
+
     thiz.initIcon();
 
     thiz.bindReaction();
@@ -59,20 +57,30 @@ Button.prototype.initIcon = function () {
 
     if (isNotNone(thiz.icon)) {
         thiz.iconEle.css({
-            width: thiz.height,
-            height: thiz.height
+            height: thiz.height,
+            width: thiz.height
         });
 
-        thiz.iconEle.html(thiz.icon);
+        var img = $('<img>');
+        img.prop('src', thiz.icon);
+        thiz.iconEle.empty().append(img);
 
-        // fixme
-    
-        thiz.icon.css({
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            marginTop: '-10px',
-            marginLeft: '-10px'
+        getImgSize(thiz.icon, function (width, height) {
+            var iconHeight = parsePxToNum(thiz.height) / 2.0;
+            var iconWidth = (1.0 * width / height) * iconHeight;
+
+            img.height(iconHeight).width(iconWidth);
+
+            var marginLeft = '-' + (iconWidth / 2) + 'px';
+            var marginTop = '-' + (iconHeight / 2) + 'px';
+
+            img.css({
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                marginLeft: marginLeft,
+                marginTop: marginTop
+            });
         });
     }
 };

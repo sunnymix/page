@@ -72,7 +72,7 @@ Menu.prototype.createActions = function () {
 
     // create
 
-    var createBtn = new Button('<img src="img/plus-solid.png" style="height: 20px;">');
+    var createBtn = new Button('img/plus-solid.png');
     createBtn.appendTo(thiz.actionsEle);
     createBtn.click(function (e, btn) {
         window.location.hash = '#' + uuid();
@@ -81,7 +81,7 @@ Menu.prototype.createActions = function () {
 
     // hide
 
-    var hideBtn = new Button('<img src="img/times-solid.png" style="height: 20px;">');
+    var hideBtn = new Button('img/times-solid.png');
     hideBtn.appendTo(thiz.actionsEle);
     hideBtn.click(function (e, btn) {
         thiz.trigger('hide');
