@@ -62,7 +62,7 @@ Button.prototype.initIcon = function () {
             width: thiz.height
         });
 
-        thiz.iconImg = $('<img style="width:0; height:0; opacity:0.6;">');
+        thiz.iconImg = $('<img style="width:0; height:0;">');
         thiz.iconImg.prop('src', thiz.icon);
         thiz.iconEle.empty().append(thiz.iconImg);
 
@@ -105,17 +105,9 @@ Button.prototype.bindReaction = function () {
         thiz.ele.css({
             background: thiz.backgroundHover
         });
-
-        thiz.iconImg.css({
-            opacity: 1
-        });
     }).on('mouseleave', function (e) {
         thiz.ele.css({
             background: thiz.background
-        });
-
-        thiz.iconImg.css({
-            opacity: 0.6
         });
     });
 };
