@@ -7,11 +7,11 @@ function Style() {
     this.fontWeight = 'normal';
     this.fontSize = '12px';
 
-    this.minHeight = '20px';
-    this.lineHeight = '20px';
+    this.minHeight = '18px';
+    this.lineHeight = '18px';
 
-    this.paddingTop = '3px';
-    this.paddingBottom = '3px';
+    this.paddingTop = '2px';
+    this.paddingBottom = '2px';
     this.paddingLeft = '60px';
     this.paddingRight = '60px';
 

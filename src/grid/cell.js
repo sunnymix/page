@@ -8,7 +8,7 @@ function Cell(data, readonly) {
         '    class=""',
         '    style="',
         '        position: relative;',
-        '        border: 1px solid #dddddd;',
+        '        border: 1px solid #000000;',
         '        border-width: 1px;',
         '        padding: 0px 6px;',
         '        ;',
