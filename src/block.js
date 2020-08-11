@@ -200,8 +200,8 @@ Block.prototype.loadStyle = function () {
             borderBottomWidth: 0,
             paddingTop: style.paddingTop,
             paddingBottom: style.paddingBottom,
-            paddingLeft: thiz.readonly ? '0px' : Style.Paper.paddingX,
-            paddingRight: thiz.readonly ? '0px' : Style.Paper.paddingX,
+            paddingLeft: '0px',
+            paddingRight: '0px',
             cursor: 'text',
             backgroundColor: '#ffffff'
         });

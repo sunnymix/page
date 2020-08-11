@@ -3,7 +3,7 @@ function Paper(p, readonly) {
 
     thiz.readonly = isTrue(readonly);
 
-    thiz.paddingHorizontal = thiz.readonly ? Style.Paper.paddingX : '0px';
+    thiz.paddingHorizontal = Style.Paper.paddingX;
 
     this.ele = $(
         [
