@@ -289,7 +289,9 @@ Block.prototype.extractData = function (data) {
 
     if (isString(data)) {
         try {
-            var dataObj = JSON.parse(data);
+            var dataObj = data.startsWith('{') ? JSON.parse(data) : {
+                text: data
+            };
             return $.extend({}, defaultData, dataObj);
         } catch (error) {
             return $.extend({}, defaultData, {

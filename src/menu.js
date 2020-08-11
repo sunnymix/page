@@ -125,7 +125,10 @@ Menu.prototype.hide = function () {
 };
 
 Menu.prototype.show = function () {
-    this.ele.fadeIn(50);
+    var thiz = this;
+
+    thiz.ele.fadeIn(50);
+    thiz.searchInput.focus();
 };
 
 Menu.prototype.appendTo = function (place) {

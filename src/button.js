@@ -4,7 +4,7 @@ function Button(icon, content, height, iconHeight) {
     thiz.icon = isNotNone(icon) ? icon : null;
     thiz.content = isNotNone(content) ? $(content) : null;
     thiz.height = isNotNone(height) ? height : '40px';
-    thiz.iconHeight = isNotNone(iconHeight) ? iconHeight : Zoom(thiz.height, 0.5);
+    thiz.iconHeight = isNotNone(iconHeight) ? iconHeight : '18px';
 
     thiz.background = '#ffffff';
     thiz.backgroundHover = '#f0f0f0';

@@ -89,6 +89,14 @@ Input.prototype.val = function (newVal) {
     }
 };
 
+Input.prototype.focus = function () {
+    var thiz = this;
+
+    setTimeout(function () {
+        thiz.inputEle.focus();
+    }, 200);
+};
+
 Input.prototype.bind = function (e, b) {
     this.listener[e] = b;
 };

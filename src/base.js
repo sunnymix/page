@@ -96,6 +96,10 @@ window.isNotEmpty = function (p) {
     return !isEmpty(p);
 };
 
+window.isNotBlank = function (p) {
+    return isNotEmpty && p.trim().length > 0;
+};
+
 window.isObject = function (p) {
     return typeof p === 'object';
 };
@@ -123,6 +127,7 @@ window.isNotTrue = function (p) {
 };
 
 window.getImgSize = function (src, cb) {
+    var draft = Draft();
     var fragment = document.createDocumentFragment();
 
     var img = $('<img>');
@@ -132,18 +137,16 @@ window.getImgSize = function (src, cb) {
         if (isFunction(cb)) {
             cb(img.width() || 0, img.height() || 0);
         }
+        draft.remove();
     });
 
     fragment.appendChild(img[0]);
 
-    Draft().empty();
-    Draft().append(fragment);
+    draft.append(fragment);
 };
 
 window.Draft = function () {
-    var thiz = this;
-
-    thiz.ele = $([
+    var ele = $([
         '<div',
         '    style="',
         '        position: absolute;',
@@ -157,9 +160,9 @@ window.Draft = function () {
         '</div>'
     ].join(''));
 
-    $('body').append(thiz.ele);
+    $('body').append(ele);
 
-    return thiz.ele;
+    return ele;
 };
 
 window.isNum = function (p) {

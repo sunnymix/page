@@ -30,17 +30,18 @@ function Paper(p, readonly) {
             '        "',
             '    >',
             '        <div class="paper-body">',
-            '            <div class="title"></div>',
-            '            <div class="writer"></div>',
+            '            <div class="paper-title"></div>',
+            '            <div class="paper-writer"></div>',
             '        </div>',
             '    </div>',
             '</div>'
         ].join('')
     );
     $(p).replaceWith(thiz.ele);
+    thiz.bodyEle = thiz.ele.find('.paper-body');
 
-    thiz.title = new Title(thiz.ele.find('.title'), thiz.readonly);
-    thiz.writer = new Writer(thiz.ele.find('.writer'), thiz.readonly);
+    thiz.title = new Title(thiz.ele.find('.paper-title'), thiz.readonly);
+    thiz.writer = new Writer(thiz.ele.find('.paper-writer'), thiz.readonly);
 
     thiz.ele.on('click', function (e) {
         thiz.click();
@@ -59,6 +60,8 @@ function Paper(p, readonly) {
 
     this.getPid();
     this.loadData();
+
+    (new Grid()).appendTo(thiz.bodyEle);
 }
 
 Paper.prototype.type = ELE_TYPE.PAPER;

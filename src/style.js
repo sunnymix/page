@@ -172,10 +172,10 @@ var STYLE_CODE = new Style()
     .setBackgroundColor('#f6f6f6')
     .setPaddingTop('0px')
     .setPaddingBottom('0px')
-    .setContentPaddingTop('6px')
-    .setContentPaddingBottom('6px')
-    .setContentPaddingLeft('10px')
-    .setContentPaddingRight('10px')
+    .setContentPaddingTop('2px')
+    .setContentPaddingBottom('2px')
+    .setContentPaddingLeft('6px')
+    .setContentPaddingRight('6px')
     ;
 
 
@@ -248,7 +248,7 @@ window.resetCss = function () {
         '    outline: none;',
         '}',
         'body {',
-        '    padding: 20px;',
+        '    padding: 1%;',
         '}',
         '',
         '</style>'
