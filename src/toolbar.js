@@ -6,7 +6,7 @@ function Toolbar(paper) {
         '    style="',
         '        position: absolute;',
         '        top: 0px;',
-        '        left: 25%;',
+        '        left: 0px;',
         '        right: 0px;',
         '    "',
         '>',
