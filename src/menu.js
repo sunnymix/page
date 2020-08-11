@@ -30,7 +30,7 @@ function Menu() {
         '      position: absolute;',
         '      left: 0px;',
         '      right: 0px;',
-        '      top: 40px;',
+        '      top: 80px;',
         '      bottom: 0px;',
         '    "',
         '  ></div>',
@@ -47,12 +47,17 @@ function Menu() {
     thiz.listener = [];
 }
 
-Menu.prototype.fetchPapers = function () {
+Menu.prototype.fetchPapers = function (query) {
     var thiz = this;
 
-    $.get('/api/papers', function (res) {
+    var _query = isNotNone(query) ? query : '';
+    _query = _query.trim();
+
+    $.get('/api/papers?query=' + _query, function (res) {
         if (isNotNone(res) && isNotEmpty(res.data)) {
             var papers = res.data || [];
+
+            thiz.nodesEle.empty();
 
             for (var i = 0; i < papers.length; i++) {
                 var paper = papers[i];
@@ -87,6 +92,32 @@ Menu.prototype.createActions = function () {
         thiz.trigger('hide');
     });
 
+    // search
+
+    thiz.searchInput = new Input();
+    thiz.searchInput.appendTo(thiz.actionsEle);
+    thiz.searchInput.search(function () {
+        thiz.search();
+    });
+};
+
+Menu.prototype.search = function () {
+    this.throttleSearch();
+};
+
+Menu.prototype.throttleSearch = function () {
+    var thiz = this;
+
+    if (isNone(thiz.throttleSearchFn)) {
+        thiz.throttleSearchFn = throttle(function () {
+            var query = thiz.searchInput.val();
+            if (isNotNone(query)) {
+                thiz.fetchPapers(query);
+            }
+        }, 200);
+    }
+
+    thiz.throttleSearchFn();
 };
 
 Menu.prototype.hide = function () {

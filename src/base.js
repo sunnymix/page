@@ -60,6 +60,10 @@ window.isFunction = function (f) {
     return typeof f === 'function';
 };
 
+window.isNotFunction = function (f) {
+    return !isFunction(f);
+};
+
 window.isUndefined = function (p) {
     return typeof p === 'undefined';
 };
@@ -126,7 +130,7 @@ window.getImgSize = function (src, cb) {
 
     img.on('load', function () {
         if (isFunction(cb)) {
-            cb(img.width() || 0, img .height() || 0);
+            cb(img.width() || 0, img.height() || 0);
         }
     });
 

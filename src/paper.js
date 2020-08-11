@@ -74,10 +74,10 @@ Paper.prototype.throttleSave = function () {
         return;
     }
 
-    if (isNone(this.throttleSaveFn)) {
-        this.throttleSaveFn = throttle(function () {
+    if (isNone(thiz.throttleSaveFn)) {
+        thiz.throttleSaveFn = throttle(function () {
             thiz.saveData(thiz.getData());
-        }, 500);
+        }, 100);
     }
 
     thiz.throttleSaveFn();
