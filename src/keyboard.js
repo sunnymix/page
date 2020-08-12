@@ -32,13 +32,18 @@ window.isEscapeAction = function (e) {
     return e.keyCode === KEYCODE.ESCAPE;
 };
 
+window.isCommand = function (e) {
+    return e.metaKey === true;
+}
+
 window.isCommandOrControl = function (e) {
-    return e.metaKey === true || e.ctrlKey === true;
+    return isCommand(e)
+        || e.ctrlKey === true;
 };
 
 window.isCreatePaperAction = function (e) {
-    return e.keyCode === KEYCODE.I 
-        && isCommandOrControl(e);
+    return e.keyCode === KEYCODE.I
+        && (isCommand(e) && !isOption(e));
 };
 
 window.isShift = function (e) {
