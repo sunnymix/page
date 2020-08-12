@@ -57,6 +57,11 @@ function Paper(p, readonly) {
             e.preventDefault();
             thiz.toolbar.showMenu();
         }
+
+        if (isEscapeAction(e)) {
+            e.preventDefault();
+            thiz.toolbar.hideMenu();
+        }
     });
 
     $(document).on('keyup', 'body', function (e) {

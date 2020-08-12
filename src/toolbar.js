@@ -64,6 +64,10 @@ Toolbar.prototype.showMenu = function () {
     this.menu.show();
 };
 
+Toolbar.prototype.hideMenu = function () {
+    this.menu.hide();
+};
+
 Toolbar.prototype.createMenus = function () {
     var thiz = this;
 
