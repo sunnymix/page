@@ -25,8 +25,8 @@ function Block(p, data, isLock, readonly) {
             '            position: absolute;',
             '            top: 0px;',
             '            bottom: 0px;',
-            '            left: -40px;',
-            '            right: -40px;',
+            '            left: -30px;',
+            '            right: -30px;',
             '            ;',
             '        "></div>',
             '    <div',
@@ -64,7 +64,7 @@ function Block(p, data, isLock, readonly) {
 
     thiz.actionsEle = thiz.ele.find('.block-actions');
 
-    thiz.attachBtn = new Button('img/ellipsis-v-solid.png', null, 26, 20);
+    thiz.attachBtn = new Button('img/ellipsis-v-solid.png', null, 24, 12, 18, null);
     thiz.attachBtn.hide();
     thiz.attachBtn.middle();
     thiz.attachBtn.appendTo(thiz.actionsEle);

@@ -1,10 +1,14 @@
-function Button(icon, content, height, iconHeight) {
+function Button(icon, content, height, width, iconHeight, iconWidth) {
     var thiz = this;
 
     thiz.icon = isNotNone(icon) ? icon : null;
     thiz.content = isNotNone(content) ? $(content) : null;
+
     thiz.height = isNotNone(height) ? height : '40px';
+    thiz.width = isNotNone(width) ? width : (isNotNone(thiz.content) ? "auto" : thiz.height);
+
     thiz.iconHeight = isNotNone(iconHeight) ? iconHeight : '18px';
+    thiz.iconWidth = isNotNone(iconWidth) ? iconWidth : thiz.iconHeight;
 
     thiz.background = '#ffffff';
     thiz.backgroundHover = '#f0f0f0';
@@ -16,7 +20,8 @@ function Button(icon, content, height, iconHeight) {
         '        position: relative;',
         '        display: inline-block;',
         '        border: 0px solid #eeeeee;',
-        '        border-radius: 0px;',
+        '        border-radius: 2px;',
+        '        opacity: 1;',
         '        background-color: ' + thiz.background + ';',
         '    "',
         '>',
@@ -41,8 +46,6 @@ function Button(icon, content, height, iconHeight) {
 Button.prototype.init = function () {
     var thiz = this;
 
-    thiz.width = isNotNone(thiz.content) ? "auto" : thiz.height;
-
     thiz.ele.css({
         width: thiz.width,
         height: thiz.height
@@ -59,7 +62,7 @@ Button.prototype.initIcon = function () {
     if (isNotNone(thiz.icon)) {
         thiz.iconEle.css({
             height: thiz.height,
-            width: thiz.height
+            width: thiz.width
         });
 
         thiz.iconImg = $('<img style="width:0; height:0;">');
@@ -115,10 +118,14 @@ Button.prototype.bindReaction = function () {
     this.ele.on('mouseenter', function (e) {
         thiz.ele.css({
             background: thiz.backgroundHover
+            //boxShadow: '0 0 2px 0 rgba(0, 0, 0, 0.3)'
+            //opacity: 1
         });
     }).on('mouseleave', function (e) {
         thiz.ele.css({
             background: thiz.background
+            //boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)'
+            //opacity: 1
         });
     });
 };

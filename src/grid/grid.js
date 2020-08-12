@@ -20,7 +20,8 @@ function Grid() {
         '                border: 0px solid #bfbfbf;',
         '                border-spacing: 0;',
         '                border-collapse: 0;',
-        '                width: 100%;',
+        '                width: auto;',
+        '                max-width: 100%;',
         '                ;',
         '            "',
         '        >',
@@ -48,7 +49,6 @@ Grid.prototype.loadPlainData = function () {
     var thiz = this;
 
     var data = [
-        '作者,Sunny',
         '更新,202008'
     ].join('\n');
 

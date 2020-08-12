@@ -27,8 +27,8 @@ function Style() {
     this.contentPaddingTop = '3px';
     this.contentPaddingBottom = '3px';
 
-    this.contentPaddingLeft = '0px';
-    this.contentPaddingRight = '0px';
+    this.contentPaddingLeft = '1px';
+    this.contentPaddingRight = '1px';
 }
 
 
@@ -172,8 +172,8 @@ var STYLE_CODE = new Style()
     .setBackgroundColor('#f6f6f6')
     .setPaddingTop('0px')
     .setPaddingBottom('0px')
-    .setContentPaddingTop('2px')
-    .setContentPaddingBottom('2px')
+    .setContentPaddingTop('3px')
+    .setContentPaddingBottom('3px')
     .setContentPaddingLeft('6px')
     .setContentPaddingRight('6px')
     ;
