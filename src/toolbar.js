@@ -60,23 +60,27 @@ Toolbar.prototype.noneFill = function () {
 };
 
 Toolbar.prototype.showMenu = function () {
-    this.fullfill();
-    this.menu.show();
+    var thiz = this;
+
+    thiz.fullfill();
+    thiz.menu.show();
 };
 
 Toolbar.prototype.hideMenu = function () {
-    this.menu.hide();
+    var thiz = this;
+    
+    thiz.noneFill();
+    thiz.menu.hide();
 };
 
 Toolbar.prototype.createMenus = function () {
     var thiz = this;
 
-    this.menu = new Menu();
-    this.menu.appendTo(this.menusEle);
-    this.menu.hide();
-    this.menu.bind('hide', function (menu) {
-        thiz.noneFill();
-        menu.hide();
+    thiz.menu = new Menu();
+    thiz.menu.appendTo(this.menusEle);
+    thiz.menu.hide();
+    thiz.menu.bind('hide', function () {
+        thiz.hideMenu();
     });
 };
 
