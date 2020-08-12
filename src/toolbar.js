@@ -1,6 +1,8 @@
 function Toolbar(paper) {
-    this.paper = paper;
-    this.ele = $([
+    var thiz = this;
+
+    thiz.paper = paper;
+    thiz.ele = $([
         '<div',
         '    class="toolbar"',
         '    style="',
@@ -27,12 +29,45 @@ function Toolbar(paper) {
         '</div>'
     ].join(''));
 
-    this.toolsEle = this.ele.find('.tools');
-    this.menusEle = this.ele.find('.menus');
+    thiz.toolsEle = thiz.ele.find('.tools');
+    thiz.menusEle = thiz.ele.find('.menus');
 
-    this.createTools();
-    this.createMenus();
+    thiz.createTools();
+    thiz.createMenus();
+
+    thiz.init();
 }
+
+Toolbar.prototype.init = function () {
+    var thiz = this;
+    thiz.initEvent();
+};
+
+Toolbar.prototype.initEvent = function () {
+    var thiz = this;
+
+    $(document).on('keydown', 'body', function (e) {
+        if (isSaveAction(e)) {
+            e.preventDefault();
+            thiz.save();
+        }
+
+        if (isShowMenuAction(e)) {
+            e.preventDefault();
+            thiz.showMenu();
+        }
+
+        if (isEscapeAction(e)) {
+            e.preventDefault();
+            thiz.hideMenu();
+        }
+
+        if (isCreatePaperAction(e)) {
+            e.preventDefault();
+            console.log('create paper');
+        }
+    });
+};
 
 Toolbar.prototype.createTools = function () {
     this.createMenuTool();

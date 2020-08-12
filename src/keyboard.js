@@ -10,7 +10,9 @@ var KEYCODE = {
     B: 66,
     C: 67,
     F: 70,
+    N: 78,
     S: 83,
+    T: 84
 };
 
 window.KEYCODE = KEYCODE;
@@ -31,6 +33,10 @@ window.isEscapeAction = function (e) {
 
 window.isCommandOrControl = function (e) {
     return e.metaKey === true || e.ctrlKey === true;
+};
+
+window.isCreatePaperAction = function (e) {
+    return e.keyCode === KEYCODE.N && isCommandOrControl(e);
 };
 
 window.isShift = function (e) {
