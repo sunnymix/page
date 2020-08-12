@@ -47,10 +47,6 @@ Toolbar.prototype.initEvent = function () {
     var thiz = this;
 
     $(document).on('keydown', 'body', function (e) {
-        if (isSaveAction(e)) {
-            e.preventDefault();
-            thiz.save();
-        }
 
         if (isShowMenuAction(e)) {
             e.preventDefault();
@@ -64,7 +60,7 @@ Toolbar.prototype.initEvent = function () {
 
         if (isCreatePaperAction(e)) {
             e.preventDefault();
-            console.log('create paper');
+            thiz.menu.createPaper();
         }
     });
 };

@@ -80,8 +80,7 @@ Menu.prototype.createActions = function () {
     var createBtn = new Button('img/plus-solid.png');
     createBtn.appendTo(thiz.actionsEle);
     createBtn.click(function (e, btn) {
-        window.location.hash = '#' + uuid();
-        window.location.reload();
+        thiz.createPaper();
     });
 
     // hide
@@ -99,6 +98,11 @@ Menu.prototype.createActions = function () {
     thiz.searchInput.search(function () {
         thiz.search();
     });
+};
+
+Menu.prototype.createPaper = function () {
+    window.location.hash = '#' + uuid();
+    window.location.reload();
 };
 
 Menu.prototype.search = function () {

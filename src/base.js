@@ -189,3 +189,56 @@ window.parsePxToNum = function (p) {
 
     return 0;
 };
+
+window.restDefaultData = function () {
+    return {
+        code: 0,
+        msg: null,
+        data: null
+    };
+};
+
+window.restData = function (code, msg, data) {
+    return $.extend(restDefaultData(), {
+        code: code,
+        msg: msg,
+        data: data
+    });
+};
+
+window.rest = function (url, type, data, cb) {
+    if (isNone(url)
+        || isNone(type)
+        || isNotFunction(cb)) {
+        return;
+    }
+
+    var _data = type === 'GET' ? '' : JSON.stringify(data || {});
+
+    $.ajax({
+        url: url,
+        type: type,
+        contentType: 'application/json',
+        dataType: 'json',
+        data: _data,
+        complete: function (xhr, status) {
+            if (isNotNone(status) 
+                && 'success' === status
+                && isNotNone(xhr)
+                && isNotNone(xhr.responseJSON)) {
+                    var resData = $.extend(restDefaultData(), xhr.responseJSON);
+                    cb(resData);
+            } else {
+                cb(restData(1, xhr.responseText || 'server error'));
+            }
+        }
+    });
+};
+
+window.restGet = function (url, cb) {
+    rest(url, 'GET', null, cb);
+};
+
+window.restPost = function (url, data, cb) {
+    rest(url, 'POST', data, cb);
+};

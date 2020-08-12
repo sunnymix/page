@@ -103,12 +103,13 @@ Paper.prototype.getData = function () {
 Paper.prototype.loadData = function () {
     var thiz = this;
 
-    $.get('/api/paper?pid=' + thiz.getPid(), function (res) {
-        // load from db
-        if (isNotNone(res) && isNotNone(res.data)) {
+    var query = 'pid=' + thiz.getPid();
+
+    restGet('/api/paper?' + query, function (res) {
+        if (res.code === 0) {
             thiz.renderData(res.data);
         } else {
-            console.error('cannot load from db');
+            console.error(res.msg || 'server error');
             var paperRaw = localStorage.getItem(thiz.cacheId());
             if (isNotNone(paperRaw)) {
                 var paperObj = JSON.parse(paperRaw);
