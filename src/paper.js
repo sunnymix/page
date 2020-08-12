@@ -52,6 +52,11 @@ function Paper(p, readonly) {
             e.preventDefault();
             thiz.save();
         }
+
+        if (isShowMenuAction(e)) {
+            e.preventDefault();
+            thiz.toolbar.showMenu();
+        }
     });
 
     $(document).on('keyup', 'body', function (e) {
@@ -154,6 +159,8 @@ Paper.prototype.getPid = function () {
 };
 
 Paper.prototype.appendToolbar = function (toolbar) {
-    this.toolbar = toolbar;
-    this.ele.append(this.toolbar.ele);
+    var thiz = this;
+
+    thiz.toolbar = toolbar;
+    thiz.ele.append(thiz.toolbar.ele);
 }
