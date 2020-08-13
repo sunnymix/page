@@ -12,8 +12,8 @@ function Style() {
 
     this.paddingTop = '2px';
     this.paddingBottom = '2px';
-    this.paddingLeft = '60px';
-    this.paddingRight = '60px';
+    this.paddingLeft = '10px';
+    this.paddingRight = '10px';
 
     this.borderBottom = '0px solid transparent';
 
@@ -27,8 +27,8 @@ function Style() {
     this.contentPaddingTop = '3px';
     this.contentPaddingBottom = '3px';
 
-    this.contentPaddingLeft = '1px';
-    this.contentPaddingRight = '1px';
+    this.contentPaddingLeft = '0';
+    this.contentPaddingRight = '0';
 }
 
 
@@ -170,10 +170,6 @@ var STYLE_H3 = new Style()
 var STYLE_CODE = new Style()
     .setFontFamily('"Roboto Mono", Menlo, Monaco')
     .setBackgroundColor('#f6f6f6')
-    .setPaddingTop('0px')
-    .setPaddingBottom('0px')
-    .setContentPaddingTop('3px')
-    .setContentPaddingBottom('3px')
     .setContentPaddingLeft('6px')
     .setContentPaddingRight('6px')
     ;

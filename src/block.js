@@ -25,8 +25,8 @@ function Block(p, data, isLock, readonly) {
             '            position: absolute;',
             '            top: 0px;',
             '            bottom: 0px;',
-            '            left: -30px;',
-            '            right: -30px;',
+            '            left: -24px;',
+            '            right: 0px;',
             '            ;',
             '        "></div>',
             '    <div',
@@ -38,12 +38,12 @@ function Block(p, data, isLock, readonly) {
             '        <div',
             '            class="block-border"',
             '            style="',
-            '                position: absolute;',
-            '                top: 0px;',
-            '                bottom: 0px;',
-            '                left: 0px;',
-            '            "></div>',
-            '        <div class="block-content" ' + (thiz.readonly ? '' : 'contenteditable="true"') + '></div>',
+            '                position: relative;',
+            '                ;',
+            '            "',
+            '        >',
+            '            <div class="block-content" ' + (thiz.readonly ? '' : 'contenteditable="true"') + '></div>',
+            '        </div>',
             '    </div>',
             '    <div',
             '        class="block-attach"',
@@ -61,10 +61,10 @@ function Block(p, data, isLock, readonly) {
     );
 
     thiz.boxEle = thiz.ele.find('.block-box');
-
+    thiz.borderEle = thiz.ele.find('.block-border');
     thiz.actionsEle = thiz.ele.find('.block-actions');
 
-    thiz.attachBtn = new Button('img/ellipsis-v-solid.png', null, 24, 12, 18, null);
+    thiz.attachBtn = new Button('img/ellipsis-v-solid.png', null, 26, 12, 18, null);
     thiz.attachBtn.hide();
     thiz.attachBtn.middle();
     thiz.attachBtn.appendTo(thiz.actionsEle);
@@ -175,6 +175,7 @@ Block.prototype.initActions = function () {
     var thiz = this;
 
     if (thiz.readonly) {
+        thiz.actionsEle.remove();
         return;
     }
 
@@ -205,8 +206,17 @@ Block.prototype.loadStyle = function () {
             paddingLeft: '0px',
             paddingRight: '0px',
             cursor: 'text',
-            backgroundColor: '#ffffff'
+            backgroundColor: style.backgroundColor,
         });
+
+        thiz.borderEle.css({
+            borderBottom: style.borderBottom
+        });
+
+        var contentPaddingLeft = (parsePxToNum(style.paddingLeft)
+            + parsePxToNum(style.contentPaddingLeft)) + 'px';
+        var contentPaddingRight = (parsePxToNum(style.paddingRight)
+            + parsePxToNum(style.contentPaddingRight)) + 'px';
 
         thiz.contentEle.css({
             // do not set fontfamily, will cause some issue
@@ -216,12 +226,12 @@ Block.prototype.loadStyle = function () {
             minHeight: style.minHeight,
             lineHeight: style.lineHeight,
             color: style.color,
-            borderBottom: style.borderBottom,
             paddingTop: style.contentPaddingTop,
             paddingBottom: style.contentPaddingBottom,
-            paddingLeft: style.contentPaddingLeft,
-            paddingRight: style.contentPaddingRight,
-            backgroundColor: style.backgroundColor
+            paddingLeft: contentPaddingLeft,
+            paddingRight: contentPaddingRight,
+            marginLeft: '-' + style.paddingLeft,
+            marginRight: '-' + style.paddingRight
         });
     }
 };

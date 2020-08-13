@@ -19,7 +19,7 @@ function Grid() {
         '            style="',
         '                border: 0px solid #bfbfbf;',
         '                border-spacing: 0;',
-        '                border-collapse: 0;',
+        '                border-collapse: collapse;',
         '                width: auto;',
         '                max-width: 100%;',
         '                ;',
