@@ -20,8 +20,8 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
         '        position: relative;',
         '        display: inline-block;',
         '        border: 0px solid #eeeeee;',
-        '        border-radius: 2px;',
-        '        opacity: 1;',
+        '        border-radius: 0px;',
+        '        opacity: 0.4;',
         '        background-color: ' + thiz.background + ';',
         '    "',
         '>',
@@ -117,15 +117,15 @@ Button.prototype.bindReaction = function () {
 
     this.ele.on('mouseenter', function (e) {
         thiz.ele.css({
-            background: thiz.backgroundHover
-            //boxShadow: '0 0 2px 0 rgba(0, 0, 0, 0.3)'
-            //opacity: 1
+            //background: thiz.backgroundHover,
+            boxShadow: '0 0 2px 0 rgba(0, 0, 0, 0.3)',
+            opacity: 1
         });
     }).on('mouseleave', function (e) {
         thiz.ele.css({
-            background: thiz.background
-            //boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)'
-            //opacity: 1
+            background: thiz.background,
+            boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)',
+            opacity: 0.4
         });
     });
 };

@@ -64,7 +64,7 @@ function Block(p, data, isLock, readonly) {
     thiz.borderEle = thiz.ele.find('.block-border');
     thiz.actionsEle = thiz.ele.find('.block-actions');
 
-    thiz.attachBtn = new Button('img/ellipsis-v-solid.png', null, 26, 12, 18, null);
+    thiz.attachBtn = new Button('img/ellipsis-v-solid.png', null, 22, 12, 18, null);
     thiz.attachBtn.hide();
     thiz.attachBtn.middle();
     thiz.attachBtn.appendTo(thiz.actionsEle);

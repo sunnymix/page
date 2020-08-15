@@ -2,7 +2,8 @@ var ELE_TYPE = {
     PAPER: 'Paper',
     TITLE: 'Title',
     WRITER: 'Writer',
-    BLOCK: 'Block'
+    BLOCK: 'Block',
+    GRID: 'Grid'
 };
 
 window.ELE_TYPE = ELE_TYPE;
@@ -21,4 +22,8 @@ window.isWriter = function(e) {
 
 window.isBlock = function(e) {
     return e && e.type && e.type === ELE_TYPE.BLOCK;
+};
+
+window.isGrid = function(e) {
+    return e && e.type && e.type === ELE_TYPE.GRID;
 };
