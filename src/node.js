@@ -10,7 +10,7 @@ function Node(place, paper) {
     thiz.id = paper.pid;
     thiz.title = paper.title;
 
-    this.ele = $([
+    thiz.ele = $([
         '<div',
         '  class="node"',
         '  style="',
@@ -49,7 +49,9 @@ function Node(place, paper) {
         thiz.trigger('click');
     });
 
-    this.listener = [];
+    thiz.listener = [];
+
+    thiz.active = false;
 }
 
 Node.prototype.bind = function (e, b) {
@@ -61,6 +63,13 @@ Node.prototype.trigger = function (e) {
     if (cb) {
         cb(this);
     }
+};
+
+Node.prototype.setActive = function () {
+    var thiz = this;
+
+    thiz.active = true;
+    thiz.ele.addClass('active');
 };
 
 window.Node = Node;

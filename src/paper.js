@@ -61,7 +61,7 @@ function Paper(p, readonly) {
     this.getPid();
     this.loadData();
 
-    (new Grid()).appendTo(thiz.bodyEle);
+    // (new Grid()).appendTo(thiz.bodyEle);
 }
 
 Paper.prototype.type = ELE_TYPE.PAPER;

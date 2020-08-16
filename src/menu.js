@@ -38,6 +38,7 @@ function Menu() {
     ].join(''));
 
     thiz.nodesEle = thiz.ele.find('.nodes');
+    thiz.nodes = [];
 
     thiz.actionsEle = thiz.ele.find('.actions');
     thiz.createActions();
@@ -58,6 +59,7 @@ Menu.prototype.fetchPapers = function (query) {
             var papers = res.data || [];
 
             thiz.nodesEle.empty();
+            thiz.nodes = [];
 
             for (var i = 0; i < papers.length; i++) {
                 var paper = papers[i];
@@ -67,9 +69,27 @@ Menu.prototype.fetchPapers = function (query) {
                     thiz.trigger('hide');
                 });
                 thiz.nodesEle.append(node.ele);
+                thiz.nodes.push(node);
             }
+
+            thiz.navigate(1);
         }
     });
+};
+
+Menu.prototype.navigate = function (offset) {
+    var thiz = this;
+
+    var index = thiz.nodes.findIndex(function (node) {
+        return node.active === true;
+    });
+
+    var nextIndex = index + offset;
+
+    if (nextIndex >= 0) {
+        var node = thiz.nodes[nextIndex];
+        node.setActive();
+    }
 };
 
 Menu.prototype.createActions = function () {
