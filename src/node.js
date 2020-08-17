@@ -70,6 +70,9 @@ Node.prototype.setActive = function () {
 
     thiz.active = true;
     thiz.ele.addClass('active');
+    thiz.ele.css({
+        backgroundColor: '#f9f9f9'
+    });
 };
 
 window.Node = Node;

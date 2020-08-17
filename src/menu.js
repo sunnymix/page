@@ -115,7 +115,7 @@ Menu.prototype.createActions = function () {
 
     thiz.searchInput = new Input();
     thiz.searchInput.appendTo(thiz.actionsEle);
-    thiz.searchInput.search(function () {
+    thiz.searchInput.onSearch(function () {
         thiz.search();
     });
 };

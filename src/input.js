@@ -65,7 +65,7 @@ Input.prototype.init = function () {
     });
 };
 
-Input.prototype.search = function (cb) {
+Input.prototype.onSearch = function (cb) {
     var thiz = this;
 
     if (isNone(cb) || isNotFunction(cb)) {
