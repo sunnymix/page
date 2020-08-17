@@ -53,3 +53,15 @@ window.isShift = function (e) {
 window.isOption = function (e) {
     return e.altKey === true;
 };
+
+window.isUpKey = function (e) {
+    return e.keyCode === KEYCODE.UP;
+};
+
+window.isDownKey = function (e) {
+    return e.keyCode === KEYCODE.DOWN;
+};
+
+window.isEnterKey = function (e) {
+    return e.keyCode === KEYCODE.ENTER;
+};

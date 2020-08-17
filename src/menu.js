@@ -77,18 +77,61 @@ Menu.prototype.fetchPapers = function (query) {
     });
 };
 
+Menu.prototype.findActiveNodeIndex = function () {
+    var thiz = this;
+
+    return thiz.nodes.findIndex(function (node) {
+        return node.active === true;
+    });
+};
+
+Menu.prototype.findActiveNode = function () {
+    var thiz = this;
+
+    var curIndex = thiz.findActiveNodeIndex();
+
+    if (curIndex >= 0
+        && curIndex < thiz.nodes.length) {
+        return thiz.nodes[curIndex];
+    }
+
+    return null;
+};
+
 Menu.prototype.navigate = function (offset) {
     var thiz = this;
 
-    var index = thiz.nodes.findIndex(function (node) {
-        return node.active === true;
-    });
+    var curIndex = thiz.findActiveNodeIndex();
 
-    var nextIndex = index + offset;
+    var activeIndex = curIndex + offset;
 
-    if (nextIndex >= 0) {
-        var node = thiz.nodes[nextIndex];
-        node.setActive();
+    thiz.activeNode(curIndex, false);
+    thiz.activeNode(activeIndex, true);
+};
+
+Menu.prototype.activeNode = function (index, active) {
+    var thiz = this;
+
+    if (index >= 0
+        && index < thiz.nodes.length) {
+        var node = thiz.nodes[index];
+        if (isNotNone(node)) {
+            if (active) {
+                node.setActive();
+            } else {
+                node.setInactive();
+            }
+        }
+    }
+};
+
+Menu.prototype.openActiveNode = function () {
+    var thiz = this;
+
+    var activeNode = thiz.findActiveNode();
+
+    if (isNotNone(activeNode)) {
+        activeNode.open();
     }
 };
 
@@ -117,6 +160,15 @@ Menu.prototype.createActions = function () {
     thiz.searchInput.appendTo(thiz.actionsEle);
     thiz.searchInput.onSearch(function () {
         thiz.search();
+    });
+    thiz.searchInput.onUp(function () {
+        thiz.navigate(-1);
+    });
+    thiz.searchInput.onDown(function () {
+        thiz.navigate(1);
+    });
+    thiz.searchInput.onEnter(function () {
+        thiz.openActiveNode();
     });
 };
 

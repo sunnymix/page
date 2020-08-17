@@ -62,6 +62,16 @@ Input.prototype.init = function () {
     
     thiz.inputEle.on('keyup', function (e) {
         thiz.trigger('keyup', e);
+
+        if (isUpKey(e)) {
+            thiz.trigger('up', e);
+        } else if (isDownKey(e)) {
+            thiz.trigger('down', e);
+        } else if (isEnterKey(e)) {
+            thiz.trigger('enter');
+        } else {
+            thiz.trigger('search', e);
+        }
     });
 };
 
@@ -72,10 +82,58 @@ Input.prototype.onSearch = function (cb) {
         return;
     }
     
-    thiz.bind('keyup', function (e, input) {
+    thiz.bind('search', function (e, input) {
         var val = input.val();
 
         cb(val);
+    });
+};
+
+Input.prototype.onKeyup = function (cb) {
+    var thiz = this;
+
+    if (isNone(cb) || isNotFunction(cb)) {
+        return;
+    }
+
+    thiz.bind('keyup', function (e, input) {
+        cb(e, input);
+    });
+};
+
+Input.prototype.onUp = function (cb) {
+    var thiz = this;
+
+    if (isNone(cb) || isNotFunction(cb)) {
+        return;
+    }
+
+    thiz.bind('up', function (e, input) {
+        cb(e, input);
+    });
+};
+
+Input.prototype.onDown = function (cb) {
+    var thiz = this;
+
+    if (isNone(cb) || isNotFunction(cb)) {
+        return;
+    }
+
+    thiz.bind('down', function (e, input) {
+        cb(e, input);
+    });
+};
+
+Input.prototype.onEnter = function (cb) {
+    var thiz = this;
+
+    if (isNone(cb) || isNotFunction(cb)) {
+        return;
+    }
+
+    thiz.bind('enter', function (e, input) {
+        cb(e, input);
     });
 };
 

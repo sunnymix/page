@@ -45,7 +45,8 @@ function Node(place, paper) {
         '</div>'
     ].join(''));
 
-    $(document).on('click', '.node-link', function (e) {
+    thiz.linkEle = thiz.ele.find('.node-link');
+    thiz.linkEle.on('click', function (e) {
         thiz.trigger('click');
     });
 
@@ -73,6 +74,24 @@ Node.prototype.setActive = function () {
     thiz.ele.css({
         backgroundColor: '#f9f9f9'
     });
+};
+
+Node.prototype.setInactive = function () {
+    var thiz = this;
+
+    thiz.active = false;
+    thiz.ele.removeClass('active');
+    thiz.ele.css({
+        backgroundColor: '#ffffff'
+    });
+};
+
+Node.prototype.open = function () {
+    var thiz = this;
+    
+    thiz.linkEle.trigger('click');
+
+    window.location.hash = '#' + thiz.id;
 };
 
 window.Node = Node;
