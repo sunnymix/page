@@ -154,7 +154,6 @@ function Block(p, data, isLock, readonly) {
     });
 
     thiz.ele.on('click', function (e) {
-        e.stopPropagation();
         thiz.focus();
     });
 
@@ -203,7 +202,7 @@ Block.prototype.switchToGrid = function () {
 
     thiz.contentEle.prop('contenteditable', false);
 
-    thiz.grid = new Grid();
+    thiz.grid = new Grid(null, null, false, thiz.readonly);
     thiz.grid.appendTo(thiz.contentEle);
 };
 

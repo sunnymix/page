@@ -1,5 +1,7 @@
-function Row(data) {
+function Row(data, readonly) {
     var thiz = this;
+
+    thiz.readonly = isTrue(readonly);
 
     thiz.ele = $([
         '<tr',
@@ -31,7 +33,7 @@ Row.prototype.loadData = function (rowData) {
     for (var cellIndex = 0; cellIndex < cellsData.length; cellIndex++) {
         var cellData = cellsData[cellIndex];
         var cell = thiz.createCell(cellData);
-
+        cell.appendTo(thiz.ele);
         thiz.cells.push(cell);
     }
 };
@@ -39,9 +41,7 @@ Row.prototype.loadData = function (rowData) {
 Row.prototype.createCell = function (cellData) {
     var thiz = this;
 
-    var cell = new Cell(cellData);
-
-    cell.appendTo(thiz.ele);
+    var cell = new Cell(cellData, thiz.readonly);
 
     return cell;
 };
@@ -58,6 +58,13 @@ Row.prototype.getData = function () {
     }
 
     return cellsData;
+};
+
+Row.prototype.addCell = function () {
+    var thiz = this;
+    var cell = thiz.createCell([[]]);
+    cell.appendTo(thiz.ele);
+    thiz.cells.push(cell);
 };
 
 window.Row = Row;

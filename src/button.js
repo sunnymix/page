@@ -2,7 +2,7 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
     var thiz = this;
 
     thiz.icon = isNotNone(icon) ? icon : null;
-    thiz.content = isNotNone(content) ? $(content) : null;
+    thiz.content = isNotNone(content) ? content : null;
 
     thiz.height = isNotNone(height) ? height : '40px';
     thiz.width = isNotNone(width) ? width : (isNotNone(thiz.content) ? "auto" : thiz.height);
@@ -17,6 +17,7 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
         '<button',
         '    class="btn"',
         '    style="',
+        '        padding: 0;',
         '        position: relative;',
         '        display: inline-block;',
         '        border: 0px solid #eeeeee;',
@@ -33,7 +34,12 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
         '            left: 0;',
         '        "',
         '    ></div>',
-        '    <div class="btn-content"></div>',
+        '    <div',
+        '        class="btn-content"',
+        '        style="',
+        '            position: relative;',
+        '        "',
+        '    ></div>',
         '</button>'
     ].join(''));
 
@@ -53,6 +59,8 @@ Button.prototype.init = function () {
 
     thiz.initIcon();
 
+    thiz.initContent();
+
     thiz.bindReaction();
 };
 
@@ -62,7 +70,7 @@ Button.prototype.initIcon = function () {
     if (isNotNone(thiz.icon)) {
         thiz.iconEle.css({
             height: thiz.height,
-            width: thiz.width
+            width: thiz.height
         });
 
         thiz.iconImg = $('<img style="width:0; height:0;">');
@@ -86,6 +94,20 @@ Button.prototype.initIcon = function () {
                 marginTop: marginTop
             });
         });
+    }
+};
+
+Button.prototype.initContent = function () {
+    var thiz = this;
+
+    if (isNotNone(thiz.content)) {
+        thiz.contentEle.html(thiz.content);
+        if (isNotNone(thiz.icon)) {
+            thiz.contentEle.css({
+                paddingLeft: (parsePxToNum(thiz.height) * 0.9) + 'px',
+                paddingRight: (parsePxToNum(thiz.height) * 0.5) + 'px'
+            });
+        }
     }
 };
 

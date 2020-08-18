@@ -20,12 +20,6 @@ Writer.prototype.click = function (e) {
 
 Writer.prototype.focus = function () {
     var thiz = this;
-
-    var blockLength = thiz.blocks.length;
-
-    if (blockLength == 0) {
-        thiz.createBlock();
-    }
 };
 
 Writer.prototype.createBlock = function (place, data) {

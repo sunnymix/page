@@ -5,7 +5,7 @@ function Cell(data, readonly) {
 
     thiz.ele = $([
         '<td',
-        '    class=""',
+        '    class="grid-cell"',
         '    style="',
         '        position: relative;',
         '        border: 1px solid #000000;',
@@ -22,7 +22,34 @@ function Cell(data, readonly) {
     thiz.writer = new Writer(thiz.ele.find('.cell-writer'), thiz.readonly);
 
     thiz.loadData(data);
+
+    thiz.init();
 }
+
+Cell.prototype.init = function () {
+    var thiz = this;
+    thiz.initBind();
+};
+
+Cell.prototype.initBind = function () {
+    var thiz = this;
+
+    thiz.ele.on('click', function () {
+        thiz.setActive();
+    });
+};
+
+Cell.prototype.setActive = function () {
+    var thiz = this;
+
+    var gridEle = thiz.ele.closest('.grid');
+
+    gridEle.find('tr.active').removeClass('active');
+    gridEle.find('td.active').removeClass('active');
+
+    thiz.ele.closest('tr').addClass('active');
+    thiz.ele.closest('td').addClass('active');
+};
 
 Cell.prototype.appendTo = function (place) {
     var thiz = this;
