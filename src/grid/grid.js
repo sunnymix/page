@@ -31,6 +31,8 @@ function Grid() {
     ].join(''));
 
     thiz.tableEle = thiz.ele.find('table');
+    
+    thiz.rows = [];
 
     thiz.loadPlainData();
 }
@@ -63,7 +65,8 @@ Grid.prototype.extractData = function (plainData) {
     if (rowDataList.length > 0) {
         for (var rowIndex = 0; rowIndex < rowDataList.length; rowIndex++) {
             var rowData = rowDataList[rowIndex];
-            thiz.createRow(rowData);
+            var row = thiz.createRow(rowData);
+            thiz.rows.push(row);
         }
     }
 };
@@ -73,12 +76,22 @@ Grid.prototype.createRow = function (rowData) {
 
     var row = new Row(rowData);
     row.appendTo(thiz.tableEle);
+
+    return row;
 };
 
 Grid.prototype.getData = function () {
     var thiz = this;
 
-    return 'grid';
+    var rowsData = [];
+
+    for (var rowIndex = 0; rowIndex < thiz.rows.length; rowIndex++) {
+        var row = thiz.rows[rowIndex];
+        var rowData = row.getData();
+        rowsData.push(rowData);
+    }
+
+    return JSON.stringify(rowsData);
 };
 
 window.Grid = Grid;

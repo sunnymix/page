@@ -7,7 +7,7 @@ function Writer(p, readonly) {
     thiz.cursor = null;
     thiz.blocks = [];
 
-    thiz.ele.on('click', this.thiz);
+    thiz.ele.on('click', thiz.focus);
 
     thiz.focus();
 };

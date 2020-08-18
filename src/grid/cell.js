@@ -47,4 +47,10 @@ Cell.prototype.renderData = function (content) {
     thiz.writer.setData(content);
 };
 
+Cell.prototype.getData = function () {
+    var thiz = this;
+
+    return thiz.writer.getData();
+};
+
 window.Cell = Cell;
