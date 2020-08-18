@@ -26,7 +26,7 @@ function Block(p, data, isLock, readonly) {
             '            top: 0px;',
             '            bottom: 0px;',
             '            left: -24px;',
-            '            right: 0px;',
+            '            right: -24px;',
             '            ;',
             '        "></div>',
             '    <div',

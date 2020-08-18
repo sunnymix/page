@@ -10,7 +10,7 @@ function Cell(data, readonly) {
         '        position: relative;',
         '        border: 1px solid #000000;',
         '        border-width: 1px;',
-        '        padding: 0px 10px;',
+        '        padding: 0px 24px;',
         //'        min-width: 100px;',
         '        ;',
         '    "',
