@@ -109,7 +109,7 @@ Paper.prototype.loadData = function () {
         if (res.code === 0) {
             thiz.renderData(res.data);
         } else {
-            console.error(res.msg || 'server error');
+            alert(res.msg || 'server error');
             var paperRaw = localStorage.getItem(thiz.cacheId());
             if (isNotNone(paperRaw)) {
                 var paperObj = JSON.parse(paperRaw);
@@ -130,13 +130,15 @@ Paper.prototype.renderData = function (paperObj) {
 
 Paper.prototype.saveData = function (data) {
     if (isNotNone(data)) {
-        var dataRaw = JSON.stringify(data);
-
-        $.post('/api/paper', dataRaw, function (res) {
-            // save to db
+        restPost('/api/paper', data, function (res) {
+            if (res.code === 0) {
+                // todo: success flush
+            } else {
+                alert(res.msg || 'server error');
+            }
         });
 
-        localStorage.setItem(this.cacheId(), dataRaw);
+        localStorage.setItem(this.cacheId(), data);
     }
 };
 
