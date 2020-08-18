@@ -75,4 +75,10 @@ Grid.prototype.createRow = function (rowData) {
     row.appendTo(thiz.tableEle);
 };
 
+Grid.prototype.getData = function () {
+    var thiz = this;
+
+    return 'grid';
+};
+
 window.Grid = Grid;

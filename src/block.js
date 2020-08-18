@@ -194,6 +194,18 @@ Block.prototype.switchToGrid = function () {
     thiz.grid.appendTo(thiz.contentEle);
 };
 
+Block.prototype.getGridData = function () {
+    var thiz = this;
+
+    var data = '';
+
+    if (isNotNone(thiz.grid)) {
+        data = thiz.grid.getData();
+    }
+
+    return data;
+};
+
 Block.prototype.initActions = function () {
     var thiz = this;
 
@@ -298,13 +310,29 @@ Block.prototype.setData = function (content) {
 };
 
 Block.prototype.getData = function () {
+    var thiz = this;
+
     var defaultData = this.defaultData();
 
     return $.extend({}, defaultData, {
         schema: this.schema,
-        text: this.contentEle.text(),
+        text: thiz.getContentData(),
         attach: this.getAttachData()
     });
+};
+
+Block.prototype.getContentData = function () {
+    var thiz = this;
+    
+    var data = '';
+
+    if (thiz.schema === SCHEMA.GRID) {
+        data = thiz.getGridData();
+    } else {
+        data = thiz.contentEle.text();
+    }
+
+    return data;
 };
 
 Block.prototype.defaultData = function () {
