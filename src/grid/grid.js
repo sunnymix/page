@@ -63,13 +63,13 @@ Grid.prototype.createActions = function () {
 
     // Rows:
 
-    var addRowBtn = new Button('img/plus-circle-solid.png', 'row', 22, 'auto', 18, 18);
+    var addRowBtn = new Button('img/plus-circle-solid.png', 'row', 22, 'auto', 14, 14);
     addRowBtn.appendTo(thiz.actionsEle);
     addRowBtn.click(function () {
         thiz.addRow();
     });
 
-    var removeRowBtn = new Button('img/times-circle-solid.png', 'row', 22, 'auto', 18, 18);
+    var removeRowBtn = new Button('img/times-circle-solid.png', 'row', 22, 'auto', 14, 14);
     removeRowBtn.appendTo(thiz.actionsEle);
     removeRowBtn.click(function () {
         thiz.removeRow();
@@ -77,13 +77,13 @@ Grid.prototype.createActions = function () {
 
     // Row Moves:
 
-    var moveUpBtn = new Button('img/chevron-circle-up-solid.png', 'up', 22, 'auto', 18, 18);
+    var moveUpBtn = new Button('img/chevron-circle-up-solid.png', 'up', 22, 'auto', 14, 14);
     moveUpBtn.appendTo(thiz.actionsEle);
     moveUpBtn.click(function () {
         thiz.moveUp();
     });
 
-    var moveDownBtn = new Button('img/chevron-circle-down-solid.png', 'down', 22, 'auto', 18, 18);
+    var moveDownBtn = new Button('img/chevron-circle-down-solid.png', 'down', 22, 'auto', 14, 14);
     moveDownBtn.appendTo(thiz.actionsEle);
     moveDownBtn.click(function () {
         thiz.moveDown();
@@ -91,13 +91,13 @@ Grid.prototype.createActions = function () {
 
     // Columns:
 
-    var addColumnBtn = new Button('img/plus-circle-solid.png', 'col', 22, 'auto', 18, 18);
+    var addColumnBtn = new Button('img/plus-circle-solid.png', 'col', 22, 'auto', 14, 14);
     addColumnBtn.appendTo(thiz.actionsEle);
     addColumnBtn.click(function () {
         thiz.addColumn();
     });
 
-    var removeColumnBtn = new Button('img/times-circle-solid.png', 'col', 22, 'auto', 18, 18);
+    var removeColumnBtn = new Button('img/times-circle-solid.png', 'col', 22, 'auto', 14, 14);
     removeColumnBtn.appendTo(thiz.actionsEle);
     removeColumnBtn.click(function () {
         thiz.removeColumn();
@@ -105,13 +105,13 @@ Grid.prototype.createActions = function () {
 
     // Column Moves:
 
-    var moveLeftBtn = new Button('img/chevron-circle-left-solid.png', 'left', 22, 'auto', 18, 18);
+    var moveLeftBtn = new Button('img/chevron-circle-left-solid.png', 'left', 22, 'auto', 14, 14);
     moveLeftBtn.appendTo(thiz.actionsEle);
     moveLeftBtn.click(function () {
         thiz.moveLeft();
     });
 
-    var moveRightBtn = new Button('img/chevron-circle-right-solid.png', 'right', 22, 'auto', 18, 18);
+    var moveRightBtn = new Button('img/chevron-circle-right-solid.png', 'right', 22, 'auto', 14, 14);
     moveRightBtn.appendTo(thiz.actionsEle);
     moveRightBtn.click(function () {
         thiz.moveRight();
