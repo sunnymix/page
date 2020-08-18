@@ -191,6 +191,7 @@ Block.prototype.setSchema = function (schema) {
 
         if (schema === SCHEMA.GRID) {
             thiz.switchToGrid();
+            thiz.setData('[]');
         }
     }
 };

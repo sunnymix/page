@@ -33,8 +33,6 @@ function Grid() {
     thiz.tableEle = thiz.ele.find('table');
 
     thiz.rows = [];
-
-    thiz.loadPlainData();
 }
 
 Grid.prototype.appendTo = function (place) {
@@ -45,30 +43,6 @@ Grid.prototype.appendTo = function (place) {
 Grid.prototype.prependTo = function (place) {
     var thiz = this;
     place.prepend(thiz.ele);
-};
-
-Grid.prototype.loadPlainData = function () {
-    var thiz = this;
-
-    var data = [
-        ','
-    ].join('\n');
-
-    thiz.extractData(data);
-};
-
-Grid.prototype.extractData = function (plainData) {
-    var thiz = this;
-
-    var rowDataList = plainData.split('\n');
-    rowDataList = rowDataList.filter(isNotBlank);
-    if (rowDataList.length > 0) {
-        for (var rowIndex = 0; rowIndex < rowDataList.length; rowIndex++) {
-            var rowData = rowDataList[rowIndex];
-            var row = thiz.createRow(rowData);
-            thiz.rows.push(row);
-        }
-    }
 };
 
 Grid.prototype.createRow = function (rowData) {
@@ -97,28 +71,38 @@ Grid.prototype.getData = function () {
 Grid.prototype.setData = function (content) {
     var thiz = this;
     var rowsData = thiz.extractJsonString(content);
-    console.log(rowsData);
+    thiz.renderData(rowsData);
 };
 
 Grid.prototype.extractJsonString = function (jsonString) {
     var rowsData = [];
 
-    if (isNotEmpty(jsonString)) {
-        try {
-            var obj = JSON.parse(jsonString);
-            if (isArray(obj)) {
-                rowsData = obj;
-            }
-        } catch (error) {
-            console.error(error);
+    jsonString = (isNone(jsonString) || isEmpty(jsonString)) ? '[]' : jsonString;
+
+    try {
+        var obj = JSON.parse(jsonString);
+        if (isArray(obj)) {
+            rowsData = obj;
         }
+    } catch (error) {
+        console.error(error);
     }
 
     return rowsData;
 };
 
-Grid.prototype.renderData = function (rows) {
+Grid.prototype.renderData = function (rowsData) {
     var thiz = this;
+
+    thiz.tableEle.empty();
+
+    rowsData = (isNone(rowsData) || isEmpty(rowsData)) ? [[]] : rowsData;
+
+    for (var rowIndex = 0; rowIndex < rowsData.length; rowIndex++) {
+        var rowData = rowsData[rowIndex];
+        var row = thiz.createRow(rowData);
+        thiz.rows.push(row);
+    }
 };
 
 window.Grid = Grid;

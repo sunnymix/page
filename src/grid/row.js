@@ -24,12 +24,12 @@ Row.prototype.appendTo = function (place) {
 Row.prototype.loadData = function (rowData) {
     var thiz = this;
 
-    var cellDataList = rowData.split(',');
-
     thiz.cells = [];
 
-    for (var cellIndex = 0; cellIndex < cellDataList.length; cellIndex++) {
-        var cellData = cellDataList[cellIndex];
+    var cellsData = isEmpty(rowData) ? [[]] : rowData;
+
+    for (var cellIndex = 0; cellIndex < cellsData.length; cellIndex++) {
+        var cellData = cellsData[cellIndex];
         var cell = thiz.createCell(cellData);
 
         thiz.cells.push(cell);

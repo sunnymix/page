@@ -36,14 +36,13 @@ Cell.prototype.loadData = function (data) {
         return;
     }
 
-    // fixme extract data
+    var fixDataToArray = isArray(data) ? data : [data];
 
-    thiz.renderData([data]);
+    thiz.renderData(fixDataToArray);
 };
 
 Cell.prototype.renderData = function (content) {
     var thiz = this;
-
     thiz.writer.setData(content);
 };
 
