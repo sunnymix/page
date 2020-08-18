@@ -10,7 +10,7 @@ function Cell(data, readonly) {
         '        position: relative;',
         '        border: 1px solid #000000;',
         '        border-width: 1px;',
-        '        padding: 0px 24px;',
+        '        padding: 0px 25px;',
         //'        min-width: 100px;',
         '        ;',
         '    "',
@@ -29,6 +29,11 @@ function Cell(data, readonly) {
 Cell.prototype.init = function () {
     var thiz = this;
     thiz.initBind();
+};
+
+Cell.prototype.focus = function () {
+    var thiz = this;
+    thiz.writer.focus();
 };
 
 Cell.prototype.initBind = function () {
@@ -59,13 +64,15 @@ Cell.prototype.appendTo = function (place) {
 Cell.prototype.loadData = function (data) {
     var thiz = this;
 
-    if (isNone(data)) {
-        return;
+    data = isNone(data) ? [] : data;
+
+    data = isArray(data) ? data : [data];
+
+    if (isEmpty(data)) {
+        data.push({});
     }
 
-    var fixDataToArray = isArray(data) ? data : [data];
-
-    thiz.renderData(fixDataToArray);
+    thiz.renderData(data);
 };
 
 Cell.prototype.renderData = function (content) {
@@ -75,8 +82,12 @@ Cell.prototype.renderData = function (content) {
 
 Cell.prototype.getData = function () {
     var thiz = this;
-
     return thiz.writer.getData();
+};
+
+Cell.prototype.remove = function () {
+    var thiz = this;
+    thiz.ele.remove();
 };
 
 window.Cell = Cell;

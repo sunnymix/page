@@ -67,4 +67,35 @@ Row.prototype.addCell = function () {
     thiz.cells.push(cell);
 };
 
+Row.prototype.removeCell = function () {
+    var thiz = this;
+    if (thiz.cells.length > 0) {
+        var cell = thiz.cells[thiz.cells.length - 1];
+        cell.remove();
+        thiz.cells = thiz.cells.slice(0, thiz.cells.length - 1);
+    }
+};
+
+Row.prototype.moveSiblingCells = function (fromIndex, toIndex) {
+    var thiz = this;
+    if (isNotEmpty(thiz.cells)) {
+        if (isContainsRange(thiz.cells.length, fromIndex, toIndex)) {
+            if (Math.abs(fromIndex - toIndex) === 1) {
+                var fromCell = thiz.cells[fromIndex];
+                var toCell = thiz.cells[toIndex];
+
+                thiz.cells[fromIndex] = toCell;
+                thiz.cells[toIndex] = fromCell;
+
+                toCell.ele.after(fromCell.ele);
+            }
+        }
+    }
+};
+
+Row.prototype.remove = function () {
+    var thiz = this;
+    thiz.ele.remove();
+};
+
 window.Row = Row;

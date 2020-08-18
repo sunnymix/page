@@ -109,7 +109,7 @@ window.isString = function (p) {
 };
 
 window.isNumber = function (p) {
-    return typeof p === 'number';  
+    return typeof p === 'number';
 };
 
 window.isArray = function (p) {
@@ -200,6 +200,20 @@ window.parsePxToNum = function (p) {
     return 0;
 };
 
+window.findEleIndex = function (p) {
+    var index = -1;
+    var ele = $(p);
+    if (isNotEmpty(ele)) {
+        index = ele.index();
+    }
+    return index;
+};
+
+window.isContainsRange = function (length, fromIndex, toIndex) {
+    return fromIndex >= 0 && fromIndex < length
+        && toIndex >= 0 && toIndex < length;
+};
+
 window.restDefaultData = function () {
     return {
         code: 0,
@@ -232,12 +246,12 @@ window.rest = function (url, type, data, cb) {
         dataType: 'json',
         data: _data,
         complete: function (xhr, status) {
-            if (isNotNone(status) 
+            if (isNotNone(status)
                 && 'success' === status
                 && isNotNone(xhr)
                 && isNotNone(xhr.responseJSON)) {
-                    var resData = $.extend(restDefaultData(), xhr.responseJSON);
-                    cb(resData);
+                var resData = $.extend(restDefaultData(), xhr.responseJSON);
+                cb(resData);
             } else {
                 cb(restData(1, xhr.responseText || 'server error'));
             }

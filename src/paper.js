@@ -44,7 +44,7 @@ function Paper(p, readonly) {
     thiz.writer = new Writer(thiz.ele.find('.paper-writer'), thiz.readonly);
 
     thiz.ele.on('click', function (e) {
-        thiz.click();
+        thiz.onClick();
     });
 
     $(document).on('keydown', 'body', function (e) {
@@ -66,8 +66,8 @@ function Paper(p, readonly) {
 
 Paper.prototype.type = ELE_TYPE.PAPER;
 
-Paper.prototype.click = function () {
-    this.writer.focus();
+Paper.prototype.onClick = function () {
+    
 };
 
 Paper.prototype.throttleSave = function () {

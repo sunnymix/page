@@ -22,7 +22,7 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
         '        display: inline-block;',
         '        border: 0px solid #eeeeee;',
         '        border-radius: 0px;',
-        '        opacity: 0.4;',
+        '        opacity: 0.6;',
         '        background-color: ' + thiz.background + ';',
         '    "',
         '>',
@@ -104,8 +104,8 @@ Button.prototype.initContent = function () {
         thiz.contentEle.html(thiz.content);
         if (isNotNone(thiz.icon)) {
             thiz.contentEle.css({
-                paddingLeft: (parsePxToNum(thiz.height) * 0.9) + 'px',
-                paddingRight: (parsePxToNum(thiz.height) * 0.5) + 'px'
+                paddingLeft: (parsePxToNum(thiz.height) * 1) + 'px',
+                paddingRight: (parsePxToNum(thiz.height) * 0.2) + 'px'
             });
         }
     }
@@ -147,20 +147,18 @@ Button.prototype.bindReaction = function () {
         thiz.ele.css({
             background: thiz.background,
             boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)',
-            opacity: 0.4
+            opacity: 0.6
         });
     });
 };
 
 Button.prototype.show = function () {
     var thiz = this;
-
     thiz.ele.show();
 };
 
 Button.prototype.hide = function () {
     var thiz = this;
-
     thiz.ele.hide();
 };
 

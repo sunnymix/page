@@ -63,30 +63,58 @@ Grid.prototype.createActions = function () {
 
     // Rows:
 
-    var addRowBtn = new Button('img/plus-circle-solid.png', 'row', 22, 'auto', 16, 16);
+    var addRowBtn = new Button('img/plus-circle-solid.png', 'row', 22, 'auto', 18, 18);
     addRowBtn.appendTo(thiz.actionsEle);
     addRowBtn.click(function () {
         thiz.addRow();
     });
 
-    var removeRowBtn = new Button('img/minus-circle-solid.png', 'row', 22, 'auto', 16, 16);
+    var removeRowBtn = new Button('img/times-circle-solid.png', 'row', 22, 'auto', 18, 18);
     removeRowBtn.appendTo(thiz.actionsEle);
     removeRowBtn.click(function () {
         thiz.removeRow();
     });
 
+    // Row Moves:
+
+    var moveUpBtn = new Button('img/chevron-circle-up-solid.png', 'up', 22, 'auto', 18, 18);
+    moveUpBtn.appendTo(thiz.actionsEle);
+    moveUpBtn.click(function () {
+        thiz.moveUp();
+    });
+
+    var moveDownBtn = new Button('img/chevron-circle-down-solid.png', 'down', 22, 'auto', 18, 18);
+    moveDownBtn.appendTo(thiz.actionsEle);
+    moveDownBtn.click(function () {
+        thiz.moveDown();
+    });
+
     // Columns:
 
-    var addColumnBtn = new Button('img/plus-circle-solid.png', 'col', 22, 'auto', 16, 16);
+    var addColumnBtn = new Button('img/plus-circle-solid.png', 'col', 22, 'auto', 18, 18);
     addColumnBtn.appendTo(thiz.actionsEle);
     addColumnBtn.click(function () {
         thiz.addColumn();
     });
 
-    var removeColumnBtn = new Button('img/minus-circle-solid.png', 'col', 22, 'auto', 16, 16);
+    var removeColumnBtn = new Button('img/times-circle-solid.png', 'col', 22, 'auto', 18, 18);
     removeColumnBtn.appendTo(thiz.actionsEle);
     removeColumnBtn.click(function () {
         thiz.removeColumn();
+    });
+
+    // Column Moves:
+
+    var moveLeftBtn = new Button('img/chevron-circle-left-solid.png', 'left', 22, 'auto', 18, 18);
+    moveLeftBtn.appendTo(thiz.actionsEle);
+    moveLeftBtn.click(function () {
+        thiz.moveLeft();
+    });
+
+    var moveRightBtn = new Button('img/chevron-circle-right-solid.png', 'right', 22, 'auto', 18, 18);
+    moveRightBtn.appendTo(thiz.actionsEle);
+    moveRightBtn.click(function () {
+        thiz.moveRight();
     });
 };
 
@@ -161,25 +189,15 @@ Grid.prototype.renderData = function (rowsData) {
 };
 
 Grid.prototype.findActiveRowIndex = function () {
-    var thiz = this;
-
-    var index = -1;
-
-    var rowEle = thiz.ele.find('tr.active');
-    if (isNotNone(rowEle)) {
-        index = rowEle.index();
-    }
-
-    return index;
+    return findEleIndex('tr.active');
 };
 
 Grid.prototype.findActiveColumnIndex = function () {
-    var thiz = this;
+    return findEleIndex('td.active');
 };
 
 Grid.prototype.addRow = function () {
     var thiz = this;
-    var activeRowIndex = thiz.findActiveRowIndex();
 
     var rowCells = [];
     if (thiz.rows.length > 0) {
@@ -195,11 +213,19 @@ Grid.prototype.addRow = function () {
     row.appendTo(thiz.tableEle);
 
     thiz.rows.push(row);
+
+    thiz.reactiveCell();
 };
 
 Grid.prototype.removeRow = function () {
     var thiz = this;
-    console.log('todo: removeRow');
+    if (thiz.rows.length > 0) {
+        var row = thiz.rows[thiz.rows.length - 1];
+        row.remove();
+        thiz.rows = thiz.rows.slice(0, thiz.rows.length - 1);
+    }
+
+    thiz.reactiveCell();
 };
 
 Grid.prototype.addColumn = function () {
@@ -210,11 +236,94 @@ Grid.prototype.addColumn = function () {
         row.addCell();
     }
 
+    thiz.reactiveCell();
 };
 
 Grid.prototype.removeColumn = function () {
     var thiz = this;
-    console.log('todo: removeColumn');
+    for (var rowIndex = 0; rowIndex < thiz.rows.length; rowIndex++) {
+        var row = thiz.rows[rowIndex];
+        row.removeCell();
+    }
+
+    thiz.reactiveCell();
+};
+
+Grid.prototype.moveUp = function () {
+    var thiz = this;
+    var activeIndex = thiz.findActiveRowIndex();
+    var previousIndex = activeIndex - 1;
+
+    if (previousIndex >= 0) {
+        var row = thiz.rows[activeIndex];
+        var previousRow = thiz.rows[previousIndex];
+
+        if (isNotNone(row) && isNotNone(previousRow)) {
+            this.rows[activeIndex] = previousRow;
+            this.rows[previousIndex] = row;
+
+            row.ele.after(previousRow.ele);
+        }
+    }
+
+    thiz.reactiveCell();
+};
+
+Grid.prototype.moveDown = function () {
+    var thiz = this;
+    var activeIndex = thiz.findActiveRowIndex();
+    var downIndex = activeIndex + 1;
+
+    if (downIndex < thiz.rows.length) {
+        var row = thiz.rows[activeIndex];
+        var downRow = thiz.rows[downIndex];
+
+        if (isNotNone(row) && isNotNone(downRow)) {
+            this.rows[activeIndex] = downRow;
+            this.rows[downIndex] = row;
+
+            downRow.ele.after(row.ele);
+        }
+    }
+
+    thiz.reactiveCell();
+};
+
+Grid.prototype.moveLeft = function () {
+    var thiz = this;
+    var activeIndex = thiz.findActiveColumnIndex();
+
+    for (var rowIndex = 0; rowIndex < thiz.rows.length; rowIndex++) {
+        var row = thiz.rows[rowIndex];
+        row.moveSiblingCells(activeIndex - 1, activeIndex);
+    }
+
+    thiz.reactiveCell();
+};
+
+Grid.prototype.moveRight = function () {
+    var thiz = this;
+    var activeIndex = thiz.findActiveColumnIndex();
+
+    for (var rowIndex = 0; rowIndex < thiz.rows.length; rowIndex++) {
+        var row = thiz.rows[rowIndex];
+        row.moveSiblingCells(activeIndex, activeIndex + 1);
+    }
+
+    thiz.reactiveCell();
+};
+
+Grid.prototype.reactiveCell = function () {
+    var thiz = this;
+    var activeRowIndex = thiz.findActiveRowIndex();
+    var activeColumnIndex = thiz.findActiveColumnIndex();
+    if (activeRowIndex >= 0 && activeRowIndex < thiz.rows.length) {
+        var row = thiz.rows[activeRowIndex];
+        if (activeColumnIndex >= 0 && activeColumnIndex < row.cells.length) {
+            var cell = row.cells[activeColumnIndex];
+            cell.focus();
+        }
+    }
 };
 
 window.Grid = Grid;

@@ -14,12 +14,16 @@ function Writer(p, readonly) {
 
 Writer.prototype.type = ELE_TYPE.WRITER;
 
-Writer.prototype.click = function (e) {
-    e.preventDefault();
-};
-
 Writer.prototype.focus = function () {
     var thiz = this;
+
+    if (isNotEmpty(thiz.blocks)) {
+        thiz.blocks[0].focus();
+    } else {
+        if (isFunction(thiz.createBlock)) {
+            thiz.createBlock();
+        }
+    }
 };
 
 Writer.prototype.createBlock = function (place, data) {
