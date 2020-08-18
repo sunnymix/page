@@ -108,6 +108,16 @@ window.isString = function (p) {
     return typeof p === 'string';
 };
 
+window.isNumber = function (p) {
+    return typeof p === 'number';  
+};
+
+window.isArray = function (p) {
+    return isNotNone(p)
+        && isNumber(p.length)
+        && isFunction(p.push)
+};
+
 $(document).on('paste', '[contenteditable]', function (event) {
     event.preventDefault();
     document.execCommand('inserttext', false, window.event.clipboardData.getData('text'));

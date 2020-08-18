@@ -144,6 +144,13 @@ function Block(p, data, isLock, readonly) {
             e.stopPropagation();
             thiz.moveDown();
         }
+
+        if (e.keyCode == KEYCODE.BACKSPACE
+            && isCommandOrControl(e)
+            && isShift(e)) {
+            e.preventDefault();
+            thiz.remove();
+        }
     });
 
     thiz.ele.on('click', function (e) {
@@ -157,6 +164,11 @@ function Block(p, data, isLock, readonly) {
 };
 
 Block.prototype.type = ELE_TYPE.BLOCK;
+
+Block.prototype.remove = function () {
+    var thiz = this;
+    thiz.ele.remove();
+};
 
 Block.prototype.appendTo = function (place) {
     this.ele.appendTo(place);
@@ -189,7 +201,7 @@ Block.prototype.switchToGrid = function () {
     thiz.contentEle.empty();
 
     thiz.contentEle.prop('contenteditable', false);
-    
+
     thiz.grid = new Grid();
     thiz.grid.appendTo(thiz.contentEle);
 };
@@ -306,24 +318,40 @@ Block.prototype.remove = function () {
 };
 
 Block.prototype.setData = function (content) {
-    this.contentEle.text(content);
+    var thiz = this;
+
+    if (thiz.schema === SCHEMA.GRID) {
+        thiz.setGridData(content);
+    } else {
+        thiz.contentEle.text(content);
+    }
+};
+
+Block.prototype.setGridData = function (content) {
+    var thiz = this;
+
+    if (isNone(thiz.grid)) {
+        thiz.switchToGrid();
+    }
+
+    thiz.grid.setData(content);
 };
 
 Block.prototype.getData = function () {
     var thiz = this;
 
-    var defaultData = this.defaultData();
+    var defaultData = thiz.defaultData();
 
     return $.extend({}, defaultData, {
-        schema: this.schema,
+        schema: thiz.schema,
         text: thiz.getContentData(),
-        attach: this.getAttachData()
+        attach: thiz.getAttachData()
     });
 };
 
 Block.prototype.getContentData = function () {
     var thiz = this;
-    
+
     var data = '';
 
     if (thiz.schema === SCHEMA.GRID) {

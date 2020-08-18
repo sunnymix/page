@@ -31,7 +31,7 @@ function Grid() {
     ].join(''));
 
     thiz.tableEle = thiz.ele.find('table');
-    
+
     thiz.rows = [];
 
     thiz.loadPlainData();
@@ -92,6 +92,33 @@ Grid.prototype.getData = function () {
     }
 
     return JSON.stringify(rowsData);
+};
+
+Grid.prototype.setData = function (content) {
+    var thiz = this;
+    var rowsData = thiz.extractJsonString(content);
+    console.log(rowsData);
+};
+
+Grid.prototype.extractJsonString = function (jsonString) {
+    var rowsData = [];
+
+    if (isNotEmpty(jsonString)) {
+        try {
+            var obj = JSON.parse(jsonString);
+            if (isArray(obj)) {
+                rowsData = obj;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    return rowsData;
+};
+
+Grid.prototype.renderData = function (rows) {
+    var thiz = this;
 };
 
 window.Grid = Grid;
