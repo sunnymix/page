@@ -127,6 +127,12 @@ function Block(p, data, isLock, readonly) {
             thiz.setSchema(SCHEMA.CODE);
         }
 
+        if (e.keyCode == KEYCODE.G && isCommandOrControl(e) && isShift(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            thiz.setSchema(SCHEMA.GRID);
+        }
+
         if (e.keyCode == KEYCODE.UP && isOption(e)) {
             e.preventDefault();
             e.stopPropagation();
@@ -161,14 +167,31 @@ Block.prototype.replaceTo = function (place) {
 };
 
 Block.prototype.setSchema = function (schema) {
-    if (this.isLock) {
+    var thiz = this;
+
+    if (thiz.isLock) {
         return;
     }
 
     if (isNotEmpty(schema)) {
-        this.schema = schema;
-        this.loadStyle();
+        thiz.schema = schema;
+        thiz.loadStyle();
+
+        if (schema === SCHEMA.GRID) {
+            thiz.switchToGrid();
+        }
     }
+};
+
+Block.prototype.switchToGrid = function () {
+    var thiz = this;
+
+    thiz.contentEle.empty();
+
+    thiz.contentEle.prop('contenteditable', false);
+    
+    thiz.grid = new Grid();
+    thiz.grid.appendTo(thiz.contentEle);
 };
 
 Block.prototype.initActions = function () {

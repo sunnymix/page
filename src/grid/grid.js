@@ -49,7 +49,7 @@ Grid.prototype.loadPlainData = function () {
     var thiz = this;
 
     var data = [
-        '更新,202008'
+        ','
     ].join('\n');
 
     thiz.extractData(data);
