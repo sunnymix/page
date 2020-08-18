@@ -70,7 +70,7 @@ Button.prototype.initIcon = function () {
     if (isNotNone(thiz.icon)) {
         thiz.iconEle.css({
             height: thiz.height,
-            width: thiz.height
+            width: thiz.height > thiz.width ? thiz.width : thiz.height
         });
 
         thiz.iconImg = $('<img style="width:0; height:0;">');

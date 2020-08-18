@@ -14,6 +14,7 @@ function Grid(place, data, lock, readonly) {
         '        class="grid-box"',
         '        style="',
         '            position: relative;',
+        '            overflow-x: auto;',
         '        "',
         '    >',
         '        <table',
@@ -62,13 +63,13 @@ Grid.prototype.createActions = function () {
 
     // Rows:
 
-    var addRowBtn = new Button('img/plus-solid.png', 'row', 22, 'auto', 11, 11);
+    var addRowBtn = new Button('img/plus-circle-solid.png', 'row', 22, 'auto', 16, 16);
     addRowBtn.appendTo(thiz.actionsEle);
     addRowBtn.click(function () {
         thiz.addRow();
     });
 
-    var removeRowBtn = new Button('img/times-solid.png', 'row', 22, 'auto', 11, 11);
+    var removeRowBtn = new Button('img/minus-circle-solid.png', 'row', 22, 'auto', 16, 16);
     removeRowBtn.appendTo(thiz.actionsEle);
     removeRowBtn.click(function () {
         thiz.removeRow();
@@ -76,13 +77,13 @@ Grid.prototype.createActions = function () {
 
     // Columns:
 
-    var addColumnBtn = new Button('img/plus-solid.png', 'col', 22, 'auto', 11, 11);
+    var addColumnBtn = new Button('img/plus-circle-solid.png', 'col', 22, 'auto', 16, 16);
     addColumnBtn.appendTo(thiz.actionsEle);
     addColumnBtn.click(function () {
         thiz.addColumn();
     });
 
-    var removeColumnBtn = new Button('img/times-solid.png', 'col', 22, 'auto', 11, 11);
+    var removeColumnBtn = new Button('img/minus-circle-solid.png', 'col', 22, 'auto', 16, 16);
     removeColumnBtn.appendTo(thiz.actionsEle);
     removeColumnBtn.click(function () {
         thiz.removeColumn();
