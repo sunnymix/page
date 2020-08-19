@@ -42,6 +42,35 @@ function Block(p, data, isLock, readonly) {
             '                ;',
             '            "',
             '        >',
+            '            <div',
+            '                class="block-task"',
+            '                style="',
+            '                    position: absolute;',
+            '                    display: none;',
+            '                    left: 0;',
+            '                    top: 50%;',
+            '                    margin-top: -7px;',
+            '                    width: 10px;',
+            '                    height: 10px;',
+            '                    border: 1px solid #000000;',
+            '                    cursor: pointer;',
+            '                "',
+            '            >',
+            '                <div',
+            '                    class="block-task-ok"',
+            '                    style="',
+            '                        position: absolute;',
+            '                        display: none;',
+            '                        left: 1px;',
+            '                        top: 2px;',
+            '                        border-left: 1px solid #000000;',
+            '                        border-bottom: 1px solid #000000;',
+            '                        width: 7px;',
+            '                        height: 3px;',
+            '                        transform: rotate(-50deg);',
+            '                    "',
+            '                ></div>',
+            '            </div>',
             '            <div class="block-content" ' + (thiz.readonly ? '' : 'contenteditable="true"') + '></div>',
             '        </div>',
             '    </div>',
@@ -63,6 +92,9 @@ function Block(p, data, isLock, readonly) {
     thiz.boxEle = thiz.ele.find('.block-box');
     thiz.borderEle = thiz.ele.find('.block-border');
     thiz.actionsEle = thiz.ele.find('.block-actions');
+    thiz.taskEle = thiz.ele.find('.block-task');
+    thiz.taskOkEle = thiz.ele.find('.block-task-ok');
+    thiz.setCheck(dataObj.check);
 
     thiz.attachBtn = new Button('img/ellipsis-v-solid.png', null, 22, 12, 18, null);
     thiz.attachBtn.hide();
@@ -73,6 +105,7 @@ function Block(p, data, isLock, readonly) {
     thiz.setAttach(dataObj.attach);
 
     thiz.initActions();
+    thiz.initTask();
 
     thiz.contentEle = thiz.ele.find('.block-content');
 
@@ -130,6 +163,14 @@ function Block(p, data, isLock, readonly) {
             e.preventDefault();
             e.stopPropagation();
             thiz.setSchema(SCHEMA.GRID);
+        }
+
+        if (e.keyCode == KEYCODE.A
+            && isCommandOrControl(e)
+            && isShift(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            thiz.setSchema(SCHEMA.TASK);
         }
 
         if (e.keyCode == KEYCODE.UP) {
@@ -245,6 +286,17 @@ Block.prototype.initActions = function () {
     });
 };
 
+Block.prototype.initTask = function () {
+    var thiz = this;
+    thiz.taskEle.on('mouseenter', function (e) {
+        // todo
+    }).on('mouseleave', function (e) {
+        // todo
+    }).on('click', function (e) {
+        thiz.taskOkEle.toggle();
+    });
+};
+
 Block.prototype.loadStyle = function () {
     var thiz = this;
 
@@ -268,9 +320,17 @@ Block.prototype.loadStyle = function () {
         });
 
         var contentPaddingLeft = (parsePxToNum(style.paddingLeft)
-            + parsePxToNum(style.contentPaddingLeft)) + 'px';
+            + parsePxToNum(style.contentPaddingLeft));
+
         var contentPaddingRight = (parsePxToNum(style.paddingRight)
-            + parsePxToNum(style.contentPaddingRight)) + 'px';
+            + parsePxToNum(style.contentPaddingRight));
+
+        if (thiz.isTask()) {
+            contentPaddingLeft += 20;
+            thiz.taskEle.show();
+        } else {
+            thiz.taskEle.hide();
+        }
 
         thiz.contentEle.css({
             // do not set fontfamily, will cause some issue
@@ -282,8 +342,8 @@ Block.prototype.loadStyle = function () {
             color: style.color,
             paddingTop: style.contentPaddingTop,
             paddingBottom: style.contentPaddingBottom,
-            paddingLeft: contentPaddingLeft,
-            paddingRight: contentPaddingRight,
+            paddingLeft: contentPaddingLeft + 'px',
+            paddingRight: contentPaddingRight + 'px',
             marginLeft: '-' + style.paddingLeft,
             marginRight: '-' + style.paddingRight
         });
@@ -366,7 +426,8 @@ Block.prototype.getData = function () {
     return $.extend({}, defaultData, {
         schema: thiz.schema,
         text: thiz.getContentData(),
-        attach: thiz.getAttachData()
+        attach: thiz.getAttachData(),
+        check: thiz.getCheckData()
     });
 };
 
@@ -384,13 +445,35 @@ Block.prototype.getContentData = function () {
     return data;
 };
 
+Block.prototype.getCheckData = function () {
+    return this.isCheck() ? 1 : 0;
+};
+
+Block.prototype.isCheck = function () {
+    var thiz = this;
+    return thiz.isTask()
+        && thiz.taskOkEle.is(":visible");
+};
+
+Block.prototype.setCheck = function (check) {
+    var thiz = this;
+    if (thiz.isTask()) {
+        if (+check > 0) {
+            thiz.taskOkEle.show();
+        } else {
+            thiz.taskOkEle.hide();
+        }
+    }
+};
+
 Block.prototype.defaultData = function () {
     return {
         schema: SCHEMA.TEXT,
         text: '',
-        attach: ''
+        attach: '',
+        check: 0
     };
-}
+};
 
 Block.prototype.extractData = function (data) {
     var defaultData = this.defaultData();
@@ -429,6 +512,10 @@ Block.prototype.getAttachData = function () {
         return this.attach.getUrl();
     }
     return "";
+};
+
+Block.prototype.isTask = function () {
+    return this.schema === SCHEMA.TASK;
 };
 
 window.Block = Block;

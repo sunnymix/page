@@ -4,7 +4,8 @@ var SCHEMA = {
     H2: 'H2',
     H3: 'H3',
     CODE: 'Code',
-    GRID: 'Grid'
+    GRID: 'Grid',
+    TASK: 'Task'
 };
 
 window.SCHEMA= SCHEMA;

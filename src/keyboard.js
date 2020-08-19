@@ -7,6 +7,7 @@ var KEYCODE = {
     NUM1: 49,
     NUM2: 50,
     NUM3: 51,
+    A: 65,
     B: 66,
     C: 67,
     E: 69,
