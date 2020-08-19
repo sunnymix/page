@@ -60,6 +60,14 @@ Writer.prototype.createBlock = function (place, data) {
         thiz.movedownBlock(block);
     });
 
+    newBlock.bind('jumpup', function (block) {
+        thiz.jumpupBlock(block);
+    });
+
+    newBlock.bind('jumpdown', function (block) {
+        thiz.jumpdownBlock(block);
+    });
+
     thiz.addBlock(newBlock, previousBlock);
 
     return newBlock;
@@ -131,6 +139,26 @@ Writer.prototype.movedownBlock = function (block) {
         var movedBlock = this.createBlock(downBlock, block.getData());
         this.removeBlock(block, false);
         movedBlock.focus();
+    }
+};
+
+Writer.prototype.jumpupBlock = function (block) {
+    var thiz = this;
+    var curIdx = thiz.getBlockIndex(block.id);
+    var toIdx = curIdx - 1;
+    if (toIdx >= 0) {
+        var upBlock = thiz.blocks[toIdx];
+        upBlock.focus();
+    }
+};
+
+Writer.prototype.jumpdownBlock = function (block) {
+    var thiz = this;
+    var curIdx = thiz.getBlockIndex(block.id);
+    var toIdx = curIdx + 1;
+    if (toIdx < thiz.blocks.length) {
+        var downBlock = thiz.blocks[toIdx];
+        downBlock.focus();
     }
 };
 

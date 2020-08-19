@@ -79,7 +79,6 @@ function Block(p, data, isLock, readonly) {
     thiz.loadStyle();
     thiz.setData(dataObj.text);
 
-
     thiz.ele.on('blur', function (e) {
         thiz.blur();
     });
@@ -133,16 +132,24 @@ function Block(p, data, isLock, readonly) {
             thiz.setSchema(SCHEMA.GRID);
         }
 
-        if (e.keyCode == KEYCODE.UP && isOption(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            thiz.moveUp();
+        if (e.keyCode == KEYCODE.UP) {
+            if (isOption(e)) {
+                e.preventDefault();
+                e.stopPropagation();
+                thiz.moveUp();
+            } else {
+                thiz.jumpUp();
+            }
         }
 
-        if (e.keyCode == KEYCODE.DOWN && isOption(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            thiz.moveDown();
+        if (e.keyCode == KEYCODE.DOWN) {
+            if (isOption(e)) {
+                e.preventDefault();
+                e.stopPropagation();
+                thiz.moveDown();
+            } else {
+                thiz.jumpDown();
+            }
         }
 
         if (e.keyCode == KEYCODE.BACKSPACE
@@ -311,6 +318,20 @@ Block.prototype.moveUp = function () {
 
 Block.prototype.moveDown = function () {
     this.trigger('movedown');
+};
+
+Block.prototype.jumpUp = function () {
+    var thiz = this;
+    if (getCaretPosition(thiz.contentEle[0]) <= 0) {
+        this.trigger('jumpup');
+    }
+};
+
+Block.prototype.jumpDown = function () {
+    var thiz = this;
+    if (getCaretPosition(thiz.contentEle[0]) >= thiz.contentEle.text().length) {
+        this.trigger('jumpdown');
+    }
 };
 
 Block.prototype.remove = function () {
