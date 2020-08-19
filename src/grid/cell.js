@@ -11,6 +11,7 @@ function Cell(data, readonly) {
         '        border: 1px solid #000000;',
         '        border-width: 1px;',
         '        padding: 0px 25px;',
+        '        vertical-align: middle;',
         //'        min-width: 100px;',
         '        ;',
         '    "',

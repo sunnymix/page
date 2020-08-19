@@ -24,7 +24,7 @@ function Grid(place, data, lock, readonly) {
         '                border-spacing: 0;',
         '                border-collapse: collapse;',
         '                width: auto;',
-        '                max-width: 100%;',
+        //'                max-width: 100%;',
         '                ;',
         '            "',
         '        >',

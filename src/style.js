@@ -1,6 +1,7 @@
 
 function Style() {
-    this.wordBreak = 'break-all';
+    this.wordWrap = 'break-word';
+    this.wordBreak = 'normal';
     this.position = 'relative';
 
     this.fontFamily = '"PingFang SC", Aria';
@@ -27,8 +28,8 @@ function Style() {
     this.contentPaddingTop = '3px';
     this.contentPaddingBottom = '3px';
 
-    this.contentPaddingLeft = '0';
-    this.contentPaddingRight = '0';
+    this.contentPaddingLeft = '0px';
+    this.contentPaddingRight = '0px';
 }
 
 
@@ -121,6 +122,7 @@ Style.prototype.setContentPaddingRight = function (contentPaddingRight) {
 
 Style.prototype.toString = function () {
     return [
+        'word-wrap: ' + this.wordWrap,
         'word-break: ' + this.wordBreak,
         'position: ' + this.position,
         'font-family: ' + this.fontFamily,
@@ -169,9 +171,9 @@ var STYLE_H3 = new Style()
 
 var STYLE_CODE = new Style()
     .setFontFamily('"Roboto Mono", Menlo, Monaco')
-    .setBackgroundColor('#f6f6f6')
-    .setContentPaddingLeft('6px')
-    .setContentPaddingRight('6px')
+    .setBackgroundColor('#f3f3f3')
+    .setContentPaddingLeft('10px')
+    .setContentPaddingRight('10px')
     ;
 
 
