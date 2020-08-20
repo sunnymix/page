@@ -225,7 +225,7 @@ window.resetCss = function () {
         '    line-height: 1;',
         '    font-family: "PingFang SC", Aria;',
         '    font-size: 12px;',
-        '    background-color: #E9E9E9;',
+        '    background-color: #ffffff;',
         '}',
         'ol, ul {',
         '    list-style: none;',
