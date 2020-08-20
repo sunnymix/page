@@ -165,9 +165,8 @@ function Block(p, data, isLock, readonly) {
             thiz.setSchema(SCHEMA.GRID);
         }
 
-        if (e.keyCode == KEYCODE.A
-            && isCommandOrControl(e)
-            && isShift(e)) {
+        if (e.keyCode == KEYCODE.K
+            && isCommandOrControl(e)) {
             e.preventDefault();
             e.stopPropagation();
             thiz.setSchema(SCHEMA.TASK);
