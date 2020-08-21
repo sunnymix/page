@@ -3,7 +3,8 @@ function Paper(p, readonly, fullscreen) {
     thiz.readonly = isTrue(readonly);
     thiz.fullscreen = isTrue(fullscreen);
     thiz.paddingHorizontal = Style.Paper.paddingX;
-    thiz.maxWidth = thiz.fullscreen ? '100%' : '800px';
+    thiz.paddingVertical = Style.Paper.paddingY;
+    thiz.maxWidth = thiz.fullscreen ? '100%' : '820px';
 
     this.ele = $(
         [
@@ -16,7 +17,7 @@ function Paper(p, readonly, fullscreen) {
             '        margin: 0 auto;',
             '        position: relative;',
             '        background-color: #ffffff;',
-            //'        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);',
+            '        box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.8);',
             '    "',
             '>',
             '    <div',
@@ -24,7 +25,7 @@ function Paper(p, readonly, fullscreen) {
             '        style="',
             '            border: 0px solid #d0d0d0;',
             '            border-radius: 0px;',
-            '            padding: 40px ' + thiz.paddingHorizontal +';',
+            '            padding: ' + thiz.paddingVertical + ' ' + thiz.paddingHorizontal +';',
             '            min-height: 800px;',
             '            background-color: #ffffff;',
             '        "',

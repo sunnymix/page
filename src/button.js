@@ -11,7 +11,7 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
     thiz.iconWidth = isNotNone(iconWidth) ? iconWidth : thiz.iconHeight;
 
     thiz.background = '#ffffff';
-    thiz.backgroundHover = '#f0f0f0';
+    thiz.backgroundHover = '#f8f8f8';
 
     thiz.ele = $([
         '<button',
@@ -21,7 +21,7 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
         '        position: relative;',
         '        display: inline-block;',
         '        border: 1px solid transparent;',
-        '        border-radius: 0px;',
+        '        border-radius: 1px;',
         '        opacity: 1;',
         '        background-color: ' + thiz.background + ';',
         '    "',
@@ -139,14 +139,14 @@ Button.prototype.bindReaction = function () {
 
     this.ele.on('mouseenter', function (e) {
         thiz.ele.css({
-            //background: thiz.backgroundHover,
+            background: thiz.backgroundHover,
             //boxShadow: '0 0 2px 0 rgba(0, 0, 0, 0.3)',
             //opacity: 1
             borderColor: '#dddddd'
         });
     }).on('mouseleave', function (e) {
         thiz.ele.css({
-            //background: thiz.background,
+            background: thiz.background,
             //boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)',
             //opacity: 1
             borderColor: 'transparent'

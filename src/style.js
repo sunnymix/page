@@ -144,7 +144,8 @@ Style.prototype.toString = function () {
 // static variable
 
 Style.Paper = {
-    paddingX: '40px'
+    paddingX: '90px',
+    paddingY: '100px'
 };
 
 var STYLE_TEXT = new Style();
@@ -154,14 +155,16 @@ var STYLE_H1 = new Style()
     .setFontSize('15px')
     .setMinHeight('26px')
     .setLineHeight('26px')
-    .setBorderBottom('2px');
+    //.setBorderBottom('2px')
+    ;
 
 var STYLE_H2 = new Style()
     .setFontWeight('bold')
     .setFontSize('14px')
     .setMinHeight('24px')
     .setLineHeight('24px')
-    .setBorderBottom('1px');
+    //.setBorderBottom('1px')
+    ;
 
 var STYLE_H3 = new Style()
     .setFontWeight('bold')
@@ -225,7 +228,7 @@ window.resetCss = function () {
         '    line-height: 1;',
         '    font-family: "PingFang SC", Aria;',
         '    font-size: 12px;',
-        '    background-color: #ffffff;',
+        '    background-color: #484C4F;',
         '}',
         'ol, ul {',
         '    list-style: none;',
