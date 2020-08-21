@@ -23,6 +23,7 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
         '        border: 1px solid transparent;',
         '        border-radius: 1px;',
         '        opacity: 1;',
+        '        cursor: pointer;',
         '        background-color: ' + thiz.background + ';',
         '    "',
         '>',

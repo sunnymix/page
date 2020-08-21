@@ -17,7 +17,7 @@ function Paper(p, readonly, fullscreen) {
             '        margin: 0 auto;',
             '        position: relative;',
             '        background-color: #ffffff;',
-            '        box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.8);',
+            //'        box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.99);',
             '    "',
             '>',
             '    <div',

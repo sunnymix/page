@@ -144,8 +144,8 @@ Style.prototype.toString = function () {
 // static variable
 
 Style.Paper = {
-    paddingX: '90px',
-    paddingY: '100px'
+    paddingX: '40px',
+    paddingY: '40px'
 };
 
 var STYLE_TEXT = new Style();
@@ -228,7 +228,7 @@ window.resetCss = function () {
         '    line-height: 1;',
         '    font-family: "PingFang SC", Aria;',
         '    font-size: 12px;',
-        '    background-color: #484C4F;',
+        '    background-color: #ffffff;',
         '}',
         'ol, ul {',
         '    list-style: none;',
