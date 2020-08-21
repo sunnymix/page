@@ -102,6 +102,27 @@ Toolbar.prototype.hideMenu = function () {
     thiz.menu.hide();
 };
 
+Toolbar.prototype.readonly = function () {
+    var thiz = this;
+    thiz.hideMenu();
+
+    var readonly = isNotNone(getSearchParam('read'));
+    var fullscreen = isNotNone(getSearchParam('fullscreen'));
+    readonly = !readonly;
+
+    var params = [];
+    if (readonly) {
+        params.push('read');
+    }
+    if (fullscreen) {
+        params.push('fullscreen');
+    }
+
+    var newPath = '/?' + params.join('&') + location.hash;
+
+    location.href = newPath;
+};
+
 Toolbar.prototype.fullScreen = function () {
     var thiz = this;
     thiz.hideMenu();
@@ -131,6 +152,9 @@ Toolbar.prototype.createMenus = function () {
     thiz.menu.hide();
     thiz.menu.bind('hide', function () {
         thiz.hideMenu();
+    });
+    thiz.menu.bind('readonly', function () {
+        thiz.readonly();
     });
     thiz.menu.bind('fullscreen', function () {
         thiz.fullScreen();

@@ -138,6 +138,14 @@ Menu.prototype.openActiveNode = function () {
 Menu.prototype.createActions = function () {
     var thiz = this;
 
+    // readonly
+
+    var readonlyBtn = new Button('img/eye-solid.png');
+    readonlyBtn.appendTo(thiz.actionsEle);
+    readonlyBtn.click(function (e, btn) {
+        thiz.trigger('readonly');
+    });
+
     // full screen
 
     var fullScreenBtn = new Button('img/compress-solid.png');
