@@ -118,10 +118,10 @@ window.isArray = function (p) {
         && isFunction(p.push)
 };
 
-$(document).on('paste', '[contenteditable]', function (event) {
-    event.preventDefault();
-    document.execCommand('inserttext', false, window.event.clipboardData.getData('text'));
-});
+// $(document).on('paste', '[contenteditable]', function (event) {
+//     event.preventDefault();
+//     document.execCommand('inserttext', false, window.event.clipboardData.getData('text'));
+// });
 
 window.getSearchParam = function (name) {
     const urlParams = new URLSearchParams(window.location.search);

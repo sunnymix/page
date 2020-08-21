@@ -105,6 +105,7 @@ Toolbar.prototype.hideMenu = function () {
 Toolbar.prototype.fullScreen = function () {
     var thiz = this;
     thiz.paper.fullScreen();
+    thiz.hideMenu();
 };
 
 Toolbar.prototype.createMenus = function () {
