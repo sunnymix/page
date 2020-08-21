@@ -22,7 +22,7 @@ function Paper(p, readonly) {
             '    <div',
             '        class="paper-box"',
             '        style="',
-            '            border: 1px solid #d0d0d0;',
+            '            border: 0px solid #d0d0d0;',
             '            border-radius: 0px;',
             '            padding: 40px ' + thiz.paddingHorizontal +';',
             '            min-height: 800px;',
