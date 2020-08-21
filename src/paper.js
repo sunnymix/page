@@ -124,6 +124,7 @@ Paper.prototype.renderData = function (paperObj) {
     var thiz = this;
 
     if (isNotNone(paperObj)) {
+        document.title = paperObj.title;
         thiz.title.setData(paperObj.title);
         thiz.writer.setData(paperObj.content);
     }
