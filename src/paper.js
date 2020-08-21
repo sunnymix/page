@@ -1,11 +1,9 @@
-function Paper(p, readonly) {
+function Paper(p, readonly, fullscreen) {
     var thiz = this;
-
     thiz.readonly = isTrue(readonly);
-
+    thiz.fullscreen = isTrue(fullscreen);
     thiz.paddingHorizontal = Style.Paper.paddingX;
-
-    thiz.maxWidth = '700px';
+    thiz.maxWidth = thiz.fullscreen ? '100%' : '700px';
 
     this.ele = $(
         [
@@ -162,19 +160,4 @@ Paper.prototype.appendToolbar = function (toolbar) {
     var thiz = this;
     thiz.toolbar = toolbar;
     thiz.ele.append(thiz.toolbar.ele);
-};
-
-Paper.prototype.fullScreen = function () {
-    var thiz = this;
-    if (thiz.ele.hasClass('fullscreen')) {
-        thiz.ele.removeClass('fullscreen');
-        thiz.ele.css({
-            maxWidth: thiz.maxWidth
-        });
-    } else {
-        thiz.ele.addClass('fullscreen');
-        thiz.ele.css({
-            maxWidth: '100%'
-        });
-    }
 };

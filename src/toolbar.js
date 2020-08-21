@@ -104,8 +104,23 @@ Toolbar.prototype.hideMenu = function () {
 
 Toolbar.prototype.fullScreen = function () {
     var thiz = this;
-    thiz.paper.fullScreen();
     thiz.hideMenu();
+
+    var readonly = isNotNone(getSearchParam('read'));
+    var fullscreen = isNotNone(getSearchParam('fullscreen'));
+    fullscreen = !fullscreen;
+
+    var params = [];
+    if (readonly) {
+        params.push('read');
+    }
+    if (fullscreen) {
+        params.push('fullscreen');
+    }
+
+    var newPath = '/?' + params.join('&') + location.hash;
+
+    location.href = newPath;
 };
 
 Toolbar.prototype.createMenus = function () {

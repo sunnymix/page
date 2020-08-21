@@ -3,7 +3,9 @@ jQuery(function () {
 
     var readonly = isNotNone(getSearchParam('read'));
 
-    var paper = new Paper('.paper', readonly);
+    var fullscreen = isNotNone(getSearchParam('fullscreen'));
+
+    var paper = new Paper('.paper', readonly, fullscreen);
 
     var toolbar = new Toolbar(paper);
 
