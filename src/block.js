@@ -1,4 +1,4 @@
-function Block(p, data, isLock, readonly) {
+function Block(p, data, isLock, readonly, context) {
     var thiz = this;
 
     thiz.id = uuid();
@@ -10,6 +10,7 @@ function Block(p, data, isLock, readonly) {
     thiz.isLock = isTrue(isLock);
 
     thiz.readonly = isTrue(readonly);
+    thiz.context = isNotNone(context) ? context : SCHEMA.PAPER;
 
     thiz.ele = $(
         [
@@ -334,6 +335,7 @@ Block.prototype.loadStyle = function () {
         thiz.contentEle.css({
             // do not set fontfamily, will cause some issue
             wordBreak: style.wordBreak,
+            wordWrap: style.wordWrap,
             fontWeight: style.fontWeight,
             fontSize: style.fontSize,
             minHeight: style.minHeight,
@@ -346,6 +348,13 @@ Block.prototype.loadStyle = function () {
             marginLeft: '-' + style.paddingLeft,
             marginRight: '-' + style.paddingRight
         });
+
+        if (thiz.isGridContext()) {
+            thiz.contentEle.css({
+                wordBreak: "keep-all",
+                wordWrap: 'normal'
+            });
+        }
     }
 };
 
@@ -515,6 +524,10 @@ Block.prototype.getAttachData = function () {
 
 Block.prototype.isTask = function () {
     return this.schema === SCHEMA.TASK;
+};
+
+Block.prototype.isGridContext = function () {
+    return this.context === SCHEMA.GRID;
 };
 
 window.Block = Block;

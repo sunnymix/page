@@ -20,7 +20,7 @@ function Cell(data, readonly) {
         '</td>'
     ].join(''));
 
-    thiz.writer = new Writer(thiz.ele.find('.cell-writer'), thiz.readonly);
+    thiz.writer = new Writer(thiz.ele.find('.cell-writer'), thiz.readonly, SCHEMA.GRID);
 
     thiz.loadData(data);
 

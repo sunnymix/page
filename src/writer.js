@@ -1,7 +1,8 @@
-function Writer(p, readonly) {
+function Writer(p, readonly, context) {
     var thiz = this;
 
     thiz.readonly = isTrue(readonly);
+    thiz.context = isNotNone(context) ? context : SCHEMA.PAPER;
 
     thiz.ele = $(p);
     thiz.cursor = null;
@@ -41,7 +42,7 @@ Writer.prototype.createBlock = function (place, data) {
 
     var isLock = false;
 
-    var newBlock = new Block(tmp, data, isLock, thiz.readonly);
+    var newBlock = new Block(tmp, data, isLock, thiz.readonly, thiz.context);
 
     newBlock.bind('enter', function (block) {
         var nextBlock = thiz.createBlock(block);

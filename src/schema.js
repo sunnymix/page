@@ -1,4 +1,5 @@
 var SCHEMA = {
+    PAPER: 'Paper',
     TEXT: 'Text',
     H1: 'H1',
     H2: 'H2',
