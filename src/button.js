@@ -20,7 +20,7 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
         '        padding: 0;',
         '        position: relative;',
         '        display: inline-block;',
-        '        border: 0px solid #eeeeee;',
+        '        border: 1px solid transparent;',
         '        border-radius: 0px;',
         '        opacity: 1;',
         '        background-color: ' + thiz.background + ';',
@@ -83,8 +83,8 @@ Button.prototype.initIcon = function () {
 
             thiz.iconImg.height(iconHeight).width(iconWidth);
 
-            var marginTop = '-' + (iconHeight * 0.5) + 'px';
-            var marginLeft = '-' + (iconWidth * 0.5) + 'px';
+            var marginTop = '-' + (iconHeight * 0.5 + 1) + 'px';
+            var marginLeft = '-' + (iconWidth * 0.5 + 1) + 'px';
 
             thiz.iconImg.css({
                 position: 'absolute',
@@ -140,14 +140,16 @@ Button.prototype.bindReaction = function () {
     this.ele.on('mouseenter', function (e) {
         thiz.ele.css({
             //background: thiz.backgroundHover,
-            boxShadow: '0 0 2px 0 rgba(0, 0, 0, 0.3)',
-            opacity: 1
+            //boxShadow: '0 0 2px 0 rgba(0, 0, 0, 0.3)',
+            //opacity: 1
+            borderColor: '#dddddd'
         });
     }).on('mouseleave', function (e) {
         thiz.ele.css({
-            background: thiz.background,
-            boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)',
-            opacity: 1
+            //background: thiz.background,
+            //boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)',
+            //opacity: 1
+            borderColor: 'transparent'
         });
     });
 };

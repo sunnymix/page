@@ -3,7 +3,7 @@ function Paper(p, readonly, fullscreen) {
     thiz.readonly = isTrue(readonly);
     thiz.fullscreen = isTrue(fullscreen);
     thiz.paddingHorizontal = Style.Paper.paddingX;
-    thiz.maxWidth = thiz.fullscreen ? '100%' : '700px';
+    thiz.maxWidth = thiz.fullscreen ? '100%' : '800px';
 
     this.ele = $(
         [
