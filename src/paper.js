@@ -5,12 +5,14 @@ function Paper(p, readonly) {
 
     thiz.paddingHorizontal = Style.Paper.paddingX;
 
+    thiz.maxWidth = '700px';
+
     this.ele = $(
         [
             '<div',
             '    class="paper"',
             '    style="',
-            '        max-width: 700px;',
+            '        max-width: ' + thiz.maxWidth +';',
             '        border: 0px solid #f9f9f9;',
             '        border-radius: 0px;',
             '        margin: 0 auto;',
@@ -158,7 +160,21 @@ Paper.prototype.getPid = function () {
 
 Paper.prototype.appendToolbar = function (toolbar) {
     var thiz = this;
-
     thiz.toolbar = toolbar;
     thiz.ele.append(thiz.toolbar.ele);
-}
+};
+
+Paper.prototype.fullScreen = function () {
+    var thiz = this;
+    if (thiz.ele.hasClass('fullscreen')) {
+        thiz.ele.removeClass('fullscreen');
+        thiz.ele.css({
+            maxWidth: thiz.maxWidth
+        });
+    } else {
+        thiz.ele.addClass('fullscreen');
+        thiz.ele.css({
+            maxWidth: '100%'
+        });
+    }
+};

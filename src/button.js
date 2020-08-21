@@ -22,7 +22,7 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
         '        display: inline-block;',
         '        border: 0px solid #eeeeee;',
         '        border-radius: 0px;',
-        '        opacity: 0.6;',
+        '        opacity: 1;',
         '        background-color: ' + thiz.background + ';',
         '    "',
         '>',
@@ -147,7 +147,7 @@ Button.prototype.bindReaction = function () {
         thiz.ele.css({
             background: thiz.background,
             boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)',
-            opacity: 0.6
+            opacity: 1
         });
     });
 };

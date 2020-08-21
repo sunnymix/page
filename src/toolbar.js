@@ -92,16 +92,19 @@ Toolbar.prototype.noneFill = function () {
 
 Toolbar.prototype.showMenu = function () {
     var thiz = this;
-
     thiz.fullfill();
     thiz.menu.show();
 };
 
 Toolbar.prototype.hideMenu = function () {
     var thiz = this;
-    
     thiz.noneFill();
     thiz.menu.hide();
+};
+
+Toolbar.prototype.fullScreen = function () {
+    var thiz = this;
+    thiz.paper.fullScreen();
 };
 
 Toolbar.prototype.createMenus = function () {
@@ -112,6 +115,9 @@ Toolbar.prototype.createMenus = function () {
     thiz.menu.hide();
     thiz.menu.bind('hide', function () {
         thiz.hideMenu();
+    });
+    thiz.menu.bind('fullscreen', function () {
+        thiz.fullScreen();
     });
 };
 

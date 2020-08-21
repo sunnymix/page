@@ -138,6 +138,14 @@ Menu.prototype.openActiveNode = function () {
 Menu.prototype.createActions = function () {
     var thiz = this;
 
+    // full screen
+
+    var fullScreenBtn = new Button('img/compress-solid.png');
+    fullScreenBtn.appendTo(thiz.actionsEle);
+    fullScreenBtn.click(function (e, btn) {
+        thiz.trigger('fullscreen');
+    });
+
     // create
 
     var createBtn = new Button('img/plus-solid.png');
