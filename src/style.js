@@ -171,7 +171,7 @@ var STYLE_H3 = new Style()
 
 var STYLE_CODE = new Style()
     .setFontFamily('"Roboto Mono", Menlo, Monaco')
-    .setBackgroundColor('#f3f3f3')
+    .setBackgroundColor('#f6f6f6')
     .setContentPaddingLeft('10px')
     .setContentPaddingRight('10px')
     ;
