@@ -130,11 +130,14 @@ Paper.prototype.renderData = function (paperObj) {
     }
 }
 
-Paper.prototype.saveData = function (data) {
+Paper.prototype.saveData = function (data, cb) {
     if (isNotNone(data)) {
         restPost('/api/paper', data, function (res) {
             if (res.code === 0) {
                 // todo: success flush
+                if (isFunction(cb)) {
+                    cb();
+                }
             } else {
                 alert(res.msg || 'server error');
             }
@@ -162,4 +165,15 @@ Paper.prototype.appendToolbar = function (toolbar) {
     var thiz = this;
     thiz.toolbar = toolbar;
     thiz.ele.append(thiz.toolbar.ele);
+};
+
+Paper.prototype.clone = function () {
+    var thiz = this;
+    var newPid = uuid();
+    var data = thiz.getData();
+    data.pid = newPid;
+    data.title += '-Copy';
+    thiz.saveData(data, function () {
+        window.location.hash = '#' + data.pid;
+    });
 };

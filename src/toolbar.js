@@ -144,12 +144,18 @@ Toolbar.prototype.fullScreen = function () {
     location.href = newPath;
 };
 
+Toolbar.prototype.clonePaper = function () {
+    var thiz = this;
+    thiz.paper.clone();
+    thiz.hideMenu();
+};
+
 Toolbar.prototype.createMenus = function () {
     var thiz = this;
 
     thiz.menu = new Menu();
     thiz.menu.appendTo(this.menusEle);
-    thiz.menu.hide();
+    thiz.hideMenu();
     thiz.menu.bind('hide', function () {
         thiz.hideMenu();
     });
@@ -158,6 +164,9 @@ Toolbar.prototype.createMenus = function () {
     });
     thiz.menu.bind('fullscreen', function () {
         thiz.fullScreen();
+    });
+    thiz.menu.bind('clone', function () {
+        thiz.clonePaper();
     });
 };
 
