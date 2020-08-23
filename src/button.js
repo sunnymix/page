@@ -20,7 +20,7 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
         '        padding: 0;',
         '        position: relative;',
         '        display: inline-block;',
-        '        border: 1px solid transparent;',
+        '        border: 1px solid #ffffff;',
         '        border-radius: 0px;',
         '        opacity: 1;',
         '        cursor: pointer;',
