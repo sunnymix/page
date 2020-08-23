@@ -156,7 +156,7 @@ Menu.prototype.createActions = function () {
 
     // readonly
 
-    var readonlyBtn = new Button('img/scroll-solid.png');
+    var readonlyBtn = new Button('img/pen-solid.png');
     readonlyBtn.appendTo(thiz.actionsEle);
     readonlyBtn.click(function (e, btn) {
         thiz.trigger('readonly');
