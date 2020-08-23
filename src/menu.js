@@ -138,9 +138,25 @@ Menu.prototype.openActiveNode = function () {
 Menu.prototype.createActions = function () {
     var thiz = this;
 
+    // create
+
+    var createBtn = new Button('img/plus-solid.png');
+    createBtn.appendTo(thiz.actionsEle);
+    createBtn.click(function (e, btn) {
+        thiz.createPaper();
+    });
+
+    // clone
+
+    var cloneBtn = new Button('img/clone.png');
+    cloneBtn.appendTo(thiz.actionsEle);
+    cloneBtn.click(function (e, btn) {
+        thiz.trigger('clone');
+    });
+
     // readonly
 
-    var readonlyBtn = new Button('img/eye-solid.png');
+    var readonlyBtn = new Button('img/scroll-solid.png');
     readonlyBtn.appendTo(thiz.actionsEle);
     readonlyBtn.click(function (e, btn) {
         thiz.trigger('readonly');
@@ -152,14 +168,6 @@ Menu.prototype.createActions = function () {
     fullScreenBtn.appendTo(thiz.actionsEle);
     fullScreenBtn.click(function (e, btn) {
         thiz.trigger('fullscreen');
-    });
-
-    // create
-
-    var createBtn = new Button('img/plus-solid.png');
-    createBtn.appendTo(thiz.actionsEle);
-    createBtn.click(function (e, btn) {
-        thiz.createPaper();
     });
 
     // hide
