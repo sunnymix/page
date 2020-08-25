@@ -38,11 +38,20 @@ window.isEscapeAction = function (e) {
 
 window.isCommand = function (e) {
     return e.metaKey === true;
-}
+};
+
+window.isControl = function (e) {
+    return e.ctrlKey === true;
+};
 
 window.isCommandOrControl = function (e) {
     return isCommand(e)
-        || e.ctrlKey === true;
+        || isControl(e);
+};
+
+window.isCommandAndControl = function (e) {
+    return isCommand(e)
+        && isControl(e);
 };
 
 window.isCreatePaperAction = function (e) {

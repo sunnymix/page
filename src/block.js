@@ -199,6 +199,12 @@ function Block(p, data, isLock, readonly, context) {
             e.preventDefault();
             thiz.remove();
         }
+
+        if (e.keyCode == KEYCODE.C
+            && isCommandAndControl(e)) {
+            e.preventDefault();
+            thiz.clone();
+        }
     });
 
     thiz.ele.on('click', function (e) {
@@ -215,6 +221,11 @@ Block.prototype.type = ELE_TYPE.BLOCK;
 Block.prototype.remove = function () {
     var thiz = this;
     thiz.ele.remove();
+};
+
+Block.prototype.clone = function () {
+    var thiz = this;
+    thiz.trigger('clone');
 };
 
 Block.prototype.appendTo = function (place) {

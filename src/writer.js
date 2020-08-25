@@ -69,6 +69,10 @@ Writer.prototype.createBlock = function (place, data) {
         thiz.jumpdownBlock(block);
     });
 
+    newBlock.bind('clone', function (block) {
+        thiz.cloneBlock(block);
+    });
+
     thiz.addBlock(newBlock, previousBlock);
 
     return newBlock;
@@ -160,6 +164,14 @@ Writer.prototype.jumpdownBlock = function (block) {
     if (toIdx < thiz.blocks.length) {
         var downBlock = thiz.blocks[toIdx];
         downBlock.focus();
+    }
+};
+
+Writer.prototype.cloneBlock = function (block) {
+    var thiz = this;
+    if (isNotNone(block)) {
+        var nextBlock = thiz.createBlock(block, block.getData());
+        nextBlock.focus();
     }
 };
 
