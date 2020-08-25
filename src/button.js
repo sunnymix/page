@@ -105,8 +105,8 @@ Button.prototype.initContent = function () {
         thiz.contentEle.html(thiz.content);
         if (isNotNone(thiz.icon)) {
             thiz.contentEle.css({
-                paddingLeft: (parsePxToNum(thiz.height) * 1) + 'px',
-                paddingRight: (parsePxToNum(thiz.height) * 0.3) + 'px'
+                paddingLeft: (parsePxToNum(thiz.height) * 0.8) + 'px',
+                paddingRight: (parsePxToNum(thiz.height) * 0.5) + 'px'
             });
         }
     }
