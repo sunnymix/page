@@ -150,6 +150,16 @@ Toolbar.prototype.clonePaper = function () {
     thiz.hideMenu();
 };
 
+Toolbar.prototype.exportHtml = function () {
+    var thiz = this;
+    console.log('export.html');
+};
+
+Toolbar.prototype.exportMarkdown = function () {
+    var thiz = this;
+    console.log('export.markdown');
+};
+
 Toolbar.prototype.createMenus = function () {
     var thiz = this;
 
@@ -167,6 +177,12 @@ Toolbar.prototype.createMenus = function () {
     });
     thiz.menu.bind('clone', function () {
         thiz.clonePaper();
+    });
+    thiz.menu.bind('export.html', function () {
+        thiz.exportHtml();
+    });
+    thiz.menu.bind('export.markdown', function () {
+        thiz.exportMarkdown();
     });
 };
 

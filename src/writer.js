@@ -11,6 +11,24 @@ function Writer(p, readonly, context) {
     thiz.ele.on('click', thiz.focus);
 
     thiz.focus();
+
+    thiz.initEvents();
+};
+
+Writer.prototype.init = function () {
+    var thiz = this;
+    thiz.initEvents();
+};
+
+Writer.prototype.initEvents = function () {
+    var thiz = this;
+    thiz.listener = {};
+};
+
+Writer.prototype.trigger = newTrigger();
+
+Writer.prototype.bind = function (event, cb) {
+    this.listener[event] = cb;
 };
 
 Writer.prototype.type = ELE_TYPE.WRITER;
@@ -71,6 +89,13 @@ Writer.prototype.createBlock = function (place, data) {
 
     newBlock.bind('clone', function (block) {
         thiz.cloneBlock(block);
+    });
+
+    newBlock.bind('blockop', function () {
+        var args = [].slice.call(arguments);
+        args.unshift('blockop');
+        args.push(thiz);
+        thiz.trigger.apply(thiz, args);
     });
 
     thiz.addBlock(newBlock, previousBlock);

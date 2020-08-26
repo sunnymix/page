@@ -20,29 +20,40 @@ function Cell(data, readonly) {
         '</td>'
     ].join(''));
 
-    thiz.writer = new Writer(thiz.ele.find('.cell-writer'), thiz.readonly, SCHEMA.GRID);
-
-    thiz.loadData(data);
-
-    thiz.init();
+    thiz.init(data);
 }
 
-Cell.prototype.init = function () {
+Cell.prototype.init = function (data) {
     var thiz = this;
+    initEvent(thiz, Cell.prototype);
+    thiz.initWriter();
     thiz.initBind();
+    thiz.initData(data);
+};
+
+Cell.prototype.initBind = function () {
+    var thiz = this;
+    thiz.ele.on('click', function () {
+        thiz.setActive();
+    });
+};
+
+Cell.prototype.initWriter = function () {
+    var thiz = this;
+    thiz.writer = new Writer(thiz.ele.find('.cell-writer'), thiz.readonly, SCHEMA.GRID);
+    thiz.writer.bind('blockop', function (block, writer) {
+        thiz.trigger('blockop', block, writer, thiz);
+    });
+};
+
+Cell.prototype.initData = function (data) {
+    var thiz = this;
+    thiz.loadData(data);
 };
 
 Cell.prototype.focus = function () {
     var thiz = this;
     thiz.writer.focus();
-};
-
-Cell.prototype.initBind = function () {
-    var thiz = this;
-
-    thiz.ele.on('click', function () {
-        thiz.setActive();
-    });
 };
 
 Cell.prototype.setActive = function () {

@@ -15,12 +15,33 @@ function Row(data, readonly) {
 
     thiz.cells = [];
 
-    thiz.loadData(data);
+    thiz.init(data);
 }
+
+Row.prototype.init = function (rowData) {
+    var thiz = this;
+    thiz.initEvents();
+    thiz.initData(rowData);
+};
+
+Row.prototype.initEvents = function () {
+    this.listener = {};
+};
+
+Row.prototype.trigger = newTrigger();
+
+Row.prototype.bind = function (event, cb) {
+    this.listener[event] = cb;
+};
 
 Row.prototype.appendTo = function (place) {
     var thiz = this;
     place.append(thiz.ele);
+};
+
+Row.prototype.initData = function (rowData) {
+    var thiz = this;
+    thiz.loadData(rowData);
 };
 
 Row.prototype.loadData = function (rowData) {
@@ -40,9 +61,10 @@ Row.prototype.loadData = function (rowData) {
 
 Row.prototype.createCell = function (cellData) {
     var thiz = this;
-
     var cell = new Cell(cellData, thiz.readonly);
-
+    cell.bind('blockop', function (block, writer, cell) {
+        thiz.trigger('blockop', block, writer, cell, thiz);
+    });
     return cell;
 };
 

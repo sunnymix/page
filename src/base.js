@@ -54,7 +54,34 @@ window.throttle = function (fn, delay, atleast) {
         }
     }
     return null;
-}
+};
+
+window.initEvent = function (obj, prototype) {
+    obj.listener = {};
+    prototype.bind = newBind();
+    prototype.trigger = newTrigger();
+};
+
+window.newBind = function () {
+    return function (event, cb) {
+        this.listener[event] = cb;
+    };
+};
+
+window.newTrigger = function () {
+    return function () {
+        var thiz = this;
+        var args = arguments;
+        if (args.length > 0) {
+            var event = args[0];
+            var passArgs = [].slice.call(args).slice(1);
+            var cb = thiz.listener[event];
+            if (isFunction(cb)) {
+                cb.apply(thiz, passArgs);
+            }
+        }
+    };
+};
 
 window.isFunction = function (f) {
     return typeof f === 'function';

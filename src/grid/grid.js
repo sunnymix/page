@@ -50,11 +50,10 @@ function Grid(place, data, lock, readonly) {
 
 Grid.prototype.init = function () {
     var thiz = this;
-
     if (thiz.readonly) {
         return;
     }
-
+    initEvent(thiz, Grid.prototype);
     thiz.createActions();
 };
 
@@ -130,9 +129,10 @@ Grid.prototype.prependTo = function (place) {
 
 Grid.prototype.createRow = function (rowData) {
     var thiz = this;
-
     var row = new Row(rowData, thiz.readonly);
-
+    row.bind('blockop', function (block, writer, cell, row) {
+        thiz.trigger('blockop', block, writer, cell, row, thiz);
+    });
     return row;
 };
 

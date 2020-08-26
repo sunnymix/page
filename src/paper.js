@@ -39,14 +39,7 @@ function Paper(p, readonly, fullscreen) {
         ].join('')
     );
     $(p).replaceWith(thiz.ele);
-    thiz.bodyEle = thiz.ele.find('.paper-body');
-
-    thiz.title = new Title(thiz.ele.find('.paper-title'), thiz.readonly);
-    thiz.writer = new Writer(thiz.ele.find('.paper-writer'), thiz.readonly);
-
-    thiz.ele.on('click', function (e) {
-        thiz.onClick();
-    });
+    thiz.bodyEle = thiz.ele.find('.paper-body');    
 
     $(document).on('keydown', 'body', function (e) {
         if (isSaveAction(e)) {
@@ -62,13 +55,39 @@ function Paper(p, readonly, fullscreen) {
     this.getPid();
     this.loadData();
 
-    // (new Grid()).appendTo(thiz.bodyEle);
+    thiz.init();
 }
 
 Paper.prototype.type = ELE_TYPE.PAPER;
 
-Paper.prototype.onClick = function () {
-    
+Paper.prototype.init = function () {
+    var thiz = this;
+    thiz.initTitle();
+    thiz.initWriter();
+    thiz.initBlockop();
+};
+
+Paper.prototype.initTitle = function () {
+    var thiz = this;
+    thiz.title = new Title(thiz.ele.find('.paper-title'), thiz.readonly);
+};
+
+Paper.prototype.initWriter = function () {
+    var thiz = this;
+    thiz.writer = new Writer(thiz.ele.find('.paper-writer'), thiz.readonly);
+    thiz.writer.bind('blockop', function (block, writer) {
+        thiz.showBlockop(block);
+    });
+};
+
+Paper.prototype.initBlockop = function () {
+    var thiz = this;
+    thiz.blockop = new Blockop();
+};
+
+Paper.prototype.showBlockop = function (block) {
+    var thiz = this;
+    thiz.blockop.show();
 };
 
 Paper.prototype.throttleSave = function () {

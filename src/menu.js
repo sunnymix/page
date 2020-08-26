@@ -170,6 +170,22 @@ Menu.prototype.createActions = function () {
         thiz.trigger('fullscreen');
     });
 
+    // html
+
+    var htmlBtn = new Button('img/html5.png');
+    htmlBtn.appendTo(thiz.actionsEle);
+    htmlBtn.click(function (e, btn) {
+        thiz.trigger('export.html');
+    });
+
+    // markdown
+
+    var markdownBtn = new Button('img/markdown.png');
+    markdownBtn.appendTo(thiz.actionsEle);
+    markdownBtn.click(function (e, btn) {
+        thiz.trigger('export.markdown');
+    });
+
     // hide
 
     var hideBtn = new Button('img/times-solid.png');

@@ -97,11 +97,6 @@ function Block(p, data, isLock, readonly, context) {
     thiz.taskOkEle = thiz.ele.find('.block-task-ok');
     thiz.setCheck(dataObj.check);
 
-    thiz.attachBtn = new Button('img/ellipsis-v-solid.png', null, 22, 12, 18, null);
-    thiz.attachBtn.hide();
-    thiz.attachBtn.middle();
-    thiz.attachBtn.appendTo(thiz.actionsEle);
-
     thiz.attachEle = thiz.ele.find('.block-attach');
     thiz.setAttach(dataObj.attach);
 
@@ -213,7 +208,7 @@ function Block(p, data, isLock, readonly, context) {
 
     $(p).replaceWith(thiz.ele);
 
-    thiz.listener = {};
+    initEvent(thiz, Block.prototype);
 };
 
 Block.prototype.type = ELE_TYPE.BLOCK;
@@ -256,13 +251,13 @@ Block.prototype.setSchema = function (schema) {
 
 Block.prototype.switchToGrid = function () {
     var thiz = this;
-
     thiz.contentEle.empty();
-
     thiz.contentEle.prop('contenteditable', false);
-
     thiz.grid = new Grid(null, null, false, thiz.readonly);
     thiz.grid.appendTo(thiz.contentEle);
+    thiz.grid.bind('blockop', function (block, writer, cell, row, grid) {
+        thiz.trigger('blockop', block, writer, cell, row, grid, thiz);
+    });
 };
 
 Block.prototype.getGridData = function () {
@@ -284,6 +279,11 @@ Block.prototype.initActions = function () {
         thiz.actionsEle.remove();
         return;
     }
+    
+    thiz.attachBtn = new Button('img/ellipsis-v-solid.png', null, 22, 12, 18, null);
+    thiz.attachBtn.hide();
+    thiz.attachBtn.middle();
+    thiz.attachBtn.appendTo(thiz.actionsEle);
 
     thiz.ele.on('mouseenter', function (e) {
         thiz.attachBtn.show();
@@ -292,8 +292,9 @@ Block.prototype.initActions = function () {
     });
 
     thiz.attachBtn.click(function (e) {
-        var url = prompt('add attachement ...', '');
-        thiz.setAttach(url);
+        // var url = prompt('add attachement ...', '');
+        // thiz.setAttach(url);
+        thiz.trigger('blockop', thiz);
     });
 };
 
@@ -378,17 +379,6 @@ Block.prototype.focus = function () {
 
 Block.prototype.enter = function () {
     this.trigger('enter');
-};
-
-Block.prototype.bind = function (e, b) {
-    this.listener[e] = b;
-};
-
-Block.prototype.trigger = function (e) {
-    var cb = this.listener[e];
-    if (cb) {
-        cb(this);
-    }
 };
 
 Block.prototype.moveUp = function () {
