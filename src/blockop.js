@@ -68,7 +68,7 @@ Blockop.prototype.appendTo = function (place) {
 Blockop.prototype.show = function (block) {
     var thiz = this;
     thiz.block = block;
-    thiz.pop.show(thiz.block.attachBtn.ele);
+    thiz.pop.show(thiz.block.opBtn.ele);
 };
 
 Blockop.prototype.hide = function () {
@@ -85,7 +85,7 @@ Blockop.prototype.clone = function () {
 
 Blockop.prototype.attach = function () {
     var thiz = this;
-    thiz.block.trigger('attach', thiz.block);
+    thiz.block.showAttach();
     thiz.hide();
 };
 
