@@ -378,33 +378,34 @@ Block.prototype.focus = function () {
 };
 
 Block.prototype.enter = function () {
-    this.trigger('enter');
+    this.trigger('enter', thiz);
 };
 
 Block.prototype.moveUp = function () {
-    this.trigger('moveup');
+    this.trigger('moveup', thiz);
 };
 
 Block.prototype.moveDown = function () {
-    this.trigger('movedown');
+    this.trigger('movedown', thiz);
 };
 
 Block.prototype.jumpUp = function () {
     var thiz = this;
     if (getCaretPosition(thiz.contentEle[0]) <= 0) {
-        this.trigger('jumpup');
+        this.trigger('jumpup', thiz);
     }
 };
 
 Block.prototype.jumpDown = function () {
     var thiz = this;
     if (getCaretPosition(thiz.contentEle[0]) >= thiz.contentEle.text().length) {
-        this.trigger('jumpdown');
+        this.trigger('jumpdown', thiz);
     }
 };
 
 Block.prototype.remove = function () {
-    this.trigger('remove');
+    var thiz = this;
+    thiz.trigger('remove', thiz);
 };
 
 Block.prototype.setData = function (content) {

@@ -5,9 +5,8 @@ function Blockop() {
         '<div',
         '    class="blockop"',
         '    style="',
-        '        position: absolute;',
-        '        z-index: 100;',
         '        background-color: #ffffff;',
+        '        border: 1px solid #eeeeee;',
         '    "',
         '>',
         '    <div',
@@ -27,27 +26,35 @@ Blockop.prototype.init = function () {
     var thiz = this;
     thiz.initPop();
     thiz.initActions();
-    thiz.initEvents();
+    initEvent(thiz, Blockop.prototype);
 };
 
 Blockop.prototype.initPop = function () {
     var thiz = this;
+    thiz.pop = new Pop();
+    thiz.pop.append(thiz.ele);
 };
 
 Blockop.prototype.initActions = function () {
     var thiz = this;
     thiz.actionsEle = thiz.ele.find('.blockop-actions');
 
-    var cloneBtn = new Button('img/clone.png', 'clone', 28, null, 18, null);
+    var cloneBtn = new Button('img/clone.png', 'clone', 28, null, 12);
     cloneBtn.appendTo(thiz.actionsEle);
     cloneBtn.click(function (e, btn) {
-        thiz.trigger('clone');
+        thiz.clone();
     });
 
-    var attachBtn = new Button('img/clone.png', 'clone', 28, null, 18, null);
+    var attachBtn = new Button('img/paperclip-solid.png', 'attach', 28, null, 12);
     attachBtn.appendTo(thiz.actionsEle);
     attachBtn.click(function (e, btn) {
-        thiz.trigger('attach');
+        thiz.attach();
+    });
+
+    var removeBtn = new Button('img/times-solid.png', 'remove', 28, null, 12);
+    removeBtn.appendTo(thiz.actionsEle);
+    removeBtn.click(function (e, btn) {
+        thiz.remove();
     });
 };
 
@@ -58,30 +65,34 @@ Blockop.prototype.appendTo = function (place) {
     }
 };
 
-Blockop.prototype.initEvents = function () {
-    this.listener = {};
-};
-
-Blockop.prototype.trigger = function (event, arg) {
+Blockop.prototype.show = function (block) {
     var thiz = this;
-    var cb = thiz.listener[event];
-    if (isFunction(cb)) {
-        cb(thiz, arg);
-    }
-};
-
-Blockop.prototype.bind = function (event, cb) {
-    this.listener[event] = cb;
+    thiz.block = block;
+    thiz.pop.show(thiz.block.attachBtn.ele);
 };
 
 Blockop.prototype.hide = function () {
-    thiz = this;
-    thiz.ele.hide();
+    var thiz = this;
+    thiz.block = null;
+    thiz.pop.hide();
 };
 
-Blockop.prototype.show = function () {
-    thiz = this;
-    thiz.ele.show();
+Blockop.prototype.clone = function () {
+    var thiz = this;
+    thiz.block.trigger('clone', thiz.block);
+    thiz.hide();
+};
+
+Blockop.prototype.attach = function () {
+    var thiz = this;
+    thiz.block.trigger('attach', thiz.block);
+    thiz.hide();
+};
+
+Blockop.prototype.remove = function () {
+    var thiz = this;
+    thiz.block.trigger('remove', thiz.block);
+    thiz.hide();
 };
 
 window.Blockop = Blockop;

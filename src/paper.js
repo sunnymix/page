@@ -87,7 +87,7 @@ Paper.prototype.initBlockop = function () {
 
 Paper.prototype.showBlockop = function (block) {
     var thiz = this;
-    thiz.blockop.show();
+    thiz.blockop.show(block);
 };
 
 Paper.prototype.throttleSave = function () {
