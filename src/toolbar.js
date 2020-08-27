@@ -156,13 +156,15 @@ Toolbar.prototype.clonePaper = function () {
 
 Toolbar.prototype.exportHtml = function () {
     var thiz = this;
-    var html = thiz.paper.getHtmlData();
-    thiz.clip.copy(html);
+    var text = thiz.paper.getHtmlData();
+    thiz.clip.copy(text);
 };
 
 Toolbar.prototype.exportMarkdown = function () {
     var thiz = this;
-    console.log('export.markdown');
+    var text = new Markdown().parsePaper(thiz.paper);
+    console.log(text);
+    thiz.clip.copy(text);
 };
 
 Toolbar.prototype.createMenus = function () {
@@ -189,6 +191,7 @@ Toolbar.prototype.createMenus = function () {
     });
     thiz.menu.bind('export.markdown', function () {
         thiz.exportMarkdown();
+        thiz.hideMenu();
     });
 };
 
