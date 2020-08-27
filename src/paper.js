@@ -76,7 +76,8 @@ Paper.prototype.initTitle = function () {
 
 Paper.prototype.initWriter = function () {
     var thiz = this;
-    thiz.writer = new Writer(thiz.ele.find('.paper-writer'), thiz.readonly);
+    thiz.writerEle = thiz.ele.find('.paper-writer');
+    thiz.writer = new Writer(thiz.writerEle, thiz.readonly);
     thiz.writer.bind('blockop', function (block, writer) {
         thiz.showBlockop(block);
     });
@@ -197,6 +198,11 @@ Paper.prototype.appendToolbar = function (toolbar) {
     var thiz = this;
     thiz.toolbar = toolbar;
     thiz.ele.append(thiz.toolbar.ele);
+};
+
+Paper.prototype.getHtmlData = function () {
+    var thiz = this;
+    return thiz.writerEle[0].outerHTML;
 };
 
 Paper.prototype.clone = function () {

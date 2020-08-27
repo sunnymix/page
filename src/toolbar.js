@@ -40,29 +40,33 @@ function Toolbar(paper) {
 
 Toolbar.prototype.init = function () {
     var thiz = this;
-    thiz.initEvent();
+    thiz.initBind();
+    thiz.initClip();
 };
 
-Toolbar.prototype.initEvent = function () {
+Toolbar.prototype.initBind = function () {
     var thiz = this;
 
     $(document).on('keydown', 'body', function (e) {
-
         if (isShowMenuAction(e)) {
             e.preventDefault();
             thiz.showMenu();
         }
-
         if (isEscapeAction(e)) {
             e.preventDefault();
             thiz.hideMenu();
         }
-
         if (isCreatePaperAction(e)) {
             e.preventDefault();
             thiz.menu.createPaper();
         }
     });
+};
+
+Toolbar.prototype.initClip = function () {
+    var thiz = this;
+    thiz.clip = new Clip();
+    thiz.clip.appendTo(thiz.toolsEle);
 };
 
 Toolbar.prototype.createTools = function () {
@@ -152,7 +156,8 @@ Toolbar.prototype.clonePaper = function () {
 
 Toolbar.prototype.exportHtml = function () {
     var thiz = this;
-    console.log('export.html');
+    var html = thiz.paper.getHtmlData();
+    thiz.clip.copy(html);
 };
 
 Toolbar.prototype.exportMarkdown = function () {
@@ -180,6 +185,7 @@ Toolbar.prototype.createMenus = function () {
     });
     thiz.menu.bind('export.html', function () {
         thiz.exportHtml();
+        thiz.hideMenu();
     });
     thiz.menu.bind('export.markdown', function () {
         thiz.exportMarkdown();

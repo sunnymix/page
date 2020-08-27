@@ -212,19 +212,16 @@ Writer.prototype.getData = function () {
 
 Writer.prototype.setData = function (data) {
     var thiz = this;
-
     if (isNotEmpty(data)) {
         thiz.ele.empty();
         thiz.blocks = [];
-
         var curBlock = null;
-
         for (var i = 0; i < data.length; i++) {
             var blockData = data[i];
             var block = thiz.createBlock(curBlock, blockData);
             curBlock = block;
         }
     }
-}
+};
 
 window.Writer = Writer;
