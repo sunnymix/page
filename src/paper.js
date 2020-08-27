@@ -6,7 +6,7 @@ function Paper(p, readonly, fullscreen) {
     thiz.paddingVertical = Style.Paper.paddingY;
     thiz.maxWidth = thiz.fullscreen ? '100%' : '820px';
 
-    this.ele = $(
+    thiz.ele = $(
         [
             '<div',
             '    class="paper"',
@@ -52,10 +52,9 @@ function Paper(p, readonly, fullscreen) {
         // thiz.save(); disable auto save
     });
 
-    this.getPid();
-    this.loadData();
-
+    thiz.getPid();
     thiz.init();
+    thiz.loadData();
 }
 
 Paper.prototype.type = ELE_TYPE.PAPER;
@@ -70,6 +69,9 @@ Paper.prototype.init = function () {
 Paper.prototype.initTitle = function () {
     var thiz = this;
     thiz.title = new Title(thiz.ele.find('.paper-title'), thiz.readonly);
+    thiz.title.bind('enter', function (title) {
+        thiz.focusWriter();
+    });
 };
 
 Paper.prototype.initWriter = function () {
@@ -88,6 +90,16 @@ Paper.prototype.initBlockop = function () {
 Paper.prototype.showBlockop = function (block) {
     var thiz = this;
     thiz.blockop.show(block);
+};
+
+Paper.prototype.focusTitle = function () {
+    var thiz = this;
+    thiz.title.focus();
+};
+
+Paper.prototype.focusWriter = function () {
+    var thiz = this;
+    thiz.writer.focus();
 };
 
 Paper.prototype.throttleSave = function () {
@@ -146,6 +158,7 @@ Paper.prototype.renderData = function (paperObj) {
         document.title = paperObj.title;
         thiz.title.setData(paperObj.title);
         thiz.writer.setData(paperObj.content);
+        thiz.focusTitle();
     }
 }
 
