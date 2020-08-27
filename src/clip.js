@@ -64,9 +64,6 @@ Clip.prototype.initEle = function () {
     thiz.textEle = thiz.ele.find('> .clip-box > .clip-text');
     thiz.copyBtn = thiz.ele.find('> .clip-box > .clip-copy-btn');
     thiz.clipboard = new ClipboardJS(thiz.copyBtn[0]);
-    thiz.clipboard.on('success', function (e) {
-        console.log('success');
-    });
 };
 
 Clip.prototype.appendTo = function (place) {
