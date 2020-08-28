@@ -210,6 +210,15 @@ Writer.prototype.getData = function () {
     return data;
 };
 
+Writer.prototype.getFirstBlockData = function () {
+    var thiz = this;
+    var data = '';
+    if (thiz.blocks.length > 0) {
+        data = thiz.blocks[0].getData().text || '';
+    }
+    return data;
+};
+
 Writer.prototype.setData = function (data) {
     var thiz = this;
     if (isNotEmpty(data)) {

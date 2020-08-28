@@ -11,7 +11,7 @@ function Paper(p, readonly, fullscreen) {
             '<div',
             '    class="paper"',
             '    style="',
-            '        max-width: ' + thiz.maxWidth +';',
+            '        max-width: ' + thiz.maxWidth + ';',
             '        border: 1px solid #f9f9f9;',
             '        border-radius: 0px;',
             '        margin: 0 auto;',
@@ -25,13 +25,12 @@ function Paper(p, readonly, fullscreen) {
             '        style="',
             '            border: 1px solid #d0d0d0;',
             '            border-radius: 0px;',
-            '            padding: ' + thiz.paddingVertical + ' ' + thiz.paddingHorizontal +';',
+            '            padding: ' + thiz.paddingVertical + ' ' + thiz.paddingHorizontal + ';',
             '            min-height: 800px;',
             '            background-color: #ffffff;',
             '        "',
             '    >',
             '        <div class="paper-body">',
-            '            <div class="paper-title"></div>',
             '            <div class="paper-writer"></div>',
             '        </div>',
             '    </div>',
@@ -39,7 +38,7 @@ function Paper(p, readonly, fullscreen) {
         ].join('')
     );
     $(p).replaceWith(thiz.ele);
-    thiz.bodyEle = thiz.ele.find('.paper-body');    
+    thiz.bodyEle = thiz.ele.find('.paper-body');
 
     $(document).on('keydown', 'body', function (e) {
         if (isSaveAction(e)) {
@@ -61,17 +60,8 @@ Paper.prototype.type = ELE_TYPE.PAPER;
 
 Paper.prototype.init = function () {
     var thiz = this;
-    thiz.initTitle();
     thiz.initWriter();
     thiz.initBlockop();
-};
-
-Paper.prototype.initTitle = function () {
-    var thiz = this;
-    thiz.title = new Title(thiz.ele.find('.paper-title'), thiz.readonly);
-    thiz.title.bind('enter', function (title) {
-        thiz.focusWriter();
-    });
 };
 
 Paper.prototype.initWriter = function () {
@@ -91,11 +81,6 @@ Paper.prototype.initBlockop = function () {
 Paper.prototype.showBlockop = function (block) {
     var thiz = this;
     thiz.blockop.show(block);
-};
-
-Paper.prototype.focusTitle = function () {
-    var thiz = this;
-    thiz.title.focus();
 };
 
 Paper.prototype.focusWriter = function () {
@@ -124,13 +109,23 @@ Paper.prototype.save = function () {
 };
 
 Paper.prototype.getData = function () {
-    var titleData = this.title.getData();
-    var contentData = this.writer.getData();
+    var thiz = this;
     return {
         pid: this.getPid(),
-        title: titleData,
-        content: contentData
+        title: thiz.getTitleData(),
+        content: thiz.getContentData()
     };
+};
+
+Paper.prototype.getTitleData = function () {
+    var thiz = this;
+    var title = thiz.writer.getFirstBlockData();
+    return isEmpty(title) ? 'Title' : title;
+};
+
+Paper.prototype.getContentData = function () {
+    var thiz = this;
+    return thiz.writer.getData();
 };
 
 Paper.prototype.loadData = function () {
@@ -154,12 +149,9 @@ Paper.prototype.loadData = function () {
 
 Paper.prototype.renderData = function (paperObj) {
     var thiz = this;
-
     if (isNotNone(paperObj)) {
         document.title = paperObj.title;
-        thiz.title.setData(paperObj.title);
         thiz.writer.setData(paperObj.content);
-        thiz.focusTitle();
     }
 }
 
@@ -168,6 +160,10 @@ Paper.prototype.saveData = function (data, cb) {
         restPost('/api/paper', data, function (res) {
             if (res.code === 0) {
                 // todo: success flush
+                document.title = 'Saved - ' + data.title;
+                setTimeout(function () {
+                    document.title = data.title;
+                }, 1000);
                 if (isFunction(cb)) {
                     cb();
                 }
