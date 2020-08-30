@@ -64,8 +64,8 @@ function Block(p, data, isLock, readonly, context) {
             '                        display: none;',
             '                        left: 1px;',
             '                        top: 2px;',
-            '                        border-left: 1px solid #000000;',
-            '                        border-bottom: 1px solid #000000;',
+            '                        border-left: 1px solid #ffffff;',
+            '                        border-bottom: 1px solid #ffffff;',
             '                        width: 7px;',
             '                        height: 3px;',
             '                        transform: rotate(-50deg);',
@@ -312,7 +312,7 @@ Block.prototype.initTask = function () {
     }).on('mouseleave', function (e) {
         // todo
     }).on('click', function (e) {
-        thiz.taskOkEle.toggle();
+        thiz.toggleCheck();
     });
 };
 
@@ -471,16 +471,27 @@ Block.prototype.getCheckData = function () {
 
 Block.prototype.isCheck = function () {
     var thiz = this;
-    return thiz.isTask()
-        && thiz.taskOkEle.is(":visible");
+    return thiz.taskOkEle.is(":visible");
+};
+
+Block.prototype.toggleCheck = function () {
+    var thiz = this;
+    var isCheck = thiz.isCheck();
+    thiz.setCheck(!isCheck);
 };
 
 Block.prototype.setCheck = function (check) {
     var thiz = this;
     if (thiz.isTask()) {
         if (+check > 0) {
+            thiz.taskEle.css({
+                backgroundColor: '#000000'
+            });
             thiz.taskOkEle.show();
         } else {
+            thiz.taskEle.css({
+                backgroundColor: '#ffffff'
+            });
             thiz.taskOkEle.hide();
         }
     }
