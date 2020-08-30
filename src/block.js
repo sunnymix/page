@@ -255,6 +255,9 @@ Block.prototype.switchToGrid = function () {
     thiz.contentEle.prop('contenteditable', false);
     thiz.grid = new Grid(null, null, false, thiz.readonly);
     thiz.grid.appendTo(thiz.contentEle);
+    if (thiz.readonly) {
+        return;
+    }
     thiz.grid.bind('blockop', function (block, writer, cell, row, grid) {
         thiz.trigger('blockop', block, writer, cell, row, grid, thiz);
     });
