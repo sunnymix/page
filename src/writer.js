@@ -40,7 +40,8 @@ Writer.prototype.focus = function () {
         thiz.blocks[0].focus();
     } else {
         if (isFunction(thiz.createBlock)) {
-            thiz.createBlock();
+            var newBlock = thiz.createBlock();
+            newBlock.focus();
         }
     }
 };

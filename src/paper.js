@@ -152,6 +152,7 @@ Paper.prototype.renderData = function (paperObj) {
     if (isNotNone(paperObj)) {
         document.title = paperObj.title;
         thiz.writer.setData(paperObj.content);
+        thiz.focusWriter();
     }
 }
 
