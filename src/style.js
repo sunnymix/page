@@ -4,7 +4,7 @@ function Style() {
     this.wordBreak = 'normal';
     this.position = 'relative';
 
-    this.fontFamily = '"PingFang SC", Aria';
+    this.fontFamily = '"Noto Serif SC", "PingFang SC", Aria';
     this.fontWeight = 'normal';
     this.fontSize = '12px';
 
