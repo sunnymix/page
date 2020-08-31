@@ -15,7 +15,7 @@ function Toolbar(paper) {
         '    <div',
         '        class="toolbar-box"',
         '        style="',
-        '            padding: 1px;',
+        '            padding: 2px;',
         '        "',
         '    >',
         '        <div',

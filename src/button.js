@@ -10,7 +10,7 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
     thiz.iconHeight = isNotNone(iconHeight) ? iconHeight : '18px';
     thiz.iconWidth = isNotNone(iconWidth) ? iconWidth : thiz.iconHeight;
 
-    thiz.background = '#ffffff';
+    thiz.background = 'transparent';
     thiz.backgroundHover = '#f6f6f6';
 
     thiz.ele = $([
@@ -20,7 +20,7 @@ function Button(icon, content, height, width, iconHeight, iconWidth) {
         '        padding: 0;',
         '        position: relative;',
         '        display: inline-block;',
-        '        border: 1px solid #ffffff;',
+        '        border: 1px solid transparent;',
         '        border-radius: 0px;',
         '        opacity: 1;',
         '        cursor: pointer;',
