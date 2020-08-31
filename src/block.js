@@ -62,15 +62,27 @@ function Block(p, data, isLock, readonly, context) {
             '                    style="',
             '                        position: absolute;',
             '                        display: none;',
-            '                        left: 1px;',
-            '                        top: 2px;',
-            '                        border-left: 1px solid #ffffff;',
-            '                        border-bottom: 1px solid #ffffff;',
-            '                        width: 7px;',
-            '                        height: 3px;',
-            '                        transform: rotate(-50deg);',
+            '                        left: 0px;',
+            '                        right: 0px;',
+            '                        top: 0px;',
+            '                        bottom: 0px;',
+            '                        background-color: #000000;',
             '                    "',
-            '                ></div>',
+            '                 >',
+            '                    <div',
+            '                        class="block-task-ok-check"',
+            '                        style="',
+            '                            position: absolute;',
+            '                            left: 0px;',
+            '                            top: 1px;',
+            '                            border-left: 1px solid #ffffff;',
+            '                            border-bottom: 1px solid #ffffff;',
+            '                            width: 9px;',
+            '                            height: 3px;',
+            '                            transform: rotate(-45deg);',
+            '                        "',
+            '                    ></div>',
+            '                </div>',
             '            </div>',
             '            <div class="block-content" ' + (thiz.readonly ? '' : 'contenteditable="true"') + '></div>',
             '        </div>',
@@ -484,14 +496,8 @@ Block.prototype.setCheck = function (check) {
     var thiz = this;
     if (thiz.isTask()) {
         if (+check > 0) {
-            thiz.taskEle.css({
-                backgroundColor: '#000000'
-            });
             thiz.taskOkEle.show();
         } else {
-            thiz.taskEle.css({
-                backgroundColor: '#ffffff'
-            });
             thiz.taskOkEle.hide();
         }
     }
