@@ -50,7 +50,7 @@ function Block(p, data, isLock, readonly, context) {
             '                    display: none;',
             '                    left: 0;',
             '                    top: 50%;',
-            '                    margin-top: -7px;',
+            '                    margin-top: -6px;',
             '                    width: 10px;',
             '                    height: 10px;',
             '                    border: 1px solid #000000;',
