@@ -8,34 +8,23 @@ function Writer(p, readonly, context) {
     thiz.cursor = null;
     thiz.blocks = [];
 
-    thiz.ele.on('click', thiz.focus);
-
-    thiz.focus();
-
-    thiz.initEvents();
+    thiz.init();
 };
 
 Writer.prototype.init = function () {
     var thiz = this;
-    thiz.initEvents();
-};
-
-Writer.prototype.initEvents = function () {
-    var thiz = this;
-    thiz.listener = {};
-};
-
-Writer.prototype.trigger = newTrigger();
-
-Writer.prototype.bind = function (event, cb) {
-    this.listener[event] = cb;
+    initEvent(thiz, Writer.prototype);
+    thiz.focus();
 };
 
 Writer.prototype.type = ELE_TYPE.WRITER;
 
+Writer.prototype.initBind = function () {
+    var thiz = this;
+};
+
 Writer.prototype.focus = function () {
     var thiz = this;
-
     if (isNotEmpty(thiz.blocks)) {
         thiz.blocks[0].focus();
     } else {

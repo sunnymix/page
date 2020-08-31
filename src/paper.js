@@ -40,17 +40,6 @@ function Paper(p, readonly, fullscreen) {
     $(p).replaceWith(thiz.ele);
     thiz.bodyEle = thiz.ele.find('.paper-body');
 
-    $(document).on('keydown', 'body', function (e) {
-        if (isSaveAction(e)) {
-            e.preventDefault();
-            thiz.save();
-        }
-    });
-
-    $(document).on('keyup', 'body', function (e) {
-        // thiz.save(); disable auto save
-    });
-
     thiz.getPid();
     thiz.init();
     thiz.loadData();
@@ -62,6 +51,7 @@ Paper.prototype.init = function () {
     var thiz = this;
     thiz.initWriter();
     thiz.initBlockop();
+    thiz.initBind();
 };
 
 Paper.prototype.initWriter = function () {
@@ -76,6 +66,18 @@ Paper.prototype.initWriter = function () {
 Paper.prototype.initBlockop = function () {
     var thiz = this;
     thiz.blockop = new Blockop();
+};
+
+Paper.prototype.initBind = function () {
+    var thiz = this;
+    $(document).on('keydown', 'body', function (e) {
+        if (isSaveAction(e)) {
+            e.preventDefault();
+            thiz.save();
+        }
+    }).on('keyup', 'body', function (e) {
+        // thiz.save(); disable auto save
+    });
 };
 
 Paper.prototype.showBlockop = function (block) {
