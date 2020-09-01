@@ -337,6 +337,11 @@ Block.prototype.loadStyle = function () {
     var style = getStyle(thiz.schema);
 
     if (isNotNone(style)) {
+        // if in grid context then clear block content padding
+        if (thiz.isGridContext()) {
+            style.contentPaddingLeft = 0;
+        }
+
         thiz.ele.prop('style', style.toString());
 
         thiz.ele.css({
