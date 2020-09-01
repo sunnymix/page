@@ -4,7 +4,8 @@ function Style() {
     this.wordBreak = 'normal';
     this.position = 'relative';
 
-    this.fontFamily = '"Noto Serif SC", "PingFang SC", Aria';
+    // this.fontFamily = '"Noto Serif SC", "PingFang SC", Aria';
+    this.fontFamily = '"PingFang SC", Aria';
     this.fontWeight = 'normal';
     this.fontSize = '12px';
 
@@ -148,7 +149,9 @@ Style.Paper = {
     paddingY: '40px'
 };
 
-var STYLE_TEXT = new Style();
+var STYLE_TEXT = new Style()
+    .setContentPaddingLeft('10px')
+    ;
 
 var STYLE_H1 = new Style()
     .setFontWeight('bold')
@@ -173,7 +176,7 @@ var STYLE_H3 = new Style()
     .setLineHeight('22px')
 
 var STYLE_CODE = new Style()
-    .setFontFamily('"Roboto Mono", Menlo, Monaco')
+    .setFontFamily('"Verily Serif Mono", "Roboto Mono", Menlo, Monaco')
     .setBackgroundColor('#f6f6f6')
     .setContentPaddingLeft('10px')
     .setContentPaddingRight('10px')

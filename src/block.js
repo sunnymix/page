@@ -54,6 +54,7 @@ function Block(p, data, isLock, readonly, context) {
             '                    width: 10px;',
             '                    height: 10px;',
             '                    border: 1px solid #000000;',
+            '                    border-radius: 50%;',
             '                    cursor: pointer;',
             '                "',
             '            >',
@@ -67,19 +68,21 @@ function Block(p, data, isLock, readonly, context) {
             '                        top: 0px;',
             '                        bottom: 0px;',
             '                        background-color: #000000;',
+            '                        border-radius: 50%;',
             '                    "',
             '                 >',
             '                    <div',
             '                        class="block-task-ok-check"',
             '                        style="',
             '                            position: absolute;',
-            '                            left: 0px;',
-            '                            top: 1px;',
+            '                            left: 1px;',
+            '                            top: 3px;',
             '                            border-left: 1px solid #ffffff;',
             '                            border-bottom: 1px solid #ffffff;',
-            '                            width: 9px;',
-            '                            height: 3px;',
-            '                            transform: rotate(-45deg);',
+            '                            border-radius: 0px;',
+            '                            width: 7px;',
+            '                            height: 2px;',
+            '                            transform: rotate(-50deg);',
             '                        "',
             '                    ></div>',
             '                </div>',
@@ -362,6 +365,14 @@ Block.prototype.loadStyle = function () {
         } else {
             thiz.taskEle.hide();
         }
+
+        thiz.taskEle.css({
+            left: style.contentPaddingLeft
+        });
+
+        thiz.attachEle.css({
+            paddingLeft: style.contentPaddingLeft
+        });
 
         thiz.contentEle.css({
             // do not set fontfamily, will cause some issue

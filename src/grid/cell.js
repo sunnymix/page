@@ -8,7 +8,7 @@ function Cell(data, readonly) {
         '    class="grid-cell"',
         '    style="',
         '        position: relative;',
-        '        border: 1px solid #dddddd;',
+        '        border: 1px solid #cccccc;',
         '        border-width: 1px;',
         '        padding: 0px 25px;',
         '        vertical-align: middle;',
