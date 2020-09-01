@@ -249,7 +249,7 @@ window.resetCss = function () {
         '    outline: none;',
         '}',
         'body {',
-        '    padding: 1%;',
+        '    padding: 2%;',
         '}',
         '',
         '</style>'
