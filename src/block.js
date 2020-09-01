@@ -334,7 +334,7 @@ Block.prototype.initTask = function () {
 Block.prototype.loadStyle = function () {
     var thiz = this;
 
-    var style = getStyle(thiz.schema);
+    var style = $.extend({}, getStyle(thiz.schema));
 
     if (isNotNone(style)) {
         // if in grid context then clear block content padding
