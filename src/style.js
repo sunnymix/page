@@ -1,36 +1,43 @@
 
 function Style() {
-    this.wordWrap = 'break-word';
-    this.wordBreak = 'normal';
-    this.position = 'relative';
+    var thiz = this;
 
-    // this.fontFamily = '"Noto Serif SC", "PingFang SC", Aria';
-    this.fontFamily = '"PingFang SC", Aria';
-    this.fontWeight = 'normal';
-    this.fontSize = '12px';
+    thiz.wordWrap = 'break-word';
+    thiz.wordBreak = 'normal';
+    thiz.position = 'relative';
 
-    this.minHeight = '18px';
-    this.lineHeight = '18px';
+    // thiz.fontFamily = '"Noto Serif SC", "PingFang SC", Aria';
+    thiz.fontFamily = '"PingFang SC", Aria';
+    thiz.fontWeight = 'normal';
+    thiz.fontSize = '12px';
 
-    this.paddingTop = '2px';
-    this.paddingBottom = '2px';
-    this.paddingLeft = '10px';
-    this.paddingRight = '10px';
+    thiz.minHeight = '18px';
+    thiz.lineHeight = '18px';
 
-    this.borderBottom = '0px solid transparent';
+    thiz.paddingTop = '2px';
+    thiz.paddingBottom = '2px';
+    thiz.paddingLeft = '10px';
+    thiz.paddingRight = '10px';
 
-    this.marginBottom = '0px';
+    thiz.borderTop = '0px solid transparent';
+    thiz.borderBottom = '0px solid transparent';
+    thiz.borderLeft = '0px solid transparent';
+    thiz.borderRight = '0px solid transparent';
 
-    this.color = '#333333';
-    this.backgroundColor = '#ffffff';
+    thiz.marginBottom = '0px';
+    thiz.marginLeft = '0px';
+    thiz.marginRight = '0px';
+
+    thiz.color = '#333333';
+    thiz.backgroundColor = '#ffffff';
 
     // content override
 
-    this.contentPaddingTop = '3px';
-    this.contentPaddingBottom = '3px';
+    thiz.contentPaddingTop = '3px';
+    thiz.contentPaddingBottom = '3px';
 
-    this.contentPaddingLeft = '0px';
-    this.contentPaddingRight = '0px';
+    thiz.contentPaddingLeft = '0px';
+    thiz.contentPaddingRight = '0px';
 }
 
 
@@ -79,6 +86,14 @@ Style.prototype.setPaddingRight = function (paddingRight) {
     return this;
 };
 
+Style.prototype.setBorderTop = function (size, style, color) {
+    var thiz = this;
+    thiz.borderTop = size + ' ' +
+        (style || 'solid') + ' ' +
+        (color || thiz.color);
+    return this;
+};
+
 Style.prototype.setBorderBottom = function (size, style, color) {
     var thiz = this;
     thiz.borderBottom = size + ' ' +
@@ -87,8 +102,34 @@ Style.prototype.setBorderBottom = function (size, style, color) {
     return this;
 };
 
+Style.prototype.setBorderLeft = function (size, style, color) {
+    var thiz = this;
+    thiz.borderLeft = size + ' ' +
+        (style || 'solid') + ' ' +
+        (color || thiz.color);
+    return this;
+};
+
+Style.prototype.setBorderRight = function (size, style, color) {
+    var thiz = this;
+    thiz.borderRight = size + ' ' +
+        (style || 'solid') + ' ' +
+        (color || thiz.color);
+    return this;
+};
+
 Style.prototype.setMarginBottom = function (marginBottom) {
     this.marginBottom = Zoom(marginBottom);
+    return this;
+};
+
+Style.prototype.setMarginLeft = function (marginLeft) {
+    this.marginLeft = Zoom(marginLeft);
+    return this;
+};
+
+Style.prototype.setMarginRight = function (marginRight) {
+    this.marginRight = Zoom(marginRight);
     return this;
 };
 
@@ -136,8 +177,13 @@ Style.prototype.toString = function () {
         'padding-bottom: ' + this.paddingBottom,
         'padding-left: ' + this.paddingLeft,
         'padding-right: ' + this.paddingRight,
+        'border-top: ' + this.borderTop,
         'border-bottom: ' + this.borderBottom,
+        'border-left: ' + this.borderLeft,
+        'border-right: ' + this.borderRight,
         'margin-bottom: ' + this.marginBottom,
+        'margin-left: ' + this.marginLeft,
+        'margin-right: ' + this.marginRight,
         'color: ' + this.color,
         'background-color: ' + this.backgroundColor
     ].join(';');
@@ -151,6 +197,7 @@ Style.Paper = {
 };
 
 var STYLE_TEXT = new Style()
+    .setPaddingLeft('10px')
     .setContentPaddingLeft('10px')
     ;
 
@@ -178,7 +225,13 @@ var STYLE_H3 = new Style()
 
 var STYLE_CODE = new Style()
     .setFontFamily('"Verily Serif Mono", "Roboto Mono", Menlo, Monaco')
-    .setBackgroundColor('#f6f6f6')
+    .setBackgroundColor('#f9f9f9')
+    .setMarginLeft('10px')
+    .setMarginRight('10px')
+    .setBorderTop('1px', 'solid', '#dddddd')
+    .setBorderBottom('1px', 'solid', '#dddddd')
+    .setBorderLeft('1px', 'solid', '#dddddd')
+    .setBorderRight('1px', 'solid', '#dddddd')
     .setContentPaddingLeft('10px')
     .setContentPaddingRight('10px')
     ;

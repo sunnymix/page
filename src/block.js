@@ -365,11 +365,17 @@ Block.prototype.loadStyle = function () {
             paddingRight: '0px',
             cursor: 'text',
             backgroundColor: style.backgroundColor,
+            marginLeft: style.marginLeft,
+            marginRight: style.marginRight,
+            borderTop: style.borderTop,
+            borderBottom: style.borderBottom,
+            borderLeft: style.borderLeft,
+            borderRight: style.borderRight
         });
 
-        thiz.borderEle.css({
-            borderBottom: style.borderBottom
-        });
+        // thiz.borderEle.css({
+        //     borderBottom: style.borderBottom
+        // });
 
         var contentPaddingLeft = (parsePxToNum(style.paddingLeft)
             + parsePxToNum(style.contentPaddingLeft));
