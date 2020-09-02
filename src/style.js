@@ -215,6 +215,7 @@ var STYLE_H1 = new Style()
     .setMinHeight('26px')
     .setLineHeight('26px')
     .setBorderBottom('2px')
+    .setMarginBottom('5px')
     ;
 
 var STYLE_H2 = new Style()
@@ -223,6 +224,7 @@ var STYLE_H2 = new Style()
     .setMinHeight('24px')
     .setLineHeight('24px')
     .setBorderBottom('1px')
+    .setMarginBottom('5px')
     ;
 
 var STYLE_H3 = new Style()
