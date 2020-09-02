@@ -21,7 +21,7 @@ function Style() {
 
     this.marginBottom = '0px';
 
-    this.color = '#000000';
+    this.color = '#333333';
     this.backgroundColor = '#ffffff';
 
     // content override
@@ -80,9 +80,10 @@ Style.prototype.setPaddingRight = function (paddingRight) {
 };
 
 Style.prototype.setBorderBottom = function (size, style, color) {
-    this.borderBottom = size + ' ' +
+    var thiz = this;
+    thiz.borderBottom = size + ' ' +
         (style || 'solid') + ' ' +
-        (color || '#000000');
+        (color || thiz.color);
     return this;
 };
 
