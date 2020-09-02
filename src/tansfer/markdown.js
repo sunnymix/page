@@ -10,14 +10,8 @@ Markdown.prototype.init = function () {
 Markdown.prototype.parsePaper = function (paper) {
     var thiz = this;
     var data = [];
-    data.push(thiz.parseTitle(paper.title));
     data.push(thiz.parseWriter(paper.writer));
     return data.join('\n\n');
-};
-
-Markdown.prototype.parseTitle = function (title) {
-    var thiz = this;
-    return '# ' + title.getData();
 };
 
 Markdown.prototype.parseWriter = function (writer) {
