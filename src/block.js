@@ -1,4 +1,4 @@
-function Block(p, data, isLock, readonly, context) {
+function Block(p, data, isLock, readonly, context, previousBlock) {
     var thiz = this;
 
     thiz.id = uuid();
@@ -11,6 +11,7 @@ function Block(p, data, isLock, readonly, context) {
 
     thiz.readonly = isTrue(readonly);
     thiz.context = isNotNone(context) ? context : SCHEMA.PAPER;
+    thiz.previousBlock = previousBlock;
 
     thiz.ele = $(
         [
@@ -136,8 +137,23 @@ function Block(p, data, isLock, readonly, context) {
     thiz.loadStyle();
     thiz.setData(dataObj.text);
 
+    $(p).replaceWith(thiz.ele);
+
+    thiz.initBind();
+    initEvent(thiz, Block.prototype);
+};
+
+Block.prototype.type = ELE_TYPE.BLOCK;
+
+Block.prototype.initBind = function () {
+    var thiz = this;
+
     thiz.ele.on('blur', function (e) {
         thiz.blur();
+    });
+
+    thiz.ele.on('click', function (e) {
+        thiz.focus();
     });
 
     thiz.ele.on('keydown', function (e) {
@@ -229,17 +245,7 @@ function Block(p, data, isLock, readonly, context) {
             thiz.clone();
         }
     });
-
-    thiz.ele.on('click', function (e) {
-        thiz.focus();
-    });
-
-    $(p).replaceWith(thiz.ele);
-
-    initEvent(thiz, Block.prototype);
 };
-
-Block.prototype.type = ELE_TYPE.BLOCK;
 
 Block.prototype.remove = function () {
     var thiz = this;
@@ -344,6 +350,19 @@ Block.prototype.initTask = function () {
     });
 };
 
+Block.prototype.resetPreviousStyle = function (nextBlock) {
+    var thiz = this;
+    if (isNotNone(nextBlock)
+        && thiz.isSameSchema(nextBlock)) {
+        if (thiz.isCode()) {
+            var style = $.extend({}, thiz.style);
+            style.setBorderBottom(0);
+            style.setBorderRadius([style.borderRadius, style.borderRadius, '0px', '0px'].join(' '));
+            thiz.applyStyle(style);
+        }
+    }
+};
+
 Block.prototype.loadStyle = function () {
     var thiz = this;
 
@@ -355,7 +374,27 @@ Block.prototype.loadStyle = function () {
             style.contentPaddingLeft = 0;
         }
 
-        thiz.ele.prop('style', style.toString());
+        if (isNotNone(thiz.previousBlock)) {
+            if (thiz.isSameSchema(thiz.previousBlock)) {
+                if (thiz.isCode()) {
+                    style.setBorderTop(0);
+                    style.setBorderRadius(['0px', '0px', style.borderRadius, style.borderRadius].join(' '));
+                    thiz.previousBlock.resetPreviousStyle(thiz);
+                }
+            }
+        }
+
+        thiz.applyStyle(style);
+    }
+};
+
+Block.prototype.applyStyle = function (style) {
+    var thiz = this;
+    thiz.style = style;
+    if (isNotNone(thiz.style)) {
+        thiz.ele.prop('style', thiz.style.toString());
+
+        // FIXME: use thiz.style
 
         thiz.ele.css({
             borderBottomWidth: 0,
@@ -372,10 +411,6 @@ Block.prototype.loadStyle = function () {
             borderLeft: style.borderLeft,
             borderRight: style.borderRight
         });
-
-        // thiz.borderEle.css({
-        //     borderBottom: style.borderBottom
-        // });
 
         var contentPaddingLeft = (parsePxToNum(style.paddingLeft)
             + parsePxToNum(style.contentPaddingLeft));
@@ -590,6 +625,14 @@ Block.prototype.getAttachData = function () {
 
 Block.prototype.isTask = function () {
     return this.schema === SCHEMA.TASK;
+};
+
+Block.prototype.isCode = function () {
+    return this.schema === SCHEMA.CODE;
+};
+
+Block.prototype.isSameSchema = function (block) {
+    return this.schema === block.schema;
 };
 
 Block.prototype.isGridContext = function () {

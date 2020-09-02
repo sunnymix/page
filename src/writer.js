@@ -50,7 +50,7 @@ Writer.prototype.createBlock = function (place, data) {
 
     var isLock = false;
 
-    var newBlock = new Block(tmp, data, isLock, thiz.readonly, thiz.context);
+    var newBlock = new Block(tmp, data, isLock, thiz.readonly, thiz.context, previousBlock);
 
     newBlock.bind('enter', function (block) {
         var nextBlock = thiz.createBlock(block);

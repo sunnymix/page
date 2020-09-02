@@ -24,6 +24,8 @@ function Style() {
     thiz.borderLeft = '0px solid transparent';
     thiz.borderRight = '0px solid transparent';
 
+    thiz.borderRadius = '0px';
+
     thiz.marginBottom = '0px';
     thiz.marginLeft = '0px';
     thiz.marginRight = '0px';
@@ -118,6 +120,11 @@ Style.prototype.setBorderRight = function (size, style, color) {
     return this;
 };
 
+Style.prototype.setBorderRadius = function (borderRadius) {
+    this.borderRadius = borderRadius;
+    return this;
+};
+
 Style.prototype.setMarginBottom = function (marginBottom) {
     this.marginBottom = Zoom(marginBottom);
     return this;
@@ -181,6 +188,7 @@ Style.prototype.toString = function () {
         'border-bottom: ' + this.borderBottom,
         'border-left: ' + this.borderLeft,
         'border-right: ' + this.borderRight,
+        'border-radius: ' + this.borderRadius,
         'margin-bottom: ' + this.marginBottom,
         'margin-left: ' + this.marginLeft,
         'margin-right: ' + this.marginRight,
@@ -224,18 +232,22 @@ var STYLE_H3 = new Style()
     .setLineHeight('22px')
 
 var STYLE_CODE = new Style()
-    .setFontFamily('"Verily Serif Mono", "Roboto Mono", Menlo, Monaco')
+    .setFontSize('9px')
+    .setFontFamily('"Roboto Mono", Menlo, Monaco')
+    .setColor('#555555')
     .setBackgroundColor('#f9f9f9')
     .setMarginLeft('10px')
-    .setMarginRight('10px')
+    .setMarginRight('0px')
     .setBorderTop('1px', 'solid', '#dddddd')
     .setBorderBottom('1px', 'solid', '#dddddd')
     .setBorderLeft('1px', 'solid', '#dddddd')
     .setBorderRight('1px', 'solid', '#dddddd')
+    .setBorderRadius('2px')
+    .setContentPaddingTop('0px')
+    .setContentPaddingBottom('0px')
     .setContentPaddingLeft('10px')
     .setContentPaddingRight('10px')
     ;
-
 
 window.Style = Style;
 window.getStyle = function (schema) {
