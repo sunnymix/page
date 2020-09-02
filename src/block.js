@@ -50,35 +50,45 @@ function Block(p, data, isLock, readonly, context) {
             '                    display: none;',
             '                    left: 0;',
             '                    top: 50%;',
-            '                    margin-top: -6px;',
-            '                    width: 10px;',
-            '                    height: 10px;',
-            '                    border: 1px solid #555555;',
+            '                    margin-top: -7px;',
+            '                    width: 14px;',
+            '                    height: 14px;',
             '                    border-radius: 50%;',
             '                    cursor: pointer;',
-            '                    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.3);',
             '                "',
             '            >',
             '                <div',
-            '                    class="block-task-ok"',
+            '                    class="block-task-uncheck"',
+            '                    style="',
+            '                        position: absolute;',
+            '                        left: 0px;',
+            '                        right: 0px;',
+            '                        top: 0px;',
+            '                        bottom: 0px;',
+            '                        background-color: #ffffff;',
+            '                        border: 1px solid #555555;',
+            '                        border-radius: 50%;',
+            '                    "',
+            '                 ></div>',
+            '                <div',
+            '                    class="block-task-check"',
             '                    style="',
             '                        position: absolute;',
             '                        display: none;',
-            '                        left: -1px;',
-            '                        right: -1px;',
-            '                        top: -1px;',
-            '                        bottom: -1px;',
+            '                        left: 0px;',
+            '                        right: 0px;',
+            '                        top: 0px;',
+            '                        bottom: 0px;',
             '                        background-color: #555555;',
-            '                        border: 1px solid #555555;',
             '                        border-radius: 50%;',
             '                    "',
             '                 >',
             '                    <div',
-            '                        class="block-task-ok-check"',
+            '                        class=""',
             '                        style="',
             '                            position: absolute;',
-            '                            left: 1px;',
-            '                            top: 3px;',
+            '                            left: 3px;',
+            '                            top: 5px;',
             '                            border-left: 1px solid #ffffff;',
             '                            border-bottom: 1px solid #ffffff;',
             '                            border-radius: 0px;',
@@ -111,7 +121,8 @@ function Block(p, data, isLock, readonly, context) {
     thiz.borderEle = thiz.ele.find('.block-border');
     thiz.actionsEle = thiz.ele.find('.block-actions');
     thiz.taskEle = thiz.ele.find('.block-task');
-    thiz.taskOkEle = thiz.ele.find('.block-task-ok');
+    thiz.taskUncheckEle = thiz.ele.find('.block-task-uncheck');
+    thiz.taskCheckEle = thiz.ele.find('.block-task-check');
     thiz.setCheck(dataObj.check);
 
     thiz.attachEle = thiz.ele.find('.block-attach');
@@ -501,7 +512,7 @@ Block.prototype.getCheckData = function () {
 
 Block.prototype.isCheck = function () {
     var thiz = this;
-    return thiz.taskOkEle.is(":visible");
+    return thiz.taskCheckEle.is(":visible");
 };
 
 Block.prototype.toggleCheck = function () {
@@ -514,9 +525,11 @@ Block.prototype.setCheck = function (check) {
     var thiz = this;
     if (thiz.isTask()) {
         if (+check > 0) {
-            thiz.taskOkEle.show();
+            thiz.taskCheckEle.show();
+            thiz.taskUncheckEle.hide();
         } else {
-            thiz.taskOkEle.hide();
+            thiz.taskCheckEle.hide();
+            thiz.taskUncheckEle.show();
         }
     }
 };
