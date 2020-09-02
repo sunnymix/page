@@ -30,7 +30,7 @@ function Style() {
     thiz.marginLeft = '0px';
     thiz.marginRight = '0px';
 
-    thiz.color = '#333333';
+    thiz.color = '#000000';
     thiz.backgroundColor = '#ffffff';
 
     // content override
@@ -234,9 +234,9 @@ var STYLE_H3 = new Style()
     .setLineHeight('22px')
 
 var STYLE_CODE = new Style()
-    .setFontSize('9px')
+    .setFontSize('11px')
     .setFontFamily('"Roboto Mono", Menlo, Monaco')
-    .setColor('#555555')
+    // .setColor('#555555')
     .setBackgroundColor('#f9f9f9')
     .setMarginLeft('10px')
     .setMarginRight('0px')
@@ -247,8 +247,8 @@ var STYLE_CODE = new Style()
     .setBorderRadius('2px')
     .setContentPaddingTop('0px')
     .setContentPaddingBottom('0px')
-    .setContentPaddingLeft('10px')
-    .setContentPaddingRight('10px')
+    .setContentPaddingLeft('5px')
+    .setContentPaddingRight('5px')
     ;
 
 window.Style = Style;
