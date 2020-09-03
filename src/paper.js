@@ -163,7 +163,9 @@ Paper.prototype.saveData = function (data, cb) {
         restPost('/api/paper', data, function (res) {
             if (res.code === 0) {
                 // todo: success flush
-                document.title = 'Saved - ' + data.title;
+                // success icon font: ☑
+                // fail icon font: ☒
+                document.title = '☑ ' + data.title;
                 setTimeout(function () {
                     document.title = data.title;
                 }, 1000);
