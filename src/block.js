@@ -13,6 +13,17 @@ function Block(p, data, isLock, readonly, context, previousBlock) {
     thiz.context = isNotNone(context) ? context : SCHEMA.PAPER;
     thiz.previousBlock = previousBlock;
 
+    thiz.initEle(p, dataObj);
+
+    thiz.initBind();
+    initEvent(thiz, Block.prototype);
+};
+
+Block.prototype.type = ELE_TYPE.BLOCK;
+
+Block.prototype.initEle = function (p, dataObj) {
+    var thiz = this;
+
     thiz.ele = $(
         [
             '<div',
@@ -21,6 +32,33 @@ function Block(p, data, isLock, readonly, context, previousBlock) {
             '        position: relative;',
             '    "',
             '>',
+            '    <div',
+            '        class="block-tags"',
+            '        style="',
+            '            position: absolute;',
+            '            top: 0px;',
+            '            bottom: 0px;',
+            '            left: -12px;',
+            '            ;',
+            '        ">',
+            '        <div',
+            '            class="block-priority-tag"',
+            '            style="',
+            '                position: absolute;',
+            '                display: none;',
+            '                left: 0px;',
+            '                top: 50%;',
+            '                width: 8px;',
+            '                height: 12px;',
+            '                line-height: 12px;',
+            '                margin-top: -7px;',
+            '                text-align: center;',
+            '                background-color: #f8f8f8;',
+            '                border: 1px solid #dddddd;',
+            '                border-radius: 1px;',
+            '            "',
+            '        >1</div>',
+            '    </div>',
             '    <div',
             '        class="block-actions"',
             '        style="',
@@ -138,12 +176,7 @@ function Block(p, data, isLock, readonly, context, previousBlock) {
     thiz.setData(dataObj.text);
 
     $(p).replaceWith(thiz.ele);
-
-    thiz.initBind();
-    initEvent(thiz, Block.prototype);
 };
-
-Block.prototype.type = ELE_TYPE.BLOCK;
 
 Block.prototype.initBind = function () {
     var thiz = this;
@@ -392,70 +425,26 @@ Block.prototype.applyStyle = function (style) {
     var thiz = this;
     thiz.style = style;
     if (isNotNone(thiz.style)) {
-        thiz.ele.prop('style', thiz.style.toString());
+        thiz.style.setPaddingLeft('0px');
+        thiz.style.setPaddingRight('0px');
 
-        // FIXME: use thiz.style
-
-        thiz.ele.css({
-            borderBottomWidth: 0,
-            paddingTop: style.paddingTop,
-            paddingBottom: style.paddingBottom,
-            paddingLeft: '0px',
-            paddingRight: '0px',
-            cursor: 'text',
-            backgroundColor: style.backgroundColor,
-            marginLeft: style.marginLeft,
-            marginRight: style.marginRight,
-            borderTop: style.borderTop,
-            borderBottom: style.borderBottom,
-            borderLeft: style.borderLeft,
-            borderRight: style.borderRight
-        });
-
-        var contentPaddingLeft = (parsePxToNum(style.paddingLeft)
-            + parsePxToNum(style.contentPaddingLeft));
-
-        var contentPaddingRight = (parsePxToNum(style.paddingRight)
-            + parsePxToNum(style.contentPaddingRight));
+        thiz.ele.prop('style', thiz.style.eleStyle());
 
         if (thiz.isTask()) {
-            contentPaddingLeft += 20;
             thiz.taskEle.show();
         } else {
             thiz.taskEle.hide();
         }
 
         thiz.taskEle.css({
-            left: style.contentPaddingLeft
+            left: thiz.style.contentPaddingLeft
         });
 
         thiz.attachEle.css({
-            paddingLeft: style.contentPaddingLeft
+            paddingLeft: thiz.style.contentPaddingLeft
         });
 
-        thiz.contentEle.css({
-            // do not set fontfamily, will cause some issue
-            wordBreak: style.wordBreak,
-            wordWrap: style.wordWrap,
-            fontWeight: style.fontWeight,
-            fontSize: style.fontSize,
-            minHeight: style.minHeight,
-            lineHeight: style.lineHeight,
-            color: style.color,
-            paddingTop: style.contentPaddingTop,
-            paddingBottom: style.contentPaddingBottom,
-            paddingLeft: contentPaddingLeft + 'px',
-            paddingRight: contentPaddingRight + 'px',
-            marginLeft: '-' + style.paddingLeft,
-            marginRight: '-' + style.paddingRight
-        });
-
-        if (thiz.isGridContext()) {
-            thiz.contentEle.css({
-                wordBreak: "keep-all",
-                wordWrap: 'normal'
-            });
-        }
+        thiz.contentEle.prop('style', thiz.style.contentStyle());
     }
 };
 

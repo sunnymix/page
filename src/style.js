@@ -40,6 +40,8 @@ function Style() {
 
     thiz.contentPaddingLeft = '0px';
     thiz.contentPaddingRight = '0px';
+
+    thiz.schema = SCHEMA.TEXT;
 }
 
 
@@ -170,16 +172,16 @@ Style.prototype.setContentPaddingRight = function (contentPaddingRight) {
     return this;
 };
 
-Style.prototype.toString = function () {
+Style.prototype.setSchema = function (schema) {
+    this.schema = schema;
+    return this;
+};
+
+Style.prototype.eleStyle = function () {
     return [
         'word-wrap: ' + this.wordWrap,
         'word-break: ' + this.wordBreak,
         'position: ' + this.position,
-        'font-family: ' + this.fontFamily,
-        'font-weight: ' + this.fontWeight,
-        'font-size: ' + this.fontSize,
-        'min-height: ' + this.minHeight,
-        'line-height: ' + this.lineHeight,
         'padding-top: ' + this.paddingTop,
         'padding-bottom: ' + this.paddingBottom,
         'padding-left: ' + this.paddingLeft,
@@ -192,9 +194,57 @@ Style.prototype.toString = function () {
         'margin-bottom: ' + this.marginBottom,
         'margin-left: ' + this.marginLeft,
         'margin-right: ' + this.marginRight,
-        'color: ' + this.color,
         'background-color: ' + this.backgroundColor
     ].join(';');
+};
+
+Style.prototype.contentStyle = function () {
+    var thiz = this;
+    var isGrid = thiz.isGrid();
+    return [
+        'word-wrap: ' + (isGrid ? 'normal' : thiz.wordWrap),
+        'word-break: ' + (isGrid ? 'keep-all' : thiz.wordBreak),
+        'position: ' + this.position,
+        'font-family: ' + this.fontFamily,
+        'font-weight: ' + this.fontWeight,
+        'font-size: ' + this.fontSize,
+        'min-height: ' + this.minHeight,
+        'line-height: ' + this.lineHeight,
+        'padding-top: ' + this.paddingTop,
+        'padding-bottom: ' + this.paddingBottom,
+        'padding-left: ' + thiz.getContentPaddingLeft(),
+        'padding-right: ' + thiz.getContentPaddingRight(),
+        'margin-left: ' + '-' + thiz.paddingLeft,
+        'margin-right: ' + '-' + thiz.paddingRight,
+        'color: ' + thiz.color
+    ].join(';');
+};
+
+Style.prototype.getContentPaddingLeft = function () {
+    var thiz = this;
+    return (
+        parsePxToNum(thiz.paddingLeft)
+        + parsePxToNum(thiz.contentPaddingLeft)
+        + (thiz.isTask() ? 20 : 0)
+    ) + 'px';
+};
+
+Style.prototype.getContentPaddingRight = function () {
+    var thiz = this;
+    return (
+        parsePxToNum(thiz.paddingRight)
+        + parsePxToNum(thiz.contentPaddingRight)
+    ) + 'px';
+};
+
+Style.prototype.isGrid = function () {
+    var thiz = this;
+    return thiz.schema === SCHEMA.GRID;
+};
+
+Style.prototype.isTask = function () {
+    var thiz = this;
+    return thiz.schema === SCHEMA.TASK;
 };
 
 // static variable
@@ -205,11 +255,13 @@ Style.Paper = {
 };
 
 var STYLE_TEXT = new Style()
+    .setSchema(SCHEMA.TEXT)
     .setPaddingLeft('10px')
     .setContentPaddingLeft('10px')
     ;
 
 var STYLE_H1 = new Style()
+    .setSchema(SCHEMA.H1)
     .setFontWeight('bold')
     .setFontSize('15px')
     .setMinHeight('26px')
@@ -219,6 +271,7 @@ var STYLE_H1 = new Style()
     ;
 
 var STYLE_H2 = new Style()
+    .setSchema(SCHEMA.H2)
     .setFontWeight('bold')
     .setFontSize('14px')
     .setMinHeight('24px')
@@ -228,12 +281,14 @@ var STYLE_H2 = new Style()
     ;
 
 var STYLE_H3 = new Style()
+    .setSchema(SCHEMA.H3)
     .setFontWeight('bold')
     .setFontSize('13px')
     .setMinHeight('22px')
     .setLineHeight('22px')
 
 var STYLE_CODE = new Style()
+    .setSchema(SCHEMA.CODE)
     .setFontSize('12px')
     .setFontFamily('"SF Mono", "Roboto Mono", Menlo, Monaco')
     // .setColor('#555555')
