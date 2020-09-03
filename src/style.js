@@ -234,7 +234,7 @@ var STYLE_H3 = new Style()
     .setLineHeight('22px')
 
 var STYLE_CODE = new Style()
-    .setFontSize('11px')
+    .setFontSize('12px')
     .setFontFamily('"SF Mono", "Roboto Mono", Menlo, Monaco')
     // .setColor('#555555')
     .setBackgroundColor('#f9f9f9')
