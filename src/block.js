@@ -404,7 +404,7 @@ Block.prototype.loadStyle = function () {
     if (isNotNone(style)) {
         // if in grid context then clear block content padding
         if (thiz.isGridContext()) {
-            style.contentPaddingLeft = 0;
+            style.contentPaddingLeft = '0px';
         }
 
         if (isNotNone(thiz.previousBlock)) {

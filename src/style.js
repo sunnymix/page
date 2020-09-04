@@ -179,6 +179,7 @@ Style.prototype.setSchema = function (schema) {
 
 Style.prototype.eleStyle = function () {
     return [
+        'cursor: text',
         'word-wrap: ' + this.wordWrap,
         'word-break: ' + this.wordBreak,
         'position: ' + this.position,
@@ -208,6 +209,7 @@ Style.prototype.contentStyle = function () {
         'font-family: ' + this.fontFamily,
         'font-weight: ' + this.fontWeight,
         'font-size: ' + this.fontSize,
+        'min-width: 1px',
         'min-height: ' + this.minHeight,
         'line-height: ' + this.lineHeight,
         'padding-top: ' + this.paddingTop,
@@ -306,6 +308,12 @@ var STYLE_CODE = new Style()
     .setContentPaddingRight('5px')
     ;
 
+var STYLE_TASK = new Style()
+    .setSchema(SCHEMA.TASK)
+    .setPaddingLeft('10px')
+    .setContentPaddingLeft('10px')
+    ;
+
 window.Style = Style;
 window.getStyle = function (schema) {
     if (schema === SCHEMA.TEXT) {
@@ -318,6 +326,8 @@ window.getStyle = function (schema) {
         return STYLE_H3;
     } else if (schema === SCHEMA.CODE) {
         return STYLE_CODE;
+    } else if (schema === SCHEMA.TASK) {
+        return STYLE_TASK;
     }
     return STYLE_TEXT;
 }
