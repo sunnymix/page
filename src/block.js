@@ -38,7 +38,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '            position: absolute;',
             '            top: 0px;',
             '            bottom: 0px;',
-            '            left: -12px;',
+            '            left: -15px;',
             '            ;',
             '        ">',
             '        <div',
@@ -48,14 +48,14 @@ Block.prototype.initEle = function (p, dataObj) {
             '                display: none;',
             '                left: 0px;',
             '                top: 50%;',
-            '                width: 8px;',
-            '                height: 12px;',
-            '                line-height: 12px;',
+            '                width: 12px;',
+            '                height: 14px;',
+            '                line-height: 14px;',
             '                margin-top: -7px;',
             '                text-align: center;',
-            '                background-color: #f8f8f8;',
-            '                border: 1px solid #dddddd;',
-            '                border-radius: 1px;',
+            '                background-color: #cccccc;',
+            '                color: #ffffff;',
+            '                border-radius: 2px;',
             '            "',
             '        >1</div>',
             '    </div>',
@@ -65,8 +65,8 @@ Block.prototype.initEle = function (p, dataObj) {
             '            position: absolute;',
             '            top: 0px;',
             '            bottom: 0px;',
-            '            left: -25px;',
-            '            right: -25px;',
+            '            left: -30px;',
+            '            right: -30px;',
             '            ;',
             '        "></div>',
             '    <div',
@@ -82,6 +82,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '                ;',
             '            "',
             '        >',
+            '            <div class="block-content" ' + (thiz.readonly ? '' : 'contenteditable="true"') + '></div>',
             '            <div',
             '                class="block-task"',
             '                style="',
@@ -138,7 +139,6 @@ Block.prototype.initEle = function (p, dataObj) {
             '                    ></div>',
             '                </div>',
             '            </div>',
-            '            <div class="block-content" ' + (thiz.readonly ? '' : 'contenteditable="true"') + '></div>',
             '        </div>',
             '    </div>',
             '    <div',
@@ -156,21 +156,24 @@ Block.prototype.initEle = function (p, dataObj) {
         ].join('')
     );
 
-    thiz.boxEle = thiz.ele.find('.block-box');
-    thiz.borderEle = thiz.ele.find('.block-border');
+    thiz.boxEle = thiz.ele.find('> .block-box');
+    thiz.borderEle = thiz.ele.find('> .block-box > .block-border');
     thiz.actionsEle = thiz.ele.find('.block-actions');
-    thiz.taskEle = thiz.ele.find('.block-task');
-    thiz.taskUncheckEle = thiz.ele.find('.block-task-uncheck');
-    thiz.taskCheckEle = thiz.ele.find('.block-task-check');
+    thiz.taskEle = thiz.ele.find('> .block-box > .block-border > .block-task');
+    thiz.taskUncheckEle = thiz.ele.find('> .block-box > .block-border > .block-task > .block-task-uncheck');
+    thiz.taskCheckEle = thiz.ele.find('> .block-box > .block-border > .block-task > .block-task-check');
     thiz.setCheck(dataObj.check);
 
-    thiz.attachEle = thiz.ele.find('.block-attach');
+    thiz.attachEle = thiz.ele.find('> .block-attach');
     thiz.setAttach(dataObj.attach);
+
+    thiz.tagsEls = thiz.ele.find('> .block-tags');
+    thiz.priorityTagEle = thiz.ele.find('> .block-tags > .block-priority-tag');
 
     thiz.initActions();
     thiz.initTask();
 
-    thiz.contentEle = thiz.ele.find('.block-content');
+    thiz.contentEle = thiz.ele.find('> .block-box > .block-border > .block-content');
 
     thiz.loadStyle();
     thiz.setData(dataObj.text);
@@ -428,7 +431,7 @@ Block.prototype.applyStyle = function (style) {
         thiz.style.setPaddingLeft('0px');
         thiz.style.setPaddingRight('0px');
 
-        thiz.ele.prop('style', thiz.style.eleStyle());
+        thiz.ele.prop('style', thiz.style.eleStyle(thiz.context));
 
         if (thiz.isTask()) {
             thiz.taskEle.show();
@@ -444,7 +447,7 @@ Block.prototype.applyStyle = function (style) {
             paddingLeft: thiz.style.contentPaddingLeft
         });
 
-        thiz.contentEle.prop('style', thiz.style.contentStyle());
+        thiz.contentEle.prop('style', thiz.style.contentStyle(thiz.context));
     }
 };
 
@@ -610,6 +613,39 @@ Block.prototype.getAttachData = function () {
         return this.attach.getUrl();
     }
     return "";
+};
+
+Block.prototype.setPriority = function (priority) {
+    var thiz = this;
+    thiz.applyPriority(priority);
+};
+
+Block.prototype.getPriorityColor = function (priority) {
+    var thiz = this;
+    var color = '#007bff';
+    var colors = ['#dc3545', '#ffc107', '#007bff'];
+    var colorIdx = priority - 1;
+    if (colorIdx >= 0 && colorIdx < colors.length) {
+        color = colors[colorIdx];
+    }
+    return color;
+};
+
+Block.prototype.applyPriority = function (priority) {
+    var thiz = this;
+    if (priority > 0) {
+        var color = thiz.getPriorityColor(priority);
+        thiz.priorityTagEle
+            .text(priority)
+            .css({
+                backgroundColor: color
+            })
+            .show();
+    } else {
+        thiz.priorityTagEle
+            .text(priority)
+            .hide();
+    }
 };
 
 Block.prototype.isTask = function () {

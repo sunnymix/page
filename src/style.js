@@ -177,7 +177,7 @@ Style.prototype.setSchema = function (schema) {
     return this;
 };
 
-Style.prototype.eleStyle = function () {
+Style.prototype.eleStyle = function (context) {
     return [
         'cursor: text',
         'word-wrap: ' + this.wordWrap,
@@ -199,9 +199,9 @@ Style.prototype.eleStyle = function () {
     ].join(';');
 };
 
-Style.prototype.contentStyle = function () {
+Style.prototype.contentStyle = function (context) {
     var thiz = this;
-    var isGrid = thiz.isGrid();
+    var isGrid = isNotNone(context) && context === SCHEMA.GRID;
     return [
         'word-wrap: ' + (isGrid ? 'normal' : thiz.wordWrap),
         'word-break: ' + (isGrid ? 'keep-all' : thiz.wordBreak),

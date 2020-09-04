@@ -108,6 +108,11 @@ Button.prototype.initContent = function () {
                 paddingLeft: (parsePxToNum(thiz.height) * 0.8) + 'px',
                 paddingRight: (parsePxToNum(thiz.height) * 0.5) + 'px'
             });
+        } else {
+            thiz.contentEle.css({
+                paddingLeft: '5px',
+                paddingRight: '5px'
+            });
         }
     }
 };

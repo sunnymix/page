@@ -39,22 +39,40 @@ Blockop.prototype.initActions = function () {
     var thiz = this;
     thiz.actionsEle = thiz.ele.find('.blockop-actions');
 
-    var cloneBtn = new Button('img/clone.png', 'clone', 28, null, 12);
+    var cloneBtn = new Button('img/clone.png', 'Clone', 28, null, 12);
     cloneBtn.appendTo(thiz.actionsEle);
     cloneBtn.click(function (e, btn) {
         thiz.clone();
     });
 
-    var attachBtn = new Button('img/paperclip-solid.png', 'attach', 28, null, 12);
+    var attachBtn = new Button('img/paperclip-solid.png', 'Attach', 28, null, 12);
     attachBtn.appendTo(thiz.actionsEle);
     attachBtn.click(function (e, btn) {
         thiz.attach();
     });
 
-    var removeBtn = new Button('img/times-solid.png', 'remove', 28, null, 12);
+    var removeBtn = new Button('img/times-solid.png', 'Remove', 28, null, 12);
     removeBtn.appendTo(thiz.actionsEle);
     removeBtn.click(function (e, btn) {
         thiz.remove();
+    });
+
+    var priority1Btn = new Button(null, 'P1', 28, null);
+    priority1Btn.appendTo(thiz.actionsEle);
+    priority1Btn.click(function (e, btn) {
+        thiz.setPriority(1);
+    });
+
+    var priority2Btn = new Button(null, 'P2', 28, null);
+    priority2Btn.appendTo(thiz.actionsEle);
+    priority2Btn.click(function (e, btn) {
+        thiz.setPriority(2);
+    });
+
+    var priority3Btn = new Button(null, 'P3', 28, null);
+    priority3Btn.appendTo(thiz.actionsEle);
+    priority3Btn.click(function (e, btn) {
+        thiz.setPriority(3);
     });
 };
 
@@ -92,6 +110,12 @@ Blockop.prototype.attach = function () {
 Blockop.prototype.remove = function () {
     var thiz = this;
     thiz.block.trigger('remove', thiz.block);
+    thiz.hide();
+};
+
+Blockop.prototype.setPriority = function (priority) {
+    var thiz = this;
+    thiz.block.setPriority(priority);
     thiz.hide();
 };
 
