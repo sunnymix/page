@@ -57,6 +57,12 @@ Blockop.prototype.initActions = function () {
         thiz.remove();
     });
 
+    var priority0Btn = new Button(null, 'P0', 28, null);
+    priority0Btn.appendTo(thiz.actionsEle);
+    priority0Btn.click(function (e, btn) {
+        thiz.setPriority(0);
+    });
+
     var priority1Btn = new Button(null, 'P1', 28, null);
     priority1Btn.appendTo(thiz.actionsEle);
     priority1Btn.click(function (e, btn) {

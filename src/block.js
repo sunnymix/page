@@ -55,7 +55,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '                text-align: center;',
             '                background-color: #cccccc;',
             '                color: #ffffff;',
-            '                border-radius: 2px;',
+            '                border-radius: 1px;',
             '            "',
             '        >1</div>',
             '    </div>',
@@ -169,6 +169,7 @@ Block.prototype.initEle = function (p, dataObj) {
 
     thiz.tagsEls = thiz.ele.find('> .block-tags');
     thiz.priorityTagEle = thiz.ele.find('> .block-tags > .block-priority-tag');
+    thiz.setPriority(dataObj.priority);
 
     thiz.initActions();
     thiz.initTask();
@@ -494,7 +495,6 @@ Block.prototype.remove = function () {
 
 Block.prototype.setData = function (content) {
     var thiz = this;
-
     if (thiz.schema === SCHEMA.GRID) {
         thiz.setGridData(content);
     } else {
@@ -504,38 +504,32 @@ Block.prototype.setData = function (content) {
 
 Block.prototype.setGridData = function (content) {
     var thiz = this;
-
     if (isNone(thiz.grid)) {
         thiz.switchToGrid();
     }
-
     thiz.grid.setData(content);
 };
 
 Block.prototype.getData = function () {
     var thiz = this;
-
     var defaultData = thiz.defaultData();
-
     return $.extend({}, defaultData, {
         schema: thiz.schema,
         text: thiz.getContentData(),
         attach: thiz.getAttachData(),
-        check: thiz.getCheckData()
+        check: thiz.getCheckData(),
+        priority: thiz.getPriorityData()
     });
 };
 
 Block.prototype.getContentData = function () {
     var thiz = this;
-
     var data = '';
-
     if (thiz.schema === SCHEMA.GRID) {
         data = thiz.getGridData();
     } else {
         data = thiz.contentEle.text();
     }
-
     return data;
 };
 
@@ -572,7 +566,8 @@ Block.prototype.defaultData = function () {
         schema: SCHEMA.TEXT,
         text: '',
         attach: '',
-        check: 0
+        check: 0,
+        priority: 0
     };
 };
 
@@ -601,7 +596,6 @@ Block.prototype.extractData = function (data) {
 
 Block.prototype.setAttach = function (url) {
     var attachBox = this.attachEle.find('.block-attach-box');
-
     if (isNotEmpty(url)) {
         this.attach = new Attach(url);
         this.attach.htmlTo(attachBox);
@@ -646,6 +640,12 @@ Block.prototype.applyPriority = function (priority) {
             .text(priority)
             .hide();
     }
+};
+
+Block.prototype.getPriorityData = function () {
+    var thiz = this;
+    var priority = +thiz.priorityTagEle.text();
+    return isNumber(priority) ? priority : 0;
 };
 
 Block.prototype.isTask = function () {
