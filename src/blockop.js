@@ -60,13 +60,6 @@ Blockop.prototype.initActions = function () {
         thiz.remove();
     });
 
-    var priority0Btn = new Button(null, 'P0', 30, null);
-    priority0Btn.border('0 1px 0 0');
-    priority0Btn.appendTo(thiz.actionsEle);
-    priority0Btn.click(function (e, btn) {
-        thiz.setPriority(0);
-    });
-
     var priority1Btn = new Button(null, 'P1', 30, null);
     priority1Btn.border('0 1px 0 0');
     priority1Btn.appendTo(thiz.actionsEle);
@@ -82,9 +75,16 @@ Blockop.prototype.initActions = function () {
     });
 
     var priority3Btn = new Button(null, 'P3', 30, null);
+    priority3Btn.border('0 1px 0 0');
     priority3Btn.appendTo(thiz.actionsEle);
     priority3Btn.click(function (e, btn) {
         thiz.setPriority(3);
+    });
+
+    var priority0Btn = new Button(null, 'P0', 30, null);
+    priority0Btn.appendTo(thiz.actionsEle);
+    priority0Btn.click(function (e, btn) {
+        thiz.setPriority(0);
     });
 };
 

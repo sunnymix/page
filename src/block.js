@@ -38,7 +38,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '            position: absolute;',
             '            top: 0px;',
             '            bottom: 0px;',
-            '            left: -15px;',
+            '            left: -17px;',
             '            ;',
             '        ">',
             '        <div',
@@ -48,16 +48,30 @@ Block.prototype.initEle = function (p, dataObj) {
             '                display: none;',
             '                left: 0px;',
             '                top: 50%;',
-            '                width: 12px;',
-            '                height: 14px;',
-            '                line-height: 14px;',
-            '                margin-top: -7px;',
+            '                width: 15px;',
+            '                height: 12px;',
+            '                line-height: 12px;',
+            '                margin-top: -6px;',
             '                text-align: center;',
-            '                background-color: #cccccc;',
             '                color: #ffffff;',
             '                border-radius: 1px;',
             '            "',
-            '        >1</div>',
+            '        >',
+            '            <div',
+            '                class="block-priority-data"',
+            '                style="',
+            '                    position: absolute;',
+            '                    left: 0;',
+            '                    right: 0;',
+            '                    top: 0;',
+            '                    bottom: 0;',
+            '                    border-radius: 0px;',
+            '                    transform: scale(0.8);',
+            '                    word-break: keep-all;',
+            '                    white-space: nowrap;',
+            '                "',
+            '            ></div>',
+            '        </div>',
             '    </div>',
             '    <div',
             '        class="block-actions"',
@@ -169,6 +183,7 @@ Block.prototype.initEle = function (p, dataObj) {
 
     thiz.tagsEls = thiz.ele.find('> .block-tags');
     thiz.priorityTagEle = thiz.ele.find('> .block-tags > .block-priority-tag');
+    thiz.priorityDataEle = thiz.ele.find('> .block-tags > .block-priority-tag > .block-priority-data');
     thiz.setPriority(dataObj.priority);
 
     thiz.initActions();
@@ -629,22 +644,18 @@ Block.prototype.applyPriority = function (priority) {
     var thiz = this;
     if (priority > 0) {
         var color = thiz.getPriorityColor(priority);
-        thiz.priorityTagEle
-            .text(priority)
-            .css({
-                backgroundColor: color
-            })
-            .show();
+        thiz.priorityTagEle.show().css({
+            backgroundColor: color
+        });
+        thiz.priorityDataEle.text('P' + priority);
     } else {
-        thiz.priorityTagEle
-            .text(priority)
-            .hide();
+        thiz.priorityTagEle.hide();
     }
 };
 
 Block.prototype.getPriorityData = function () {
     var thiz = this;
-    var priority = +thiz.priorityTagEle.text();
+    var priority = +(thiz.priorityTagEle.text().replace(/p/gi, ''));
     return isNumber(priority) ? priority : 0;
 };
 
