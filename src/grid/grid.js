@@ -33,7 +33,11 @@ function Grid(place, data, lock, readonly) {
         '    <div',
         '        class="grid-actions"',
         '        style="',
-        '            position: relative;',
+        '            display: none;',
+        '            position: absolute;',
+        '            top: 100%;',
+        '            z-index: 1;',
+        '            border: 1px solid #eeeeee;',
         '        "',
         '    >',
         '    </div>',
@@ -55,6 +59,7 @@ Grid.prototype.init = function () {
     }
     initEvent(thiz, Grid.prototype);
     thiz.createActions();
+    thiz.initBind();
 };
 
 Grid.prototype.createActions = function () {
@@ -62,13 +67,15 @@ Grid.prototype.createActions = function () {
 
     // Rows:
 
-    var addRowBtn = new Button('img/plus-solid.png', 'row', 22, 'auto', 12, 12);
+    var addRowBtn = new Button('img/plus-solid.png', 'row', 30, 'auto', 12, 12);
+    addRowBtn.border('0 1px 0 0');
     addRowBtn.appendTo(thiz.actionsEle);
     addRowBtn.click(function () {
         thiz.addRow();
     });
 
-    var removeRowBtn = new Button('img/times-solid.png', 'row', 22, 'auto', 12, 12);
+    var removeRowBtn = new Button('img/times-solid.png', 'row', 30, 'auto', 12, 12);
+    removeRowBtn.border('0 1px 0 0');
     removeRowBtn.appendTo(thiz.actionsEle);
     removeRowBtn.click(function () {
         thiz.removeRow();
@@ -76,13 +83,15 @@ Grid.prototype.createActions = function () {
 
     // Row Moves:
 
-    var moveUpBtn = new Button('img/angle-up-solid.png', 'up', 22, 'auto', 12, 12);
+    var moveUpBtn = new Button('img/angle-up-solid.png', 'up', 30, 'auto', 12, 12);
+    moveUpBtn.border('0 1px 0 0');
     moveUpBtn.appendTo(thiz.actionsEle);
     moveUpBtn.click(function () {
         thiz.moveUp();
     });
 
-    var moveDownBtn = new Button('img/angle-down-solid.png', 'down', 22, 'auto', 12, 12);
+    var moveDownBtn = new Button('img/angle-down-solid.png', 'down', 30, 'auto', 12, 12);
+    moveDownBtn.border('0 1px 0 0');
     moveDownBtn.appendTo(thiz.actionsEle);
     moveDownBtn.click(function () {
         thiz.moveDown();
@@ -90,13 +99,15 @@ Grid.prototype.createActions = function () {
 
     // Columns:
 
-    var addColumnBtn = new Button('img/plus-solid.png', 'col', 22, 'auto', 12, 12);
+    var addColumnBtn = new Button('img/plus-solid.png', 'col', 30, 'auto', 12, 12);
+    addColumnBtn.border('0 1px 0 0');
     addColumnBtn.appendTo(thiz.actionsEle);
     addColumnBtn.click(function () {
         thiz.addColumn();
     });
 
-    var removeColumnBtn = new Button('img/times-solid.png', 'col', 22, 'auto', 12, 12);
+    var removeColumnBtn = new Button('img/times-solid.png', 'col', 30, 'auto', 12, 12);
+    removeColumnBtn.border('0 1px 0 0');
     removeColumnBtn.appendTo(thiz.actionsEle);
     removeColumnBtn.click(function () {
         thiz.removeColumn();
@@ -104,16 +115,26 @@ Grid.prototype.createActions = function () {
 
     // Column Moves:
 
-    var moveLeftBtn = new Button('img/angle-left-solid.png', 'left', 22, 'auto', 12, 12);
+    var moveLeftBtn = new Button('img/angle-left-solid.png', 'left', 30, 'auto', 12, 12);
+    moveLeftBtn.border('0 1px 0 0');
     moveLeftBtn.appendTo(thiz.actionsEle);
     moveLeftBtn.click(function () {
         thiz.moveLeft();
     });
 
-    var moveRightBtn = new Button('img/angle-right-solid.png', 'right', 22, 'auto', 12, 12);
+    var moveRightBtn = new Button('img/angle-right-solid.png', 'right', 30, 'auto', 12, 12);
     moveRightBtn.appendTo(thiz.actionsEle);
     moveRightBtn.click(function () {
         thiz.moveRight();
+    });
+};
+
+Grid.prototype.initBind = function () {
+    var thiz = this;
+    thiz.ele.on('mouseenter', function () {
+        thiz.actionsEle.show();
+    }).on('mouseleave', function () {
+        thiz.actionsEle.hide();
     });
 };
 

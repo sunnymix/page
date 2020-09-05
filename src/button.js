@@ -105,13 +105,13 @@ Button.prototype.initContent = function () {
         thiz.contentEle.html(thiz.content);
         if (isNotNone(thiz.icon)) {
             thiz.contentEle.css({
-                paddingLeft: (parsePxToNum(thiz.height) * 0.8) + 'px',
-                paddingRight: (parsePxToNum(thiz.height) * 0.5) + 'px'
+                paddingLeft: thiz.iconEle.width(),
+                paddingRight: '10px'
             });
         } else {
             thiz.contentEle.css({
-                paddingLeft: '5px',
-                paddingRight: '5px'
+                paddingLeft: '10px',
+                paddingRight: '10px'
             });
         }
     }
@@ -168,6 +168,17 @@ Button.prototype.show = function () {
 Button.prototype.hide = function () {
     var thiz = this;
     thiz.ele.hide();
+};
+
+Button.prototype.border = function (width) {
+    var thiz = this;
+    if (isNotEmpty(width)) {
+        thiz.ele.css({
+            borderColor: '#eeeeee',
+            borderStyle: 'solid',
+            borderWidth: width
+        });
+    }
 };
 
 window.Button = Button;
