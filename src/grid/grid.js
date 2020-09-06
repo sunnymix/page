@@ -38,6 +38,7 @@ function Grid(place, data, lock, readonly) {
         '            top: 100%;',
         '            z-index: 1;',
         '            border: 1px solid #eeeeee;',
+        '            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.08);',
         '        "',
         '    >',
         '    </div>',
