@@ -38,7 +38,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '            position: absolute;',
             '            top: 0px;',
             '            bottom: 0px;',
-            '            left: -17px;',
+            '            left: -18px;',
             '            ;',
             '        ">',
             '        <div',
@@ -48,13 +48,13 @@ Block.prototype.initEle = function (p, dataObj) {
             '                display: none;',
             '                left: 0px;',
             '                top: 50%;',
-            '                width: 15px;',
-            '                height: 12px;',
-            '                line-height: 12px;',
-            '                margin-top: -6px;',
+            '                width: 16px;',
+            '                height: 16px;',
+            '                line-height: 16px;',
+            '                margin-top: -8px;',
             '                text-align: center;',
             '                color: #ffffff;',
-            '                border-radius: 1px;',
+            '                border-radius: 50%;',
             '            "',
             '        >',
             '            <div',
@@ -65,8 +65,9 @@ Block.prototype.initEle = function (p, dataObj) {
             '                    right: 0;',
             '                    top: 0;',
             '                    bottom: 0;',
+            '                    font-weight: bold;',
             '                    border-radius: 0px;',
-            '                    transform: scale(0.8);',
+            '                    transform: scale(0.75);',
             '                    word-break: keep-all;',
             '                    white-space: nowrap;',
             '                "',
@@ -632,7 +633,7 @@ Block.prototype.setPriority = function (priority) {
 Block.prototype.getPriorityColor = function (priority) {
     var thiz = this;
     var color = '#007bff';
-    var colors = ['#dc3545', '#ffc107', '#007bff'];
+    var colors = ['#dc3545', '#28a745', '#007bff'];
     var colorIdx = priority - 1;
     if (colorIdx >= 0 && colorIdx < colors.length) {
         color = colors[colorIdx];
@@ -650,6 +651,7 @@ Block.prototype.applyPriority = function (priority) {
         thiz.priorityDataEle.text('P' + priority);
     } else {
         thiz.priorityTagEle.hide();
+        thiz.priorityDataEle.text(priority);
     }
 };
 
