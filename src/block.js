@@ -55,6 +55,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '                text-align: center;',
             '                color: #ffffff;',
             '                border-radius: 50%;',
+            '                opacity: 0.7;',
             '            "',
             '        >',
             '            <div',
