@@ -14,6 +14,7 @@ function Grid(place, data, lock, readonly) {
         '        class="grid-box"',
         '        style="',
         '            position: relative;',
+        '            padding: 0 0 1px 0;',
         '            overflow-x: auto;',
         '        "',
         '    >',
