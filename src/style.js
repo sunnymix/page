@@ -4,7 +4,7 @@ function Style(block) {
     thiz.block = block;
 
     thiz.wordWrap = 'break-word';
-    thiz.wordBreak = 'normal';
+    thiz.wordBreak = 'break-all';
     thiz.position = 'relative';
 
     thiz.fontFamily = '';
@@ -185,12 +185,7 @@ Style.prototype.setSchema = function (schema) {
 Style.prototype.eleStyle = function (context) {
     return [
         'cursor: text',
-        'word-wrap: ' + this.wordWrap,
-        'word-break: ' + this.wordBreak,
         'position: ' + this.position,
-        'font-family: ' + this.fontFamily,
-        'font-weight: ' + this.fontWeight,
-        'font-size: ' + this.fontSize,
         'padding-top: ' + this.paddingTop,
         'padding-bottom: ' + this.paddingBottom,
         'padding-left: ' + this.paddingLeft,
@@ -209,7 +204,7 @@ Style.prototype.eleStyle = function (context) {
 
 Style.prototype.contentStyle = function () {
     var thiz = this;
-    var isInGrid = thiz.block.context === SCHEMA.GRID;
+    var isInGrid = thiz.block.isGridContext();
     return [
         'word-wrap: ' + (isInGrid ? 'normal' : thiz.wordWrap),
         'word-break: ' + (isInGrid ? 'keep-all' : thiz.wordBreak),
