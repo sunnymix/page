@@ -40,27 +40,6 @@ Blockop.prototype.initActions = function () {
     var thiz = this;
     thiz.actionsEle = thiz.ele.find('.blockop-actions');
 
-    var cloneBtn = new Button('img/clone.png', 'Clone', 30, null, 12);
-    cloneBtn.border('0 1px 0 0');
-    cloneBtn.appendTo(thiz.actionsEle);
-    cloneBtn.click(function (e, btn) {
-        thiz.clone();
-    });
-
-    var attachBtn = new Button('img/paperclip-solid.png', 'Attach', 30, null, 12);
-    attachBtn.border('0 1px 0 0');
-    attachBtn.appendTo(thiz.actionsEle);
-    attachBtn.click(function (e, btn) {
-        thiz.attach();
-    });
-
-    var removeBtn = new Button('img/times-solid.png', 'Remove', 30, null, 12);
-    removeBtn.border('0 1px 0 0');
-    removeBtn.appendTo(thiz.actionsEle);
-    removeBtn.click(function (e, btn) {
-        thiz.remove();
-    });
-
     var priority1Btn = new Button(null, 'P1', 30, null);
     priority1Btn.border('0 1px 0 0');
     priority1Btn.appendTo(thiz.actionsEle);
@@ -83,9 +62,37 @@ Blockop.prototype.initActions = function () {
     });
 
     var priority0Btn = new Button(null, 'P0', 30, null);
+    priority0Btn.border('0 1px 0 0');
     priority0Btn.appendTo(thiz.actionsEle);
     priority0Btn.click(function (e, btn) {
         thiz.setPriority(0);
+    });
+
+    var highlightBtn = new Button(null, 'Highlight', 30, null);
+    highlightBtn.border('0 1px 0 0');
+    highlightBtn.appendTo(thiz.actionsEle);
+    highlightBtn.click(function (e, btn) {
+        thiz.toggleHighlight();
+    });
+
+    var cloneBtn = new Button('img/clone.png', 'Clone', 30, null, 16);
+    cloneBtn.border('0 1px 0 0');
+    cloneBtn.appendTo(thiz.actionsEle);
+    cloneBtn.click(function (e, btn) {
+        thiz.clone();
+    });
+
+    var attachBtn = new Button('img/paperclip-solid.png', 'Attach', 30, null, 16);
+    attachBtn.border('0 1px 0 0');
+    attachBtn.appendTo(thiz.actionsEle);
+    attachBtn.click(function (e, btn) {
+        thiz.attach();
+    });
+
+    var removeBtn = new Button('img/times-solid.png', 'Remove', 30, null, 16);
+    removeBtn.appendTo(thiz.actionsEle);
+    removeBtn.click(function (e, btn) {
+        thiz.remove();
     });
 };
 
@@ -129,6 +136,12 @@ Blockop.prototype.remove = function () {
 Blockop.prototype.setPriority = function (priority) {
     var thiz = this;
     thiz.block.setPriority(priority);
+    thiz.hide();
+};
+
+Blockop.prototype.toggleHighlight = function () {
+    var thiz = this;
+    thiz.block.toggleHighlight();
     thiz.hide();
 };
 

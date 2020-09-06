@@ -2,6 +2,8 @@
 function Style() {
     var thiz = this;
 
+    thiz.schema = SCHEMA.TEXT;
+
     thiz.wordWrap = 'break-word';
     thiz.wordBreak = 'normal';
     thiz.position = 'relative';
@@ -40,8 +42,6 @@ function Style() {
 
     thiz.contentPaddingLeft = '0px';
     thiz.contentPaddingRight = '0px';
-
-    thiz.schema = SCHEMA.TEXT;
 }
 
 

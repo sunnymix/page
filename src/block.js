@@ -195,6 +195,7 @@ Block.prototype.initEle = function (p, dataObj) {
 
     thiz.loadStyle();
     thiz.setData(dataObj.text);
+    thiz.setHighlight(dataObj.highlight);
 
     $(p).replaceWith(thiz.ele);
 };
@@ -535,7 +536,8 @@ Block.prototype.getData = function () {
         text: thiz.getContentData(),
         attach: thiz.getAttachData(),
         check: thiz.getCheckData(),
-        priority: thiz.getPriorityData()
+        priority: thiz.getPriorityData(),
+        highlight: thiz.getHighlightData()
     });
 };
 
@@ -584,7 +586,8 @@ Block.prototype.defaultData = function () {
         text: '',
         attach: '',
         check: 0,
-        priority: 0
+        priority: 0,
+        highlight: 0
     };
 };
 
@@ -660,6 +663,38 @@ Block.prototype.getPriorityData = function () {
     var thiz = this;
     var priority = +(thiz.priorityTagEle.text().replace(/p/gi, ''));
     return isNumber(priority) ? priority : 0;
+};
+
+Block.prototype.toggleHighlight = function () {
+    var thiz = this;
+    var highlight = thiz.getHighlightData();
+    highlight = (highlight > 0) ? 0 : 1;
+    thiz.setHighlight(highlight);
+};
+
+Block.prototype.setHighlight = function (highlight) {
+    var thiz = this;
+    thiz.highlight = highlight;
+    thiz.applyHighlight(highlight);
+};
+
+Block.prototype.applyHighlight = function (highlight) {
+    var thiz = this;
+    if (highlight > 0) {
+        thiz.contentEle.css({
+            backgroundColor: '#ffeeba'
+        });
+    } else {
+        thiz.contentEle.css({
+            backgroundColor: 'transparent'
+        });
+    }
+};
+
+Block.prototype.getHighlightData = function () {
+    var thiz = this;
+    var highlight = isNumber(thiz.highlight) ? thiz.highlight : 0;
+    return highlight;
 };
 
 Block.prototype.isTask = function () {
