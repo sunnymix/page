@@ -1,8 +1,7 @@
 
-function Style() {
+function Style(block) {
     var thiz = this;
-
-    thiz.schema = SCHEMA.TEXT;
+    thiz.block = block;
 
     thiz.wordWrap = 'break-word';
     thiz.wordBreak = 'normal';
@@ -35,14 +34,21 @@ function Style() {
     thiz.backgroundColor = '#ffffff';
 
     // content override
-
     thiz.contentPaddingTop = '3px';
     thiz.contentPaddingBottom = '3px';
-
     thiz.contentPaddingLeft = '0px';
     thiz.contentPaddingRight = '0px';
-}
 
+    // const
+    thiz.priorityWidth = 30;
+
+    thiz.initStyle();
+};
+
+Style.Paper = {
+    paddingX: '40px',
+    paddingY: '40px'
+};
 
 Style.prototype.setFontFamily = function (fontFamily) {
     this.fontFamily = fontFamily;
@@ -201,12 +207,12 @@ Style.prototype.eleStyle = function (context) {
     ].join(';');
 };
 
-Style.prototype.contentStyle = function (context) {
+Style.prototype.contentStyle = function () {
     var thiz = this;
-    var isGrid = isNotNone(context) && context === SCHEMA.GRID;
+    var isInGrid = thiz.block.context === SCHEMA.GRID;
     return [
-        'word-wrap: ' + (isGrid ? 'normal' : thiz.wordWrap),
-        'word-break: ' + (isGrid ? 'keep-all' : thiz.wordBreak),
+        'word-wrap: ' + (isInGrid ? 'normal' : thiz.wordWrap),
+        'word-break: ' + (isInGrid ? 'keep-all' : thiz.wordBreak),
         'position: ' + this.position,
         'font-family: ' + this.fontFamily,
         'font-weight: ' + this.fontWeight,
@@ -229,7 +235,23 @@ Style.prototype.getContentPaddingLeft = function () {
     return (
         parsePxToNum(thiz.paddingLeft)
         + parsePxToNum(thiz.contentPaddingLeft)
-        + (thiz.isTask() ? 20 : 0)
+        + (thiz.block.isShowPriority() ? thiz.priorityWidth : 0)
+        + (thiz.block.isTask() ? 20 : 0)
+    ) + 'px';
+};
+
+Style.prototype.getTagsLeft = function () {
+    var thiz = this;
+    return (
+        parsePxToNum(thiz.contentPaddingLeft)
+    ) + 'px';
+};
+
+Style.prototype.getTaskLeft = function () {
+    var thiz = this;
+    return (
+        parsePxToNum(thiz.contentPaddingLeft)
+        + (thiz.block.isShowPriority() ? thiz.priorityWidth : 0)
     ) + 'px';
 };
 
@@ -241,98 +263,87 @@ Style.prototype.getContentPaddingRight = function () {
     ) + 'px';
 };
 
-Style.prototype.isGrid = function () {
+Style.prototype.initStyle = function () {
     var thiz = this;
-    return thiz.schema === SCHEMA.GRID;
+    var handers = {};
+    handers[SCHEMA.TEXT] = thiz.initText;
+    handers[SCHEMA.H1] = thiz.initH1;
+    handers[SCHEMA.H2] = thiz.initH2;
+    handers[SCHEMA.H3] = thiz.initH3;
+    handers[SCHEMA.CODE] = thiz.initCode;
+    handers[SCHEMA.TASK] = thiz.initTask;
+    var handler = handers[thiz.block.schema];
+    if (isFunction(handler)) {
+        handler.call(thiz);
+    }
 };
 
-Style.prototype.isTask = function () {
-    var thiz = this;
-    return thiz.schema === SCHEMA.TASK;
+Style.prototype.initText = function () {
+    this
+        .setPaddingLeft('10px')
+        .setContentPaddingLeft('10px')
+        ;
 };
 
-// static variable
-
-Style.Paper = {
-    paddingX: '40px',
-    paddingY: '40px'
+Style.prototype.initH1 = function () {
+    this
+        .setFontWeight('bold')
+        .setFontSize('15px')
+        .setMinHeight('26px')
+        .setLineHeight('26px')
+        .setBorderBottom('2px')
+        .setMarginBottom('5px')
+        ;
 };
 
-var STYLE_TEXT = new Style()
-    .setSchema(SCHEMA.TEXT)
-    .setPaddingLeft('10px')
-    .setContentPaddingLeft('10px')
-    ;
+Style.prototype.initH2 = function () {
+    this
+        .setFontWeight('bold')
+        .setFontSize('14px')
+        .setMinHeight('24px')
+        .setLineHeight('24px')
+        .setBorderBottom('1px')
+        .setMarginBottom('5px')
+        ;
+}
 
-var STYLE_H1 = new Style()
-    .setSchema(SCHEMA.H1)
-    .setFontWeight('bold')
-    .setFontSize('15px')
-    .setMinHeight('26px')
-    .setLineHeight('26px')
-    .setBorderBottom('2px')
-    .setMarginBottom('5px')
-    ;
+Style.prototype.initH3 = function () {
+    this
+        .setFontWeight('bold')
+        .setFontSize('13px')
+        .setMinHeight('22px')
+        .setLineHeight('22px')
+        ;
+};
 
-var STYLE_H2 = new Style()
-    .setSchema(SCHEMA.H2)
-    .setFontWeight('bold')
-    .setFontSize('14px')
-    .setMinHeight('24px')
-    .setLineHeight('24px')
-    .setBorderBottom('1px')
-    .setMarginBottom('5px')
-    ;
+Style.prototype.initCode = function () {
+    this
+        .setFontSize('12px')
+        .setFontFamily('Monospaced, Menlo, Monaco')
+        // .setColor('#555555')
+        .setBackgroundColor('#f9f9f9')
+        .setMarginLeft('10px')
+        .setMarginRight('0px')
+        .setBorderTop('1px', 'solid', '#dddddd')
+        .setBorderBottom('1px', 'solid', '#dddddd')
+        .setBorderLeft('1px', 'solid', '#dddddd')
+        .setBorderRight('1px', 'solid', '#dddddd')
+        .setBorderRadius('2px')
+        .setContentPaddingTop('0px')
+        .setContentPaddingBottom('0px')
+        .setContentPaddingLeft('5px')
+        .setContentPaddingRight('5px')
+        ;
+};
 
-var STYLE_H3 = new Style()
-    .setSchema(SCHEMA.H3)
-    .setFontWeight('bold')
-    .setFontSize('13px')
-    .setMinHeight('22px')
-    .setLineHeight('22px')
-
-var STYLE_CODE = new Style()
-    .setSchema(SCHEMA.CODE)
-    .setFontSize('12px')
-    .setFontFamily('Monospaced, Menlo, Monaco')
-    // .setColor('#555555')
-    .setBackgroundColor('#f9f9f9')
-    .setMarginLeft('10px')
-    .setMarginRight('0px')
-    .setBorderTop('1px', 'solid', '#dddddd')
-    .setBorderBottom('1px', 'solid', '#dddddd')
-    .setBorderLeft('1px', 'solid', '#dddddd')
-    .setBorderRight('1px', 'solid', '#dddddd')
-    .setBorderRadius('2px')
-    .setContentPaddingTop('0px')
-    .setContentPaddingBottom('0px')
-    .setContentPaddingLeft('5px')
-    .setContentPaddingRight('5px')
-    ;
-
-var STYLE_TASK = new Style()
-    .setSchema(SCHEMA.TASK)
-    .setPaddingLeft('10px')
-    .setContentPaddingLeft('10px')
-    ;
+Style.prototype.initTask = function () {
+    this
+        .setPaddingLeft('10px')
+        .setContentPaddingLeft('10px')
+        ;
+};
 
 window.Style = Style;
-window.getStyle = function (schema) {
-    if (schema === SCHEMA.TEXT) {
-        return STYLE_TEXT;
-    } else if (schema === SCHEMA.H1) {
-        return STYLE_H1;
-    } else if (schema === SCHEMA.H2) {
-        return STYLE_H2;
-    } else if (schema === SCHEMA.H3) {
-        return STYLE_H3;
-    } else if (schema === SCHEMA.CODE) {
-        return STYLE_CODE;
-    } else if (schema === SCHEMA.TASK) {
-        return STYLE_TASK;
-    }
-    return STYLE_TEXT;
-}
 
 window.resetCss = function () {
     $('head').append([

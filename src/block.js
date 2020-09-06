@@ -6,7 +6,6 @@ function Block(p, data, isLock, readonly, context, previousBlock) {
     var dataObj = thiz.extractData(data);
 
     thiz.schema = dataObj.schema;
-    thiz.style = getStyle(thiz.schema);
     thiz.isLock = isTrue(isLock);
 
     thiz.readonly = isTrue(readonly);
@@ -38,7 +37,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '            position: absolute;',
             '            top: 0px;',
             '            bottom: 0px;',
-            '            left: -15px;',
+            '            left: 0;',
             '            ;',
             '        ">',
             '        <div',
@@ -48,13 +47,13 @@ Block.prototype.initEle = function (p, dataObj) {
             '                display: none;',
             '                left: 0px;',
             '                top: 50%;',
-            '                width: 14px;',
+            '                width: 20px;',
             '                height: 14px;',
             '                line-height: 14px;',
             '                margin-top: -7px;',
             '                text-align: center;',
             '                color: #ffffff;',
-            '                border-radius: 50%;',
+            '                border-radius: 2px;',
             '                opacity: 0.8;',
             '            "',
             '        >',
@@ -69,7 +68,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '                    font-size: 12px;',
             '                    font-weight: normal;',
             '                    border-radius: 0px;',
-            '                    transform: scale(0.8);',
+            '                    transform: scale(0.9);',
             '                    word-break: keep-all;',
             '                    white-space: nowrap;',
             '                "',
@@ -184,7 +183,7 @@ Block.prototype.initEle = function (p, dataObj) {
     thiz.attachEle = thiz.ele.find('> .block-attach');
     thiz.setAttach(dataObj.attach);
 
-    thiz.tagsEls = thiz.ele.find('> .block-tags');
+    thiz.tagsEle = thiz.ele.find('> .block-tags');
     thiz.priorityTagEle = thiz.ele.find('> .block-tags > .block-priority-tag');
     thiz.priorityDataEle = thiz.ele.find('> .block-tags > .block-priority-tag > .block-priority-data');
     thiz.setPriority(dataObj.priority);
@@ -421,27 +420,21 @@ Block.prototype.resetPreviousStyle = function (nextBlock) {
 
 Block.prototype.loadStyle = function () {
     var thiz = this;
-
-    var style = $.extend({}, getStyle(thiz.schema));
-
-    if (isNotNone(style)) {
-        // if in grid context then clear block content padding
-        if (thiz.isGridContext()) {
-            style.contentPaddingLeft = '0px';
-        }
-
-        if (isNotNone(thiz.previousBlock)) {
-            if (thiz.isSameSchema(thiz.previousBlock)) {
-                if (thiz.isCode()) {
-                    style.setBorderTop(0);
-                    style.setBorderRadius(['0px', '0px', style.borderRadius, style.borderRadius].join(' '));
-                    thiz.previousBlock.resetPreviousStyle(thiz);
-                }
+    var style = new Style(thiz);
+    // if in grid context then clear block content padding
+    if (thiz.isGridContext()) {
+        style.contentPaddingLeft = '0px';
+    }
+    if (isNotNone(thiz.previousBlock)) {
+        if (thiz.isSameSchema(thiz.previousBlock)) {
+            if (thiz.isCode()) {
+                style.setBorderTop(0);
+                style.setBorderRadius(['0px', '0px', style.borderRadius, style.borderRadius].join(' '));
+                thiz.previousBlock.resetPreviousStyle(thiz);
             }
         }
-
-        thiz.applyStyle(style);
     }
+    thiz.applyStyle(style);
 };
 
 Block.prototype.applyStyle = function (style) {
@@ -459,8 +452,12 @@ Block.prototype.applyStyle = function (style) {
             thiz.taskEle.hide();
         }
 
+        thiz.tagsEle.css({
+            left: thiz.style.getTagsLeft()
+        });
+
         thiz.taskEle.css({
-            left: thiz.style.contentPaddingLeft
+            left: thiz.style.getTaskLeft()
         });
 
         thiz.attachEle.css({
@@ -616,16 +613,20 @@ Block.prototype.extractData = function (data) {
 };
 
 Block.prototype.setAttach = function (url) {
+    var thiz = this;
     var attachBox = this.attachEle.find('.block-attach-box');
+    attachBox.empty();
+    thiz.attach = null;
     if (isNotEmpty(url)) {
-        this.attach = new Attach(url);
-        this.attach.htmlTo(attachBox);
+        thiz.attach = new Attach(url);
+        thiz.attach.htmlTo(attachBox);
     }
 };
 
 Block.prototype.getAttachData = function () {
-    if (isNotNone(this.attach)) {
-        return this.attach.getUrl();
+    var thiz = this;
+    if (isNotNone(thiz.attach)) {
+        return thiz.attach.getUrl();
     }
     return "";
 };
@@ -666,6 +667,11 @@ Block.prototype.getPriorityData = function () {
     return isNumber(priority) ? priority : 0;
 };
 
+Block.prototype.isShowPriority = function () {
+    var thiz = this;
+    return thiz.getPriorityData() > 0;
+};
+
 Block.prototype.toggleHighlight = function () {
     var thiz = this;
     var highlight = thiz.getHighlightData();
@@ -698,12 +704,32 @@ Block.prototype.getHighlightData = function () {
     return highlight;
 };
 
-Block.prototype.isTask = function () {
-    return this.schema === SCHEMA.TASK;
+Block.prototype.isText = function () {
+    return this.schema === SCHEMA.TEXT;
+};
+
+Block.prototype.isH1 = function () {
+    return this.schema === SCHEMA.H1;
+};
+
+Block.prototype.isH2 = function () {
+    return this.schema === SCHEMA.H2;
+};
+
+Block.prototype.isH3 = function () {
+    return this.schema === SCHEMA.H3;
 };
 
 Block.prototype.isCode = function () {
     return this.schema === SCHEMA.CODE;
+};
+
+Block.prototype.isGrid = function () {
+    return this.schema === SCHEMA.GRID;
+};
+
+Block.prototype.isTask = function () {
+    return this.schema === SCHEMA.TASK;
 };
 
 Block.prototype.isSameSchema = function (block) {
