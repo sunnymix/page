@@ -183,6 +183,9 @@ Style.prototype.eleStyle = function (context) {
         'word-wrap: ' + this.wordWrap,
         'word-break: ' + this.wordBreak,
         'position: ' + this.position,
+        'font-family: ' + this.fontFamily,
+        'font-weight: ' + this.fontWeight,
+        'font-size: ' + this.fontSize,
         'padding-top: ' + this.paddingTop,
         'padding-bottom: ' + this.paddingBottom,
         'padding-left: ' + this.paddingLeft,
@@ -252,7 +255,7 @@ Style.prototype.isTask = function () {
 // static variable
 
 Style.Paper = {
-    paddingX: '40px',
+    paddingX: '20px',
     paddingY: '40px'
 };
 
