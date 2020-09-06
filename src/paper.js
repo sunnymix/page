@@ -39,7 +39,7 @@ function Paper(p, readonly, fullscreen) {
             '            <div',
             '                class="paper-writer"',
             '                style="',
-            '                    padding: 0 20px',
+            // '                    padding: 0 15px',
             '                "',
             '            ></div>',
             '        </div>',

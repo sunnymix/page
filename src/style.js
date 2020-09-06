@@ -8,8 +8,7 @@ function Style() {
     thiz.wordBreak = 'normal';
     thiz.position = 'relative';
 
-    // thiz.fontFamily = '"Noto Serif SC", "PingFang SC", Aria';
-    thiz.fontFamily = '"PingFang SC", Aria';
+    thiz.fontFamily = '';
     thiz.fontWeight = 'normal';
     thiz.fontSize = '12px';
 
@@ -255,7 +254,7 @@ Style.prototype.isTask = function () {
 // static variable
 
 Style.Paper = {
-    paddingX: '20px',
+    paddingX: '40px',
     paddingY: '40px'
 };
 
@@ -295,7 +294,7 @@ var STYLE_H3 = new Style()
 var STYLE_CODE = new Style()
     .setSchema(SCHEMA.CODE)
     .setFontSize('12px')
-    .setFontFamily('"SF Mono", "Roboto Mono", Menlo, Monaco')
+    .setFontFamily('Monospaced, Menlo, Monaco')
     // .setColor('#555555')
     .setBackgroundColor('#f9f9f9')
     .setMarginLeft('10px')
