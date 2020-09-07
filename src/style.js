@@ -266,7 +266,7 @@ Style.prototype.getContentBackgroundColor = function () {
         color = '#ffeeba';
     }
     if (thiz.block.getCheckData() > 0) {
-        color = '#f3f3f3';
+        color = '#eeeeee';
     }
     return color;
 };
