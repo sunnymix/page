@@ -262,8 +262,11 @@ Style.prototype.getContentPaddingRight = function () {
 Style.prototype.getContentBackgroundColor = function () {
     var thiz = this;
     var color = 'transparent';
-    if (thiz.block.highlight > 0) {
+    if (thiz.block.getHighlightData() > 0) {
         color = '#ffeeba';
+    }
+    if (thiz.block.getCheckData() > 0) {
+        color = '#f3f3f3';
     }
     return color;
 };
