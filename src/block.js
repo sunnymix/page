@@ -178,7 +178,7 @@ Block.prototype.initEle = function (p, dataObj) {
     thiz.taskEle = thiz.ele.find('> .block-box > .block-border > .block-task');
     thiz.taskUncheckEle = thiz.ele.find('> .block-box > .block-border > .block-task > .block-task-uncheck');
     thiz.taskCheckEle = thiz.ele.find('> .block-box > .block-border > .block-task > .block-task-check');
-    thiz.setCheck(dataObj.check);
+    thiz.setCheckData(dataObj.check);
 
     thiz.attachEle = thiz.ele.find('> .block-attach');
     thiz.setAttach(dataObj.attach);
@@ -192,12 +192,11 @@ Block.prototype.initEle = function (p, dataObj) {
 
     thiz.contentEle = thiz.ele.find('> .block-box > .block-border > .block-content');
 
-    thiz.setPriority(dataObj.priority);
+    thiz.setContentData(dataObj.text);
+    thiz.setPriorityData(dataObj.priority);
+    thiz.setHighlightData(dataObj.highlight);
 
     thiz.loadStyle();
-
-    thiz.setData(dataObj.text);
-    thiz.setHighlight(dataObj.highlight);
 
     $(p).replaceWith(thiz.ele);
 };
@@ -332,7 +331,7 @@ Block.prototype.setSchema = function (schema) {
         thiz.loadStyle();
         if (schema === SCHEMA.GRID) {
             thiz.switchToGrid();
-            thiz.setData('[]');
+            thiz.setContentData('[]');
         }
     }
 };
@@ -420,7 +419,6 @@ Block.prototype.resetPreviousStyle = function (nextBlock) {
 Block.prototype.loadStyle = function () {
     var thiz = this;
     var style = new Style(thiz);
-    // if in grid context then clear block content padding
     if (thiz.isGridContext()) {
         style.contentPaddingLeft = '0px';
     }
@@ -446,7 +444,16 @@ Block.prototype.applyStyle = function (style) {
         thiz.ele.prop('style', thiz.style.eleStyle(thiz.context));
 
         if (thiz.isTask()) {
-            thiz.taskEle.show();
+            thiz.taskEle.css({
+                left: thiz.style.getTaskLeft()
+            }).show();
+            if (+thiz.check > 0) {
+                thiz.taskCheckEle.show();
+                thiz.taskUncheckEle.hide();
+            } else {
+                thiz.taskCheckEle.hide();
+                thiz.taskUncheckEle.show();
+            }
         } else {
             thiz.taskEle.hide();
         }
@@ -455,9 +462,17 @@ Block.prototype.applyStyle = function (style) {
             left: thiz.style.getTagsLeft()
         });
 
-        thiz.taskEle.css({
-            left: thiz.style.getTaskLeft()
-        });
+        if (thiz.priority > 0) {
+            var color = thiz.getPriorityColor(thiz.priority);
+            thiz.priorityTagEle.show()
+                .css({
+                    backgroundColor: color
+                });
+            thiz.priorityDataEle.text('P' + thiz.priority);
+        } else {
+            thiz.priorityTagEle.hide();
+            thiz.priorityDataEle.text(thiz.priority);
+        }
 
         thiz.attachEle.css({
             paddingLeft: thiz.style.contentPaddingLeft
@@ -508,7 +523,7 @@ Block.prototype.remove = function () {
     thiz.trigger('remove', thiz);
 };
 
-Block.prototype.setData = function (content) {
+Block.prototype.setContentData = function (content) {
     var thiz = this;
     if (thiz.schema === SCHEMA.GRID) {
         thiz.setGridData(content);
@@ -555,17 +570,20 @@ Block.prototype.getCheckData = function () {
 
 Block.prototype.isCheck = function () {
     var thiz = this;
-    return thiz.taskCheckEle.is(":visible");
+    return thiz.check > 0;
 };
 
 Block.prototype.toggleCheck = function () {
     var thiz = this;
     var isCheck = thiz.isCheck();
-    thiz.setCheck(!isCheck);
+    thiz.setCheckData(!isCheck);
+    thiz.loadStyle();
 };
 
-Block.prototype.setCheck = function (check) {
+Block.prototype.setCheckData = function (check) {
     var thiz = this;
+    thiz.check = check;
+    // fixme: uniform style render
     if (thiz.isTask()) {
         if (+check > 0) {
             thiz.taskCheckEle.show();
@@ -634,13 +652,13 @@ Block.prototype.togglePriority = function (priority) {
     var thiz = this;
     var curPriority = thiz.getPriorityData();
     var newPriority = (curPriority === priority) ? 0 : priority;
-    thiz.setPriority(newPriority);
+    thiz.setPriorityData(newPriority);
+    thiz.applyPriority();
 };
 
-Block.prototype.setPriority = function (priority) {
+Block.prototype.setPriorityData = function (priority) {
     var thiz = this;
-    thiz.applyPriority(priority);
-    thiz.loadStyle();
+    thiz.priority = priority;
 };
 
 Block.prototype.getPriorityColor = function (priority) {
@@ -654,24 +672,14 @@ Block.prototype.getPriorityColor = function (priority) {
     return color;
 };
 
-Block.prototype.applyPriority = function (priority) {
+Block.prototype.applyPriority = function () {
     var thiz = this;
-    if (priority > 0) {
-        var color = thiz.getPriorityColor(priority);
-        thiz.priorityTagEle.show().css({
-            backgroundColor: color
-        });
-        thiz.priorityDataEle.text('P' + priority);
-    } else {
-        thiz.priorityTagEle.hide();
-        thiz.priorityDataEle.text(priority);
-    }
+    thiz.loadStyle();
 };
 
 Block.prototype.getPriorityData = function () {
     var thiz = this;
-    var priority = +(thiz.priorityTagEle.text().replace(/p/gi, ''));
-    return isNumber(priority) ? priority : 0;
+    return thiz.priority;
 };
 
 Block.prototype.isShowPriority = function () {
@@ -683,26 +691,18 @@ Block.prototype.toggleHighlight = function () {
     var thiz = this;
     var highlight = thiz.getHighlightData();
     highlight = (highlight > 0) ? 0 : 1;
-    thiz.setHighlight(highlight);
-};
-
-Block.prototype.setHighlight = function (highlight) {
-    var thiz = this;
-    thiz.highlight = highlight;
+    thiz.setHighlightData(highlight);
     thiz.applyHighlight(highlight);
 };
 
-Block.prototype.applyHighlight = function (highlight) {
+Block.prototype.setHighlightData = function (highlight) {
     var thiz = this;
-    if (highlight > 0) {
-        thiz.contentEle.css({
-            backgroundColor: '#ffeeba'
-        });
-    } else {
-        thiz.contentEle.css({
-            backgroundColor: 'transparent'
-        });
-    }
+    thiz.highlight = highlight;
+};
+
+Block.prototype.applyHighlight = function () {
+    var thiz = this;
+    thiz.loadStyle();
 };
 
 Block.prototype.getHighlightData = function () {

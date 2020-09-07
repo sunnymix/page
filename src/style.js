@@ -221,7 +221,8 @@ Style.prototype.contentStyle = function () {
         'padding-right: ' + thiz.getContentPaddingRight(),
         'margin-left: ' + '-' + thiz.paddingLeft,
         'margin-right: ' + '-' + thiz.paddingRight,
-        'color: ' + thiz.color
+        'color: ' + thiz.color,
+        'background-color: ' + thiz.getContentBackgroundColor()
     ].join(';');
 };
 
@@ -256,6 +257,15 @@ Style.prototype.getContentPaddingRight = function () {
         parsePxToNum(thiz.paddingRight)
         + parsePxToNum(thiz.contentPaddingRight)
     ) + 'px';
+};
+
+Style.prototype.getContentBackgroundColor = function () {
+    var thiz = this;
+    var color = 'transparent';
+    if (thiz.block.highlight > 0) {
+        color = '#ffeeba';
+    }
+    return color;
 };
 
 Style.prototype.initStyle = function () {
