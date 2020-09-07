@@ -61,13 +61,6 @@ Blockop.prototype.initActions = function () {
         thiz.setPriority(3);
     });
 
-    var priority0Btn = new Button(null, 'P0', 30, null);
-    priority0Btn.border('0 1px 0 0');
-    priority0Btn.appendTo(thiz.actionsEle);
-    priority0Btn.click(function (e, btn) {
-        thiz.setPriority(0);
-    });
-
     var highlightBtn = new Button(null, 'Highlight', 30, null);
     highlightBtn.border('0 1px 0 0');
     highlightBtn.appendTo(thiz.actionsEle);
@@ -135,7 +128,7 @@ Blockop.prototype.remove = function () {
 
 Blockop.prototype.setPriority = function (priority) {
     var thiz = this;
-    thiz.block.setPriority(priority);
+    thiz.block.togglePriority(priority);
     thiz.hide();
 };
 

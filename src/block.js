@@ -78,7 +78,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '                        top: 0px;',
             '                        bottom: 0px;',
             '                        background-color: #ffffff;',
-            '                        border: 1px solid #000000;',
+            '                        border: 1px solid #666666;',
             '                        border-radius: 50%;',
             '                    "',
             '                 ></div>',
@@ -91,7 +91,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '                        right: 0px;',
             '                        top: 0px;',
             '                        bottom: 0px;',
-            '                        background-color: #000000;',
+            '                        background-color: #666666;',
             '                        border-radius: 50%;',
             '                    "',
             '                 >',
@@ -186,14 +186,16 @@ Block.prototype.initEle = function (p, dataObj) {
     thiz.tagsEle = thiz.ele.find('> .block-tags');
     thiz.priorityTagEle = thiz.ele.find('> .block-tags > .block-priority-tag');
     thiz.priorityDataEle = thiz.ele.find('> .block-tags > .block-priority-tag > .block-priority-data');
-    thiz.setPriority(dataObj.priority);
 
     thiz.initActions();
     thiz.initTask();
 
     thiz.contentEle = thiz.ele.find('> .block-box > .block-border > .block-content');
 
+    thiz.setPriority(dataObj.priority);
+
     thiz.loadStyle();
+
     thiz.setData(dataObj.text);
     thiz.setHighlight(dataObj.highlight);
 
@@ -322,15 +324,12 @@ Block.prototype.replaceTo = function (place) {
 
 Block.prototype.setSchema = function (schema) {
     var thiz = this;
-
     if (thiz.isLock) {
         return;
     }
-
     if (isNotEmpty(schema)) {
         thiz.schema = schema;
         thiz.loadStyle();
-
         if (schema === SCHEMA.GRID) {
             thiz.switchToGrid();
             thiz.setData('[]');
@@ -631,9 +630,17 @@ Block.prototype.getAttachData = function () {
     return "";
 };
 
+Block.prototype.togglePriority = function (priority) {
+    var thiz = this;
+    var curPriority = thiz.getPriorityData();
+    var newPriority = (curPriority === priority) ? 0 : priority;
+    thiz.setPriority(newPriority);
+};
+
 Block.prototype.setPriority = function (priority) {
     var thiz = this;
     thiz.applyPriority(priority);
+    thiz.loadStyle();
 };
 
 Block.prototype.getPriorityColor = function (priority) {
