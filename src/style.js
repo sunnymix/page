@@ -431,7 +431,7 @@ window.resetCss = function () {
         '}',
         '@font-face {',
         '    font-family: Code;',
-        '    src: local(SFMono-Medium);',
+        '    src: local(SFMono-Medium), local(SFMono);',
         '}',
         '</style>'
     ].join(''));
