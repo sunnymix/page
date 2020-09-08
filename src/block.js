@@ -136,7 +136,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '                text-align: center;',
             '                color: #ffffff;',
             '                border-radius: 1px;',
-            '                opacity: 0.8;',
+            // '                opacity: 0.8;',
             '            "',
             '        >',
             '            <div',
@@ -463,7 +463,7 @@ Block.prototype.applyStyle = function (style) {
         });
 
         if (thiz.priority > 0) {
-            var color = thiz.getPriorityColor(thiz.priority);
+            var color = thiz.style.getPriorityColor();
             thiz.priorityTagEle.show()
                 .css({
                     backgroundColor: color
@@ -659,17 +659,6 @@ Block.prototype.togglePriority = function (priority) {
 Block.prototype.setPriorityData = function (priority) {
     var thiz = this;
     thiz.priority = priority;
-};
-
-Block.prototype.getPriorityColor = function (priority) {
-    var thiz = this;
-    var color = '#007bff';
-    var colors = ['#dc3545', '#28a745', '#007bff'];
-    var colorIdx = priority - 1;
-    if (colorIdx >= 0 && colorIdx < colors.length) {
-        color = colors[colorIdx];
-    }
-    return color;
 };
 
 Block.prototype.applyPriority = function () {
