@@ -40,7 +40,8 @@ function Style(block) {
     thiz.contentPaddingRight = '0px';
 
     // const
-    thiz.priorityWidth = 30;
+    thiz.priorityWidth = 25;
+    thiz.taskWidth = 20;
 
     thiz.initStyle();
 };
@@ -231,8 +232,8 @@ Style.prototype.getContentPaddingLeft = function () {
     return (
         parsePxToNum(thiz.paddingLeft)
         + parsePxToNum(thiz.contentPaddingLeft)
+        + (thiz.block.isTask() ? thiz.taskWidth : 0)
         + (thiz.block.isShowPriority() ? thiz.priorityWidth : 0)
-        + (thiz.block.isTask() ? 20 : 0)
     ) + 'px';
 };
 
@@ -240,6 +241,7 @@ Style.prototype.getTagsLeft = function () {
     var thiz = this;
     return (
         parsePxToNum(thiz.contentPaddingLeft)
+        + (thiz.block.isTask() ? thiz.taskWidth : 0)
     ) + 'px';
 };
 
@@ -247,7 +249,6 @@ Style.prototype.getTaskLeft = function () {
     var thiz = this;
     return (
         parsePxToNum(thiz.contentPaddingLeft)
-        + (thiz.block.isShowPriority() ? thiz.priorityWidth : 0)
     ) + 'px';
 };
 
