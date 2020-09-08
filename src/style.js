@@ -348,7 +348,7 @@ Style.prototype.initH3 = function () {
 Style.prototype.initCode = function () {
     this
         .setFontSize('12px')
-        .setFontFamily('Monospaced, Menlo, Monaco')
+        .setFontFamily('Cousine, Monospaced, Menlo, Monaco')
         // .setColor('#555555')
         .setBackgroundColor('#f9f9f9')
         .setMarginLeft('10px')
