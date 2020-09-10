@@ -48,6 +48,16 @@ Block.prototype.initEle = function (p, dataObj) {
             '        "',
             '        >',
             '        <div',
+            '            class="block-background"',
+            '            style="',
+            '                position: absolute;',
+            '                left: 0px;',
+            '                right: 0px;',
+            '                top: 0px;',
+            '                bottom: 0px;',
+            '            "',
+            '        ></div>',
+            '        <div',
             '            class="block-border"',
             '            style="',
             '                position: relative;',
@@ -173,6 +183,7 @@ Block.prototype.initEle = function (p, dataObj) {
     );
 
     thiz.boxEle = thiz.ele.find('> .block-box');
+    thiz.backgroundEle = thiz.ele.find('> .block-box > .block-background');
     thiz.borderEle = thiz.ele.find('> .block-box > .block-border');
     thiz.actionsEle = thiz.ele.find('.block-actions');
     thiz.taskEle = thiz.ele.find('> .block-box > .block-border > .block-task');
@@ -479,8 +490,9 @@ Block.prototype.applyStyle = function (style) {
             paddingLeft: thiz.style.contentPaddingLeft
         });
 
-        thiz.borderEle.css({
-            backgroundColor: thiz.style.getBorderBackgroundColor()
+        thiz.backgroundEle.css({
+            left: thiz.style.getBackgroundLeft(),
+            backgroundColor: thiz.style.getBackgroundColor()
         });
 
         thiz.contentEle.prop('style', thiz.style.contentStyle(thiz.context));

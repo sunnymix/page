@@ -260,7 +260,7 @@ Style.prototype.getContentPaddingRight = function () {
     ) + 'px';
 };
 
-Style.prototype.getContentBackgroundColor = function () {
+Style.prototype.getBackgroundColor = function () {
     var thiz = this;
     var color = 'transparent';
     if (thiz.block.getHighlightData() > 0) {
@@ -272,9 +272,11 @@ Style.prototype.getContentBackgroundColor = function () {
     return color;
 };
 
-Style.prototype.getBorderBackgroundColor = function () {
+Style.prototype.getBackgroundLeft = function () {
     var thiz = this;
-    return thiz.getContentBackgroundColor();
+    return (
+        parsePxToNum(thiz.contentPaddingLeft) / 2
+    ) + 'px';
 };
 
 Style.prototype.getTagsTop = function () {
