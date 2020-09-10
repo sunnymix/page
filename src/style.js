@@ -222,8 +222,8 @@ Style.prototype.contentStyle = function () {
         'padding-right: ' + thiz.getContentPaddingRight(),
         'margin-left: ' + '-' + thiz.paddingLeft,
         'margin-right: ' + '-' + thiz.paddingRight,
-        'color: ' + thiz.getContentColor(),
-        'background-color: ' + thiz.getContentBackgroundColor()
+        'color: ' + thiz.getContentColor()
+        // 'background-color: ' + thiz.getContentBackgroundColor()
     ].join(';');
 };
 
@@ -272,6 +272,21 @@ Style.prototype.getContentBackgroundColor = function () {
     return color;
 };
 
+Style.prototype.getBorderBackgroundColor = function () {
+    var thiz = this;
+    return thiz.getContentBackgroundColor();
+};
+
+Style.prototype.getTagsTop = function () {
+    var thiz = this;
+    return (
+        parsePxToNum(thiz.paddingTop)
+        + parsePxToNum(thiz.contentPaddingTop)
+        + (parsePxToNum(thiz.lineHeight) / 2)
+        - 8
+    ) + 'px';
+};
+
 Style.prototype.getPriorityColor = function () {
     var thiz = this;
     var priority = thiz.block.getPriorityData();
@@ -288,7 +303,7 @@ Style.prototype.getPriorityColor = function () {
 };
 
 Style.prototype.getContentColor = function () {
-    var thiz= this;
+    var thiz = this;
     var color = thiz.block.isCheck() ? '#555555' : thiz.color;
     return color;
 };

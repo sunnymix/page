@@ -128,11 +128,11 @@ Block.prototype.initEle = function (p, dataObj) {
             '                position: absolute;',
             '                display: none;',
             '                left: 0px;',
-            '                top: 50%;',
+            '                top: 0;',
             '                width: 20px;',
             '                height: 14px;',
             '                line-height: 14px;',
-            '                margin-top: -7px;',
+            '                margin-top: 0;',
             '                text-align: center;',
             '                color: #ffffff;',
             '                border-radius: 1px;',
@@ -459,7 +459,8 @@ Block.prototype.applyStyle = function (style) {
         }
 
         thiz.tagsEle.css({
-            left: thiz.style.getTagsLeft()
+            left: thiz.style.getTagsLeft(),
+            top: thiz.style.getTagsTop()
         });
 
         if (thiz.priority > 0) {
@@ -476,6 +477,10 @@ Block.prototype.applyStyle = function (style) {
 
         thiz.attachEle.css({
             paddingLeft: thiz.style.contentPaddingLeft
+        });
+
+        thiz.borderEle.css({
+            backgroundColor: thiz.style.getBorderBackgroundColor()
         });
 
         thiz.contentEle.prop('style', thiz.style.contentStyle(thiz.context));
