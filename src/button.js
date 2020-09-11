@@ -179,6 +179,17 @@ Button.prototype.border = function (width) {
             borderWidth: width
         });
     }
+    return thiz;
+};
+
+Button.prototype.float = function (float) {
+    var thiz = this;
+    if (isNotEmpty(float)) {
+        thiz.ele.css({
+            float: float
+        });
+    }
+    return thiz;
 };
 
 window.Button = Button;

@@ -68,49 +68,17 @@ Grid.prototype.init = function () {
 Grid.prototype.createActions = function () {
     var thiz = this;
 
-    // Rows:
-
-    var addRowBtn = new Button('img/plus-solid.png', 'row', 30, 'auto', 16, 16);
-    addRowBtn.border('0 1px 0 0');
-    addRowBtn.appendTo(thiz.actionsEle);
-    addRowBtn.click(function () {
-        thiz.addRow();
-    });
-
-    var removeRowBtn = new Button('img/times-solid.png', 'row', 30, 'auto', 16, 16);
-    removeRowBtn.border('0 1px 0 0');
-    removeRowBtn.appendTo(thiz.actionsEle);
-    removeRowBtn.click(function () {
-        thiz.removeRow();
-    });
-
-    // Row Moves:
-
-    var moveUpBtn = new Button('img/angle-up-solid.png', 'up', 30, 'auto', 16, 16);
-    moveUpBtn.border('0 1px 0 0');
-    moveUpBtn.appendTo(thiz.actionsEle);
-    moveUpBtn.click(function () {
-        thiz.moveUp();
-    });
-
-    var moveDownBtn = new Button('img/angle-down-solid.png', 'down', 30, 'auto', 16, 16);
-    moveDownBtn.border('0 1px 0 0');
-    moveDownBtn.appendTo(thiz.actionsEle);
-    moveDownBtn.click(function () {
-        thiz.moveDown();
-    });
-
     // Columns:
 
-    var addColumnBtn = new Button('img/plus-solid.png', 'col', 30, 'auto', 16, 16);
-    addColumnBtn.border('0 1px 0 0');
+    var addColumnBtn = new Button('img/table-column-plus-after.png', null, 36, 36, 18, 18);
+    addColumnBtn.border('0 1px 0 0').float('left');
     addColumnBtn.appendTo(thiz.actionsEle);
     addColumnBtn.click(function () {
         thiz.addColumn();
     });
 
-    var removeColumnBtn = new Button('img/times-solid.png', 'col', 30, 'auto', 16, 16);
-    removeColumnBtn.border('0 1px 0 0');
+    var removeColumnBtn = new Button('img/table-column-remove.png', null, 36, 36, 18, 18);
+    removeColumnBtn.border('0 1px 0 0').float('left');
     removeColumnBtn.appendTo(thiz.actionsEle);
     removeColumnBtn.click(function () {
         thiz.removeColumn();
@@ -118,17 +86,50 @@ Grid.prototype.createActions = function () {
 
     // Column Moves:
 
-    var moveLeftBtn = new Button('img/angle-left-solid.png', 'left', 30, 'auto', 16, 16);
-    moveLeftBtn.border('0 1px 0 0');
+    var moveLeftBtn = new Button('img/chevron-double-left.png', null, 36, 36, 18, 18);
+    moveLeftBtn.border('0 1px 0 0').float('left');
     moveLeftBtn.appendTo(thiz.actionsEle);
     moveLeftBtn.click(function () {
         thiz.moveLeft();
     });
 
-    var moveRightBtn = new Button('img/angle-right-solid.png', 'right', 30, 'auto', 16, 16);
+    var moveRightBtn = new Button('img/chevron-double-right.png', null, 36, 36, 18, 18);
+    moveRightBtn.border('0 1px 0 0').float('left');
     moveRightBtn.appendTo(thiz.actionsEle);
     moveRightBtn.click(function () {
         thiz.moveRight();
+    });
+
+    // Rows:
+
+    var addRowBtn = new Button('img/table-row-plus-after.png', null, 36, 36, 18, 18);
+    addRowBtn.border('0 1px 0 0').float('left');
+    addRowBtn.appendTo(thiz.actionsEle);
+    addRowBtn.click(function () {
+        thiz.addRow();
+    });
+
+    var removeRowBtn = new Button('img/table-row-remove.png', null, 36, 36, 18, 18);
+    removeRowBtn.border('0 1px 0 0').float('left');
+    removeRowBtn.appendTo(thiz.actionsEle);
+    removeRowBtn.click(function () {
+        thiz.removeRow();
+    });
+
+    // Row Moves:
+
+    var moveUpBtn = new Button('img/chevron-double-up.png', null, 36, 36, 18, 18);
+    moveUpBtn.border('0 1px 0 0').float('left');
+    moveUpBtn.appendTo(thiz.actionsEle);
+    moveUpBtn.click(function () {
+        thiz.moveUp();
+    });
+
+    var moveDownBtn = new Button('img/chevron-double-down.png', null, 36, 36, 18, 18);
+    moveDownBtn.border('0 1px 0 0').float('left');
+    moveDownBtn.appendTo(thiz.actionsEle);
+    moveDownBtn.click(function () {
+        thiz.moveDown();
     });
 };
 
@@ -139,6 +140,7 @@ Grid.prototype.initBind = function () {
     }).on('mouseleave', function () {
         thiz.actionsEle.hide();
     });
+    // thiz.actionsEle.show();
 };
 
 Grid.prototype.appendTo = function (place) {
