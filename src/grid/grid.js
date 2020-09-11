@@ -126,11 +126,13 @@ Grid.prototype.createActions = function () {
     });
 
     var moveDownBtn = new Button('img/chevron-double-down.png', null, 36, 36, 18, 18);
-    moveDownBtn.border('0 1px 0 0').float('left');
+    moveDownBtn.border('0 0 0 0').float('left');
     moveDownBtn.appendTo(thiz.actionsEle);
     moveDownBtn.click(function () {
         thiz.moveDown();
     });
+
+    new Clearfix(thiz.actionsEle);
 };
 
 Grid.prototype.initBind = function () {
