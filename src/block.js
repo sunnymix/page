@@ -172,14 +172,10 @@ Block.prototype.initEle = function (p, dataObj) {
             '        style="',
             '            position: absolute;',
             '            top: 0px;',
-            '            height: 18px;',
+            '            height: 14px;',
             '            width: 18px;',
             '            left: 0;',
-            '            margin-top: -2px;',
-            '            background-image: url(img/link.png);',
-            '            background-size: 18px 18px;',
-            '            background-repeat: no-repeat;',
-            '            background-position: center top;',
+            '            padding-top: 2px;',
             '        ">',
             '    </a>',
             '    <div',
@@ -214,6 +210,7 @@ Block.prototype.initEle = function (p, dataObj) {
     thiz.priorityDataEle = thiz.ele.find('> .block-tags > .block-priority-tag > .block-priority-data');
 
     thiz.linkEle = thiz.ele.find('> .block-link');
+    new Link(thiz.linkEle);
 
     thiz.initActions();
     thiz.initTask();
