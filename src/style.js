@@ -40,8 +40,9 @@ function Style(block) {
     thiz.contentPaddingRight = '0px';
 
     // const
-    thiz.priorityWidth = 25;
     thiz.taskWidth = 20;
+    thiz.priorityWidth = 25;
+    thiz.linkWidth = 25;
 
     thiz.initStyle();
 };
@@ -227,28 +228,34 @@ Style.prototype.contentStyle = function () {
     ].join(';');
 };
 
-Style.prototype.getContentPaddingLeft = function () {
+Style.prototype.getTaskLeft = function () {
     var thiz = this;
     return (
-        parsePxToNum(thiz.paddingLeft)
-        + parsePxToNum(thiz.contentPaddingLeft)
-        + (thiz.block.isTask() ? thiz.taskWidth : 0)
-        + (thiz.block.isShowPriority() ? thiz.priorityWidth : 0)
+        parsePxToNum(thiz.contentPaddingLeft)
     ) + 'px';
 };
 
 Style.prototype.getTagsLeft = function () {
     var thiz = this;
     return (
-        parsePxToNum(thiz.contentPaddingLeft)
+        parsePxToNum(thiz.getTaskLeft())
         + (thiz.block.isTask() ? thiz.taskWidth : 0)
     ) + 'px';
 };
 
-Style.prototype.getTaskLeft = function () {
+Style.prototype.getLinkLeft = function () {
     var thiz = this;
     return (
-        parsePxToNum(thiz.contentPaddingLeft)
+        parsePxToNum(thiz.getTagsLeft())
+        + (thiz.block.isShowPriority() ? thiz.priorityWidth : 0)
+    ) + 'px';
+};
+
+Style.prototype.getContentPaddingLeft = function () {
+    var thiz = this;
+    return (
+        parsePxToNum(thiz.getLinkLeft())
+        + (thiz.block.isShowLink() ? thiz.linkWidth : 0)
     ) + 'px';
 };
 
@@ -279,7 +286,7 @@ Style.prototype.getBackgroundLeft = function () {
     ) + 'px';
 };
 
-Style.prototype.getTagsTop = function () {
+Style.prototype.getBaseLineTop = function () {
     var thiz = this;
     return (
         parsePxToNum(thiz.paddingTop)
@@ -366,7 +373,7 @@ Style.prototype.initH3 = function () {
 Style.prototype.initCode = function () {
     this
         .setFontSize('12px')
-        .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
+        .setFontFamily('Cousine, Menlo, Monospaced, Consolas, Monaco')
         .setBackgroundColor('#f9f9f9')
         .setMarginLeft('10px')
         .setMarginRight('0px')

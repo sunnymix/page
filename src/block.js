@@ -130,7 +130,6 @@ Block.prototype.initEle = function (p, dataObj) {
             '            top: 0px;',
             '            bottom: 0px;',
             '            left: 0;',
-            '            ;',
             '        ">',
             '        <div',
             '            class="block-priority-tag"',
@@ -167,6 +166,22 @@ Block.prototype.initEle = function (p, dataObj) {
             '            ></div>',
             '        </div>',
             '    </div>',
+            '    <a',
+            '        class="block-link"',
+            '        href=""',
+            '        style="',
+            '            position: absolute;',
+            '            top: 0px;',
+            '            height: 18px;',
+            '            width: 18px;',
+            '            left: 0;',
+            '            margin-top: -2px;',
+            '            background-image: url(img/link.png);',
+            '            background-size: 18px 18px;',
+            '            background-repeat: no-repeat;',
+            '            background-position: center top;',
+            '        ">',
+            '    </a>',
             '    <div',
             '        class="block-attach"',
             '        style="',
@@ -198,6 +213,8 @@ Block.prototype.initEle = function (p, dataObj) {
     thiz.priorityTagEle = thiz.ele.find('> .block-tags > .block-priority-tag');
     thiz.priorityDataEle = thiz.ele.find('> .block-tags > .block-priority-tag > .block-priority-data');
 
+    thiz.linkEle = thiz.ele.find('> .block-link');
+
     thiz.initActions();
     thiz.initTask();
 
@@ -205,6 +222,7 @@ Block.prototype.initEle = function (p, dataObj) {
 
     thiz.setContentData(dataObj.text);
     thiz.setPriorityData(dataObj.priority);
+    thiz.setLinkData(dataObj.link);
     thiz.setHighlightData(dataObj.highlight);
 
     thiz.loadStyle();
@@ -454,6 +472,8 @@ Block.prototype.applyStyle = function (style) {
 
         thiz.ele.prop('style', thiz.style.eleStyle(thiz.context));
 
+        thiz.contentEle.prop('style', thiz.style.contentStyle(thiz.context));
+
         if (thiz.isTask()) {
             thiz.taskEle.css({
                 left: thiz.style.getTaskLeft()
@@ -471,7 +491,7 @@ Block.prototype.applyStyle = function (style) {
 
         thiz.tagsEle.css({
             left: thiz.style.getTagsLeft(),
-            top: thiz.style.getTagsTop()
+            top: thiz.style.getBaseLineTop()
         });
 
         if (thiz.priority > 0) {
@@ -486,16 +506,23 @@ Block.prototype.applyStyle = function (style) {
             thiz.priorityDataEle.text(thiz.priority);
         }
 
-        thiz.attachEle.css({
-            paddingLeft: thiz.style.contentPaddingLeft
-        });
+        if (thiz.isShowLink()) {
+            thiz.linkEle.show().css({
+                left: thiz.style.getLinkLeft(),
+                top: thiz.style.getBaseLineTop()
+            });
+        } else {
+            thiz.linkEle.hide();
+        }
 
         thiz.backgroundEle.css({
             left: thiz.style.getBackgroundLeft(),
             backgroundColor: thiz.style.getBackgroundColor()
         });
 
-        thiz.contentEle.prop('style', thiz.style.contentStyle(thiz.context));
+        thiz.attachEle.css({
+            paddingLeft: thiz.style.contentPaddingLeft
+        });
     }
 };
 
@@ -566,6 +593,7 @@ Block.prototype.getData = function () {
         attach: thiz.getAttachData(),
         check: thiz.getCheckData(),
         priority: thiz.getPriorityData(),
+        link: thiz.getLinkData(),
         highlight: thiz.getHighlightData()
     });
 };
@@ -619,17 +647,16 @@ Block.prototype.defaultData = function () {
         attach: '',
         check: 0,
         priority: 0,
+        link: '',
         highlight: 0
     };
 };
 
 Block.prototype.extractData = function (data) {
     var defaultData = this.defaultData();
-
     if (isObject(data)) {
         return $.extend({}, defaultData, data);
     }
-
     if (isString(data)) {
         try {
             var dataObj = data.startsWith('{') ? JSON.parse(data) : {
@@ -642,7 +669,6 @@ Block.prototype.extractData = function (data) {
             });
         }
     }
-
     return defaultData;
 };
 
@@ -662,7 +688,7 @@ Block.prototype.getAttachData = function () {
     if (isNotNone(thiz.attach)) {
         return thiz.attach.getUrl();
     }
-    return "";
+    return '';
 };
 
 Block.prototype.togglePriority = function (priority) {
@@ -691,6 +717,34 @@ Block.prototype.getPriorityData = function () {
 Block.prototype.isShowPriority = function () {
     var thiz = this;
     return thiz.getPriorityData() > 0;
+};
+
+Block.prototype.applyLink = function (link) {
+    var thiz = this;
+    thiz.setLinkData(link);
+    thiz.loadStyle();
+};
+
+Block.prototype.setLinkData = function (link) {
+    var thiz = this;
+    thiz.linkEle.prop('href', link);
+    thiz.link = link;
+};
+
+Block.prototype.getLinkData = function () {
+    var thiz = this;
+    return isNotNone(thiz.link) ? thiz.link : '';
+};
+
+Block.prototype.isShowLink = function () {
+    var thiz = this;
+    return isNotEmpty(thiz.getLinkData());
+};
+
+Block.prototype.showLink = function () {
+    var thiz = this;
+    var link = prompt('add link ...', '');
+    thiz.applyLink(link);
 };
 
 Block.prototype.toggleHighlight = function () {

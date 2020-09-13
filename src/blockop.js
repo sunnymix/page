@@ -82,6 +82,13 @@ Blockop.prototype.initActions = function () {
         thiz.attach();
     });
 
+    var linkBtn = new Button('img/link.png', null, 36, 36, 18, 18);
+    linkBtn.border('0 1px 0 0').float('left');
+    linkBtn.appendTo(thiz.actionsEle);
+    linkBtn.click(function (e, btn) {
+        thiz.link();
+    });
+
     var removeBtn = new Button('img/times-solid.png', null, 36, 36, 18, 18);
     removeBtn.border('0 0px 0 0').float('left');
     removeBtn.appendTo(thiz.actionsEle);
@@ -120,6 +127,12 @@ Blockop.prototype.clone = function () {
 Blockop.prototype.attach = function () {
     var thiz = this;
     thiz.block.showAttach();
+    thiz.hide();
+};
+
+Blockop.prototype.link = function () {
+    var thiz = this;
+    thiz.block.showLink();
     thiz.hide();
 };
 
