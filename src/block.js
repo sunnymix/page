@@ -175,7 +175,6 @@ Block.prototype.initEle = function (p, dataObj) {
             '            height: 14px;',
             '            width: 18px;',
             '            left: 0;',
-            '            padding-top: 2px;',
             '        ">',
             '    </a>',
             '    <div',
