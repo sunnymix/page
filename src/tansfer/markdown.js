@@ -150,7 +150,7 @@ Markdown.prototype.parseGridBlock = function (data) {
 
 Markdown.prototype.parseTaskBlock = function (data) {
     var check = (data.check === 1) ? 'x' : ' ';
-    return '[' + check + '] ' + data.text;
+    return '[' + check + '] ' + data.text + '\n\n';
 };
 
 Markdown.prototype.parseBlockAttach = function (data) {
