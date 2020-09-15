@@ -373,7 +373,7 @@ Style.prototype.initH3 = function () {
 Style.prototype.initCode = function () {
     this
         .setFontSize('12px')
-        .setFontFamily('Cousine, Menlo, Monospaced, Consolas, Monaco')
+        .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
         .setBackgroundColor('#f9f9f9')
         .setMarginLeft('10px')
         .setMarginRight('0px')
@@ -455,7 +455,7 @@ window.resetCss = function () {
         '}',
         '@font-face {',
         '    font-family: Code;',
-        '    src: local(SFMono-Medium), local(SFMono);',
+        '    src: local(SFMono-Regular), local(RobotoMono-Regular);',
         '}',
         '</style>'
     ].join(''));
