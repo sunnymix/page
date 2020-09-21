@@ -168,6 +168,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '    </div>',
             '    <a',
             '        class="block-link"',
+            '        target="_blank"',
             '        href=""',
             '        style="',
             '            position: absolute;',
