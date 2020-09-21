@@ -49,7 +49,7 @@ function Style(block) {
 
 Style.Paper = {
     paddingX: '40px',
-    paddingY: '40px'
+    paddingY: '60px'
 };
 
 Style.prototype.setFontFamily = function (fontFamily) {
@@ -336,6 +336,8 @@ Style.prototype.initText = function () {
     this
         .setPaddingLeft('10px')
         .setContentPaddingLeft('10px')
+        .setPaddingRight('10px')
+        .setContentPaddingRight('10px')
         ;
 };
 

@@ -30,6 +30,16 @@ function Paper(p, readonly, fullscreen) {
             '            background-color: #ffffff;',
             '        "',
             '    >',
+            '        <div',
+            '            class="paper-title"',
+            '            style="',
+            '                z-index: 1;',
+            '                position: absolute;',
+            '                left: 10px;',
+            '                top: 10px;',
+            '                ;',
+            '            "',
+            '        ></div>',
             '        <div ',
             '            class="paper-body"',
             '            style="',
@@ -59,9 +69,16 @@ Paper.prototype.type = ELE_TYPE.PAPER;
 
 Paper.prototype.init = function () {
     var thiz = this;
+    thiz.initTitle();
     thiz.initWriter();
     thiz.initBlockop();
     thiz.initBind();
+};
+
+Paper.prototype.initTitle = function () {
+    var thiz = this;
+    thiz.titleEle = thiz.ele.find('.paper-title');
+    thiz.title = new Title(thiz.titleEle, thiz.readonly);
 };
 
 Paper.prototype.initWriter = function () {
@@ -131,7 +148,7 @@ Paper.prototype.getData = function () {
 
 Paper.prototype.getTitleData = function () {
     var thiz = this;
-    var title = thiz.writer.getFirstBlockData();
+    var title = thiz.title.getData();
     return isEmpty(title) ? 'Title' : title;
 };
 
@@ -163,6 +180,7 @@ Paper.prototype.renderData = function (paperObj) {
     var thiz = this;
     if (isNotNone(paperObj)) {
         document.title = paperObj.title;
+        thiz.title.setData(paperObj.title);
         thiz.writer.setData(paperObj.content);
         thiz.focusWriter();
     }
@@ -205,7 +223,7 @@ Paper.prototype.getPid = function () {
     window.location.hash = '#' + uuid();
 };
 
-Paper.prototype.appendToolbar = function (toolbar) {
+Paper.prototype.addToolbar = function (toolbar) {
     var thiz = this;
     thiz.toolbar = toolbar;
     thiz.ele.append(thiz.toolbar.ele);

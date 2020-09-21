@@ -1,14 +1,14 @@
-function Title(p, readonly) {
+function Title(place, readonly) {
     var thiz = this;
 
     thiz.readonly = isTrue(readonly);
 
     thiz.block = new Block(null, {
-        schema: SCHEMA.H1,
+        schema: SCHEMA.Text,
         text: 'Title'
     }, true, thiz.readonly);
 
-    thiz.block.replaceTo(p);
+    thiz.block.appendTo(place);
     thiz.init();
 };
 
@@ -32,7 +32,7 @@ Title.prototype.getData = function () {
 };
 
 Title.prototype.setData = function (data) {
-    this.block.setData(data || 'Title');
+    this.block.setContentData(data || 'Title');
 };
 
 Title.prototype.focus = function () {

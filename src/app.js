@@ -9,7 +9,7 @@ jQuery(function () {
 
     var toolbar = new Toolbar(paper);
 
-    paper.appendToolbar(toolbar);
+    paper.addToolbar(toolbar);
 
     window.onhashchange = function() {
         paper.loadData();

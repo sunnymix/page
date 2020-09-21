@@ -390,7 +390,7 @@ Block.prototype.getGridData = function () {
 Block.prototype.initActions = function () {
     var thiz = this;
 
-    if (thiz.readonly) {
+    if (thiz.readonly || thiz.isLock) {
         thiz.actionsEle.remove();
         return;
     }
