@@ -53,7 +53,8 @@ Writer.prototype.createBlock = function (place, data) {
     var newBlock = new Block(tmp, data, isLock, thiz.readonly, thiz.context, previousBlock);
 
     newBlock.bind('enter', function (block) {
-        var nextBlock = thiz.createBlock(block);
+        var caretRightContent = block.trimCaretContent();
+        var nextBlock = thiz.createBlock(block, caretRightContent);
         nextBlock.focus();
     });
 

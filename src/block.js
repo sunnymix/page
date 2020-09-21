@@ -559,6 +559,28 @@ Block.prototype.jumpDown = function () {
     }
 };
 
+Block.prototype.getCaretPosition = function () {
+    var thiz = this;
+    return getCaretPosition(thiz.contentEle[0]);
+};
+
+Block.prototype.trimCaretContent = function () {
+    var thiz = this;
+    if (thiz.isGrid()) {
+        return '';
+    }
+    var caretPos = thiz.getCaretPosition();
+    var content = thiz.getContentData();
+    if (caretPos + 1 >= content.length
+        || content.length <= 0) {
+        return '';
+    }
+    var leftContent = content.substring(0, caretPos);
+    thiz.setContentData(leftContent);
+    var rightContent = content.substring(caretPos);
+    return rightContent;
+};
+
 Block.prototype.remove = function () {
     var thiz = this;
     thiz.trigger('remove', thiz);
