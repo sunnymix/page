@@ -768,6 +768,13 @@ Block.prototype.getHighlightData = function () {
     return highlight;
 };
 
+Block.prototype.setContentColor = function (color) {
+    var thiz = this;
+    thiz.contentEle.css({
+        color: color || '#000000'
+    });
+};
+
 Block.prototype.isText = function () {
     return this.schema === SCHEMA.TEXT;
 };
