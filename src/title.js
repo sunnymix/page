@@ -7,7 +7,7 @@ function Title(place, readonly) {
         schema: SCHEMA.Text,
         text: 'Title'
     }, true, thiz.readonly);
-    thiz.block.setContentColor('#555555');
+    thiz.block.setContentColor('#444444');
 
     thiz.block.appendTo(place);
     thiz.init();

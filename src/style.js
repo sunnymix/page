@@ -49,7 +49,7 @@ function Style(block) {
 
 Style.Paper = {
     paddingX: '40px',
-    paddingY: '60px'
+    paddingY: '40px'
 };
 
 Style.prototype.setFontFamily = function (fontFamily) {
@@ -453,7 +453,7 @@ window.resetCss = function () {
         '    outline: none;',
         '}',
         'body {',
-        '    padding: 2%;',
+        '    padding: 10px;',
         '}',
         '@font-face {',
         '    font-family: Code;',
