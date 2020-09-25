@@ -53,9 +53,18 @@ Writer.prototype.createBlock = function (place, data) {
     var newBlock = new Block(tmp, data, isLock, thiz.readonly, thiz.context, previousBlock);
 
     newBlock.bind('enter', function (block) {
-        var caretRightContent = block.trimCaretContent();
-        var nextBlock = thiz.createBlock(block, caretRightContent);
-        nextBlock.focus();
+        var caretPosition = block.getCaretPosition();
+        console.log(caretPosition);
+        var newBlock;
+        if (caretPosition == 0) {
+            newBlock = thiz.createBlock(block, 'new');
+            thiz.movedownBlock(block);
+        } else {
+            var caretRightContent = block.trimCaretContent();
+            newBlock = thiz.createBlock(block, caretRightContent);
+            newBlock.setSchema(block.schema);
+            newBlock.focus();
+        }
     });
 
     newBlock.bind('remove', function (block) {

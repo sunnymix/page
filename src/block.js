@@ -571,7 +571,7 @@ Block.prototype.trimCaretContent = function () {
     }
     var caretPos = thiz.getCaretPosition();
     var content = thiz.getContentData();
-    if (caretPos + 1 >= content.length
+    if (caretPos + 1 > content.length
         || content.length <= 0) {
         return '';
     }
