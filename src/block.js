@@ -766,12 +766,15 @@ Block.prototype.showLink = function () {
     thiz.applyLink(link);
 };
 
-Block.prototype.toggleHighlight = function () {
+Block.prototype.toggleHighlight = function (light) {
     var thiz = this;
-    var highlight = thiz.getHighlightData();
-    highlight = (highlight > 0) ? 0 : 1;
-    thiz.setHighlightData(highlight);
-    thiz.applyHighlight(highlight);
+    var curLight = thiz.getHighlightData();
+    var newLight = 0;
+    if (light >= 0 && curLight != light) {
+        newLight = light;
+    }
+    thiz.setHighlightData(newLight);
+    thiz.applyHighlight(newLight);
 };
 
 Block.prototype.setHighlightData = function (highlight) {

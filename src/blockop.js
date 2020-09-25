@@ -61,11 +61,25 @@ Blockop.prototype.initActions = function () {
         thiz.setPriority(3);
     });
 
-    var highlightBtn = new Button(null, 'Highlight', 36, null);
-    highlightBtn.border('0 1px 0 0').float('left');
-    highlightBtn.appendTo(thiz.actionsEle);
-    highlightBtn.click(function (e, btn) {
-        thiz.toggleHighlight();
+    var highlight1Btn = new Button(null, 'L1', 36, null);
+    highlight1Btn.border('0 1px 0 0').float('left');
+    highlight1Btn.appendTo(thiz.actionsEle);
+    highlight1Btn.click(function (e, btn) {
+        thiz.toggleHighlight(1);
+    });
+
+    var highlight2Btn = new Button(null, 'L2', 36, null);
+    highlight2Btn.border('0 1px 0 0').float('left');
+    highlight2Btn.appendTo(thiz.actionsEle);
+    highlight2Btn.click(function (e, btn) {
+        thiz.toggleHighlight(2);
+    });
+
+    var highlight3Btn = new Button(null, 'L3', 36, null);
+    highlight3Btn.border('0 1px 0 0').float('left');
+    highlight3Btn.appendTo(thiz.actionsEle);
+    highlight3Btn.click(function (e, btn) {
+        thiz.toggleHighlight(3);
     });
 
     var cloneBtn = new Button('img/clone.png', null, 36, 36, 18, 18);
@@ -148,9 +162,9 @@ Blockop.prototype.setPriority = function (priority) {
     thiz.hide();
 };
 
-Blockop.prototype.toggleHighlight = function () {
+Blockop.prototype.toggleHighlight = function (light) {
     var thiz = this;
-    thiz.block.toggleHighlight();
+    thiz.block.toggleHighlight(light);
     thiz.hide();
 };
 

@@ -270,11 +270,18 @@ Style.prototype.getContentPaddingRight = function () {
 Style.prototype.getBackgroundColor = function () {
     var thiz = this;
     var color = 'transparent';
-    if (thiz.block.getHighlightData() > 0) {
-        color = '#ffeeba';
-    }
+    var light = thiz.block.getHighlightData();
     if (thiz.block.getCheckData() > 0) {
         color = '#f0f0f0';
+    }
+    if (light > 0) {
+        color = '#ffeeba';
+    }
+    if (light > 1) {
+        color = '#cce5ff';
+    }
+    if (light > 2) {
+        color = '#f8d7da';
     }
     return color;
 };
