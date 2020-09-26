@@ -161,6 +161,9 @@ Grid.prototype.createRow = function (rowData) {
     row.bind('blockop', function (block, writer, cell, row) {
         thiz.trigger('blockop', block, writer, cell, row, thiz);
     });
+    row.bind('enter', function (block, writer, cell, row) {
+        thiz.trigger('enter', block, writer, cell, row, thiz);
+    });
     return row;
 };
 

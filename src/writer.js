@@ -54,10 +54,9 @@ Writer.prototype.createBlock = function (place, data) {
 
     newBlock.bind('enter', function (block) {
         var caretPosition = block.getCaretPosition();
-        console.log(caretPosition);
         var newBlock;
         if (caretPosition == 0) {
-            newBlock = thiz.createBlock(block, 'new');
+            newBlock = thiz.createBlock(block);
             thiz.movedownBlock(block);
         } else {
             var caretRightContent = block.trimCaretContent();
@@ -65,6 +64,18 @@ Writer.prototype.createBlock = function (place, data) {
             newBlock.setSchema(block.schema);
             newBlock.focus();
         }
+    });
+
+    newBlock.bind('forceenter', function (block) {
+        // forceenter -> grid.enter:
+        if (block.isGridContext()) {
+            thiz.trigger('enter', block, thiz);
+        }
+    });
+
+    newBlock.bind('grid.enter', function (block, writer, cell, row, grid, parentBlock) {
+        var newBlock = thiz.createBlock(parentBlock);
+        newBlock.focus();
     });
 
     newBlock.bind('remove', function (block) {
@@ -101,6 +112,11 @@ Writer.prototype.createBlock = function (place, data) {
     thiz.addBlock(newBlock, previousBlock);
 
     return newBlock;
+};
+
+Writer.prototype.isGridContext = function () {
+    var thiz = this;
+    return thiz.context == SCHEMA.GRID;
 };
 
 Writer.prototype.addBlock = function (newBlock, previousBlock) {

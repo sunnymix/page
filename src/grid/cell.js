@@ -1,8 +1,6 @@
 function Cell(data, readonly) {
     var thiz = this;
-
     thiz.readonly = isTrue(readonly);
-
     thiz.ele = $([
         '<td',
         '    class="grid-cell"',
@@ -19,7 +17,6 @@ function Cell(data, readonly) {
         '    <div class="cell-writer"></div>',
         '</td>'
     ].join(''));
-
     thiz.init(data);
 }
 
@@ -43,6 +40,9 @@ Cell.prototype.initWriter = function () {
     thiz.writer = new Writer(thiz.ele.find('.cell-writer'), thiz.readonly, SCHEMA.GRID);
     thiz.writer.bind('blockop', function (block, writer) {
         thiz.trigger('blockop', block, writer, thiz);
+    });
+    thiz.writer.bind('enter', function (block, writer) {
+        thiz.trigger('enter', block, writer, thiz);
     });
 };
 

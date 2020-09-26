@@ -241,8 +241,12 @@ Block.prototype.initBind = function () {
     thiz.ele.on('keydown', function (e) {
         if (e.keyCode == KEYCODE.ENTER) {
             e.preventDefault();
-            thiz.enter();
-            return false;
+            e.stopPropagation();
+            if (isCommandOrControl(e)) {
+                thiz.forceEnter();
+            } else {
+                thiz.enter();
+            }
         }
 
         if (e.keyCode == KEYCODE.BACKSPACE) {
@@ -374,28 +378,26 @@ Block.prototype.switchToGrid = function () {
     thiz.grid.bind('blockop', function (block, writer, cell, row, grid) {
         thiz.trigger('blockop', block, writer, cell, row, grid, thiz);
     });
+    thiz.grid.bind('enter', function (block, writer, cell, row, grid) {
+        thiz.trigger('grid.enter', block, writer, cell, row, grid, thiz);
+    });
 };
 
 Block.prototype.getGridData = function () {
     var thiz = this;
-
     var data = '';
-
     if (isNotNone(thiz.grid)) {
         data = thiz.grid.getData();
     }
-
     return data;
 };
 
 Block.prototype.initActions = function () {
     var thiz = this;
-
     if (thiz.readonly || thiz.isLock) {
         thiz.actionsEle.remove();
         return;
     }
-
     thiz.opBtn = new Button('img/ellipsis-v-solid.png', null, 22, 12, 18, null);
     thiz.opBtn.hide();
     thiz.opBtn.middle();
@@ -533,6 +535,11 @@ Block.prototype.focus = function () {
 Block.prototype.enter = function () {
     var thiz = this;
     thiz.trigger('enter', thiz);
+};
+
+Block.prototype.forceEnter = function () {
+    var thiz = this;
+    thiz.trigger('forceenter', thiz);
 };
 
 Block.prototype.moveUp = function () {

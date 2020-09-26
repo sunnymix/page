@@ -65,6 +65,9 @@ Row.prototype.createCell = function (cellData) {
     cell.bind('blockop', function (block, writer, cell) {
         thiz.trigger('blockop', block, writer, cell, thiz);
     });
+    cell.bind('enter', function (block, writer, cell) {
+        thiz.trigger('enter', block, writer, cell, thiz);
+    });
     return cell;
 };
 
