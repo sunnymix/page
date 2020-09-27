@@ -18,7 +18,7 @@ Pop.prototype.initEle = function () {
         '        position: absolute;',
         '        left: 0;',
         '        top: 0;',
-        '        border: 1px solid #eeeeee;',
+        '        border: 1px solid transparent;',
         '        z-index: 100;',
         '    "',
         '>',

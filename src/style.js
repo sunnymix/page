@@ -460,7 +460,7 @@ window.resetCss = function () {
         '    outline: none;',
         '}',
         'body {',
-        '    padding: 10px;',
+        '    padding: 20px;',
         '}',
         '@font-face {',
         '    font-family: Code;',
