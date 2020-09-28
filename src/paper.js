@@ -78,6 +78,9 @@ Paper.prototype.initTitle = function () {
     var thiz = this;
     thiz.titleEle = thiz.ele.find('.paper-title');
     thiz.title = new Title(thiz.titleEle, thiz.readonly);
+    thiz.title.bind('enter', function (title) {
+        thiz.focusWriter();
+    });
 };
 
 Paper.prototype.initWriter = function () {
@@ -114,6 +117,11 @@ Paper.prototype.showBlockop = function (block) {
 Paper.prototype.focusWriter = function () {
     var thiz = this;
     thiz.writer.focus();
+};
+
+Paper.prototype.focusTitle = function () {
+    var thiz = this;
+    thiz.title.focus();
 };
 
 Paper.prototype.throttleSave = function () {
@@ -181,8 +189,8 @@ Paper.prototype.renderData = function (paperObj) {
         document.title = paperObj.title;
         thiz.title.setData(paperObj.title);
         thiz.writer.setData(paperObj.content);
-        thiz.focusWriter();
     }
+    thiz.focusTitle();
 }
 
 Paper.prototype.saveData = function (data, cb) {
