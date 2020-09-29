@@ -70,6 +70,9 @@ Writer.prototype.createBlock = function (place, data) {
         // forceenter -> grid.enter:
         if (block.isGridContext()) {
             thiz.trigger('enter', block, thiz);
+        } else {
+            var newBlock = thiz.createBlock(block);
+            newBlock.focus();
         }
     });
 
