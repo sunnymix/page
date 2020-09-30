@@ -61,7 +61,7 @@ Writer.prototype.createBlock = function (place, data) {
         } else {
             var caretRightContent = block.trimCaretContent();
             newBlock = thiz.createBlock(block, caretRightContent);
-            newBlock.setSchema(block.schema);
+            newBlock.setSchema(thiz.inheritSchema(block.schema));
             newBlock.focus();
         }
     });
@@ -115,6 +115,21 @@ Writer.prototype.createBlock = function (place, data) {
     thiz.addBlock(newBlock, previousBlock);
 
     return newBlock;
+};
+
+Writer.prototype.inheritSchema = function (blockSchema) {
+    var res = blockSchema;
+    if ([
+        SCHEMA.PAPER,
+        SCHEMA.TEXT,
+        SCHEMA.H1,
+        SCHEMA.H2,
+        SCHEMA.H3,
+        SCHEMA.Grid
+    ].indexOf(blockSchema) >= 0) {
+        res = SCHEMA.TEXT;
+    }
+    return res;
 };
 
 Writer.prototype.isGridContext = function () {
