@@ -49,7 +49,7 @@ function Style(block) {
 
 Style.Paper = {
     paddingX: '40px',
-    paddingY: '40px'
+    paddingY: '60px'
 };
 
 Style.prototype.setFontFamily = function (fontFamily) {
@@ -255,7 +255,7 @@ Style.prototype.getContentPaddingLeft = function () {
     var thiz = this;
     return (
         parsePxToNum(thiz.getLinkLeft())
-        + (thiz.block.isShowLink() ? thiz.linkWidth : 0)
+        // + (thiz.block.isShowLink() ? thiz.linkWidth : 0)
     ) + 'px';
 };
 

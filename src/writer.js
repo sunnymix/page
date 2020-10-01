@@ -112,9 +112,24 @@ Writer.prototype.createBlock = function (place, data) {
         thiz.trigger.apply(thiz, args);
     });
 
+    newBlock.bind('focus', function (block) {
+        thiz.handleBlockFocus(block);
+    });
+
     thiz.addBlock(newBlock, previousBlock);
 
     return newBlock;
+};
+
+Writer.prototype.handleBlockFocus = function (focusBlock) {
+    var thiz = this;
+    var blurBlocks = thiz.blocks.filter(function (e) {
+        return e.id != focusBlock.id;
+    });
+    for (var i = 0; i < blurBlocks.length; i++) {
+        var blurBlock = blurBlocks[i];
+        blurBlock.blur();
+    }
 };
 
 Writer.prototype.inheritSchema = function (blockSchema) {

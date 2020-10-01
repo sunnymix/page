@@ -171,11 +171,20 @@ Block.prototype.initEle = function (p, dataObj) {
             '        target="_blank"',
             '        href=""',
             '        style="',
+            '            display: none;',
             '            position: absolute;',
-            '            top: 0px;',
-            '            height: 14px;',
-            '            width: 18px;',
-            '            left: 0;',
+            '            top: -12px;',
+            '            left: -40px;',
+            '            width: 20px;',
+            '            word-break: keep-all;',
+            '            white-space: nowrap;',
+            '            overflow: hidden;',
+            '            border: 1px solid #cccccc;',
+            '            background-color: #ffffff;',
+            '            padding: 2px;',
+            '            text-decoration: none;',
+            '            border-radius: 1px;',
+            '            ;',
             '        ">',
             '    </a>',
             '    <div',
@@ -505,14 +514,16 @@ Block.prototype.applyStyle = function (style) {
             thiz.priorityDataEle.text(thiz.priority);
         }
 
-        if (thiz.isShowLink()) {
-            thiz.linkEle.show().css({
-                left: thiz.style.getLinkLeft(),
-                top: thiz.style.getBaseLineTop()
-            });
-        } else {
-            thiz.linkEle.hide();
-        }
+        // if (thiz.isShowLink()) {
+        //     thiz.linkEle.show()
+        //         .css({
+        //             left: thiz.style.getLinkLeft(),
+        //             top: thiz.style.getBaseLineTop()
+        //         })
+        //         ;
+        // } else {
+        //     thiz.linkEle.hide();
+        // }
 
         thiz.backgroundEle.css({
             left: thiz.style.getBackgroundLeft(),
@@ -526,10 +537,17 @@ Block.prototype.applyStyle = function (style) {
 };
 
 Block.prototype.blur = function () {
+    var thiz = this;
+    thiz.linkEle.hide();
 };
 
 Block.prototype.focus = function () {
-    this.contentEle.focus();
+    var thiz = this;
+    thiz.contentEle.focus();
+    if (thiz.isShowLink()) {
+        thiz.linkEle.show();
+    }
+    thiz.trigger('focus', thiz);
 };
 
 Block.prototype.enter = function () {
@@ -753,7 +771,10 @@ Block.prototype.applyLink = function (link) {
 
 Block.prototype.setLinkData = function (link) {
     var thiz = this;
-    thiz.linkEle.prop('href', link);
+    thiz.linkEle
+        .prop('href', link)
+        .text(link)
+        ;
     thiz.link = link;
 };
 
