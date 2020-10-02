@@ -1,9 +1,9 @@
 function Title(place, readonly) {
     var thiz = this;
-
+    
     thiz.readonly = isTrue(readonly);
 
-    thiz.block = new Block(null, {
+    thiz.block = new Block(null, null, {
         schema: SCHEMA.Text,
         text: 'Title'
     }, true, thiz.readonly);

@@ -14,7 +14,9 @@ function Cell(data, readonly) {
         '        ;',
         '    "',
         '>',
-        '    <div class="cell-writer"></div>',
+        '    <div',
+        '        class="cell-writer"',
+        '    ></div>',
         '</td>'
     ].join(''));
     thiz.init(data);

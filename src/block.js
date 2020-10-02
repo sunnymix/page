@@ -1,8 +1,9 @@
-function Block(p, data, isLock, readonly, context, previousBlock) {
+function Block(writer, p, data, isLock, readonly, context, previousBlock) {
     var thiz = this;
-
+    thiz.isBlock = true;
+    thiz.writer = writer;
+    
     thiz.id = uuid();
-
     var dataObj = thiz.extractData(data);
 
     thiz.schema = dataObj.schema;
@@ -29,6 +30,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '    class="block"',
             '    style="',
             '        position: relative;',
+            '        ;',
             '    "',
             '>',
             '    <div',
@@ -70,8 +72,8 @@ Block.prototype.initEle = function (p, dataObj) {
             '                style="',
             '                    position: absolute;',
             '                    display: none;',
-            '                    left: 0;',
-            '                    top: 4px;',
+            '                    left: 0px;',
+            '                    top: 2px;',
             // '                    margin-top: -6px;',
             '                    width: 14px;',
             '                    height: 14px;',
@@ -127,7 +129,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '        class="block-tags"',
             '        style="',
             '            position: absolute;',
-            '            top: 0px;',
+            '            top: 2px;',
             '            bottom: 0px;',
             '            left: 0;',
             '        ">',
@@ -166,27 +168,18 @@ Block.prototype.initEle = function (p, dataObj) {
             '            ></div>',
             '        </div>',
             '    </div>',
-            '    <a',
+            '    <div',
             '        class="block-link"',
-            '        target="_blank"',
-            '        href=""',
             '        style="',
-            '            display: none;',
             '            position: absolute;',
-            '            top: -12px;',
-            '            left: -40px;',
-            '            width: 20px;',
-            '            word-break: keep-all;',
-            '            white-space: nowrap;',
-            '            overflow: hidden;',
-            '            border: 1px solid #cccccc;',
-            '            background-color: #ffffff;',
-            '            padding: 2px;',
-            '            text-decoration: none;',
-            '            border-radius: 1px;',
+            '            top: 100%;',
+            '            left: 0px;',
+            '            right: 0px;',
+            // '            overflow: hidden;',
+            '            z-index: 1;',
             '            ;',
             '        ">',
-            '    </a>',
+            '    </div>',
             '    <div',
             '        class="block-attach"',
             '        style="',
@@ -219,7 +212,7 @@ Block.prototype.initEle = function (p, dataObj) {
     thiz.priorityDataEle = thiz.ele.find('> .block-tags > .block-priority-tag > .block-priority-data');
 
     thiz.linkEle = thiz.ele.find('> .block-link');
-    new Link(thiz.linkEle);
+    thiz.link = new Link(thiz.linkEle);
 
     thiz.initActions();
     thiz.initTask();
@@ -340,6 +333,32 @@ Block.prototype.initBind = function () {
             thiz.clone();
         }
     });
+
+    // thiz.linkEle
+    //     .on('mouseenter', function () {
+    //         thiz.expandLink();
+    //     })
+    //     .on('mouseleave', function () {
+    //         thiz.shrinkLink();
+    //     });
+};
+
+Block.prototype.expandLink = function () {
+    var thiz = this;
+    thiz.linkEle
+        .css({
+            // right: 0
+        });
+    thiz.link.expand();
+};
+
+Block.prototype.shrinkLink = function () {
+    var thiz = this;
+    thiz.linkEle
+        .css({
+            // right: 'auto'
+        });
+    thiz.link.shrink();
 };
 
 Block.prototype.remove = function () {
@@ -407,15 +426,17 @@ Block.prototype.initActions = function () {
         thiz.actionsEle.remove();
         return;
     }
-    thiz.opBtn = new Button('img/ellipsis-v-solid.png', null, 22, 12, 18, null);
+    thiz.opBtn = new Button('img/ellipsis-v-solid.png', null, 18, 12, 16, null);
     thiz.opBtn.hide();
     thiz.opBtn.middle();
     thiz.opBtn.appendTo(thiz.actionsEle);
 
     thiz.ele.on('mouseenter', function (e) {
         thiz.opBtn.show();
+        thiz.expandLink();
     }).on('mouseleave', function (e) {
         thiz.opBtn.hide();
+        thiz.shrinkLink();
     });
 
     thiz.opBtn.click(function (e) {
@@ -453,6 +474,11 @@ Block.prototype.resetPreviousStyle = function (nextBlock) {
     }
 };
 
+Block.prototype.reload = function () {
+    var thiz = this;
+    thiz.loadStyle();
+};
+
 Block.prototype.loadStyle = function () {
     var thiz = this;
     var style = new Style(thiz);
@@ -484,6 +510,7 @@ Block.prototype.applyStyle = function (style) {
 
         if (thiz.isTask()) {
             thiz.taskEle.css({
+                // top: thiz.style.getBaseLineTop(),
                 left: thiz.style.getTaskLeft()
             }).show();
             if (+thiz.check > 0) {
@@ -514,16 +541,16 @@ Block.prototype.applyStyle = function (style) {
             thiz.priorityDataEle.text(thiz.priority);
         }
 
-        // if (thiz.isShowLink()) {
-        //     thiz.linkEle.show()
-        //         .css({
-        //             left: thiz.style.getLinkLeft(),
-        //             top: thiz.style.getBaseLineTop()
-        //         })
-        //         ;
-        // } else {
-        //     thiz.linkEle.hide();
-        // }
+        if (thiz.isShowLink()) {
+            thiz.linkEle
+                .css({
+                    left: thiz.style.getContentPaddingLeft(),
+                    // top: thiz.style.getBaseLineTop()
+                })
+                .show();
+        } else {
+            thiz.linkEle.hide();
+        }
 
         thiz.backgroundEle.css({
             left: thiz.style.getBackgroundLeft(),
@@ -536,16 +563,26 @@ Block.prototype.applyStyle = function (style) {
     }
 };
 
+Block.prototype.isFirstBlock = function () {
+    var thiz = this;
+    return isNotNone(thiz.writer) && thiz.writer.isFirstBlock(thiz.id);
+};
+
+Block.prototype.isLastBlock = function () {
+    var thiz = this;
+    return isNotNone(thiz.writer) && thiz.writer.isLastBlock(thiz.id);
+};
+
 Block.prototype.blur = function () {
     var thiz = this;
-    thiz.linkEle.hide();
+    // thiz.linkEle.hide();
 };
 
 Block.prototype.focus = function () {
     var thiz = this;
     thiz.contentEle.focus();
     if (thiz.isShowLink()) {
-        thiz.linkEle.show();
+        // thiz.linkEle.show();
     }
     thiz.trigger('focus', thiz);
 };
@@ -771,21 +808,23 @@ Block.prototype.applyLink = function (link) {
 
 Block.prototype.setLinkData = function (link) {
     var thiz = this;
-    thiz.linkEle
-        .prop('href', link)
-        .text(link)
-        ;
-    thiz.link = link;
+    thiz.link.setData(link);
 };
 
 Block.prototype.getLinkData = function () {
     var thiz = this;
-    return isNotNone(thiz.link) ? thiz.link : '';
+    return thiz.link.getData();
+};
+
+Block.prototype.hasLink = function () {
+    var thiz = this;
+    return isNotBlank(thiz.getLinkData());
 };
 
 Block.prototype.isShowLink = function () {
     var thiz = this;
-    return isNotEmpty(thiz.getLinkData());
+    var notBlankLink = isNotBlank(thiz.getLinkData());
+    return !thiz.isLock && !thiz.readonly && notBlankLink;
 };
 
 Block.prototype.showLink = function () {

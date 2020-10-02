@@ -14,8 +14,8 @@ function Style(block) {
     thiz.minHeight = '18px';
     thiz.lineHeight = '18px';
 
-    thiz.paddingTop = '2px';
-    thiz.paddingBottom = '2px';
+    thiz.paddingTop = '0px';
+    thiz.paddingBottom = '0px';
     thiz.paddingLeft = '10px';
     thiz.paddingRight = '10px';
 
@@ -26,7 +26,7 @@ function Style(block) {
 
     thiz.borderRadius = '0px';
 
-    thiz.marginBottom = '0px';
+    thiz.marginBottom = '12px';
     thiz.marginLeft = '0px';
     thiz.marginRight = '0px';
 
@@ -34,8 +34,8 @@ function Style(block) {
     thiz.backgroundColor = '#ffffff';
 
     // content override
-    thiz.contentPaddingTop = '3px';
-    thiz.contentPaddingBottom = '3px';
+    thiz.contentPaddingTop = '0px';
+    thiz.contentPaddingBottom = '0px';
     thiz.contentPaddingLeft = '0px';
     thiz.contentPaddingRight = '0px';
 
@@ -49,7 +49,7 @@ function Style(block) {
 
 Style.Paper = {
     paddingX: '40px',
-    paddingY: '60px'
+    paddingY: '40px'
 };
 
 Style.prototype.setFontFamily = function (fontFamily) {
@@ -185,22 +185,24 @@ Style.prototype.setSchema = function (schema) {
 };
 
 Style.prototype.eleStyle = function (context) {
+    var thiz = this;
     return [
         'cursor: text',
-        'position: ' + this.position,
-        'padding-top: ' + this.paddingTop,
-        'padding-bottom: ' + this.paddingBottom,
-        'padding-left: ' + this.paddingLeft,
-        'padding-right: ' + this.paddingRight,
-        'border-top: ' + this.borderTop,
-        'border-bottom: ' + this.borderBottom,
-        'border-left: ' + this.borderLeft,
-        'border-right: ' + this.borderRight,
-        'border-radius: ' + this.borderRadius,
-        'margin-bottom: ' + this.marginBottom,
-        'margin-left: ' + this.marginLeft,
-        'margin-right: ' + this.marginRight,
-        'background-color: ' + this.backgroundColor
+        'position: ' + thiz.position,
+        'padding-top: ' + thiz.paddingTop,
+        'padding-bottom: ' + thiz.paddingBottom,
+        'padding-left: ' + thiz.paddingLeft,
+        'padding-right: ' + thiz.paddingRight,
+        'border-top: ' + thiz.borderTop,
+        'border-bottom: ' + thiz.borderBottom,
+        'border-left: ' + thiz.borderLeft,
+        'border-right: ' + thiz.borderRight,
+        'border-radius: ' + thiz.borderRadius,
+        'margin-top: ' + thiz.getMarginTop(),
+        'margin-bottom: ' + thiz.marginBottom,
+        'margin-left: ' + thiz.marginLeft,
+        'margin-right: ' + thiz.marginRight,
+        'background-color: ' + thiz.backgroundColor
     ].join(';');
 };
 
@@ -267,6 +269,15 @@ Style.prototype.getContentPaddingRight = function () {
     ) + 'px';
 };
 
+Style.prototype.getMarginTop = function () {
+    var thiz = this;
+    var marginTop = parsePxToNum(thiz.marginTop);
+    if (marginTop === 0 && thiz.block.isFirstBlock()) {
+        marginTop = thiz.marginBottom;
+    }
+    return marginTop;
+};
+
 Style.prototype.getBackgroundColor = function () {
     var thiz = this;
     var color = 'transparent';
@@ -289,7 +300,7 @@ Style.prototype.getBackgroundColor = function () {
 Style.prototype.getBackgroundLeft = function () {
     var thiz = this;
     return (
-        parsePxToNum(thiz.contentPaddingLeft) / 2
+        parsePxToNum(thiz.getContentPaddingLeft())
     ) + 'px';
 };
 
@@ -299,7 +310,7 @@ Style.prototype.getBaseLineTop = function () {
         parsePxToNum(thiz.paddingTop)
         + parsePxToNum(thiz.contentPaddingTop)
         + (parsePxToNum(thiz.lineHeight) / 2)
-        - 8
+        - 7
     ) + 'px';
 };
 
@@ -320,7 +331,10 @@ Style.prototype.getPriorityColor = function () {
 
 Style.prototype.getContentColor = function () {
     var thiz = this;
-    var color = thiz.block.isCheck() ? '#555555' : thiz.color;
+    var color = thiz.color;
+    if (thiz.block.hasLink()) {
+        color = '#007bff';
+    }
     return color;
 };
 
@@ -355,7 +369,6 @@ Style.prototype.initH1 = function () {
         .setMinHeight('26px')
         .setLineHeight('26px')
         .setBorderBottom('2px')
-        .setMarginBottom('5px')
         ;
 };
 
@@ -366,7 +379,6 @@ Style.prototype.initH2 = function () {
         .setMinHeight('24px')
         .setLineHeight('24px')
         .setBorderBottom('1px')
-        .setMarginBottom('5px')
         ;
 }
 

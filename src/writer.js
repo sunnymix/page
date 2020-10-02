@@ -1,5 +1,6 @@
 function Writer(p, readonly, context) {
     var thiz = this;
+    thiz.isWriter = true;
 
     thiz.readonly = isTrue(readonly);
     thiz.context = isNotNone(context) ? context : SCHEMA.PAPER;
@@ -50,7 +51,7 @@ Writer.prototype.createBlock = function (place, data) {
 
     var isLock = false;
 
-    var newBlock = new Block(tmp, data, isLock, thiz.readonly, thiz.context, previousBlock);
+    var newBlock = new Block(thiz, tmp, data, isLock, thiz.readonly, thiz.context, previousBlock);
 
     newBlock.bind('enter', function (block) {
         var caretPosition = block.getCaretPosition();
@@ -279,7 +280,21 @@ Writer.prototype.setData = function (data) {
             var block = thiz.createBlock(curBlock, blockData);
             curBlock = block;
         }
+        var firstBlock = thiz.blocks[0];
+        if (isNotNone(firstBlock)) {
+            firstBlock.reload();
+        }
     }
+};
+
+Writer.prototype.isFirstBlock = function (blockId) {
+    var thiz = this;
+    return thiz.getBlockIndex(blockId) === 0;
+};
+
+Writer.prototype.isLastBlock = function (blockId) {
+    var thiz = this;
+    return thiz.getBlockIndex(blockId) === thiz.blocks.length - 1;
 };
 
 window.Writer = Writer;

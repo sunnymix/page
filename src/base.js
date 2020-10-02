@@ -124,7 +124,7 @@ window.isNotEmpty = function (p) {
 };
 
 window.isNotBlank = function (p) {
-    return isNotEmpty && p.trim().length > 0;
+    return isNotEmpty(p) && p.length > 0;
 };
 
 window.isObject = function (p) {

@@ -10,6 +10,8 @@ function Menu() {
         '        top: 2px;',
         '        bottom: 2px;',
         '        background-color: #ffffff;',
+        '        z-index: 2;',
+        '        ;',
         '    "',
         '  >',
         '    <div',

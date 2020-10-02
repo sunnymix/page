@@ -4,64 +4,96 @@ function Link(place) {
         '<div',
         '    class="link"',
         '    style="',
-        '        position: absolute;',
-        '        left: 0px;',
-        '        top: 0px;',
-        '        width: 16px;',
-        '        height: 14px;',
+        // '        position: absolute;',
+        // '        left: 0px;',
+        // '        right: 0px;',
+        // '        top: 0px;',
+        '        background-color: #ffffff;',
+        '        z-index: 1;',
+        // '        border-top: 1px solid #007bff;',
+        '        margin-top: 0px;',
+        '        height: 10px;',
+        '        ;',
         '    "',
         '>',
-        '    <div',
-        '        class="link-icon"',
+        // '    <div',
+        // '        class="link-icon"',
+        // '        style="',
+        // '            position: absolute;',
+        // '            left: 0px;',
+        // '            top: 0px;',
+        // '            width: 3px;',
+        // '            height: 20px;',
+        // '            background-color: #007bff;',
+        // '            border-radius: 1px;',
+        // '            ;',
+        // '        "',
+        // '    ></div>',
+        '    <a',
+        '        class="link-anchor"',
+        '        target="_blank"',
         '        style="',
-        '            position: absolute;',
-        '            left: 0px;',
-        '            top: 3px;',
-        '            width: 14px;',
-        '            height: 10px;',
+        // '            position: absolute;',
+        '            display: none;',
+        // '            left: 2px;',
+        // '            top: 50%;',
+        // '            margin-top: -6px;',
+        '            height: 12px;',
+        '            line-height: 12px;',
+        '            text-decoration: none;',
+        '            white-space: nowrap;',
+        '            z-index: 1;',
         '            background-color: transparent;',
+        '            overflow: hidden;',
+        '            padding: 0 2px;',
+        '            ;',
         '        "',
-        '    >',
-        '        <div',
-        '            style="',
-        '                position: absolute;',
-        '                left: 0;',
-        '                width: 30%;',
-        '                top: 0;',
-        '                height: 4px;',
-        '                border: 2px solid #6c757d;',
-        '                border-right-width: 0px;',
-        '                border-radius: 3px 0 0 3px',
-        '            "',
-        '        ></div>',
-        '        <div',
-        '            style="',
-        '                position: absolute;',
-        '                right: 0;',
-        '                width: 30%;',
-        '                top: 0;',
-        '                height: 4px;',
-        '                border: 2px solid #6c757d;',
-        '                border-left-width: 0px;',
-        '                border-radius: 0 3px 3px 0',
-        '            "',
-        '        ></div>',
-        '        <div',
-        '            style="',
-        '                position: absolute;',
-        '                left: 4px;',
-        '                right: 4px;',
-        '                top: 3px;',
-        '                height: 0px;',
-        '                border-top: 2px solid #6c757d;',
-        '            "',
-        '        ></div>',
-        '    </div>',
+        '    ></a>',
         '</div>'
     ].join(''));
+
+    thiz.anchorEle = thiz.ele.find('> .link-anchor');
+
     if (isNotNone(place)) {
         place.append(thiz.ele);
     }
 }
+
+Link.prototype.setData = function (url) {
+    var thiz = this;
+    thiz.url = url.trim();
+    thiz.anchorEle
+        .attr('href', thiz.url)
+        .text(thiz.url);
+};
+
+Link.prototype.getData = function (url) {
+    var thiz = this;
+    return thiz.url || '';
+};
+
+Link.prototype.show = function () {
+    var thiz = this;
+    thiz.ele.show();
+};
+
+Link.prototype.hide = function () {
+    var thiz = this;
+    thiz.ele.hide();
+};
+
+Link.prototype.expand = function () {
+    var thiz = this;
+    thiz.anchorEle.css({
+        display: 'block'
+    });
+};
+
+Link.prototype.shrink = function () {
+    var thiz = this;
+    thiz.anchorEle.css({
+        display: 'none'
+    });
+};
 
 window.Link = Link;
