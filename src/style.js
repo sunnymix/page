@@ -229,6 +229,7 @@ Style.prototype.contentStyle = function () {
     var thiz = this;
     var isInGrid = thiz.block.isGridContext();
     return [
+        'display: inline-block',
         'word-wrap: ' + (isInGrid ? 'normal' : thiz.wordWrap),
         'word-break: ' + (isInGrid ? 'keep-all' : thiz.wordBreak),
         'position: ' + this.position,
@@ -243,7 +244,7 @@ Style.prototype.contentStyle = function () {
         'padding-left: ' + thiz.getContentPaddingLeft(),
         'padding-right: ' + thiz.getContentPaddingRight(),
         'border-top: ' + thiz.contentBorderTop,
-        'border-bottom: ' + thiz.contentBorderBottom,
+        'border-bottom: ' + thiz.getContentBorderBottom(),
         'margin-left: ' + '-' + thiz.paddingLeft,
         'margin-right: ' + '-' + thiz.paddingRight,
         'color: ' + thiz.getContentColor()
@@ -354,7 +355,7 @@ Style.prototype.getPriorityColor = function () {
         color = colors[colorIdx];
     }
     if (thiz.block.isCheck()) {
-        color = '#aaaaaa';
+        // color = '#aaaaaa';
     }
     return color;
 };
@@ -363,9 +364,14 @@ Style.prototype.getContentColor = function () {
     var thiz = this;
     var color = thiz.color;
     if (thiz.block.hasLink()) {
-        color = '#007bff';
+        // color = '#007bff';
     }
     return color;
+};
+
+Style.prototype.getContentBorderBottom = function () {
+    var thiz = this;
+    return thiz.contentBorderBottom;
 };
 
 Style.prototype.initStyle = function () {
@@ -395,20 +401,20 @@ Style.prototype.initText = function () {
 Style.prototype.initH1 = function () {
     this
         .setFontWeight('bold')
-        .setFontSize('15px')
+        .setFontSize('17px')
         .setMinHeight('26px')
         .setLineHeight('26px')
-        .setContentBorderBottom('2px')
+        // .setContentBorderBottom('2px')
         ;
 };
 
 Style.prototype.initH2 = function () {
     this
         .setFontWeight('bold')
-        .setFontSize('14px')
+        .setFontSize('15px')
         .setMinHeight('24px')
         .setLineHeight('24px')
-        .setContentBorderBottom('1px')
+        // .setContentBorderBottom('1px')
         ;
 }
 

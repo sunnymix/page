@@ -47,7 +47,7 @@ function Link(place) {
         '            background-color: transparent;',
         '            overflow: hidden;',
         '            padding: 0 2px;',
-        '            color: #aaaaaa;',
+        '            color: #999999;',
         '            ;',
         '        "',
         '    ></a>',
@@ -88,7 +88,7 @@ Link.prototype.expand = function () {
     var thiz = this;
     thiz.expandTimer = setTimeout(function () {
         thiz.anchorEle.css({
-            display: 'block'
+            display: 'inline-block'
         });
     }, 10);
 };
