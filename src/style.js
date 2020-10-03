@@ -9,13 +9,13 @@ function Style(block) {
 
     thiz.fontFamily = '';
     thiz.fontWeight = 'normal';
-    thiz.fontSize = '12px';
+    thiz.fontSize = '13px';
 
     thiz.minHeight = '18px';
     thiz.lineHeight = '18px';
 
     thiz.paddingTop = '0px';
-    thiz.paddingBottom = '15px';
+    thiz.paddingBottom = '18px';
     thiz.paddingLeft = '10px';
     thiz.paddingRight = '10px';
 
@@ -245,6 +245,7 @@ Style.prototype.contentStyle = function () {
         'padding-right: ' + thiz.getContentPaddingRight(),
         'border-top: ' + thiz.contentBorderTop,
         'border-bottom: ' + thiz.getContentBorderBottom(),
+        'border-radius: 1px',
         'margin-left: ' + '-' + thiz.paddingLeft,
         'margin-right: ' + '-' + thiz.paddingRight,
         'color: ' + thiz.getContentColor()
@@ -331,7 +332,7 @@ Style.prototype.getBackgroundColor = function () {
 Style.prototype.getBackgroundLeft = function () {
     var thiz = this;
     return (
-        parsePxToNum(thiz.getContentPaddingLeft())
+        parsePxToNum(thiz.getContentPaddingLeft()) - 3
     ) + 'px';
 };
 
@@ -401,9 +402,7 @@ Style.prototype.initText = function () {
 Style.prototype.initH1 = function () {
     this
         .setFontWeight('bold')
-        .setFontSize('17px')
-        .setMinHeight('26px')
-        .setLineHeight('26px')
+        .setFontSize('18px')
         // .setContentBorderBottom('2px')
         ;
 };
@@ -411,9 +410,7 @@ Style.prototype.initH1 = function () {
 Style.prototype.initH2 = function () {
     this
         .setFontWeight('bold')
-        .setFontSize('15px')
-        .setMinHeight('24px')
-        .setLineHeight('24px')
+        .setFontSize('16px')
         // .setContentBorderBottom('1px')
         ;
 }
@@ -421,9 +418,7 @@ Style.prototype.initH2 = function () {
 Style.prototype.initH3 = function () {
     this
         .setFontWeight('bold')
-        .setFontSize('13px')
-        .setMinHeight('22px')
-        .setLineHeight('22px')
+        .setFontSize('14px')
         ;
 };
 
@@ -484,7 +479,7 @@ window.resetCss = function () {
         'body {',
         '    line-height: 1;',
         '    font-family: "PingFang SC", Aria;',
-        '    font-size: 12px;',
+        '    font-size: 13px;',
         '    background-color: #ffffff;',
         '}',
         'ol, ul {',

@@ -180,7 +180,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '            right: 0px;',
             // '            overflow: hidden;',
             '            z-index: 1;',
-            '            margin-top: -15px;',
+            '            margin-top: -18px;',
             '            ;',
             '        ">',
             '    </div>',
