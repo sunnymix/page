@@ -369,11 +369,11 @@ Style.prototype.getContentColor = function () {
 
 Style.prototype.getContentBorderBottom = function () {
     var thiz = this;
-    var size = '0px';
+    var color = 'transparent';
     if (thiz.block.hasLink()) {
-        size = '1px';
+        color = '#000000';
     }
-    return size + ' solid #000000';
+    return '1px solid ' + color;
 };
 
 Style.prototype.setContentMarginLeft = function (contentMarginLeft) {
@@ -446,7 +446,6 @@ Style.prototype.initH3 = function () {
 
 Style.prototype.initCode = function () {
     this
-        .setFontSize('12px')
         .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
         .setBackgroundColor('#f9f9f9')
         .setMarginLeft('10px')
