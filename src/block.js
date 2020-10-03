@@ -67,17 +67,12 @@ Block.prototype.initEle = function (p, dataObj) {
             '            "',
             '        >',
             '            <div',
-            '                class="block-content"',
-            '                ' + (thiz.readonly ? '' : 'contenteditable="true"'),
-            '            ></div>',
-            '            <div',
             '                class="block-task"',
             '                style="',
             '                    position: absolute;',
             '                    display: none;',
             '                    left: 0px;',
             '                    top: 2px;',
-            // '                    margin-top: -6px;',
             '                    width: 14px;',
             '                    height: 14px;',
             '                    border-radius: 50%;',
@@ -178,7 +173,6 @@ Block.prototype.initEle = function (p, dataObj) {
             '            top: 100%;',
             '            left: 0px;',
             '            right: 0px;',
-            // '            overflow: hidden;',
             '            z-index: 1;',
             '            margin-top: -18px;',
             '            ;',
@@ -221,7 +215,8 @@ Block.prototype.initEle = function (p, dataObj) {
     thiz.initActions();
     thiz.initTask();
 
-    thiz.contentEle = thiz.ele.find('> .block-box > .block-border > .block-content');
+    //thiz.contentEle = thiz.ele.find('> .block-box > .block-border > .block-content');
+    thiz.initContentEle();
 
     thiz.setContentData(dataObj.text);
     thiz.setPriorityData(dataObj.priority);
@@ -231,6 +226,15 @@ Block.prototype.initEle = function (p, dataObj) {
     thiz.loadStyle();
 
     $(p).replaceWith(thiz.ele);
+};
+
+Block.prototype.initContentEle = function () {
+    var thiz = this;
+    thiz.contentEle = thiz.isGrid() ? newEle('div') : newEle('a');
+    if (isNotTrue(thiz.readonly)) {
+        thiz.contentEle.prop('contenteditable', true);
+    }
+    thiz.borderEle.prepend(thiz.contentEle);
 };
 
 Block.prototype.initBind = function () {
@@ -832,6 +836,8 @@ Block.prototype.applyLink = function (link) {
 Block.prototype.setLinkData = function (link) {
     var thiz = this;
     thiz.link.setData(link);
+    thiz.contentEle.prop('href', link);
+    thiz.contentEle.prop('target', '_blank');
 };
 
 Block.prototype.getLinkData = function () {

@@ -322,4 +322,8 @@ window.getCaretPosition = function (editableDiv) {
         }
     }
     return caretPos;
-}
+};
+
+window.newEle = function (type) {
+    return $('<' + type + '>');
+};

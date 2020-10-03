@@ -55,7 +55,7 @@ function Style(block) {
 
 Style.Paper = {
     paddingX: '40px',
-    paddingY: '40px'
+    paddingY: '50px'
 };
 
 Style.prototype.setFontFamily = function (fontFamily) {
@@ -252,6 +252,7 @@ Style.prototype.contentStyle = function () {
         'margin-left: ' + thiz.getContentMarginLeft(),
         'margin-right: ' + thiz.getContentMarginRight(),
         'color: ' + thiz.getContentColor(),
+        'text-decoration: none'
         // 'background-color: ' + thiz.getContentBackgroundColor()
     ].join(';');
 };
