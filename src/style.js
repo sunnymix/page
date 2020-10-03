@@ -252,7 +252,6 @@ Style.prototype.contentStyle = function () {
         'margin-left: ' + thiz.getContentMarginLeft(),
         'margin-right: ' + thiz.getContentMarginRight(),
         'color: ' + thiz.getContentColor(),
-        'box-shadow: ' + thiz.getContentBoxShadow(),
         // 'background-color: ' + thiz.getContentBackgroundColor()
     ].join(';');
 };
@@ -370,16 +369,11 @@ Style.prototype.getContentColor = function () {
 
 Style.prototype.getContentBorderBottom = function () {
     var thiz = this;
-    return thiz.contentBorderBottom;
-};
-
-Style.prototype.getContentBoxShadow = function () {
-    var thiz = this;
-    var shadow = '0 0';
+    var size = '0px';
     if (thiz.block.hasLink()) {
-        shadow = '0 1px';
+        size = '1px';
     }
-    return shadow;
+    return size + ' solid #000000';
 };
 
 Style.prototype.setContentMarginLeft = function (contentMarginLeft) {
@@ -429,7 +423,8 @@ Style.prototype.initH1 = function () {
     this
         .setFontWeight('bold')
         .setFontSize('18px')
-        // .setContentBorderBottom('2px')
+        .setLineHeight('20px')
+        .setMinHeight('20px')
         ;
 };
 
@@ -437,7 +432,8 @@ Style.prototype.initH2 = function () {
     this
         .setFontWeight('bold')
         .setFontSize('16px')
-        // .setContentBorderBottom('1px')
+        .setLineHeight('20px')
+        .setMinHeight('20px')
         ;
 }
 
