@@ -215,8 +215,7 @@ Block.prototype.initEle = function (p, dataObj) {
     thiz.initActions();
     thiz.initTask();
 
-    //thiz.contentEle = thiz.ele.find('> .block-box > .block-border > .block-content');
-    thiz.initContentEle();
+    thiz.initContentEle(dataObj.link);
 
     thiz.setContentData(dataObj.text);
     thiz.setPriorityData(dataObj.priority);
@@ -228,9 +227,16 @@ Block.prototype.initEle = function (p, dataObj) {
     $(p).replaceWith(thiz.ele);
 };
 
-Block.prototype.initContentEle = function () {
+Block.prototype.initContentEle = function (link) {
     var thiz = this;
-    thiz.contentEle = thiz.isGrid() ? newEle('div') : newEle('a');
+    var eleType = 'div';
+    if (isTrue(thiz.readonly)
+        && isNotBlank(link)) {
+        eleType = 'a';
+    }
+
+    thiz.contentEle = newEle(eleType);
+
     if (isNotTrue(thiz.readonly)) {
         thiz.contentEle.prop('contenteditable', true);
     }
