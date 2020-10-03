@@ -42,6 +42,9 @@ function Style(block) {
     thiz.contentBorderTop = '0px solid transparent';
     thiz.contentBorderBottom = '0px solid transparent';
 
+    thiz.contentMarginLeft = '0px';
+    thiz.contentMarginRight = '0px';
+
     // const
     thiz.taskWidth = 20;
     thiz.priorityWidth = 25;
@@ -245,10 +248,11 @@ Style.prototype.contentStyle = function () {
         'padding-right: ' + thiz.getContentPaddingRight(),
         'border-top: ' + thiz.contentBorderTop,
         'border-bottom: ' + thiz.getContentBorderBottom(),
-        'border-radius: 1px',
-        'margin-left: ' + '-' + thiz.paddingLeft,
-        'margin-right: ' + '-' + thiz.paddingRight,
-        'color: ' + thiz.getContentColor()
+        'border-radius: 0px',
+        'margin-left: ' + thiz.getContentMarginLeft(),
+        'margin-right: ' + thiz.getContentMarginRight(),
+        'color: ' + thiz.getContentColor(),
+        'box-shadow: ' + thiz.getContentBoxShadow(),
         // 'background-color: ' + thiz.getContentBackgroundColor()
     ].join(';');
 };
@@ -256,7 +260,7 @@ Style.prototype.contentStyle = function () {
 Style.prototype.getTaskLeft = function () {
     var thiz = this;
     return (
-        parsePxToNum(thiz.contentPaddingLeft)
+        parsePxToNum(thiz.contentMarginLeft)
     ) + 'px';
 };
 
@@ -278,18 +282,12 @@ Style.prototype.getLinkLeft = function () {
 
 Style.prototype.getContentPaddingLeft = function () {
     var thiz = this;
-    return (
-        parsePxToNum(thiz.getLinkLeft())
-        // + (thiz.block.isShowLink() ? thiz.linkWidth : 0)
-    ) + 'px';
+    return thiz.contentPaddingLeft;
 };
 
 Style.prototype.getContentPaddingRight = function () {
     var thiz = this;
-    return (
-        parsePxToNum(thiz.paddingRight)
-        + parsePxToNum(thiz.contentPaddingRight)
-    ) + 'px';
+    return thiz.contentPaddingRight;
 };
 
 Style.prototype.getMarginTop = function () {
@@ -332,7 +330,7 @@ Style.prototype.getBackgroundColor = function () {
 Style.prototype.getBackgroundLeft = function () {
     var thiz = this;
     return (
-        parsePxToNum(thiz.getContentPaddingLeft()) - 3
+        parsePxToNum(thiz.getContentMarginLeft())
     ) + 'px';
 };
 
@@ -375,6 +373,37 @@ Style.prototype.getContentBorderBottom = function () {
     return thiz.contentBorderBottom;
 };
 
+Style.prototype.getContentBoxShadow = function () {
+    var thiz = this;
+    var shadow = '0 0';
+    if (thiz.block.hasLink()) {
+        shadow = '0 1px';
+    }
+    return shadow;
+};
+
+Style.prototype.setContentMarginLeft = function (contentMarginLeft) {
+    this.contentMarginLeft = contentMarginLeft;
+    return this;
+}
+
+Style.prototype.getContentMarginLeft = function () {
+    var thiz = this;
+    return (
+        parsePxToNum(thiz.getLinkLeft())
+    ) + 'px';
+};
+
+Style.prototype.setContentMarginRight = function (contentMarginRight) {
+    this.contentMarginRight = contentMarginRight;
+    return this;
+};
+
+Style.prototype.getContentMarginRight = function () {
+    var thiz = this;
+    return thiz.contentMarginRight;
+};
+
 Style.prototype.initStyle = function () {
     var thiz = this;
     var handers = {};
@@ -392,10 +421,7 @@ Style.prototype.initStyle = function () {
 
 Style.prototype.initText = function () {
     this
-        .setPaddingLeft('10px')
-        .setContentPaddingLeft('10px')
-        .setPaddingRight('10px')
-        .setContentPaddingRight('10px')
+        .setContentMarginLeft('10px')
         ;
 };
 
@@ -441,8 +467,7 @@ Style.prototype.initCode = function () {
 
 Style.prototype.initTask = function () {
     this
-        .setPaddingLeft('10px')
-        .setContentPaddingLeft('10px')
+        .setContentMarginLeft('10px')
         ;
 };
 

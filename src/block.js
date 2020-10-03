@@ -548,7 +548,7 @@ Block.prototype.applyStyle = function (style) {
         if (thiz.isShowLink()) {
             thiz.linkEle
                 .css({
-                    left: thiz.style.getContentPaddingLeft(),
+                    left: thiz.style.getContentMarginLeft(),
                     // top: thiz.style.getBaseLineTop()
                 })
                 .show();
@@ -663,8 +663,13 @@ Block.prototype.setContentData = function (content) {
     if (thiz.schema === SCHEMA.GRID) {
         thiz.setGridData(content);
     } else {
-        thiz.contentEle.text(content);
+        thiz.setContentText(content);
     }
+};
+
+Block.prototype.setContentText = function (text) {
+    var thiz = this;
+    thiz.contentEle.text(text);
 };
 
 Block.prototype.setGridData = function (content) {
