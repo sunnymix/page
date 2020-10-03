@@ -15,7 +15,7 @@ function Style(block) {
     thiz.lineHeight = '18px';
 
     thiz.paddingTop = '0px';
-    thiz.paddingBottom = '0px';
+    thiz.paddingBottom = '15px';
     thiz.paddingLeft = '10px';
     thiz.paddingRight = '10px';
 
@@ -26,7 +26,7 @@ function Style(block) {
 
     thiz.borderRadius = '0px';
 
-    thiz.marginBottom = '15px';
+    thiz.marginBottom = '0px';
     thiz.marginLeft = '0px';
     thiz.marginRight = '0px';
 
@@ -38,6 +38,9 @@ function Style(block) {
     thiz.contentPaddingBottom = '0px';
     thiz.contentPaddingLeft = '0px';
     thiz.contentPaddingRight = '0px';
+
+    thiz.contentBorderTop = '0px solid transparent';
+    thiz.contentBorderBottom = '0px solid transparent';
 
     // const
     thiz.taskWidth = 20;
@@ -129,6 +132,22 @@ Style.prototype.setBorderRight = function (size, style, color) {
     return this;
 };
 
+Style.prototype.setContentBorderTop = function (size, style, color) {
+    var thiz = this;
+    thiz.contentBorderTop = size + ' ' +
+        (style || 'solid') + ' ' +
+        (color || thiz.color);
+    return this;
+};
+
+Style.prototype.setContentBorderBottom = function (size, style, color) {
+    var thiz = this;
+    thiz.contentBorderBottom = size + ' ' +
+        (style || 'solid') + ' ' +
+        (color || thiz.color);
+    return this;
+};
+
 Style.prototype.setBorderRadius = function (borderRadius) {
     this.borderRadius = borderRadius;
     return this;
@@ -189,7 +208,7 @@ Style.prototype.eleStyle = function (context) {
     return [
         'cursor: text',
         'position: ' + thiz.position,
-        'padding-top: ' + thiz.paddingTop,
+        'padding-top: ' + thiz.getPaddingTop(),
         'padding-bottom: ' + thiz.paddingBottom,
         'padding-left: ' + thiz.paddingLeft,
         'padding-right: ' + thiz.paddingRight,
@@ -219,10 +238,12 @@ Style.prototype.contentStyle = function () {
         'min-width: 1px',
         'min-height: ' + this.minHeight,
         'line-height: ' + this.lineHeight,
-        'padding-top: ' + this.paddingTop,
-        'padding-bottom: ' + this.paddingBottom,
+        'padding-top: ' + thiz.contentPaddingTop,
+        'padding-bottom: ' + thiz.contentPaddingBottom,
         'padding-left: ' + thiz.getContentPaddingLeft(),
         'padding-right: ' + thiz.getContentPaddingRight(),
+        'border-top: ' + thiz.contentBorderTop,
+        'border-bottom: ' + thiz.contentBorderBottom,
         'margin-left: ' + '-' + thiz.paddingLeft,
         'margin-right: ' + '-' + thiz.paddingRight,
         'color: ' + thiz.getContentColor()
@@ -278,6 +299,15 @@ Style.prototype.getMarginTop = function () {
     return marginTop;
 };
 
+Style.prototype.getPaddingTop = function () {
+    var thiz = this;
+    var paddingTop = parsePxToNum(thiz.paddingTop);
+    if (paddingTop === 0 && thiz.block.isFirstBlock()) {
+        paddingTop = thiz.paddingBottom;
+    }
+    return paddingTop;
+};
+
 Style.prototype.getBackgroundColor = function () {
     var thiz = this;
     var color = 'transparent';
@@ -307,7 +337,7 @@ Style.prototype.getBackgroundLeft = function () {
 Style.prototype.getBaseLineTop = function () {
     var thiz = this;
     return (
-        parsePxToNum(thiz.paddingTop)
+        parsePxToNum(thiz.getPaddingTop())
         + parsePxToNum(thiz.contentPaddingTop)
         + (parsePxToNum(thiz.lineHeight) / 2)
         - 7
@@ -368,7 +398,7 @@ Style.prototype.initH1 = function () {
         .setFontSize('15px')
         .setMinHeight('26px')
         .setLineHeight('26px')
-        .setBorderBottom('2px')
+        .setContentBorderBottom('2px')
         ;
 };
 
@@ -378,7 +408,7 @@ Style.prototype.initH2 = function () {
         .setFontSize('14px')
         .setMinHeight('24px')
         .setLineHeight('24px')
-        .setBorderBottom('1px')
+        .setContentBorderBottom('1px')
         ;
 }
 
@@ -403,8 +433,6 @@ Style.prototype.initCode = function () {
         .setBorderLeft('1px', 'solid', '#dddddd')
         .setBorderRight('1px', 'solid', '#dddddd')
         .setBorderRadius('2px')
-        .setContentPaddingTop('0px')
-        .setContentPaddingBottom('0px')
         .setContentPaddingLeft('5px')
         .setContentPaddingRight('5px')
         ;

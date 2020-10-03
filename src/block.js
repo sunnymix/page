@@ -177,6 +177,7 @@ Block.prototype.initEle = function (p, dataObj) {
             '            right: 0px;',
             // '            overflow: hidden;',
             '            z-index: 1;',
+            '            margin-top: -15px;',
             '            ;',
             '        ">',
             '    </div>',
@@ -426,9 +427,9 @@ Block.prototype.initActions = function () {
         thiz.actionsEle.remove();
         return;
     }
-    thiz.opBtn = new Button('img/ellipsis-v-solid.png', null, 18, 12, 16, null);
+    thiz.opBtn = new Button('img/ellipsis-v-solid.png', null, 18, 12, 18, null);
     thiz.opBtn.hide();
-    thiz.opBtn.middle();
+    // thiz.opBtn.middle();
     thiz.opBtn.appendTo(thiz.actionsEle);
 
     thiz.ele.on('mouseenter', function (e) {
@@ -559,6 +560,10 @@ Block.prototype.applyStyle = function (style) {
 
         thiz.attachEle.css({
             paddingLeft: thiz.style.contentPaddingLeft
+        });
+
+        thiz.actionsEle.css({
+            top: thiz.style.getBaseLineTop()
         });
     }
 };
