@@ -4,13 +4,9 @@ function Link(place) {
         '<div',
         '    class="link"',
         '    style="',
-        // '        position: absolute;',
-        // '        left: 0px;',
-        // '        right: 0px;',
-        // '        top: 0px;',
+        '        position: relative;',
         '        background-color: transparent;',
         '        z-index: 1;',
-        // '        border-top: 1px solid #007bff;',
         '        margin-top: 0px;',
         '        height: 15px;',
         '        padding-left: 0px;',
@@ -18,28 +14,11 @@ function Link(place) {
         '        ;',
         '    "',
         '>',
-        // '    <div',
-        // '        class="link-icon"',
-        // '        style="',
-        // '            position: absolute;',
-        // '            left: 0px;',
-        // '            top: 0px;',
-        // '            width: 3px;',
-        // '            height: 20px;',
-        // '            background-color: #007bff;',
-        // '            border-radius: 1px;',
-        // '            ;',
-        // '        "',
-        // '    ></div>',
         '    <a',
         '        class="link-anchor"',
         '        target="_blank"',
         '        style="',
-        // '            position: absolute;',
         '            display: none;',
-        // '            left: 2px;',
-        // '            top: 50%;',
-        // '            margin-top: -6px;',
         '            height: 15px;',
         '            line-height: 15px;',
         '            text-decoration: none;',
@@ -56,6 +35,18 @@ function Link(place) {
     ].join(''));
 
     thiz.anchorEle = thiz.ele.find('> .link-anchor');
+
+    thiz.anchorEle
+        .on('mouseenter', function () {
+            thiz.anchorEle.css({
+                color: '#007bff'
+            });
+        })
+        .on('mouseleave', function () {
+            thiz.anchorEle.css({
+                color: '#999999'
+            });
+        });
 
     if (isNotNone(place)) {
         place.append(thiz.ele);
