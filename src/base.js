@@ -159,6 +159,10 @@ window.isTrue = function (p) {
     return isDefined(p) && true === p;
 };
 
+window.isFalse = function (p) {
+    return isDefined(p) && false === p;
+};
+
 window.isNotTrue = function (p) {
     return !isTrue(p);
 };

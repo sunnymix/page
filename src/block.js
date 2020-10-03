@@ -689,6 +689,14 @@ Block.prototype.getData = function () {
     });
 };
 
+Block.prototype.center = function (isCenter) {
+    var thiz = this;
+    var textAlign = isFalse(isCenter) ? 'left' : 'center';
+    thiz.borderEle.css({
+        textAlign: textAlign
+    });
+};
+
 Block.prototype.getContentData = function () {
     var thiz = this;
     var data = '';

@@ -10,6 +10,7 @@ function Title(place, readonly) {
     thiz.block.setContentColor('#444444');
 
     thiz.block.appendTo(place);
+    thiz.block.center();
     thiz.init();
 };
 
