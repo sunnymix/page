@@ -433,10 +433,10 @@ Block.prototype.initActions = function () {
 
     thiz.ele.on('mouseenter', function (e) {
         thiz.opBtn.show();
-        thiz.expandLink();
+        // thiz.expandLink();
     }).on('mouseleave', function (e) {
         thiz.opBtn.hide();
-        thiz.shrinkLink();
+        // thiz.shrinkLink();
     });
 
     thiz.opBtn.click(function (e) {
@@ -576,6 +576,7 @@ Block.prototype.isLastBlock = function () {
 Block.prototype.blur = function () {
     var thiz = this;
     // thiz.linkEle.hide();
+    thiz.shrinkLink();
 };
 
 Block.prototype.focus = function () {
@@ -584,6 +585,7 @@ Block.prototype.focus = function () {
     if (thiz.isShowLink()) {
         // thiz.linkEle.show();
     }
+    thiz.expandLink();
     thiz.trigger('focus', thiz);
 };
 

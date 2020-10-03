@@ -13,6 +13,7 @@ function Link(place) {
         // '        border-top: 1px solid #007bff;',
         '        margin-top: 0px;',
         '        height: 10px;',
+        '        padding-left: 0px;',
         '        ;',
         '    "',
         '>',
@@ -46,6 +47,7 @@ function Link(place) {
         '            background-color: transparent;',
         '            overflow: hidden;',
         '            padding: 0 2px;',
+        '            color: #aaaaaa;',
         '            ;',
         '        "',
         '    ></a>',
@@ -84,13 +86,16 @@ Link.prototype.hide = function () {
 
 Link.prototype.expand = function () {
     var thiz = this;
-    thiz.anchorEle.css({
-        display: 'block'
-    });
+    thiz.expandTimer = setTimeout(function () {
+        thiz.anchorEle.css({
+            display: 'block'
+        });
+    }, 10);
 };
 
 Link.prototype.shrink = function () {
     var thiz = this;
+    clearTimeout(thiz.expandTimer);
     thiz.anchorEle.css({
         display: 'none'
     });

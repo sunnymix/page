@@ -26,7 +26,7 @@ function Style(block) {
 
     thiz.borderRadius = '0px';
 
-    thiz.marginBottom = '12px';
+    thiz.marginBottom = '15px';
     thiz.marginLeft = '0px';
     thiz.marginRight = '0px';
 
