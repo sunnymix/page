@@ -145,7 +145,6 @@ Block.prototype.initEle = function (p, dataObj) {
             '                text-align: center;',
             '                color: #ffffff;',
             '                border-radius: 1px;',
-            // '                opacity: 0.8;',
             '            "',
             '        >',
             '            <div',
@@ -169,12 +168,8 @@ Block.prototype.initEle = function (p, dataObj) {
             '    <div',
             '        class="block-link"',
             '        style="',
-            '            position: absolute;',
-            '            top: 100%;',
-            '            left: 0px;',
-            '            right: 0px;',
+            '            position: relative;',
             '            z-index: 1;',
-            '            margin-top: -18px;',
             '            ;',
             '        ">',
             '    </div>',
@@ -347,31 +342,15 @@ Block.prototype.initBind = function () {
             thiz.clone();
         }
     });
-
-    // thiz.linkEle
-    //     .on('mouseenter', function () {
-    //         thiz.expandLink();
-    //     })
-    //     .on('mouseleave', function () {
-    //         thiz.shrinkLink();
-    //     });
 };
 
 Block.prototype.expandLink = function () {
     var thiz = this;
-    thiz.linkEle
-        .css({
-            // right: 0
-        });
     thiz.link.expand();
 };
 
 Block.prototype.shrinkLink = function () {
     var thiz = this;
-    thiz.linkEle
-        .css({
-            // right: 'auto'
-        });
     thiz.link.shrink();
 };
 

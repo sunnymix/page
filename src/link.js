@@ -4,6 +4,7 @@ function Link(place) {
         '<div',
         '    class="link"',
         '    style="',
+        '        display: none;',
         '        position: relative;',
         '        background-color: transparent;',
         '        z-index: 1;',
@@ -18,7 +19,7 @@ function Link(place) {
         '        class="link-anchor"',
         '        target="_blank"',
         '        style="',
-        '            display: none;',
+        '            display: inline-block;',
         '            height: 15px;',
         '            line-height: 15px;',
         '            text-decoration: none;',
@@ -78,19 +79,12 @@ Link.prototype.hide = function () {
 
 Link.prototype.expand = function () {
     var thiz = this;
-    thiz.expandTimer = setTimeout(function () {
-        thiz.anchorEle.css({
-            display: 'inline-block'
-        });
-    }, 10);
+    thiz.show();
 };
 
 Link.prototype.shrink = function () {
     var thiz = this;
-    clearTimeout(thiz.expandTimer);
-    thiz.anchorEle.css({
-        display: 'none'
-    });
+    thiz.hide();
 };
 
 window.Link = Link;

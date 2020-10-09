@@ -15,7 +15,7 @@ function Style(block) {
     thiz.lineHeight = '18px';
 
     thiz.paddingTop = '0px';
-    thiz.paddingBottom = '18px';
+    thiz.paddingBottom = '10px';
     thiz.paddingLeft = '10px';
     thiz.paddingRight = '10px';
 
@@ -54,8 +54,8 @@ function Style(block) {
 };
 
 Style.Paper = {
-    paddingX: '40px',
-    paddingY: '50px'
+    paddingX: '60px',
+    paddingY: '60px'
 };
 
 Style.prototype.setFontFamily = function (fontFamily) {
@@ -313,7 +313,7 @@ Style.prototype.getBackgroundColor = function () {
     var color = 'transparent';
     var light = thiz.block.getHighlightData();
     if (thiz.block.getCheckData() > 0) {
-        color = '#f0f0f0';
+        // color = '#f0f0f0';
     }
     if (light > 0) {
         color = '#ffeeba';
