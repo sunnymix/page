@@ -230,7 +230,7 @@ Block.prototype.initContentEle = function (link) {
         eleType = 'a';
     }
 
-    thiz.contentEle = newEle(eleType);
+    thiz.contentEle = newEle(eleType, 'block-content');
 
     if (isNotTrue(thiz.readonly)) {
         thiz.contentEle.prop('contenteditable', true);

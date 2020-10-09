@@ -324,6 +324,10 @@ window.getCaretPosition = function (editableDiv) {
     return caretPos;
 };
 
-window.newEle = function (type) {
-    return $('<' + type + '>');
+window.newEle = function (type, clazz) {
+    var ele = $('<' + type + '>');
+    if (isNotBlank(clazz)) {
+        ele.prop('class', clazz);
+    }
+    return ele;
 };
