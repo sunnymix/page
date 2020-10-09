@@ -232,7 +232,7 @@ Style.prototype.contentStyle = function () {
     var thiz = this;
     var isInGrid = thiz.block.isGridContext();
     return [
-        'display: inline-block',
+        'display: ' + (thiz.block.isGrid() ? 'block' : 'inline-block'),
         'word-wrap: ' + (isInGrid ? 'normal' : thiz.wordWrap),
         'word-break: ' + (isInGrid ? 'keep-all' : thiz.wordBreak),
         'position: ' + this.position,
