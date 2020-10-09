@@ -24,42 +24,29 @@ Block.prototype.type = ELE_TYPE.BLOCK;
 Block.prototype.initEle = function (p, dataObj) {
     var thiz = this;
 
-    thiz.ele = tmpEle(
-        '<div class="block" style="position: relative">',
-        //   actions
-        //   task
-        //   tags
-        //   box (background, border)
-        //   link
-        //   attach
-        '</div>'
-    );
+    thiz.ele = Ele('div', {
+        id: '.block',
+        style: { position: 'relative' }
+    });
+
+    ////// block (actions, box, attach) //////
 
     // actions
     thiz.initActionsEle();
     thiz.ele.append(thiz.actionsEle);
 
-    // task
-    thiz.initTaskEle();
-    thiz.ele.append(thiz.taskEle);
-    thiz.setCheckData(dataObj.check);
-
-    // tag
-    thiz.initTagsEle();
-    thiz.ele.append(thiz.tagsEle);
-
-    // box (background, border)
+    // box
     thiz.initBoxEle();
     thiz.ele.append(thiz.boxEle);
-
-    // link
-    thiz.initLinkEle();
-    thiz.ele.append(thiz.linkEle);
-    thiz.link = new Link(thiz.linkEle);
 
     // attach
     thiz.initAttachEle();
     thiz.ele.append(thiz.attachEle);
+    
+    ////// data //////
+
+    thiz.setCheckData(dataObj.check);
+
     thiz.setAttach(dataObj.attach);
 
     thiz.initActions();
@@ -79,15 +66,10 @@ Block.prototype.initEle = function (p, dataObj) {
 
 Block.prototype.initBoxEle = function () {
     var thiz = this;
-    thiz.boxEle = tmpEle(
-        '<div',
-        '    class="block-box"',
-        '    style="position: relative"',
-        '    >',
-        //   background
-        //   border
-        '</div>',
-    );
+    thiz.boxEle = Ele('div', {
+        id: '.block-box',
+        style: { position: 'relative' }
+    });
 
     // background
     thiz.initBackgroundEle();
@@ -96,27 +78,38 @@ Block.prototype.initBoxEle = function () {
     // border
     thiz.initBorderEle();
     thiz.boxEle.append(thiz.borderEle);
+
+    // tags
+    thiz.initTagsEle();
+    thiz.boxEle.append(thiz.tagsEle);
+
+    // task
+    thiz.initTaskEle();
+    thiz.boxEle.append(thiz.taskEle);
+
+    // link
+    thiz.initLinkEle();
+    thiz.boxEle.append(thiz.linkEle);
+    thiz.link = new Link(thiz.linkEle);
 };
 
 Block.prototype.initBackgroundEle = function () {
     var thiz = this;
-    thiz.backgroundEle = tmpEle(
-        '<div',
-        '    class="block-background"',
-        '    style="',
-        '        position: absolute;',
-        '        left: 0px;',
-        '        right: 0px;',
-        '        top: 0px;',
-        '        bottom: 0px;',
-        '    "',
-        '></div>',
-    );
+    thiz.backgroundEle = Ele('div', {
+        id: '.block-background',
+        style: {
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+        }
+    });
 };
 
 Block.prototype.initBorderEle = function () {
     var thiz = this;
-    thiz.borderEle = tmpEle(
+    thiz.borderEle = tmplEle(
         '<div',
         '    class="block-border"',
         '    style="position: relative"',
@@ -127,7 +120,7 @@ Block.prototype.initBorderEle = function () {
 
 Block.prototype.initActionsEle = function () {
     var thiz = this;
-    thiz.actionsEle = tmpEle(
+    thiz.actionsEle = tmplEle(
         '<div',
         '    class="block-actions"',
         '    style="',
@@ -143,7 +136,7 @@ Block.prototype.initActionsEle = function () {
 
 Block.prototype.initTaskEle = function () {
     var thiz = this;
-    thiz.taskEle = tmpEle(
+    thiz.taskEle = tmplEle(
         '<div',
         '    class="block-task"',
         '    style="',
@@ -207,7 +200,7 @@ Block.prototype.initTaskEle = function () {
 
 Block.prototype.initTagsEle = function () {
     var thiz = this;
-    thiz.tagsEle = tmpEle(
+    thiz.tagsEle = tmplEle(
         '<div',
         '    class="block-tags"',
         '    style="',
@@ -258,7 +251,7 @@ Block.prototype.initTagsEle = function () {
 
 Block.prototype.initAttachEle = function () {
     var thiz = this;
-    thiz.attachEle = tmpEle(
+    thiz.attachEle = tmplEle(
         '<div',
         '    class="block-attach"',
         '    style="',
@@ -276,7 +269,7 @@ Block.prototype.initAttachEle = function () {
 
 Block.prototype.initLinkEle = function () {
     var thiz = this;
-    thiz.linkEle = tmpEle(
+    thiz.linkEle = tmplEle(
         '<div',
         '    class="block-link"',
         '    style="',
