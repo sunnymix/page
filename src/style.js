@@ -232,6 +232,7 @@ Style.prototype.contentStyle = function () {
     var thiz = this;
     var isInGrid = thiz.block.isGridContext();
     return [
+        'word-spacing: 0px',
         'display: ' + (thiz.block.isGrid() ? 'block' : 'inline-block'),
         'word-wrap: ' + (isInGrid ? 'normal' : thiz.wordWrap),
         'word-break: ' + (isInGrid ? 'keep-all' : thiz.wordBreak),
@@ -372,7 +373,7 @@ Style.prototype.getContentBorderBottom = function () {
     var thiz = this;
     var color = 'transparent';
     if (thiz.block.hasLink()) {
-        color = '#000000';
+        color = '#cccccc';
     }
     return '1px solid ' + color;
 };

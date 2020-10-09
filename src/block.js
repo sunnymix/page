@@ -2,7 +2,7 @@ function Block(writer, p, data, isLock, readonly, context, previousBlock) {
     var thiz = this;
     thiz.isBlock = true;
     thiz.writer = writer;
-    
+
     thiz.id = uuid();
     var dataObj = thiz.extractData(data);
 
@@ -24,188 +24,43 @@ Block.prototype.type = ELE_TYPE.BLOCK;
 Block.prototype.initEle = function (p, dataObj) {
     var thiz = this;
 
-    thiz.ele = $(
-        [
-            '<div',
-            '    class="block"',
-            '    style="',
-            '        position: relative;',
-            '        ;',
-            '    "',
-            '>',
-            '    <div',
-            '        class="block-actions"',
-            '        style="',
-            '            position: absolute;',
-            '            top: 0px;',
-            '            bottom: 0px;',
-            '            left: -25px;',
-            '            right: -25px;',
-            '            ;',
-            '        "></div>',
-            '    <div',
-            '        class="block-box"',
-            '        style="',
-            '            position: relative;',
-            '        "',
-            '        >',
-            '        <div',
-            '            class="block-background"',
-            '            style="',
-            '                position: absolute;',
-            '                left: 0px;',
-            '                right: 0px;',
-            '                top: 0px;',
-            '                bottom: 0px;',
-            '            "',
-            '        ></div>',
-            '        <div',
-            '            class="block-border"',
-            '            style="',
-            '                position: relative;',
-            '                ;',
-            '            "',
-            '        >',
-            '            <div',
-            '                class="block-task"',
-            '                style="',
-            '                    position: absolute;',
-            '                    display: none;',
-            '                    left: 0px;',
-            '                    top: 2px;',
-            '                    width: 14px;',
-            '                    height: 14px;',
-            '                    border-radius: 50%;',
-            '                    cursor: pointer;',
-            '                "',
-            '            >',
-            '                <div',
-            '                    class="block-task-uncheck"',
-            '                    style="',
-            '                        position: absolute;',
-            '                        left: 0px;',
-            '                        right: 0px;',
-            '                        top: 0px;',
-            '                        bottom: 0px;',
-            '                        background-color: #ffffff;',
-            '                        border: 1px solid #aaaaaa;',
-            '                        border-radius: 1px;',
-            '                    "',
-            '                 ></div>',
-            '                <div',
-            '                    class="block-task-check"',
-            '                    style="',
-            '                        position: absolute;',
-            '                        display: none;',
-            '                        left: 0px;',
-            '                        right: 0px;',
-            '                        top: 0px;',
-            '                        bottom: 0px;',
-            '                        background-color: #aaaaaa;',
-            '                        border-radius: 1px;',
-            '                    "',
-            '                 >',
-            '                    <div',
-            '                        class=""',
-            '                        style="',
-            '                            position: absolute;',
-            '                            left: 4px;',
-            '                            top: 5px;',
-            '                            border-left: 1px solid #ffffff;',
-            '                            border-bottom: 1px solid #ffffff;',
-            '                            border-radius: 0px;',
-            '                            width: 5px;',
-            '                            height: 2px;',
-            '                            transform: rotate(-50deg);',
-            '                        "',
-            '                    ></div>',
-            '                </div>',
-            '            </div>',
-            '        </div>',
-            '    </div>',
-            '    <div',
-            '        class="block-tags"',
-            '        style="',
-            '            position: absolute;',
-            '            top: 2px;',
-            '            bottom: 0px;',
-            '            left: 0;',
-            '        ">',
-            '        <div',
-            '            class="block-priority-tag"',
-            '            style="',
-            '                position: absolute;',
-            '                display: none;',
-            '                left: 0px;',
-            '                top: 0;',
-            '                width: 20px;',
-            '                height: 14px;',
-            '                line-height: 14px;',
-            '                margin-top: 0;',
-            '                text-align: center;',
-            '                color: #ffffff;',
-            '                border-radius: 1px;',
-            '            "',
-            '        >',
-            '            <div',
-            '                class="block-priority-data"',
-            '                style="',
-            '                    position: absolute;',
-            '                    left: 0;',
-            '                    right: 0;',
-            '                    top: 0;',
-            '                    bottom: 0;',
-            '                    font-size: 12px;',
-            '                    font-weight: normal;',
-            '                    border-radius: 0px;',
-            '                    transform: scale(0.8);',
-            '                    word-break: keep-all;',
-            '                    white-space: nowrap;',
-            '                "',
-            '            ></div>',
-            '        </div>',
-            '    </div>',
-            '    <div',
-            '        class="block-link"',
-            '        style="',
-            '            position: relative;',
-            '            z-index: 1;',
-            '            ;',
-            '        ">',
-            '    </div>',
-            '    <div',
-            '        class="block-attach"',
-            '        style="',
-            '            position: relative;',
-            '        ">',
-            '        <div ',
-            '            class="block-attach-box"',
-            '            style="',
-            '                display: block;',
-            '            "></div>',
-            '    </div>',
-            '</div>'
-        ].join('')
+    thiz.ele = tmpEle(
+        '<div class="block" style="position: relative">',
+        //   actions
+        //   task
+        //   tags
+        //   box (background, border)
+        //   link
+        //   attach
+        '</div>'
     );
 
-    thiz.boxEle = thiz.ele.find('> .block-box');
-    thiz.backgroundEle = thiz.ele.find('> .block-box > .block-background');
-    thiz.borderEle = thiz.ele.find('> .block-box > .block-border');
-    thiz.actionsEle = thiz.ele.find('.block-actions');
-    thiz.taskEle = thiz.ele.find('> .block-box > .block-border > .block-task');
-    thiz.taskUncheckEle = thiz.ele.find('> .block-box > .block-border > .block-task > .block-task-uncheck');
-    thiz.taskCheckEle = thiz.ele.find('> .block-box > .block-border > .block-task > .block-task-check');
+    // actions
+    thiz.initActionsEle();
+    thiz.ele.append(thiz.actionsEle);
+
+    // task
+    thiz.initTaskEle();
+    thiz.ele.append(thiz.taskEle);
     thiz.setCheckData(dataObj.check);
 
-    thiz.attachEle = thiz.ele.find('> .block-attach');
-    thiz.setAttach(dataObj.attach);
+    // tag
+    thiz.initTagsEle();
+    thiz.ele.append(thiz.tagsEle);
 
-    thiz.tagsEle = thiz.ele.find('> .block-tags');
-    thiz.priorityTagEle = thiz.ele.find('> .block-tags > .block-priority-tag');
-    thiz.priorityDataEle = thiz.ele.find('> .block-tags > .block-priority-tag > .block-priority-data');
+    // box (background, border)
+    thiz.initBoxEle();
+    thiz.ele.append(thiz.boxEle);
 
-    thiz.linkEle = thiz.ele.find('> .block-link');
+    // link
+    thiz.initLinkEle();
+    thiz.ele.append(thiz.linkEle);
     thiz.link = new Link(thiz.linkEle);
+
+    // attach
+    thiz.initAttachEle();
+    thiz.ele.append(thiz.attachEle);
+    thiz.setAttach(dataObj.attach);
 
     thiz.initActions();
     thiz.initTask();
@@ -222,6 +77,217 @@ Block.prototype.initEle = function (p, dataObj) {
     $(p).replaceWith(thiz.ele);
 };
 
+Block.prototype.initBoxEle = function () {
+    var thiz = this;
+    thiz.boxEle = tmpEle(
+        '<div',
+        '    class="block-box"',
+        '    style="position: relative"',
+        '    >',
+        //   background
+        //   border
+        '</div>',
+    );
+
+    // background
+    thiz.initBackgroundEle();
+    thiz.boxEle.append(thiz.backgroundEle);
+
+    // border
+    thiz.initBorderEle();
+    thiz.boxEle.append(thiz.borderEle);
+};
+
+Block.prototype.initBackgroundEle = function () {
+    var thiz = this;
+    thiz.backgroundEle = tmpEle(
+        '<div',
+        '    class="block-background"',
+        '    style="',
+        '        position: absolute;',
+        '        left: 0px;',
+        '        right: 0px;',
+        '        top: 0px;',
+        '        bottom: 0px;',
+        '    "',
+        '></div>',
+    );
+};
+
+Block.prototype.initBorderEle = function () {
+    var thiz = this;
+    thiz.borderEle = tmpEle(
+        '<div',
+        '    class="block-border"',
+        '    style="position: relative"',
+        '>',
+        '</div>',
+    );
+};
+
+Block.prototype.initActionsEle = function () {
+    var thiz = this;
+    thiz.actionsEle = tmpEle(
+        '<div',
+        '    class="block-actions"',
+        '    style="',
+        '        position: absolute;',
+        '        top: 0px;',
+        '        bottom: 0px;',
+        '        left: -25px;',
+        '        right: -25px;',
+        '        ;',
+        '    "></div>',
+    );
+};
+
+Block.prototype.initTaskEle = function () {
+    var thiz = this;
+    thiz.taskEle = tmpEle(
+        '<div',
+        '    class="block-task"',
+        '    style="',
+        '        position: absolute;',
+        '        display: none;',
+        '        left: 0px;',
+        '        top: 2px;',
+        '        width: 14px;',
+        '        height: 14px;',
+        '        border-radius: 50%;',
+        '        cursor: pointer;',
+        '    "',
+        '>',
+        '    <div',
+        '        class="block-task-uncheck"',
+        '        style="',
+        '            position: absolute;',
+        '            left: 0px;',
+        '            right: 0px;',
+        '            top: 0px;',
+        '            bottom: 0px;',
+        '            background-color: #ffffff;',
+        '            border: 1px solid #aaaaaa;',
+        '            border-radius: 1px;',
+        '        "',
+        '    ></div>',
+        '    <div',
+        '        class="block-task-check"',
+        '        style="',
+        '            position: absolute;',
+        '            display: none;',
+        '            left: 0px;',
+        '            right: 0px;',
+        '            top: 0px;',
+        '            bottom: 0px;',
+        '            background-color: #aaaaaa;',
+        '            border-radius: 1px;',
+        '        "',
+        '     >',
+        '        <div',
+        '            class="block-task-check-on"',
+        '            style="',
+        '                position: absolute;',
+        '                left: 4px;',
+        '                top: 5px;',
+        '                border-left: 1px solid #ffffff;',
+        '                border-bottom: 1px solid #ffffff;',
+        '                border-radius: 0px;',
+        '                width: 5px;',
+        '                height: 2px;',
+        '                transform: rotate(-50deg);',
+        '            "',
+        '        ></div>',
+        '    </div>',
+        '</div>'
+    );
+
+    thiz.taskUncheckEle = thiz.taskEle.find('.block-task-uncheck');
+    thiz.taskCheckEle = thiz.taskEle.find('.block-task-check');
+};
+
+Block.prototype.initTagsEle = function () {
+    var thiz = this;
+    thiz.tagsEle = tmpEle(
+        '<div',
+        '    class="block-tags"',
+        '    style="',
+        '        position: absolute;',
+        '        top: 2px;',
+        '        bottom: 0px;',
+        '        left: 0;',
+        '    ">',
+        '    <div',
+        '        class="block-priority-tag"',
+        '        style="',
+        '            position: absolute;',
+        '            display: none;',
+        '            left: 0px;',
+        '            top: 0;',
+        '            width: 20px;',
+        '            height: 14px;',
+        '            line-height: 14px;',
+        '            margin-top: 0;',
+        '            text-align: center;',
+        '            color: #ffffff;',
+        '            border-radius: 1px;',
+        '        "',
+        '    >',
+        '        <div',
+        '            class="block-priority-data"',
+        '            style="',
+        '                position: absolute;',
+        '                left: 0;',
+        '                right: 0;',
+        '                top: 0;',
+        '                bottom: 0;',
+        '                font-size: 12px;',
+        '                font-weight: normal;',
+        '                border-radius: 0px;',
+        '                transform: scale(0.8);',
+        '                word-break: keep-all;',
+        '                white-space: nowrap;',
+        '            "',
+        '        ></div>',
+        '    </div>',
+        '</div>',
+    );
+
+    thiz.priorityTagEle = thiz.tagsEle.find('.block-priority-tag');
+    thiz.priorityDataEle = thiz.priorityTagEle.find('.block-priority-data');
+};
+
+Block.prototype.initAttachEle = function () {
+    var thiz = this;
+    thiz.attachEle = tmpEle(
+        '<div',
+        '    class="block-attach"',
+        '    style="',
+        '        position: relative;',
+        '    "',
+        '>',
+        '    <div ',
+        '        class="block-attach-box"',
+        '        style="',
+        '            display: block;',
+        '        "></div>',
+        '</div>',
+    );
+};
+
+Block.prototype.initLinkEle = function () {
+    var thiz = this;
+    thiz.linkEle = tmpEle(
+        '<div',
+        '    class="block-link"',
+        '    style="',
+        '        position: relative;',
+        '        z-index: 1;',
+        '        ;',
+        '    ">',
+        '</div>',
+    );
+};
+
 Block.prototype.initContentEle = function (link) {
     var thiz = this;
     var eleType = 'div';
@@ -236,6 +302,24 @@ Block.prototype.initContentEle = function (link) {
         thiz.contentEle.prop('contenteditable', true);
     }
     thiz.borderEle.prepend(thiz.contentEle);
+
+    thiz.initContentTailEle(link);
+};
+
+Block.prototype.initContentTailEle = function (link) {
+    var thiz = this;
+    if (!thiz.isGrid()) {
+        thiz.contentTailEle = $([
+            '<div',
+            '    class="block-content-tail"',
+            '    style="',
+            '        display: inline-block;',
+            '    "',
+            '>tail</div>'
+        ].join());
+
+        thiz.contentEle.append(thiz.contentTailEle);
+    }
 };
 
 Block.prototype.initBind = function () {

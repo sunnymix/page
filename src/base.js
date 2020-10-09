@@ -331,3 +331,27 @@ window.newEle = function (type, clazz) {
     }
     return ele;
 };
+
+window.tmpEle = function () {
+    var res = null;
+
+    var args = parseFuncArgsToArray(arguments);
+    var argsLen = args.length;
+
+    if (argsLen > 0) {
+        if (argsLen === 1 && isArray(args[0])) {
+            res = $(args[0].join(''));
+        } else {
+            res = $(args.join(''));
+        }
+    }
+    return res;
+};
+
+window.parseFuncArgsToArray = function (args) {
+    var res = [];
+    if (isNotNone(args)) {
+        res = [].slice.call(args);
+    }
+    return res;
+};
