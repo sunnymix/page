@@ -21,6 +21,16 @@ function Ele() {
         ele.css(opt.style);
     }
 
+    if (isNotNone(opt.props)) {
+        for (var prop in opt.props) {
+            ele.prop(prop, opt.props[prop]);
+        }
+    }
+
+    if (isNotBlank(opt.body)) {
+        ele.html(opt.body);
+    }
+
     return ele;
 };
 
@@ -61,7 +71,9 @@ Ele.getDefaultOpt = function () {
         id: '',
         clazz: '',
         hash: '',
-        style: null
+        style: null,
+        body: '',
+        props: null
     };
 }
 
@@ -81,10 +93,19 @@ Ele.extendDefaultOpt = function (inputOpt) {
         }
 
         var styleProps = {};
+        var eleProps = {}
 
         for (var prop in inputOpt) {
-            if (Ele.styleProps.includes(prop)) {
+            var isStyleProp = Ele.styleProps.includes(prop);
+            var isMetaProps = Ele.metaProps.includes(prop);
+
+            if (isStyleProp) {
                 styleProps[prop] = inputOpt[prop];
+            }
+
+            if (!isStyleProp
+                && !isMetaProps) {
+                eleProps[prop] = inputOpt[prop];
             }
         }
 
@@ -92,9 +113,19 @@ Ele.extendDefaultOpt = function (inputOpt) {
             || isNotNone(inputOpt.style)) {
             opt.style = $.extend({}, styleProps, inputOpt.style);
         }
+
+        opt.props = eleProps;
+
+        if (isNotBlank(inputOpt.body)) {
+            opt.body = inputOpt.body;
+        }
     }
     return opt;
 };
+
+Ele.metaProps = [
+    'id', 'clazz', 'hash', 'style', 'body'
+];
 
 Ele.styleProps = [
     'position', 'display',
@@ -105,9 +136,11 @@ Ele.styleProps = [
     'height', 'minHeight', 'maxHeight',
     'lineHeight',
     'border', 'borderLeft', 'borderRight', 'borderTop', 'borderBottom',
-    'border-radius', // todo
+    'borderRadius', // todo
     'cursor',
-    'background', 'backgroundColor'
+    'background', 'backgroundColor',
+    'textDecoration', 'textAlign',
+    'color', 'fontSize', 'fontFamily',
 ];
 
 window.Ele = Ele;

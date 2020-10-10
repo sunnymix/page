@@ -373,7 +373,7 @@ Style.prototype.getContentBorderBottom = function () {
     var thiz = this;
     var color = 'transparent';
     if (thiz.block.hasLink()) {
-        color = '#cccccc';
+        color = '#dddddd';
     }
     return '1px solid ' + color;
 };

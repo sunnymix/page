@@ -4,16 +4,16 @@ function Block(writer, p, data, isLock, readonly, context, previousBlock) {
     thiz.writer = writer;
 
     thiz.id = uuid();
-    var dataObj = thiz.extractData(data);
+    var initData = thiz.extractData(data);
 
-    thiz.schema = dataObj.schema;
+    thiz.schema = initData.schema;
     thiz.isLock = isTrue(isLock);
 
     thiz.readonly = isTrue(readonly);
     thiz.context = isNotNone(context) ? context : SCHEMA.PAPER;
     thiz.previousBlock = previousBlock;
 
-    thiz.initEle(p, dataObj);
+    thiz.initEle(p, initData);
 
     thiz.initBind();
     initEvent(thiz, Block.prototype);
@@ -21,7 +21,7 @@ function Block(writer, p, data, isLock, readonly, context, previousBlock) {
 
 Block.prototype.type = ELE_TYPE.BLOCK;
 
-Block.prototype.initEle = function (p, dataObj) {
+Block.prototype.initEle = function (p, initData) {
     var thiz = this;
 
     thiz.ele = new Ele('div', {
@@ -36,7 +36,7 @@ Block.prototype.initEle = function (p, dataObj) {
     thiz.ele.append(thiz.actionsEle);
 
     // box
-    thiz.initBoxEle();
+    thiz.initBoxEle(initData);
     thiz.ele.append(thiz.boxEle);
 
     // attach
@@ -45,26 +45,24 @@ Block.prototype.initEle = function (p, dataObj) {
 
     ////// data //////
 
-    thiz.setCheckData(dataObj.check);
+    thiz.setCheckData(initData.check);
 
-    thiz.setAttach(dataObj.attach);
+    thiz.setAttach(initData.attach);
 
     thiz.initActions();
     thiz.initTask();
 
-    thiz.initContentEle(dataObj.link);
-
-    thiz.setContentData(dataObj.text);
-    thiz.setPriorityData(dataObj.priority);
-    thiz.setLinkData(dataObj.link);
-    thiz.setHighlightData(dataObj.highlight);
+    thiz.setContentData(initData.text);
+    thiz.setPriorityData(initData.priority);
+    thiz.setLinkData(initData.link);
+    thiz.setHighlightData(initData.highlight);
 
     thiz.loadStyle();
 
     $(p).replaceWith(thiz.ele);
 };
 
-Block.prototype.initBoxEle = function () {
+Block.prototype.initBoxEle = function (initData) {
     var thiz = this;
     thiz.boxEle = new Ele('div', {
         id: '.block-box',
@@ -76,7 +74,7 @@ Block.prototype.initBoxEle = function () {
     thiz.boxEle.append(thiz.backgroundEle);
 
     // border
-    thiz.initBorderEle();
+    thiz.initBorderEle(initData);
     thiz.boxEle.append(thiz.borderEle);
 
     // tags
@@ -105,11 +103,68 @@ Block.prototype.initBackgroundEle = function () {
     });
 };
 
-Block.prototype.initBorderEle = function () {
+Block.prototype.initBorderEle = function (initData) {
     var thiz = this;
     thiz.borderEle = new Ele('div', {
         id: '.block-border',
         position: 'relative',
+    });
+
+    // content
+    thiz.initContentEle(initData);
+    thiz.borderEle.append(thiz.contentEle);
+
+    // tail
+    thiz.initTailEle(initData);
+    thiz.borderEle.append(thiz.tailEle);
+};
+
+Block.prototype.initContentEle = function (initData) {
+    var thiz = this;
+
+    var isReadonlyLink = isTrue(thiz.readonly) && isNotBlank(initData.link);
+    var eleType = isReadonlyLink ? 'a' : 'div';
+
+    thiz.contentEle = new Ele(eleType, {
+        id: '.block-content'
+    });
+
+    var isEditable = isFalse(thiz.readonly);
+    if (isEditable) {
+        thiz.contentEle.prop('contenteditable', true);
+    }
+};
+
+Block.prototype.initTailEle = function (initData) {
+    var thiz = this;
+
+    thiz.tailEle = new Ele('div', {
+        id: '.block-tail',
+        position: 'relative',
+        display: 'inline-block',
+    });
+
+    thiz.initLinkIconEle(initData);
+    thiz.tailEle.append(thiz.linkIconEle);
+};
+
+Block.prototype.initLinkIconEle = function (initData) {
+    var thiz = this;
+    thiz.linkIconEle = new Ele('a', {
+        id: '.block-link-icon',
+        target: '_blank',
+        body: '··',
+        display: 'inline-block',
+        padding: 0,
+        width: '16px',
+        height: '10px',
+        lineHeight: '10px',
+        backgroundColor: '#dddddd',
+        borderRadius: '1px',
+        textAlign: 'center',
+        textDecoration: 'none',
+        color: '#ffffff',
+        marginLeft: '10px',
     });
 };
 
@@ -270,40 +325,6 @@ Block.prototype.initLinkEle = function () {
         '    ">',
         '</div>',
     );
-};
-
-Block.prototype.initContentEle = function (link) {
-    var thiz = this;
-    var eleType = 'div';
-    if (isTrue(thiz.readonly)
-        && isNotBlank(link)) {
-        eleType = 'a';
-    }
-
-    thiz.contentEle = newEle(eleType, 'block-content');
-
-    if (isNotTrue(thiz.readonly)) {
-        thiz.contentEle.prop('contenteditable', true);
-    }
-    thiz.borderEle.prepend(thiz.contentEle);
-
-    thiz.initContentTailEle(link);
-};
-
-Block.prototype.initContentTailEle = function (link) {
-    var thiz = this;
-    if (!thiz.isGrid()) {
-        thiz.contentTailEle = $([
-            '<div',
-            '    class="block-content-tail"',
-            '    style="',
-            '        display: inline-block;',
-            '    "',
-            '>tail</div>'
-        ].join());
-
-        thiz.contentEle.append(thiz.contentTailEle);
-    }
 };
 
 Block.prototype.initBind = function () {
@@ -609,8 +630,10 @@ Block.prototype.applyStyle = function (style) {
                     // top: thiz.style.getBaseLineTop()
                 })
                 .show();
+            thiz.linkIconEle.show();
         } else {
             thiz.linkEle.hide();
+            thiz.linkIconEle.hide();
         }
 
         thiz.backgroundEle.css({
@@ -641,7 +664,7 @@ Block.prototype.isLastBlock = function () {
 Block.prototype.blur = function () {
     var thiz = this;
     // thiz.linkEle.hide();
-    thiz.shrinkLink();
+    // thiz.shrinkLink();
 };
 
 Block.prototype.focus = function () {
@@ -650,7 +673,7 @@ Block.prototype.focus = function () {
     if (thiz.isShowLink()) {
         // thiz.linkEle.show();
     }
-    thiz.expandLink();
+    // thiz.expandLink();
     thiz.trigger('focus', thiz);
 };
 
@@ -813,6 +836,7 @@ Block.prototype.defaultData = function () {
     };
 };
 
+// fixme
 Block.prototype.extractData = function (data) {
     var defaultData = this.defaultData();
     if (isObject(data)) {
@@ -891,6 +915,7 @@ Block.prototype.setLinkData = function (link) {
     thiz.link.setData(link);
     thiz.contentEle.prop('href', link);
     thiz.contentEle.prop('target', '_blank');
+    thiz.linkIconEle.prop('href', link);
 };
 
 Block.prototype.getLinkData = function () {
