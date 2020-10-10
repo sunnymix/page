@@ -1,4 +1,3 @@
-
 function Style(block) {
     var thiz = this;
     thiz.block = block;
@@ -9,13 +8,13 @@ function Style(block) {
 
     thiz.fontFamily = '';
     thiz.fontWeight = 'normal';
-    thiz.fontSize = '13px';
+    thiz.fontSize = Style.BaseFontSize;
 
-    thiz.minHeight = '18px';
-    thiz.lineHeight = '18px';
+    thiz.minHeight = '20px';
+    thiz.lineHeight = '20px';
 
     thiz.paddingTop = '0px';
-    thiz.paddingBottom = '10px';
+    thiz.paddingBottom = '4px';
     thiz.paddingLeft = '10px';
     thiz.paddingRight = '10px';
 
@@ -52,6 +51,8 @@ function Style(block) {
 
     thiz.initStyle();
 };
+
+Style.BaseFontSize = '12px';
 
 Style.Paper = {
     paddingX: '60px',
@@ -430,25 +431,27 @@ Style.prototype.initText = function () {
 Style.prototype.initH1 = function () {
     this
         .setFontWeight('bold')
-        .setFontSize('18px')
-        .setLineHeight('20px')
-        .setMinHeight('20px')
+        .setFontSize((parsePxToNum(Style.BaseFontSize) + 6) + 'px')
+        .setLineHeight('30px')
+        .setMinHeight('30px')
         ;
 };
 
 Style.prototype.initH2 = function () {
     this
         .setFontWeight('bold')
-        .setFontSize('16px')
-        .setLineHeight('20px')
-        .setMinHeight('20px')
+        .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
+        .setLineHeight('28px')
+        .setMinHeight('28px')
         ;
 }
 
 Style.prototype.initH3 = function () {
     this
         .setFontWeight('bold')
-        .setFontSize('14px')
+        .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
+        .setLineHeight('24px')
+        .setMinHeight('24px')
         ;
 };
 
@@ -507,7 +510,7 @@ window.resetCss = function () {
         'body {',
         '    line-height: 1;',
         '    font-family: "PingFang SC", Aria;',
-        '    font-size: 13px;',
+        '    font-size: ' + Style.BaseFontSize + ';',
         '    background-color: #ffffff;',
         '}',
         'ol, ul {',
