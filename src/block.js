@@ -338,6 +338,11 @@ Block.prototype.initBind = function () {
         thiz.focus();
     });
 
+    thiz.contentEle.on('click', function (e) {
+        e.stopPropagation();
+        thiz.focus();
+    });
+
     thiz.ele.on('keydown', function (e) {
         if (e.keyCode == KEYCODE.ENTER) {
             e.preventDefault();
@@ -670,9 +675,13 @@ Block.prototype.blur = function () {
     // thiz.shrinkLink();
 };
 
-Block.prototype.focus = function () {
+Block.prototype.focus = function (keepCursor) {
     var thiz = this;
-    thiz.contentEle.focus();
+    if (!isTrue(keepCursor)) {
+        setTimeout(function () {
+            thiz.contentEle.focus();
+        }, 1);
+    }
     if (thiz.isShowLink()) {
         // thiz.linkEle.show();
     }
