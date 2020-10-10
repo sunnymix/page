@@ -215,16 +215,22 @@ Style.prototype.eleStyle = function (context) {
         'padding-bottom: ' + thiz.paddingBottom,
         'padding-left: ' + thiz.paddingLeft,
         'padding-right: ' + thiz.paddingRight,
+        'margin-top: ' + thiz.getMarginTop(),
+        'margin-bottom: ' + thiz.marginBottom,
+        'margin-left: ' + thiz.marginLeft,
+        'margin-right: ' + thiz.marginRight,
+    ].join(';');
+};
+
+Style.prototype.borderStyle = function () {
+    var thiz = this;
+    return [
+        'background-color: ' + thiz.backgroundColor,
         'border-top: ' + thiz.borderTop,
         'border-bottom: ' + thiz.borderBottom,
         'border-left: ' + thiz.borderLeft,
         'border-right: ' + thiz.borderRight,
         'border-radius: ' + thiz.borderRadius,
-        'margin-top: ' + thiz.getMarginTop(),
-        'margin-bottom: ' + thiz.marginBottom,
-        'margin-left: ' + thiz.marginLeft,
-        'margin-right: ' + thiz.marginRight,
-        'background-color: ' + thiz.backgroundColor
     ].join(';');
 };
 

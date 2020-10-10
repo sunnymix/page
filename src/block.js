@@ -543,19 +543,6 @@ Block.prototype.initTask = function () {
     });
 };
 
-Block.prototype.resetPreviousStyle = function (nextBlock) {
-    var thiz = this;
-    if (isNotNone(nextBlock)
-        && thiz.isSameSchema(nextBlock)) {
-        if (thiz.isCode()) {
-            var style = $.extend({}, thiz.style);
-            style.setBorderBottom(0);
-            style.setBorderRadius([style.borderRadius, style.borderRadius, '0px', '0px'].join(' '));
-            thiz.applyStyle(style);
-        }
-    }
-};
-
 Block.prototype.reload = function () {
     var thiz = this;
     thiz.loadStyle();
@@ -579,6 +566,20 @@ Block.prototype.loadStyle = function () {
     thiz.applyStyle(style);
 };
 
+Block.prototype.resetPreviousStyle = function (nextBlock) {
+    var thiz = this;
+    if (isNotNone(nextBlock)
+        && thiz.isSameSchema(nextBlock)) {
+        if (thiz.isCode()) {
+            var style = $.extend({}, thiz.style);
+            style.setBorderBottom(0);
+            style.setBorderRadius([style.borderRadius, style.borderRadius, '0px', '0px'].join(' '));
+            style.setPaddingBottom('0px');
+            thiz.applyStyle(style);
+        }
+    }
+};
+
 Block.prototype.applyStyle = function (style) {
     var thiz = this;
     thiz.style = style;
@@ -587,6 +588,8 @@ Block.prototype.applyStyle = function (style) {
         thiz.style.setPaddingRight('0px');
 
         thiz.ele.prop('style', thiz.style.eleStyle(thiz.context));
+
+        thiz.borderEle.prop('style', thiz.style.borderStyle(thiz.context));
 
         thiz.contentEle.prop('style', thiz.style.contentStyle(thiz.context));
 
