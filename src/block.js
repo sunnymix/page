@@ -360,6 +360,13 @@ Block.prototype.initBind = function () {
             }
         }
 
+        if (e.keyCode == KEYCODE.BACKSPACE
+            && isCommandOrControl(e)
+            && isShift(e)) {
+            e.preventDefault();
+            thiz.remove();
+        }
+
         if (e.keyCode == KEYCODE.B && isCommandOrControl(e) && isShift(e)) {
             e.preventDefault();
             e.stopPropagation();
@@ -423,13 +430,6 @@ Block.prototype.initBind = function () {
             }
         }
 
-        if (e.keyCode == KEYCODE.BACKSPACE
-            && isCommandOrControl(e)
-            && isShift(e)) {
-            e.preventDefault();
-            thiz.remove();
-        }
-
         if (e.keyCode == KEYCODE.C
             && isCommandAndControl(e)) {
             e.preventDefault();
@@ -446,11 +446,6 @@ Block.prototype.expandLink = function () {
 Block.prototype.shrinkLink = function () {
     var thiz = this;
     thiz.link.shrink();
-};
-
-Block.prototype.remove = function () {
-    var thiz = this;
-    thiz.ele.remove();
 };
 
 Block.prototype.clone = function () {
@@ -750,6 +745,7 @@ Block.prototype.trimCaretContent = function () {
 
 Block.prototype.remove = function () {
     var thiz = this;
+    thiz.ele.remove();
     thiz.trigger('remove', thiz);
 };
 

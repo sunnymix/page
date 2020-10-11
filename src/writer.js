@@ -179,23 +179,26 @@ Writer.prototype.getBlockIndex = function (id) {
 };
 
 Writer.prototype.removeBlock = function (block, autoFocus) {
-    var idx = this.getBlockIndex(block.id);
+    var thiz = this;
+    var idx = thiz.getBlockIndex(block.id);
     var isAutoFocus = isNotNone(autoFocus) ? autoFocus : true;
 
     if (idx < 0) {
         return;
     }
 
-    this.blocks.splice(idx, 1);
+    thiz.blocks.splice(idx, 1);
     block.ele.remove();
 
     if (isAutoFocus) {
-        if (this.blocks.length > 0) {
+        if (thiz.blocks.length > 0) {
             var focusIdx = idx - 1;
             focusIdx = focusIdx < 0 ? 0 : focusIdx;
-            this.blocks[focusIdx].focus();
+            setTimeout(function () {
+                thiz.blocks[focusIdx].focus();
+            }, 1);
         } else {
-            this.focus();
+            thiz.focus();
         }
     }
 };
