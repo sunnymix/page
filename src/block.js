@@ -334,11 +334,11 @@ Block.prototype.initBind = function () {
         thiz.blur();
     });
 
-    thiz.ele.on('click', function (e) {
+    thiz.ele.on('mousedown', function (e) {
         thiz.focus();
     });
 
-    thiz.contentEle.on('click', function (e) {
+    thiz.contentEle.on('mousedown', function (e) {
         e.stopPropagation();
         thiz.focus(true);
     });
@@ -676,8 +676,10 @@ Block.prototype.focus = function (keepCursor) {
     
     if (resetCursor
         && !thiz.isGrid()) {
-        thiz.contentEle.focus();
-        setCursorToEnd(thiz.contentEle[0]);
+        setTimeout(function () {
+            thiz.contentEle.focus();
+            setCursorToEnd(thiz.contentEle[0]);
+        }, 1);
     }
 
     if (thiz.isShowLink()) {
