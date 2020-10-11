@@ -340,7 +340,7 @@ Block.prototype.initBind = function () {
 
     thiz.contentEle.on('click', function (e) {
         e.stopPropagation();
-        thiz.focus();
+        thiz.focus(true);
     });
 
     thiz.ele.on('keydown', function (e) {
@@ -677,11 +677,13 @@ Block.prototype.blur = function () {
 
 Block.prototype.focus = function (keepCursor) {
     var thiz = this;
-    if (!isTrue(keepCursor)) {
-        setTimeout(function () {
-            thiz.contentEle.focus();
-        }, 1);
+    var resetCursor = !isTrue(keepCursor);
+    
+    if (resetCursor) {
+        thiz.contentEle.focus();
+        setCursorToEnd(thiz.contentEle[0]);
     }
+    
     if (thiz.isShowLink()) {
         // thiz.linkEle.show();
     }

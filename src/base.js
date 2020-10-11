@@ -324,6 +324,18 @@ window.getCaretPosition = function (editableDiv) {
     return caretPos;
 };
 
+window.setCursorToEnd = function (ele) {
+    try {
+        var range = document.createRange();
+        var sel = window.getSelection();
+        range.setStart(ele, 1);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    } catch (err) {
+    }
+}
+
 window.newEle = function (type, clazz) {
     var ele = $('<' + type + '>');
     if (isNotBlank(clazz)) {
