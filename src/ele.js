@@ -135,13 +135,14 @@ Ele.styleProps = [
     'width', 'minWidth', 'maxWidth',
     'height', 'minHeight', 'maxHeight',
     'lineHeight',
-    'border', 'borderLeft', 'borderRight', 'borderTop', 'borderBottom',
+    'border', 'borderLeft', 'borderRight', 'borderTop', 'borderBottom', 'borderWidth', 'borderColor', 'borderWidth', 'borderStyle',
     'borderRadius', // todo
     'cursor',
     'background', 'backgroundColor',
     'textDecoration', 'textAlign',
     'color', 'fontSize', 'fontFamily',
     'float',
+    'transform',
 ];
 
 window.Ele = Ele;

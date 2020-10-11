@@ -144,7 +144,8 @@ Block.prototype.initTailEle = function (initData) {
         id: '.block-tail',
         position: 'relative',
         display: 'inline-block',
-        float: 'left'
+        float: 'left',
+        marginLeft: '6px',
     });
 
     thiz.initLinkIconEle(initData);
@@ -155,20 +156,63 @@ Block.prototype.initLinkIconEle = function (initData) {
     var thiz = this;
     thiz.linkIconEle = new Ele('a', {
         id: '.block-link-icon',
+        position: 'relative',
         target: '_blank',
-        body: '··',
+        body: '',
         display: 'inline-block',
         padding: 0,
-        width: '16px',
-        height: '12px',
-        lineHeight: '12px',
-        backgroundColor: '#e1e4e8',
+        width: '12px',
+        height: '14px',
+        lineHeight: '14px',
+        backgroundColor: '#655e5e',
         borderRadius: '1px',
         textAlign: 'center',
         textDecoration: 'none',
         color: '#ffffff',
-        marginLeft: '4px',
     });
+
+    var dotEle = new Ele('div', {
+        id: '.block-link-dot',
+        width: '2px',
+        height: '2px',
+        backgroundColor: '#dddddd',
+        borderRadius: 0,
+        position: 'absolute',
+        top: '3px',
+        left: '50%',
+        marginLeft: '-1px',
+    });
+    thiz.linkIconEle.append(dotEle);
+
+    var stringEle = new Ele('div', {
+        id: '.block-link-string',
+        width: '2px',
+        height: '5px',
+        backgroundColor: '#dddddd',
+        borderRadius: 0,
+        position: 'absolute',
+        bottom: '3px',
+        left: '50%',
+        marginLeft: '-1px',
+    });
+    thiz.linkIconEle.append(stringEle);
+
+    var arrowEle = new Ele('div', {
+        id: '.block-link-arrow',
+        position: 'absolute',
+        width: '4px',
+        height: '4px',
+        left: '4px',
+        top: '5px',
+        borderStyle: 'solid',
+        borderColor: '#ffffff',
+        borderWidth: '1px 1px 0 0',
+        marginLeft: '-1px',
+        transform: 'rotate(45deg)',
+        borderRadius: '1px',
+    });
+    // thiz.linkIconEle.append(arrowEle);
+
 };
 
 Block.prototype.initActionsEle = function () {
