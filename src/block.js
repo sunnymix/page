@@ -679,11 +679,12 @@ Block.prototype.focus = function (keepCursor) {
     var thiz = this;
     var resetCursor = !isTrue(keepCursor);
     
-    if (resetCursor) {
+    if (resetCursor
+        && !thiz.isGrid()) {
         thiz.contentEle.focus();
         setCursorToEnd(thiz.contentEle[0]);
     }
-    
+
     if (thiz.isShowLink()) {
         // thiz.linkEle.show();
     }
