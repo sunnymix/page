@@ -2,6 +2,7 @@ function Clearfix(place) {
     var thiz = this;
     thiz.ele = $([
         '<div',
+        '    class="clearfix"',
         '    style="',
         '        visibility: hidden;',
         '        display: block;',

@@ -260,7 +260,8 @@ Style.prototype.contentStyle = function () {
         'margin-left: ' + thiz.getContentMarginLeft(),
         'margin-right: ' + thiz.getContentMarginRight(),
         'color: ' + thiz.getContentColor(),
-        'text-decoration: none'
+        'text-decoration: none',
+        'float: ' + (thiz.block.isGrid() ? 'none' : 'left'),
         // 'background-color: ' + thiz.getContentBackgroundColor()
     ].join(';');
 };
@@ -380,9 +381,10 @@ Style.prototype.getContentBorderBottom = function () {
     var thiz = this;
     var color = 'transparent';
     if (thiz.block.hasLink()) {
-        color = '#dddddd';
+        color = '#e1e4e8';
+        return '1px solid ' + color;
     }
-    return '1px solid ' + color;
+    return '0 none';
 };
 
 Style.prototype.setContentMarginLeft = function (contentMarginLeft) {

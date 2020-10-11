@@ -141,6 +141,7 @@ Ele.styleProps = [
     'background', 'backgroundColor',
     'textDecoration', 'textAlign',
     'color', 'fontSize', 'fontFamily',
+    'float',
 ];
 
 window.Ele = Ele;

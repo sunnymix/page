@@ -117,6 +117,8 @@ Block.prototype.initBorderEle = function (initData) {
     // tail
     thiz.initTailEle(initData);
     thiz.borderEle.append(thiz.tailEle);
+
+    new Clearfix(thiz.tailEle);
 };
 
 Block.prototype.initContentEle = function (initData) {
@@ -142,6 +144,7 @@ Block.prototype.initTailEle = function (initData) {
         id: '.block-tail',
         position: 'relative',
         display: 'inline-block',
+        float: 'left'
     });
 
     thiz.initLinkIconEle(initData);
@@ -157,14 +160,14 @@ Block.prototype.initLinkIconEle = function (initData) {
         display: 'inline-block',
         padding: 0,
         width: '16px',
-        height: '10px',
-        lineHeight: '10px',
-        backgroundColor: '#dddddd',
+        height: '12px',
+        lineHeight: '12px',
+        backgroundColor: '#e1e4e8',
         borderRadius: '1px',
         textAlign: 'center',
         textDecoration: 'none',
         color: '#ffffff',
-        marginLeft: '10px',
+        marginLeft: '4px',
     });
 };
 
