@@ -14,7 +14,7 @@ function Style(block) {
     thiz.lineHeight = '20px';
 
     thiz.paddingTop = '0px';
-    thiz.paddingBottom = '4px';
+    thiz.paddingBottom = '6px';
     thiz.paddingLeft = '10px';
     thiz.paddingRight = '10px';
 
@@ -52,7 +52,7 @@ function Style(block) {
     thiz.initStyle();
 };
 
-Style.BaseFontSize = '12px';
+Style.BaseFontSize = '13px';
 
 Style.Paper = {
     paddingX: '60px',
@@ -431,43 +431,40 @@ Style.prototype.initText = function () {
 Style.prototype.initH1 = function () {
     this
         .setFontWeight('bold')
-        .setFontSize((parsePxToNum(Style.BaseFontSize) + 6) + 'px')
-        .setLineHeight('30px')
-        .setMinHeight('30px')
+        .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
+        .setLineHeight('22px')
+        .setMinHeight('22px')
         ;
 };
 
 Style.prototype.initH2 = function () {
     this
         .setFontWeight('bold')
-        .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
-        .setLineHeight('28px')
-        .setMinHeight('28px')
+        .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
         ;
 }
 
 Style.prototype.initH3 = function () {
     this
         .setFontWeight('bold')
-        .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
-        .setLineHeight('24px')
-        .setMinHeight('24px')
+        .setFontSize((parsePxToNum(Style.BaseFontSize) + 0) + 'px')
         ;
 };
 
 Style.prototype.initCode = function () {
     this
         .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
-        .setBackgroundColor('#f9f9f9')
+        .setBackgroundColor('#ffffff')
         .setMarginLeft('10px')
         .setMarginRight('0px')
-        .setBorderTop('1px', 'solid', '#dddddd')
-        .setBorderBottom('1px', 'solid', '#dddddd')
-        .setBorderLeft('1px', 'solid', '#dddddd')
-        .setBorderRight('1px', 'solid', '#dddddd')
-        .setBorderRadius('2px')
+        .setBorderTop('1px', 'solid', '#e1e4e8')
+        .setBorderBottom('1px', 'solid', '#e1e4e8')
+        .setBorderLeft('1px', 'solid', '#e1e4e8')
+        .setBorderRight('1px', 'solid', '#e1e4e8')
+        .setBorderRadius('1px')
         .setContentPaddingLeft('5px')
         .setContentPaddingRight('5px')
+        .setColor('#24292e')
         ;
 };
 

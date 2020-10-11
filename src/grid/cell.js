@@ -6,7 +6,7 @@ function Cell(data, readonly) {
         '    class="grid-cell"',
         '    style="',
         '        position: relative;',
-        '        border: 1px solid #cccccc;',
+        '        border: 1px solid #e1e4e8;',
         '        border-width: 1px;',
         '        padding: 1px 25px;',
         '        vertical-align: middle;',
