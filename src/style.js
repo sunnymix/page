@@ -35,8 +35,8 @@ function Style(block) {
     // content override
     thiz.contentPaddingTop = '0px';
     thiz.contentPaddingBottom = '0px';
-    thiz.contentPaddingLeft = '0px';
-    thiz.contentPaddingRight = '0px';
+    thiz.contentPaddingLeft = '2px';
+    thiz.contentPaddingRight = '2px';
 
     thiz.contentBorderTop = '0px solid transparent';
     thiz.contentBorderBottom = '0px solid transparent';
