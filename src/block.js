@@ -145,7 +145,7 @@ Block.prototype.initTailEle = function (initData) {
         position: 'relative',
         display: 'inline-block',
         float: 'left',
-        marginLeft: '6px',
+        marginLeft: '2px',
     });
 
     thiz.initLinkIconEle(initData);
