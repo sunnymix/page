@@ -270,6 +270,7 @@ Style.prototype.contentStyle = function () {
         'color: ' + thiz.getContentColor(),
         'text-decoration: none',
         'float: ' + (thiz.block.isGrid() ? 'none' : 'left'),
+        'margin-bottom: -1px', // fixme
         // 'background-color: ' + thiz.getContentBackgroundColor()
     ].join(';');
 };
@@ -390,7 +391,7 @@ Style.prototype.getContentBorderBottom = function () {
     var color = 'transparent';
     if (thiz.block.hasLink()) {
         color = '#007bff';
-        return '1px solid ' + color;
+        return '1px dashed ' + color;
     }
     return '0 none';
 };
@@ -444,7 +445,7 @@ Style.prototype.initH1 = function () {
         .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
         .setLineHeight('22px')
         .setMinHeight('22px')
-        .setBorderBottom('1px', 'solid', '#e1e4e8')
+        .setBorderBottom('2px', 'solid', '#e1e4e8')
         ;
 };
 
@@ -460,6 +461,7 @@ Style.prototype.initH3 = function () {
     this
         .setFontWeight('bold')
         .setFontSize((parsePxToNum(Style.BaseFontSize) + 0) + 'px')
+        .setBorderBottom('1px', 'dashed', '#e1e4e8')
         ;
 };
 
