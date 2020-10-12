@@ -22,6 +22,7 @@ function Style(block) {
     thiz.borderBottom = '0px solid transparent';
     thiz.borderLeft = '0px solid transparent';
     thiz.borderRight = '0px solid transparent';
+    thiz.borderPaddingBottom = '0px';
 
     thiz.borderRadius = '0px';
 
@@ -133,7 +134,13 @@ Style.prototype.setBorderRight = function (size, style, color) {
     thiz.borderRight = size + ' ' +
         (style || 'solid') + ' ' +
         (color || thiz.color);
-    return this;
+    return thiz;
+};
+
+Style.prototype.setBorderPaddingBottom = function (borderPaddingBottom) {
+    var thiz = this;
+    thiz.borderPaddingBottom = borderPaddingBottom;
+    return thiz;
 };
 
 Style.prototype.setContentBorderTop = function (size, style, color) {
@@ -232,6 +239,7 @@ Style.prototype.borderStyle = function () {
         'border-left: ' + thiz.borderLeft,
         'border-right: ' + thiz.borderRight,
         'border-radius: ' + thiz.borderRadius,
+        'padding-bottom: ' + thiz.borderPaddingBottom,
     ].join(';');
 };
 
@@ -381,7 +389,7 @@ Style.prototype.getContentBorderBottom = function () {
     var thiz = this;
     var color = 'transparent';
     if (thiz.block.hasLink()) {
-        color = '#e1e4e8';
+        color = '#007bff';
         return '1px solid ' + color;
     }
     return '0 none';
@@ -436,6 +444,7 @@ Style.prototype.initH1 = function () {
         .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
         .setLineHeight('22px')
         .setMinHeight('22px')
+        .setBorderBottom('1px', 'solid', '#e1e4e8')
         ;
 };
 
@@ -443,6 +452,7 @@ Style.prototype.initH2 = function () {
     this
         .setFontWeight('bold')
         .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
+        .setBorderBottom('1px', 'solid', '#e1e4e8')
         ;
 }
 
