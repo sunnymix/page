@@ -381,7 +381,7 @@ Style.prototype.getContentColor = function () {
     var thiz = this;
     var color = thiz.color;
     if (thiz.block.hasLink()) {
-        // color = '#007bff';
+        color = '#0064bd';
     }
     return color;
 };
@@ -389,10 +389,10 @@ Style.prototype.getContentColor = function () {
 Style.prototype.getContentBorderBottom = function () {
     var thiz = this;
     var color = 'transparent';
-    if (thiz.block.hasLink()) {
-        color = '#007bff';
-        return '1px dashed ' + color;
-    }
+    // if (thiz.block.hasLink()) {
+    //     color = '#655e5e';
+    //     return '1px dashed ' + color;
+    // }
     return '0 none';
 };
 

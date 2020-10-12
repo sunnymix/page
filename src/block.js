@@ -145,7 +145,6 @@ Block.prototype.initTailEle = function (initData) {
         position: 'relative',
         display: 'inline-block',
         float: 'left',
-        marginLeft: '2px',
     });
 
     thiz.initLinkIconEle(initData);
@@ -156,29 +155,31 @@ Block.prototype.initLinkIconEle = function (initData) {
     var thiz = this;
     thiz.linkIconEle = new Ele('a', {
         id: '.block-link-icon',
-        position: 'relative',
+        position: 'absolute',
+        left: '0px',
+        top: '-2px',
         target: '_blank',
         body: '',
         display: 'inline-block',
         padding: 0,
         width: '12px',
-        height: '14px',
-        lineHeight: '14px',
-        backgroundColor: '#655e5e',
-        borderRadius: '1px',
+        height: '12px',
+        lineHeight: '12px',
+        // backgroundColor: '#e1e4e8',
+        border: '1px solid #0064bd',
+        borderRadius: '50%',
         textAlign: 'center',
         textDecoration: 'none',
-        color: '#ffffff',
     });
 
     var dotEle = new Ele('div', {
         id: '.block-link-dot',
         width: '2px',
         height: '2px',
-        backgroundColor: '#dddddd',
-        borderRadius: 0,
+        backgroundColor: '#0064bd',
+        borderRadius: '2px',
         position: 'absolute',
-        top: '3px',
+        top: '2px',
         left: '50%',
         marginLeft: '-1px',
     });
@@ -188,10 +189,10 @@ Block.prototype.initLinkIconEle = function (initData) {
         id: '.block-link-string',
         width: '2px',
         height: '5px',
-        backgroundColor: '#dddddd',
-        borderRadius: 0,
+        backgroundColor: '#0064bd',
+        borderRadius: '2px',
         position: 'absolute',
-        bottom: '3px',
+        bottom: '2px',
         left: '50%',
         marginLeft: '-1px',
     });
