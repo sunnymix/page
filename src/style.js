@@ -270,7 +270,6 @@ Style.prototype.contentStyle = function () {
         'color: ' + thiz.getContentColor(),
         'text-decoration: none',
         'float: ' + (thiz.block.isGrid() ? 'none' : 'left'),
-        'margin-bottom: -1px', // fixme
         // 'background-color: ' + thiz.getContentBackgroundColor()
     ].join(';');
 };
