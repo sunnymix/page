@@ -292,7 +292,7 @@ Block.prototype.initTagsEle = function () {
         '    class="block-tags"',
         '    style="',
         '        position: absolute;',
-        '        top: 2px;',
+        '        top: 0px;',
         '        bottom: 0px;',
         '        left: 0;',
         '    ">',
@@ -636,7 +636,7 @@ Block.prototype.applyStyle = function (style) {
 
         if (thiz.isTask()) {
             thiz.taskEle.css({
-                // top: thiz.style.getBaseLineTop(),
+                top: thiz.style.getBaseLineTop(),
                 left: thiz.style.getTaskLeft()
             }).show();
             if (+thiz.check > 0) {

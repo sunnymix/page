@@ -6,12 +6,12 @@ function Style(block) {
     thiz.wordBreak = 'break-all';
     thiz.position = 'relative';
 
-    thiz.fontFamily = '';
+    thiz.fontFamily = ''; //'Noto Serif SC';
     thiz.fontWeight = 'normal';
     thiz.fontSize = Style.BaseFontSize;
 
-    thiz.minHeight = '20px';
-    thiz.lineHeight = '20px';
+    thiz.minHeight = '22px';
+    thiz.lineHeight = '22px';
 
     thiz.paddingTop = '0px';
     thiz.paddingBottom = '6px';
@@ -442,8 +442,6 @@ Style.prototype.initH1 = function () {
     this
         .setFontWeight('bold')
         .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
-        .setLineHeight('22px')
-        .setMinHeight('22px')
         .setBorderBottom('2px', 'solid', '#e1e4e8')
         ;
 };
