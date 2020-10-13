@@ -354,8 +354,7 @@ Style.prototype.getBackgroundLeft = function () {
 Style.prototype.getBaseLineTop = function () {
     var thiz = this;
     return (
-        parsePxToNum(thiz.getPaddingTop())
-        + parsePxToNum(thiz.contentPaddingTop)
+        parsePxToNum(thiz.contentPaddingTop)
         + (parsePxToNum(thiz.lineHeight) / 2)
         - 7
     ) + 'px';
