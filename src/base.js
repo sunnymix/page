@@ -313,16 +313,20 @@ window.getCursorPosition = function (editableDiv) {
 };
 
 window.setCursorToEnd = function (ele) {
+    setCursor(ele, ele.innerText.length);
+};
+
+window.setCursor = function (ele, position) {
     var range = document.createRange();
     if (ele && ele.firstChild) {
-        range.setStart(ele.firstChild, ele.innerText.length);
+        range.setStart(ele.firstChild, position);
         range.collapse(true);
 
         var sel = window.getSelection();
         sel.removeAllRanges();
         sel.addRange(range);
     }
-}
+};
 
 window.newEle = function (type, clazz) {
     var ele = $('<' + type + '>');

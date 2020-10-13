@@ -389,8 +389,8 @@ Block.prototype.initBind = function () {
     });
 
     thiz.ele.on('paste', function (e) {
+        e.preventDefault();
         thiz.handlePasteEvent(e);
-        return false;
     });
 };
 
@@ -492,16 +492,22 @@ Block.prototype.handleKeydownEvent = function (e) {
 Block.prototype.handlePasteEvent = function (e) {
     var thiz = this;
     if (!thiz.isGrid()) {
-        var pasteText = getPasteText(e);
+        var pasteText = getPasteText(e).trim();
+
         var contentText = thiz.getContentData();
         var position = thiz.getCursorPosition();
-        
+
         var prefixText = contentText.substring(0, position);
         var suffixText = contentText.substring(position);
-        
-        var newContentText = prefixText + pasteText + suffixText;
-        
-        thiz.setContentData(newContentText);
+
+        var rows = pasteText.split('\n');
+        var singleRow = rows.length == 1;
+
+        if (singleRow) {
+            document.execCommand("insertHTML", false, rows[0]);
+        } else {
+
+        }
     }
 };
 
@@ -793,6 +799,11 @@ Block.prototype.jumpDown = function () {
 Block.prototype.getCursorPosition = function () {
     var thiz = this;
     return getCursorPosition(thiz.contentEle[0]);
+};
+
+Block.prototype.setCursorPosition = function (position) {
+    var thiz = this;
+    setCursor(thiz.contentEle[0], position);
 };
 
 Block.prototype.trimCaretContent = function () {
