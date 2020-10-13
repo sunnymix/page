@@ -385,98 +385,124 @@ Block.prototype.initBind = function () {
     });
 
     thiz.ele.on('keydown', function (e) {
-        if (e.keyCode == KEYCODE.ENTER) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (isCommandOrControl(e)) {
-                thiz.forceEnter();
-            } else {
-                thiz.enter();
-            }
-        }
+        thiz.handleKeydownEvent(e);
+    });
 
-        if (e.keyCode == KEYCODE.BACKSPACE) {
-            if (thiz.contentEle.text().length == 0) {
-                thiz.remove();
-            }
-        }
+    thiz.ele.on('paste', function (e) {
+        thiz.handlePasteEvent(e);
+        return false;
+    });
+};
 
-        if (e.keyCode == KEYCODE.BACKSPACE
-            && isCommandOrControl(e)
-            && isShift(e)) {
-            e.preventDefault();
+Block.prototype.handleKeydownEvent = function (e) {
+    var thiz = this;
+    if (e.keyCode == KEYCODE.ENTER) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (isCommandOrControl(e)) {
+            thiz.forceEnter();
+        } else {
+            thiz.enter();
+        }
+    }
+
+    if (e.keyCode == KEYCODE.BACKSPACE) {
+        if (thiz.contentEle.text().length == 0) {
             thiz.remove();
         }
+    }
 
-        if (e.keyCode == KEYCODE.B && isCommandOrControl(e) && isShift(e)) {
+    if (e.keyCode == KEYCODE.BACKSPACE
+        && isCommandOrControl(e)
+        && isShift(e)) {
+        e.preventDefault();
+        thiz.remove();
+    }
+
+    if (e.keyCode == KEYCODE.B && isCommandOrControl(e) && isShift(e)) {
+        e.preventDefault();
+        e.stopPropagation();
+        thiz.setSchema(SCHEMA.TEXT);
+    }
+
+    if (e.keyCode == KEYCODE.NUM1 && isCommandOrControl(e)) {
+        e.preventDefault();
+        e.stopPropagation();
+        thiz.setSchema(SCHEMA.H1);
+    }
+
+    if (e.keyCode == KEYCODE.NUM2 && isCommandOrControl(e)) {
+        e.preventDefault();
+        e.stopPropagation();
+        thiz.setSchema(SCHEMA.H2);
+    }
+
+    if (e.keyCode == KEYCODE.NUM3 && isCommandOrControl(e)) {
+        e.preventDefault();
+        e.stopPropagation();
+        thiz.setSchema(SCHEMA.H3);
+    }
+
+    if (e.keyCode == KEYCODE.C && isCommandOrControl(e) && isShift(e)) {
+        e.preventDefault();
+        e.stopPropagation();
+        thiz.setSchema(SCHEMA.CODE);
+    }
+
+    if (e.keyCode == KEYCODE.G && isCommandOrControl(e) && isShift(e)) {
+        e.preventDefault();
+        e.stopPropagation();
+        thiz.setSchema(SCHEMA.GRID);
+    }
+
+    if (e.keyCode == KEYCODE.K
+        && isCommandOrControl(e)) {
+        e.preventDefault();
+        e.stopPropagation();
+        thiz.setSchema(SCHEMA.TASK);
+    }
+
+    if (e.keyCode == KEYCODE.UP) {
+        if (isOption(e)) {
             e.preventDefault();
             e.stopPropagation();
-            thiz.setSchema(SCHEMA.TEXT);
+            thiz.moveUp();
+        } else {
+            thiz.jumpUp();
         }
+    }
 
-        if (e.keyCode == KEYCODE.NUM1 && isCommandOrControl(e)) {
+    if (e.keyCode == KEYCODE.DOWN) {
+        if (isOption(e)) {
             e.preventDefault();
             e.stopPropagation();
-            thiz.setSchema(SCHEMA.H1);
+            thiz.moveDown();
+        } else {
+            thiz.jumpDown();
         }
+    }
 
-        if (e.keyCode == KEYCODE.NUM2 && isCommandOrControl(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            thiz.setSchema(SCHEMA.H2);
-        }
+    if (e.keyCode == KEYCODE.C
+        && isCommandAndControl(e)) {
+        e.preventDefault();
+        thiz.clone();
+    }
+};
 
-        if (e.keyCode == KEYCODE.NUM3 && isCommandOrControl(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            thiz.setSchema(SCHEMA.H3);
-        }
-
-        if (e.keyCode == KEYCODE.C && isCommandOrControl(e) && isShift(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            thiz.setSchema(SCHEMA.CODE);
-        }
-
-        if (e.keyCode == KEYCODE.G && isCommandOrControl(e) && isShift(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            thiz.setSchema(SCHEMA.GRID);
-        }
-
-        if (e.keyCode == KEYCODE.K
-            && isCommandOrControl(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            thiz.setSchema(SCHEMA.TASK);
-        }
-
-        if (e.keyCode == KEYCODE.UP) {
-            if (isOption(e)) {
-                e.preventDefault();
-                e.stopPropagation();
-                thiz.moveUp();
-            } else {
-                thiz.jumpUp();
-            }
-        }
-
-        if (e.keyCode == KEYCODE.DOWN) {
-            if (isOption(e)) {
-                e.preventDefault();
-                e.stopPropagation();
-                thiz.moveDown();
-            } else {
-                thiz.jumpDown();
-            }
-        }
-
-        if (e.keyCode == KEYCODE.C
-            && isCommandAndControl(e)) {
-            e.preventDefault();
-            thiz.clone();
-        }
-    });
+Block.prototype.handlePasteEvent = function (e) {
+    var thiz = this;
+    if (!thiz.isGrid()) {
+        var pasteText = getPasteText(e);
+        var contentText = thiz.getContentData();
+        var position = thiz.getCursorPosition();
+        
+        var prefixText = contentText.substring(0, position);
+        var suffixText = contentText.substring(position);
+        
+        var newContentText = prefixText + pasteText + suffixText;
+        
+        thiz.setContentData(newContentText);
+    }
 };
 
 Block.prototype.expandLink = function () {
@@ -714,7 +740,7 @@ Block.prototype.blur = function () {
 Block.prototype.focus = function (keepCursor) {
     var thiz = this;
     var resetCursor = !isTrue(keepCursor);
-    
+
     if (resetCursor
         && !thiz.isGrid()) {
         setTimeout(function () {
@@ -752,21 +778,21 @@ Block.prototype.moveDown = function () {
 
 Block.prototype.jumpUp = function () {
     var thiz = this;
-    if (getCaretPosition(thiz.contentEle[0]) <= 0) {
+    if (getCursorPosition(thiz.contentEle[0]) <= 0) {
         thiz.trigger('jumpup', thiz);
     }
 };
 
 Block.prototype.jumpDown = function () {
     var thiz = this;
-    if (getCaretPosition(thiz.contentEle[0]) >= thiz.contentEle.text().length) {
+    if (getCursorPosition(thiz.contentEle[0]) >= thiz.contentEle.text().length) {
         thiz.trigger('jumpdown', thiz);
     }
 };
 
-Block.prototype.getCaretPosition = function () {
+Block.prototype.getCursorPosition = function () {
     var thiz = this;
-    return getCaretPosition(thiz.contentEle[0]);
+    return getCursorPosition(thiz.contentEle[0]);
 };
 
 Block.prototype.trimCaretContent = function () {
@@ -774,7 +800,7 @@ Block.prototype.trimCaretContent = function () {
     if (thiz.isGrid()) {
         return '';
     }
-    var caretPos = thiz.getCaretPosition();
+    var caretPos = thiz.getCursorPosition();
     var content = thiz.getContentData();
     if (caretPos + 1 > content.length
         || content.length <= 0) {

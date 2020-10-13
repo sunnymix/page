@@ -300,7 +300,7 @@ window.restPost = function (url, data, cb) {
 
 // Caret
 
-window.getCaretPosition = function (editableDiv) {
+window.getCursorPosition = function (editableDiv) {
     var pos = 0, sel, range;
     sel = window.getSelection();
     if (sel.rangeCount) {
@@ -338,4 +338,16 @@ window.parseFuncArgsToArray = function (args) {
         res = [].slice.call(args);
     }
     return res;
+};
+
+window.getPasteText = function (e) {
+    var text = '';
+    if (window.clipboardData && window.clipboardData.getData) { // IE
+        text = window.clipboardData.getData('Text');
+    } else if (e.clipboardData && e.clipboardData.getData) { // Standard
+        text = e.clipboardData.getData('text/plain');
+    } else if (e.originalEvent) { // JQuery
+        text = getPasteText(e.originalEvent);
+    }
+    return text;
 };

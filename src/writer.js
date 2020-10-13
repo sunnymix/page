@@ -54,7 +54,7 @@ Writer.prototype.createBlock = function (place, data) {
     var newBlock = new Block(thiz, tmp, data, isLock, thiz.readonly, thiz.context, previousBlock);
 
     newBlock.bind('enter', function (block) {
-        var caretPosition = block.getCaretPosition();
+        var caretPosition = block.getCursorPosition();
         var newBlock;
         if (caretPosition == 0) {
             newBlock = thiz.createBlock(block);
