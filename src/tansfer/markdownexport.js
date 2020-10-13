@@ -1,26 +1,26 @@
-function Markdown() {
+function MarkdownExport() {
     var thiz = this;
     thiz.init();
 }
 
-Markdown.prototype.init = function () {
+MarkdownExport.prototype.init = function () {
     var thiz = this;
 };
 
-Markdown.prototype.parsePaper = function (paper) {
+MarkdownExport.prototype.parsePaper = function (paper) {
     var thiz = this;
     var data = [];
     data.push(thiz.parseWriter(paper.writer));
     return data.join('');
 };
 
-Markdown.prototype.parseWriter = function (writer) {
+MarkdownExport.prototype.parseWriter = function (writer) {
     var thiz = this;
     var data = thiz.parseBlocks(writer.blocks);
     return data.join('');
 };
 
-Markdown.prototype.parseBlocks = function (blocks) {
+MarkdownExport.prototype.parseBlocks = function (blocks) {
     var thiz = this;
     var res = [];
     var datas = [];
@@ -32,7 +32,7 @@ Markdown.prototype.parseBlocks = function (blocks) {
     return res;
 };
 
-Markdown.prototype.parseBlockDatas = function (blockDatas) {
+MarkdownExport.prototype.parseBlockDatas = function (blockDatas) {
     var thiz = this;
     var res = [];
     for (var i = 0; i < blockDatas.length; i++) {
@@ -44,7 +44,7 @@ Markdown.prototype.parseBlockDatas = function (blockDatas) {
     return res;
 };
 
-Markdown.prototype.parseBlockData = function (data, previousData, nextData) {
+MarkdownExport.prototype.parseBlockData = function (data, previousData, nextData) {
     var thiz = this;
     var res = 'cannot parse\n\n';
     var parser = thiz.getParser(data.schema);
@@ -55,7 +55,7 @@ Markdown.prototype.parseBlockData = function (data, previousData, nextData) {
     return res;
 };
 
-Markdown.prototype.getParsers = function () {
+MarkdownExport.prototype.getParsers = function () {
     var thiz = this;
     if (isNotNone(thiz.parsers)) {
         return thiz.parsers;
@@ -73,28 +73,28 @@ Markdown.prototype.getParsers = function () {
     return thiz.parsers;
 };
 
-Markdown.prototype.getParser = function (schema) {
+MarkdownExport.prototype.getParser = function (schema) {
     var thiz = this;
     return thiz.getParsers()[schema];
 };
 
-Markdown.prototype.parseTextBlock = function (data) {
+MarkdownExport.prototype.parseTextBlock = function (data) {
     return data.text + '\n\n';
 };
 
-Markdown.prototype.parseH1Block = function (data) {
+MarkdownExport.prototype.parseH1Block = function (data) {
     return '# ' + data.text + '\n\n';
 };
 
-Markdown.prototype.parseH2Block = function (data) {
+MarkdownExport.prototype.parseH2Block = function (data) {
     return '## ' + data.text + '\n\n';
 };
 
-Markdown.prototype.parseH3Block = function (data) {
+MarkdownExport.prototype.parseH3Block = function (data) {
     return '### ' + data.text + '\n\n';
 };
 
-Markdown.prototype.parseCodeBlock = function (data, previousData, nextData) {
+MarkdownExport.prototype.parseCodeBlock = function (data, previousData, nextData) {
     var thiz = this;
     var res = [];
     if (!thiz.isSameSchema(data, previousData)) {
@@ -107,7 +107,7 @@ Markdown.prototype.parseCodeBlock = function (data, previousData, nextData) {
     return res.join('');
 };
 
-Markdown.prototype.parseGridBlock = function (data) {
+MarkdownExport.prototype.parseGridBlock = function (data) {
     var thiz = this;
     var gridString = data.text;
     var rows = JSON.parse(gridString);
@@ -148,12 +148,12 @@ Markdown.prototype.parseGridBlock = function (data) {
     return res;
 };
 
-Markdown.prototype.parseTaskBlock = function (data) {
+MarkdownExport.prototype.parseTaskBlock = function (data) {
     var check = (data.check === 1) ? 'x' : ' ';
     return '[' + check + '] ' + data.text + '\n\n';
 };
 
-Markdown.prototype.parseBlockAttach = function (data) {
+MarkdownExport.prototype.parseBlockAttach = function (data) {
     var attach = data.attach;
     var res = '';
     if (isNotEmpty(attach)) {
@@ -162,10 +162,10 @@ Markdown.prototype.parseBlockAttach = function (data) {
     return res;
 };
 
-Markdown.prototype.isSameSchema = function (a, b) {
+MarkdownExport.prototype.isSameSchema = function (a, b) {
     return isNotNone(a) && isNotNone(a.schema)
         && isNotNone(b) && isNotNone(b.schema)
         && a.schema === b.schema;
 }
 
-window.Markdown = Markdown;
+window.MarkdownExport = MarkdownExport;

@@ -162,7 +162,7 @@ Toolbar.prototype.exportHtml = function () {
 
 Toolbar.prototype.exportMarkdown = function () {
     var thiz = this;
-    var text = new Markdown().parsePaper(thiz.paper);
+    var text = new MarkdownExport().parsePaper(thiz.paper);
     thiz.clip.copy(text);
 };
 
