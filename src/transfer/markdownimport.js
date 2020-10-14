@@ -8,7 +8,7 @@ function MarkdownImport() {
  * @param {string} text Markdown source text.
  * @returns Block data array.
  */
-MarkdownImport.prototype.import = function (sourceText) {
+MarkdownImport.prototype.parse = function (sourceText) {
     var thiz = this;
     var blockDataArray = [];
 
@@ -27,7 +27,7 @@ MarkdownImport.prototype.import = function (sourceText) {
         var rowText = rows[i];
 
         var parser = thiz.getParser(rowText);
-        var blockData = thiz.parseRowToBlockData(rowText, parser);
+        var blockData = thiz.applyParser(rowText, parser);
 
         if (isNone(blockData)) {
             continue;
@@ -68,8 +68,13 @@ MarkdownImport.prototype.import = function (sourceText) {
         // <------ switch toggle, cache data <------
 
         if (isHandleCache) {
-            // todo
-            console.log('isHandleCache')
+            if (isToggling && isNotEmpty(rowTextCacheArray)) {
+                var cacheRowsText = rowTextCacheArray.join('\n');
+                var cacheBlockData = thiz.applyParser(cacheRowsText, toggleParser);
+                if (isNotNone(cacheBlockData)) {
+                    blockDataArray.push(cacheBlockData);
+                }
+            }
         }
 
         if (isStartToggle) {
@@ -80,7 +85,7 @@ MarkdownImport.prototype.import = function (sourceText) {
         if (isPushData) {
             isToggling = isAllNotNone(toggleSchema, toggleParser);
             if (isToggling) {
-                blockData = thiz.parseRowToBlockData(rowText, toggleParser);
+                blockData = thiz.applyParser(rowText, toggleParser);
             }
             if (isNotNone(blockData)) {
                 blockDataArray.push(blockData);
@@ -95,7 +100,7 @@ MarkdownImport.prototype.import = function (sourceText) {
     return blockDataArray;
 };
 
-MarkdownImport.prototype.parseRowToBlockData = function (rowText, parser) {
+MarkdownImport.prototype.applyParser = function (rowText, parser) {
     var thiz = this;
     if (isBlank(rowText)) {
         return null;
@@ -121,10 +126,10 @@ MarkdownImport.prototype.getParser = function (rowText) {
     if (isBlank(rowText)) {
         return null;
     }
-    var parsers = thiz.getParsers();
+    var parsers = thiz.getParses();
 
     var regexp = '.*';
-    var parse = thiz.parseTextBlockData;
+    var parse = thiz.parseText;
 
     for (var regexpText in parsers) {
         if (new RegExp(regexpText).test(rowText)) {
@@ -140,50 +145,54 @@ MarkdownImport.prototype.getParser = function (rowText) {
     };
 };
 
-MarkdownImport.prototype.getParsers = function () {
+MarkdownImport.prototype.getParses = function () {
     var thiz = this;
-    if (isNotNone(thiz.parsers)) {
-        return thiz.parsers;
+    if (isNotNone(thiz.parses)) {
+        return thiz.parses;
     }
     map = {};
 
-    map['^(###)(.*)$'] = thiz.parseH3BlockData;
-    map['^(##)(.*)$'] = thiz.parseH2BlockData;
-    map['^(#)(.*)$'] = thiz.parseH1BlockData;
-    map['^(\\[[.\\sxX√]?\\])(.*)$'] = thiz.parseTaskBlockData;
-    map['^```\\s*$'] = thiz.parseCodeBlockData;
-    // map['^(\\|)(.)+(\\|)$'] = thiz.parseGridBlockData;
+    map['^(###)(.*)$'] = thiz.parseH3;
+    map['^(##)(.*)$'] = thiz.parseH2;
+    map['^(#)(.*)$'] = thiz.parseH1;
+    map['^(\\[[.\\sxX√]?\\])(.*)$'] = thiz.parseTask;
+    map['^```\\s*$'] = thiz.parseCode;
+    map['^(\\|)(.)+(\\|)$'] = thiz.parseGrid;
 
-    thiz.parsers = map;
-    return thiz.parsers;
+    thiz.parses = map;
+    return thiz.parses;
 };
 
-MarkdownImport.prototype.parseTextBlockData = function (sourceText, schemaText, contentText) {
-    return this.createBlockData(SCHEMA.TEXT, contentText);
+MarkdownImport.prototype.parseText = function (sourceText, schemaText, contentText) {
+    return this.createBlock(SCHEMA.TEXT, contentText);
 };
 
-MarkdownImport.prototype.parseH1BlockData = function (sourceText, schemaText, contentText) {
-    return this.createBlockData(SCHEMA.H1, contentText);
+MarkdownImport.prototype.parseH1 = function (sourceText, schemaText, contentText) {
+    return this.createBlock(SCHEMA.H1, contentText);
 };
 
-MarkdownImport.prototype.parseH2BlockData = function (sourceText, schemaText, contentText) {
-    return this.createBlockData(SCHEMA.H2, contentText);
+MarkdownImport.prototype.parseH2 = function (sourceText, schemaText, contentText) {
+    return this.createBlock(SCHEMA.H2, contentText);
 };
 
-MarkdownImport.prototype.parseH3BlockData = function (sourceText, schemaText, contentText) {
-    return this.createBlockData(SCHEMA.H3, contentText);
+MarkdownImport.prototype.parseH3 = function (sourceText, schemaText, contentText) {
+    return this.createBlock(SCHEMA.H3, contentText);
 };
 
-MarkdownImport.prototype.parseTaskBlockData = function (sourceText, schemaText, contentText) {
+MarkdownImport.prototype.parseTask = function (sourceText, schemaText, contentText) {
     var check = (new RegExp('^\\[[xX√]+\\]$')).test(schemaText) ? 1 : 0;
-    return this.createBlockData(SCHEMA.TASK, contentText, check);
+    return this.createBlock(SCHEMA.TASK, contentText, check);
 };
 
-MarkdownImport.prototype.parseCodeBlockData = function (sourceText, schemaText, contentText) {
-    return this.createBlockData(SCHEMA.CODE, sourceText);
+MarkdownImport.prototype.parseCode = function (sourceText, schemaText, contentText) {
+    return this.createBlock(SCHEMA.CODE, sourceText);
 };
 
-MarkdownImport.prototype.createBlockData = function (schema, text, check) {
+MarkdownImport.prototype.parseGrid = function (sourceText, schemaText, contentText) {
+    return this.createBlock(SCHEMA.GRID, '[[[]]]');
+};
+
+MarkdownImport.prototype.createBlock = function (schema, text, check) {
     return {
         schema: schema,
         text: text,

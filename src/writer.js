@@ -143,7 +143,7 @@ Writer.prototype.handlePasteEvent = function (block, e) {
 Writer.prototype.pasteRows = function (block, pasteText) {
     var thiz = this;
     var markdownImport = new MarkdownImport();
-    var blockDataArray = markdownImport.import(pasteText);
+    var blockDataArray = markdownImport.parse(pasteText);
     if (isNotEmpty(blockDataArray)) {
         var previousBlock = block;
         for (var i in blockDataArray) {
