@@ -21,7 +21,8 @@ MarkdownImport.prototype.import = function (sourceText) {
 
     for (var i in rows) {
         var rowText = rows[i];
-        var blockData = thiz.parseRowToBlockData(rowText);
+        var parser = thiz.getParser(rowText);
+        var blockData = thiz.parseRowToBlockData(rowText, parser);
         if (isNotNone(blockData)) {
             blockDataArray.push(blockData);
         }
@@ -30,31 +31,49 @@ MarkdownImport.prototype.import = function (sourceText) {
     return blockDataArray;
 };
 
-MarkdownImport.prototype.parseRowToBlockData = function (rowText) {
+MarkdownImport.prototype.parseRowToBlockData = function (rowText, parser) {
+    var thiz = this;
+    if (isBlank(rowText)) {
+        return null;
+    }
+
+    var schemaText = '';
+    var contentText = rowText;
+
+    var regexp = new RegExp(parser.regexp);
+    var regexpRes = regexp.exec(rowText);
+
+    if (isNotEmpty(regexpRes) && regexpRes.length >= 3) {
+        schemaText = regexpRes[1].trim();
+        contentText = regexpRes[2].trim();
+    }
+
+    return parser.parse.call(thiz, rowText, schemaText, contentText);
+};
+
+MarkdownImport.prototype.getParser = function (rowText) {
+    var thiz = this;
     var thiz = this;
     if (isBlank(rowText)) {
         return null;
     }
     var parsers = thiz.getParsers();
-    var parser = null;
-    var schemaText = '';
-    var contentText = '';
-    for (var regexpText in parsers) {
-        var regexp = new RegExp(regexpText);
-        var regexpRes = regexp.exec(rowText);
 
-        if (isNotEmpty(regexpRes) && regexpRes.length >= 3) {
-            parser = parsers[regexpText];
-            schemaText = regexpRes[1].trim();
-            contentText = regexpRes[2].trim();
+    var regexp = '.*';
+    var parse = thiz.parseTextBlockData;
+
+    for (var regexpText in parsers) {
+        if (new RegExp(regexpText).test(rowText)) {
+            regexp = regexpText;
+            parse = parsers[regexpText];
             break;
         }
     }
-    if (isNone(parser)) {
-        parser = thiz.parseTextData;
-        contentText = rowText;
-    }
-    return parser.call(thiz, rowText, schemaText, contentText);
+
+    return {
+        regexp: regexp,
+        parse: parse
+    };
 };
 
 MarkdownImport.prototype.getParsers = function () {
@@ -63,19 +82,21 @@ MarkdownImport.prototype.getParsers = function () {
         return thiz.parsers;
     }
     map = {};
-    // priority by order
+
+    // ****** priority by order ******
+
     map['^(###)(.*)$'] = thiz.parseH3BlockData;
     map['^(##)(.*)$'] = thiz.parseH2BlockData;
     map['^(#)(.*)$'] = thiz.parseH1BlockData;
     map['^(\\[[.\\sxX√]?\\])(.*)$'] = thiz.parseTaskBlockData;
-    // map[SCHEMA.CODE] = thiz.parseCodeBlock;
+    // map['^```\\s*$'] = thiz.parseCodeBlockData;
     // map[SCHEMA.GRID] = thiz.parseGridBlock;
-    // map[SCHEMA.TASK] = thiz.parseTaskBlock;
+
     thiz.parsers = map;
     return thiz.parsers;
 };
 
-MarkdownImport.prototype.parseTextData = function (rowText, schemaText, contentText) {
+MarkdownImport.prototype.parseTextBlockData = function (rowText, schemaText, contentText) {
     return this.createBlockData(SCHEMA.TEXT, contentText);
 };
 
