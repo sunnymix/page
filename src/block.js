@@ -1,4 +1,4 @@
-function Block(writer, p, data, isLock, readonly, context, previousBlock) {
+function Block(writer, place, data, isLock, readonly, context, previousBlock) {
     var thiz = this;
     thiz.isBlock = true;
     thiz.writer = writer;
@@ -13,7 +13,7 @@ function Block(writer, p, data, isLock, readonly, context, previousBlock) {
     thiz.context = isNotNone(context) ? context : SCHEMA.PAPER;
     thiz.previousBlock = previousBlock;
 
-    thiz.initEle(p, initData);
+    thiz.initEle(place, initData);
 
     thiz.initBind();
     initEvent(thiz, Block.prototype);
@@ -21,7 +21,7 @@ function Block(writer, p, data, isLock, readonly, context, previousBlock) {
 
 Block.prototype.type = ELE_TYPE.BLOCK;
 
-Block.prototype.initEle = function (p, initData) {
+Block.prototype.initEle = function (place, initData) {
     var thiz = this;
 
     thiz.ele = new Ele('div', {
@@ -59,7 +59,9 @@ Block.prototype.initEle = function (p, initData) {
 
     thiz.loadStyle();
 
-    $(p).replaceWith(thiz.ele);
+    if (isNotNone(place)) {
+        $(place).replaceWith(thiz.ele);
+    }
 };
 
 Block.prototype.initBoxEle = function (initData) {
@@ -491,24 +493,7 @@ Block.prototype.handleKeydownEvent = function (e) {
 
 Block.prototype.handlePasteEvent = function (e) {
     var thiz = this;
-    if (!thiz.isGrid()) {
-        var pasteText = getPasteText(e).trim();
-
-        var contentText = thiz.getContentData();
-        var position = thiz.getCursorPosition();
-
-        var prefixText = contentText.substring(0, position);
-        var suffixText = contentText.substring(position);
-
-        var rows = pasteText.split('\n');
-        var singleRow = rows.length == 1;
-
-        if (singleRow) {
-            document.execCommand("insertHTML", false, rows[0]);
-        } else {
-
-        }
-    }
+    thiz.trigger('paste', thiz, e);
 };
 
 Block.prototype.expandLink = function () {

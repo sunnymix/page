@@ -36,22 +36,22 @@ Writer.prototype.focus = function () {
     }
 };
 
-Writer.prototype.createBlock = function (place, data) {
+Writer.prototype.createBlock = function (blockOrContainer, data) {
     var thiz = this;
 
-    var tmp = $('<div></div>');
+    var tmpPlace = $('<div></div>');
     var previousBlock = null;
 
-    if (isBlock(place)) {
-        place.ele.after(tmp);
-        previousBlock = place;
+    if (isBlock(blockOrContainer)) {
+        blockOrContainer.ele.after(tmpPlace);
+        previousBlock = blockOrContainer;
     } else {
-        thiz.ele.append(tmp);
+        thiz.ele.append(tmpPlace);
     }
 
     var isLock = false;
 
-    var newBlock = new Block(thiz, tmp, data, isLock, thiz.readonly, thiz.context, previousBlock);
+    var newBlock = new Block(thiz, tmpPlace, data, isLock, thiz.readonly, thiz.context, previousBlock);
 
     newBlock.bind('enter', function (block) {
         var caretPosition = block.getCursorPosition();
@@ -117,9 +117,41 @@ Writer.prototype.createBlock = function (place, data) {
         thiz.handleBlockFocus(block);
     });
 
+    newBlock.bind('paste', function (block, e) {
+        thiz.handlePasteEvent(block, e);
+    });
+
     thiz.addBlock(newBlock, previousBlock);
 
     return newBlock;
+};
+
+Writer.prototype.handlePasteEvent = function (block, e) {
+    var thiz = this;
+    if (!thiz.isGridContext()) {
+        var pasteText = getPasteText(e).trim();
+        var singleRow = pasteText.indexOf('\n') < 0;
+
+        if (singleRow) {
+            document.execCommand("insertHTML", false, pasteText);
+        } else {
+            thiz.pasteRows(block, pasteText);
+        }
+    }
+};
+
+Writer.prototype.pasteRows = function (block, pasteText) {
+    var thiz = this;
+    var markdownImport = new MarkdownImport();
+    var blockDataArray = markdownImport.import(pasteText);
+    if (isNotEmpty(blockDataArray)) {
+        var previousBlock = block;
+        for (var i in blockDataArray) {
+            var newBlockData = blockDataArray[i];
+            var newBlock = thiz.createBlock(previousBlock, newBlockData);
+            previousBlock = newBlock;
+        }
+    }
 };
 
 Writer.prototype.handleBlockFocus = function (focusBlock) {

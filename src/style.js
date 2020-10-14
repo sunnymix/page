@@ -441,7 +441,7 @@ Style.prototype.initH1 = function () {
     this
         .setFontWeight('bold')
         .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
-        .setBorderBottom('2px', 'solid', '#e1e4e8')
+        // .setBorderBottom('2px', 'solid', '#e1e4e8')
         ;
 };
 
@@ -449,7 +449,7 @@ Style.prototype.initH2 = function () {
     this
         .setFontWeight('bold')
         .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
-        .setBorderBottom('1px', 'solid', '#e1e4e8')
+        // .setBorderBottom('1px', 'solid', '#e1e4e8')
         ;
 }
 
@@ -457,7 +457,7 @@ Style.prototype.initH3 = function () {
     this
         .setFontWeight('bold')
         .setFontSize((parsePxToNum(Style.BaseFontSize) + 0) + 'px')
-        .setBorderBottom('1px', 'dashed', '#e1e4e8')
+        // .setBorderBottom('1px', 'dashed', '#e1e4e8')
         ;
 };
 
@@ -471,7 +471,7 @@ Style.prototype.initCode = function () {
         .setBorderBottom('1px', 'solid', '#e1e4e8')
         .setBorderLeft('1px', 'solid', '#e1e4e8')
         .setBorderRight('1px', 'solid', '#e1e4e8')
-        .setBorderRadius('1px')
+        .setBorderRadius('2px')
         .setContentPaddingLeft('5px')
         .setContentPaddingRight('5px')
         .setColor('#24292e')

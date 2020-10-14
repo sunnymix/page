@@ -127,6 +127,10 @@ window.isNotBlank = function (p) {
     return isNotEmpty(p) && p.length > 0;
 };
 
+window.isBlank = function (p) {
+    return !isNotBlank(p);
+};
+
 window.isObject = function (p) {
     return typeof p === 'object';
 };
