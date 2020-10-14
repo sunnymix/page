@@ -21,6 +21,7 @@ MarkdownImport.prototype.import = function (sourceText) {
 
     var toggleSchema = null;
     var toggleParser = null;
+    var rowTextCacheArray = [];
 
     for (var i in rows) {
         var rowText = rows[i];
@@ -32,35 +33,63 @@ MarkdownImport.prototype.import = function (sourceText) {
             continue;
         }
 
-        var isToggle = isAllNotNone(toggleSchema, toggleParser);
+        var isToggling = isAllNotNone(toggleSchema, toggleParser);
+        var isTogglingCode = isToggling && toggleSchema == SCHEMA.CODE;
+        var isTogglingGrid = isToggling && toggleSchema == SCHEMA.GRID;
 
-        // switch toggle
+        var isStartToggle = false;
+        var isStopToggle = false;
+
+        var isPushData = true;
+        var isHandleCache = true;
+
+        // ------> switch toggle, cache data ------>
+
+        // Code toggle
         if (blockData.schema == SCHEMA.CODE) {
-            if (isToggle) {
-                toggleSchema = toggleParser = null;
-            } else {
-                toggleSchema = SCHEMA.CODE;
-                toggleParser = parser;
-            }
-            blockData = null; // ``` has no content
+            isPushData = false; // ``` has no content
+            isHandleCache = false;
+            isStartToggle = !isToggling;
+            isStopToggle = isToggling;
+        } else if (blockData.schema == SCHEMA.GRID) {
+            isPushData = false;
+            isHandleCache = false;
+            isStartToggle = !isToggling;
+            isStopToggle = false;
+            rowTextCacheArray.push(rowText);
+        } else {
+            isPushData = true;
+            isHandleCache = isTogglingGrid;
+            isStartToggle = false;
+            isStopToggle = !isTogglingCode
+                || isTogglingGrid;
         }
 
-        if (isNone(blockData)) {
-            continue;
+        // <------ switch toggle, cache data <------
+
+        if (isHandleCache) {
+            // todo
+            console.log('isHandleCache')
         }
 
-        if (blockData.schema == SCHEMA.TEXT) {
-            isToggle = isAllNotNone(toggleSchema, toggleParser);
-            if (isToggle) {
+        if (isStartToggle) {
+            toggleSchema = blockData.schema;
+            toggleParser = parser;
+        }
+
+        if (isPushData) {
+            isToggling = isAllNotNone(toggleSchema, toggleParser);
+            if (isToggling) {
                 blockData = thiz.parseRowToBlockData(rowText, toggleParser);
             }
+            if (isNotNone(blockData)) {
+                blockDataArray.push(blockData);
+            }
         }
 
-        if (isNone(blockData)) {
-            continue;
+        if (isStopToggle) {
+            toggleSchema = toggleParser = null;
         }
-
-        blockDataArray.push(blockData);
     }
 
     return blockDataArray;
@@ -117,41 +146,41 @@ MarkdownImport.prototype.getParsers = function () {
         return thiz.parsers;
     }
     map = {};
-    
+
     map['^(###)(.*)$'] = thiz.parseH3BlockData;
     map['^(##)(.*)$'] = thiz.parseH2BlockData;
     map['^(#)(.*)$'] = thiz.parseH1BlockData;
     map['^(\\[[.\\sxX√]?\\])(.*)$'] = thiz.parseTaskBlockData;
     map['^```\\s*$'] = thiz.parseCodeBlockData;
-    // map[SCHEMA.GRID] = thiz.parseGridBlock;
+    // map['^(\\|)(.)+(\\|)$'] = thiz.parseGridBlockData;
 
     thiz.parsers = map;
     return thiz.parsers;
 };
 
-MarkdownImport.prototype.parseTextBlockData = function (rowText, schemaText, contentText) {
+MarkdownImport.prototype.parseTextBlockData = function (sourceText, schemaText, contentText) {
     return this.createBlockData(SCHEMA.TEXT, contentText);
 };
 
-MarkdownImport.prototype.parseH1BlockData = function (rowText, schemaText, contentText) {
+MarkdownImport.prototype.parseH1BlockData = function (sourceText, schemaText, contentText) {
     return this.createBlockData(SCHEMA.H1, contentText);
 };
 
-MarkdownImport.prototype.parseH2BlockData = function (rowText, schemaText, contentText) {
+MarkdownImport.prototype.parseH2BlockData = function (sourceText, schemaText, contentText) {
     return this.createBlockData(SCHEMA.H2, contentText);
 };
 
-MarkdownImport.prototype.parseH3BlockData = function (rowText, schemaText, contentText) {
+MarkdownImport.prototype.parseH3BlockData = function (sourceText, schemaText, contentText) {
     return this.createBlockData(SCHEMA.H3, contentText);
 };
 
-MarkdownImport.prototype.parseTaskBlockData = function (rowText, schemaText, contentText) {
+MarkdownImport.prototype.parseTaskBlockData = function (sourceText, schemaText, contentText) {
     var check = (new RegExp('^\\[[xX√]+\\]$')).test(schemaText) ? 1 : 0;
     return this.createBlockData(SCHEMA.TASK, contentText, check);
 };
 
-MarkdownImport.prototype.parseCodeBlockData = function (rowText, schemaText, contentText) {
-    return this.createBlockData(SCHEMA.CODE, rowText);
+MarkdownImport.prototype.parseCodeBlockData = function (sourceText, schemaText, contentText) {
+    return this.createBlockData(SCHEMA.CODE, sourceText);
 };
 
 MarkdownImport.prototype.createBlockData = function (schema, text, check) {
