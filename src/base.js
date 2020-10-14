@@ -115,6 +115,23 @@ window.isNotNone = function (p) {
     return !isNone(p);
 };
 
+window.isAllNotNone = function () {
+    var args = parseFuncArgsToArray(arguments);
+    var allNotNone = false;
+    if (args.length > 0) {
+        var pass = true;
+        for (var i in args) {
+            var arg = args[i];
+            if (isNone(arg)) {
+                pass = false;
+                break;
+            }
+        }
+        allNotNone = pass;
+    }
+    return allNotNone;
+};
+
 window.isEmpty = function (p) {
     return isNone(p) || (typeof p.length === 'number' && p.length === 0);
 };
