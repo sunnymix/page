@@ -29,10 +29,14 @@ Block.prototype.initEle = function (place, initData) {
         position: 'relative'
     });
 
-    ////// block (actions, box, attach) //////
+    ////// block (schema, actions, box, attach) //////
+
+    // schema
+    thiz.initSchemaEle(initData);
+    thiz.ele.append(thiz.schemaEle);
 
     // actions
-    thiz.initActionsEle();
+    thiz.initActionsEle(initData);
     thiz.ele.append(thiz.actionsEle);
 
     // box
@@ -62,6 +66,29 @@ Block.prototype.initEle = function (place, initData) {
     if (isNotNone(place)) {
         $(place).replaceWith(thiz.ele);
     }
+};
+
+Block.prototype.initSchemaEle = function (initData) {
+    var thiz = this;
+    thiz.schemaEle = new Ele('div', {
+        id: '.block-schema',
+        position: 'absolute',
+        left: '-55px',
+        top: 0,
+        height: '16px',
+        lineHeight: '16px',
+        color: '#dddddd',
+        body: initData.schema,
+        fontSize: Style.SmallFontSize,
+    });
+};
+
+Block.prototype.schemaVisible = function () {
+    var thiz = this;
+    var isHighlight = [SCHEMA.TITLE, SCHEMA.H1, SCHEMA.H2, SCHEMA.H3, SCHEMA.GRID].includes(thiz.schema);
+    var isEdit = isNotTrue(thiz.readonly);
+    var isNotInGrid = !thiz.isGridContext();
+    return isHighlight && isEdit && isNotInGrid;
 };
 
 Block.prototype.initBoxEle = function (initData) {
@@ -126,7 +153,7 @@ Block.prototype.initBorderEle = function (initData) {
 Block.prototype.initContentEle = function (initData) {
     var thiz = this;
 
-    var isReadonlyLink = isTrue(thiz.readonly) && isNotBlank(initData.link);
+    var isReadonlyLink = thiz.readonly && isNotBlank(initData.link);
     var eleType = isReadonlyLink ? 'a' : 'div';
 
     thiz.contentEle = new Ele(eleType, {
@@ -652,6 +679,18 @@ Block.prototype.applyStyle = function (style) {
 
         thiz.contentEle.prop('style', thiz.style.contentStyle(thiz.context));
 
+        if (thiz.schemaVisible()) {
+            thiz.schemaEle.css({
+                top: thiz.style.getBoxBaseLineTop()
+            }).show();   
+        } else {
+            thiz.schemaEle.hide();
+        }
+
+        thiz.actionsEle.css({
+            top: thiz.style.getBoxBaseLineTop()
+        });
+
         if (thiz.isTask()) {
             thiz.taskEle.css({
                 top: thiz.style.getBaseLineTop(),
@@ -705,10 +744,6 @@ Block.prototype.applyStyle = function (style) {
 
         thiz.attachEle.css({
             paddingLeft: thiz.style.contentPaddingLeft
-        });
-
-        thiz.actionsEle.css({
-            top: thiz.style.getBaseLineTop()
         });
     }
 };

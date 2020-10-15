@@ -55,6 +55,8 @@ function Style(block) {
 
 Style.BaseFontSize = '13px';
 
+Style.SmallFontSize = (parsePxToNum(Style.BaseFontSize) - 1) + 'px';
+
 Style.Paper = {
     paddingX: '60px',
     paddingY: '60px'
@@ -360,6 +362,14 @@ Style.prototype.getBaseLineTop = function () {
     ) + 'px';
 };
 
+Style.prototype.getBoxBaseLineTop = function () {
+    var thiz = this;
+    return (
+        parsePxToNum(thiz.getBaseLineTop())
+        + (parsePxToNum(thiz.getPaddingTop()))
+    ) + 'px';
+};
+
 Style.prototype.getPriorityColor = function () {
     var thiz = this;
     var priority = thiz.block.getPriorityData();
@@ -419,6 +429,7 @@ Style.prototype.getContentMarginRight = function () {
 Style.prototype.initStyle = function () {
     var thiz = this;
     var handers = {};
+    handers[SCHEMA.TITLE] = thiz.initTitle;
     handers[SCHEMA.TEXT] = thiz.initText;
     handers[SCHEMA.H1] = thiz.initH1;
     handers[SCHEMA.H2] = thiz.initH2;
@@ -429,6 +440,9 @@ Style.prototype.initStyle = function () {
     if (isFunction(handler)) {
         handler.call(thiz);
     }
+};
+
+Style.prototype.initTitle = function () {
 };
 
 Style.prototype.initText = function () {

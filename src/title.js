@@ -4,8 +4,8 @@ function Title(place, readonly) {
     thiz.readonly = isTrue(readonly);
 
     thiz.block = new Block(null, null, {
-        schema: SCHEMA.Text,
-        text: 'Title'
+        schema: SCHEMA.TITLE,
+        text: ''
     }, true, thiz.readonly);
     // thiz.block.setContentColor('#444444');
 
