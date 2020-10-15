@@ -20,8 +20,11 @@
             var schema = thiz.schema;
 
             var text = contentText;
-            if ([SCHEMA.CODE, SCHEMA.GRID].includes(schema)) {
+            if ([SCHEMA.CODE].includes(schema)) {
                 text = sourceText;
+            }
+            if (SCHEMA.GRID == schema) {
+                text = thiz.parseGrid(sourceText);
             }
 
             var check = 0;
@@ -31,6 +34,44 @@
 
             return new BlockDef(schema, text, check);
         };
+    };
+
+    Parser.prototype.parseGrid = function (sourceText) {
+        var thiz = this;
+        var rowTextArray = sourceText.trim().split('\n');
+        var rowDataArray = [];
+        for (var i in rowTextArray) {
+            var rowText = rowTextArray[i];
+            var rowData = thiz.parseGridRow(rowText);
+            if (isNotNone(rowData)) {
+                rowDataArray.push(rowData);
+            }
+        }
+        return JSON.stringify(rowDataArray);
+    };
+
+    Parser.prototype.parseGridRow = function (sourceRowText) {
+        var thiz = this;
+        var isGapRow = new RegExp('^[\\|\\s-]+$').test(sourceRowText);
+        if (isGapRow) {
+            return null;
+        }
+        var contentRowText = (new RegExp('^\\|(.*)\\|$').exec(sourceRowText))[1];
+        var cellTextArray = contentRowText.split('|');
+        var cellDataArray = [];
+        for (var i in cellTextArray) {
+            var cellText = cellTextArray[i].trim();
+            var cellData = thiz.parseGridCell(cellText);
+            cellDataArray.push(cellData);
+        }
+        return cellDataArray;
+    };
+
+    Parser.prototype.parseGridCell = function (sourceCellText) {
+        var thiz = this;
+        var cellText = sourceCellText.replace(/\<br\/?\>/g, '\n');
+        var blocks = new MarkdownImport().parse(cellText);
+        return blocks;
     };
 
     Parser.array = [
@@ -86,6 +127,7 @@
 
         for (var i in rows) {
             var rowText = rows[i];
+            var isLastItem = (i == rows.length - 1);
 
             var parser = Parser.get(rowText);
 
@@ -119,7 +161,7 @@
                 rowTextCacheArray.push(rowText);
             } else {
                 isPushData = true;
-                isHandleCache = isTogglingGrid;
+                isHandleCache = isToggling;
                 isStartToggle = false;
                 isStopToggle = !isTogglingCode
                     || isTogglingGrid;
@@ -127,7 +169,8 @@
 
             // <------ switch toggle, cache data <------
 
-            if (isHandleCache) {
+            var isApplyCache = isLastItem || isHandleCache;
+            if (isApplyCache) {
                 if (isToggling && isNotEmpty(rowTextCacheArray)) {
                     var cacheRowsText = rowTextCacheArray.join('\n');
                     var cacheBlockData = thiz.applyParser(cacheRowsText, toggleParser);
