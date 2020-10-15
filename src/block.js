@@ -498,6 +498,12 @@ Block.prototype.handleKeydownEvent = function (e) {
         thiz.showLink();
     }
 
+    if (e.keyCode == KEYCODE.O && isCommandOrControl(e) && isShift(e)) {
+        e.preventDefault();
+        e.stopPropagation();
+        thiz.setSchema(SCHEMA.QUOTE);
+    }
+
     if (e.keyCode == KEYCODE.UP) {
         if (isOption(e)) {
             e.preventDefault();
@@ -518,8 +524,7 @@ Block.prototype.handleKeydownEvent = function (e) {
         }
     }
 
-    if (e.keyCode == KEYCODE.C
-        && isCommandAndControl(e)) {
+    if (e.keyCode == KEYCODE.C && isCommandAndControl(e)) {
         e.preventDefault();
         thiz.clone();
     }
@@ -560,6 +565,7 @@ Block.prototype.setSchema = function (schema) {
     }
     if (isNotEmpty(schema)) {
         thiz.schema = schema;
+        thiz.schemaEle.text(thiz.schema);
         thiz.loadStyle();
         if (schema === SCHEMA.GRID) {
             thiz.switchToGrid();

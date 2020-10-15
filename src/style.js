@@ -436,6 +436,7 @@ Style.prototype.initStyle = function () {
     handers[SCHEMA.H3] = thiz.initH3;
     handers[SCHEMA.CODE] = thiz.initCode;
     handers[SCHEMA.TASK] = thiz.initTask;
+    handers[SCHEMA.QUOTE] = thiz.initQuote;
     var handler = handers[thiz.block.schema];
     if (isFunction(handler)) {
         handler.call(thiz);
@@ -495,6 +496,13 @@ Style.prototype.initCode = function () {
 Style.prototype.initTask = function () {
     this
         .setContentMarginLeft('10px')
+        ;
+};
+
+Style.prototype.initQuote = function () {
+    this
+        .setBorderLeft('2px', 'solid', '#e1e4e8')
+        .setContentMarginLeft('8px')
         ;
 };
 

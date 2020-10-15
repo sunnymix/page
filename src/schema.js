@@ -8,7 +8,8 @@
         H3: 'H3',
         CODE: 'Code',
         GRID: 'Grid',
-        TASK: 'Task'
+        TASK: 'Task',
+        QUOTE: 'Quote'
     };
 
     window.SCHEMA = SCHEMA;

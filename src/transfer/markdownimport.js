@@ -93,7 +93,8 @@
         new Parser(3, SCHEMA.H3, '^(###)(.*)$'),
         new Parser(4, SCHEMA.TASK, '^(\\[[.\\sxX√]?\\])(.*)$'),
         new Parser(5, SCHEMA.CODE, '^```\\s*$'),
-        new Parser(6, SCHEMA.GRID, '^(\\|)(.)+(\\|)$')
+        new Parser(6, SCHEMA.GRID, '^(\\|)(.)+(\\|)$'),
+        new Parser(7, SCHEMA.QUOTE, '^(\\>)(.*)$'),
     ];
 
     Parser.get = function (text) {

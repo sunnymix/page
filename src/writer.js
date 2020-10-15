@@ -173,8 +173,9 @@ Writer.prototype.inheritSchema = function (blockSchema) {
         SCHEMA.H1,
         SCHEMA.H2,
         SCHEMA.H3,
-        SCHEMA.Grid
-    ].indexOf(blockSchema) >= 0) {
+        SCHEMA.GRID,
+        SCHEMA.QUOTE,
+    ].includes(blockSchema)) {
         res = SCHEMA.TEXT;
     }
     return res;

@@ -70,6 +70,7 @@
         map[SCHEMA.CODE] = thiz.parseCodeBlock;
         map[SCHEMA.GRID] = thiz.parseGridBlock;
         map[SCHEMA.TASK] = thiz.parseTaskBlock;
+        map[SCHEMA.QUOTE] = thiz.parseQuoteBlock;
         thiz.parsers = map;
         return thiz.parsers;
     };
@@ -157,6 +158,11 @@
         var thiz = this;
         var check = (data.check === 1) ? 'x' : ' ';
         return '[' + check + '] ' + thiz.parseTextContent(data) + '\n\n';
+    };
+
+    MarkdownExport.prototype.parseQuoteBlock = function (data) {
+        var thiz = this;
+        return '> ' + thiz.parseTextContent(data) + '\n\n';
     };
 
     MarkdownExport.prototype.parseBlockAttach = function (data) {
