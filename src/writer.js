@@ -27,7 +27,7 @@ Writer.prototype.initBind = function () {
 Writer.prototype.focus = function () {
     var thiz = this;
     if (isNotEmpty(thiz.blocks)) {
-        thiz.blocks[0].focus();
+        thiz.blocks[thiz.blocks.length - 1].focus();
     } else {
         if (isFunction(thiz.createBlock)) {
             var newBlock = thiz.createBlock();
