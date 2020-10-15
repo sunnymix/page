@@ -486,11 +486,16 @@ Block.prototype.handleKeydownEvent = function (e) {
         thiz.setSchema(SCHEMA.GRID);
     }
 
-    if (e.keyCode == KEYCODE.K
-        && isCommandOrControl(e)) {
+    if (e.keyCode == KEYCODE.K && isCommandOrControl(e)) {
         e.preventDefault();
         e.stopPropagation();
         thiz.setSchema(SCHEMA.TASK);
+    }
+
+    if (e.keyCode == KEYCODE.L && isCommandOrControl(e) && isShift(e)) {
+        e.preventDefault();
+        e.stopPropagation();
+        thiz.showLink();
     }
 
     if (e.keyCode == KEYCODE.UP) {
@@ -683,7 +688,7 @@ Block.prototype.applyStyle = function (style) {
         if (thiz.schemaVisible()) {
             thiz.schemaEle.css({
                 top: thiz.style.getBoxBaseLineTop()
-            }).show();   
+            }).show();
         } else {
             thiz.schemaEle.hide();
         }
@@ -1049,8 +1054,10 @@ Block.prototype.isShowLink = function () {
 
 Block.prototype.showLink = function () {
     var thiz = this;
-    var link = prompt('add link ...', '');
-    thiz.applyLink(link);
+    var link = prompt('add link ...', thiz.getLinkData());
+    if (isNotNone(link)) {
+        thiz.applyLink(link);
+    }
 };
 
 Block.prototype.toggleHighlight = function (light) {

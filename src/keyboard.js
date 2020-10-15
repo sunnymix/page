@@ -15,9 +15,11 @@ var KEYCODE = {
     G: 71,
     I: 73,
     K: 75,
+    L: 76,
+    M: 77,
     N: 78,
     S: 83,
-    T: 84
+    T: 84,
 };
 
 window.KEYCODE = KEYCODE;
