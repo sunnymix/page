@@ -4,7 +4,19 @@
         thiz.schema = schema;
         thiz.text = text;
         thiz.check = check || 0;
+        thiz.parseTextLink();
     }
+
+    BlockDef.prototype.parseTextLink = function () {
+        var thiz = this;
+        var matchArray = new RegExp('^\\[(.+)\\]\\((.+)\\)$').exec(thiz.text);
+        if (isNotNone(matchArray)
+            && matchArray.length == 3) {
+            thiz.text = matchArray[1];
+            thiz.link = matchArray[2];
+            console.log(matchArray);
+        }
+    };
 
     function Parser(order, schema, regexp) {
         var thiz = this;
@@ -93,7 +105,7 @@
         goodParsers.sort(function (a, b) {
             return b.order - a.order;
         });
-        
+
         if (goodParsers.length > 0) {
             res = goodParsers[0];
         }
