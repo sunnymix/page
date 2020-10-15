@@ -73,13 +73,14 @@ Block.prototype.initSchemaEle = function (initData) {
     thiz.schemaEle = new Ele('div', {
         id: '.block-schema',
         position: 'absolute',
-        left: '-55px',
+        left: '-50px',
         top: 0,
         height: '16px',
         lineHeight: '16px',
         color: '#dddddd',
         body: initData.schema,
         fontSize: Style.SmallFontSize,
+        // transform: 'rotate(90deg)',
     });
 };
 
