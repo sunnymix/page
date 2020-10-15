@@ -107,7 +107,10 @@ Paper.prototype.initBind = function () {
         }
     }).on('keyup', 'body', function (e) {
         // thiz.save(); disable auto save
+    }).on('mousedown', function (e) {
+        thiz.focusWriter();
     });
+    
 };
 
 Paper.prototype.showBlockop = function (block) {

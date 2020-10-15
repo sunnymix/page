@@ -378,6 +378,7 @@ Block.prototype.initBind = function () {
     });
 
     thiz.ele.on('mousedown', function (e) {
+        e.stopPropagation();
         thiz.focus();
     });
 
