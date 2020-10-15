@@ -4,6 +4,7 @@
         thiz.schema = schema;
         thiz.text = text;
         thiz.check = check || 0;
+        thiz.trimText();
         thiz.parseTextLink();
     }
 
@@ -14,7 +15,13 @@
             && matchArray.length == 3) {
             thiz.text = matchArray[1];
             thiz.link = matchArray[2];
-            console.log(matchArray);
+        }
+    };
+
+    BlockDef.prototype.trimText = function () {
+        var thiz = this;
+        if ([SCHEMA.H1, SCHEMA.H2, SCHEMA.H3, SCHEMA.QUOTE].includes(thiz.schema)) {
+            thiz.text = thiz.text.trimStart();
         }
     };
 
@@ -50,7 +57,7 @@
 
     Parser.prototype.parseGrid = function (sourceText) {
         var thiz = this;
-        var rowTextArray = sourceText.trim().split('\n');
+        var rowTextArray = sourceText.split('\n');
         var rowDataArray = [];
         for (var i in rowTextArray) {
             var rowText = rowTextArray[i];
@@ -127,7 +134,7 @@
         var thiz = this;
         var blockDataArray = [];
 
-        var text = sourceText.trim();
+        var text = sourceText;
         if (isBlank(text)) {
             return blockDataArray;
         }
@@ -228,8 +235,8 @@
         var regexpRes = regexp.exec(rowText);
 
         if (isNotEmpty(regexpRes) && regexpRes.length >= 3) {
-            schemaText = regexpRes[1].trim();
-            contentText = regexpRes[2].trim();
+            schemaText = regexpRes[1];
+            contentText = regexpRes[2];
         }
 
         return parser.parse.call(thiz, rowText, schemaText, contentText);

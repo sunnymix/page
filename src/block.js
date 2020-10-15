@@ -873,7 +873,10 @@ Block.prototype.setContentData = function (content) {
 
 Block.prototype.setContentText = function (text) {
     var thiz = this;
-    thiz.contentEle.text(text);
+    if (thiz.isCode()) {
+        text = text.replace(/\s/g, '&nbsp;');
+    }
+    thiz.contentEle.html(text);
 };
 
 Block.prototype.setGridData = function (content) {
