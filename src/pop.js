@@ -18,6 +18,8 @@ Pop.prototype.initEle = function () {
         '        position: absolute;',
         '        left: 0;',
         '        top: 0;',
+        '        right: 0;',
+        '        bottom: 0;',
         '        border: 1px solid transparent;',
         '        z-index: 100;',
         '    "',
@@ -27,7 +29,9 @@ Pop.prototype.initEle = function () {
         '        style="',
         '            position: absolute;',
         '            left: 0;',
+        '            right: 0;',
         '            top: 0;',
+        '            bottom: 0;',
         '            z-index: 150;',
         '        "',
         '    >',
@@ -49,10 +53,11 @@ Pop.prototype.initEle = function () {
 
 Pop.prototype.initBind = function () {
     var thiz = this;
-    thiz.popEle.on('click', function (e) {
+    thiz.boxEle.on('click', function (e) {
         e.stopPropagation();
     });
-    thiz.ele.on('click', function (e) {
+    thiz.popEle.on('click', function (e) {
+        e.stopPropagation();
         thiz.hide();
     });
 };
@@ -67,30 +72,38 @@ Pop.prototype.beside = function (ele) {
     if (isNotNone(ele)) {
         var offset = ele.offset();
         offset.top += ele.height();
-        thiz.popEle.css({
-            left: offset.left,
-            top: offset.top
+        thiz.boxEle.css({
+            marginLeft: offset.left,
+            marginTop: offset.top
         });
     }
 };
 
+Pop.prototype.fixed = function () {
+    var thiz = this;
+    thiz.popEle.css({
+        position: 'fixed'
+    });
+};
+
+Pop.prototype.rightTop = function () {
+    var thiz = this;
+    thiz.boxEle.css({
+        float: 'right',
+        marginTop: '2px',
+        marginRight: '2px'
+    });
+};
+
 Pop.prototype.show = function (ele) {
     var thiz = this;
-    thiz.ele.css({
-        overflow: 'auto',
-        right: '0px',
-        bottom: '0px'
-    });
+    thiz.ele.show();
     thiz.beside(ele);
 };
 
 Pop.prototype.hide = function () {
     var thiz = this;
-    thiz.ele.css({
-        overflow: 'hidden',
-        right: '100%',
-        bottom: '100%'
-    });
+    thiz.ele.hide();
 };
 
 window.Pop = Pop;

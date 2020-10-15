@@ -72,6 +72,7 @@ Paper.prototype.init = function () {
     thiz.initTitle();
     thiz.initWriter();
     thiz.initBlockop();
+    thiz.initAlert();
     thiz.initBind();
 };
 
@@ -98,6 +99,11 @@ Paper.prototype.initBlockop = function () {
     thiz.blockop = new Blockop();
 };
 
+Paper.prototype.initAlert = function () {
+    var thiz = this;
+    thiz.alert = new Alert();
+};
+
 Paper.prototype.initBind = function () {
     var thiz = this;
     $(document).on('keydown', 'body', function (e) {
@@ -107,7 +113,9 @@ Paper.prototype.initBind = function () {
         }
     }).on('keyup', 'body', function (e) {
         // thiz.save(); disable auto save
-    }).on('mousedown', function (e) {
+    });
+    
+    thiz.ele.on('mousedown', function (e) {
         thiz.focusWriter();
     });
     
@@ -198,25 +206,30 @@ Paper.prototype.renderData = function (paperObj) {
 }
 
 Paper.prototype.saveData = function (data, cb) {
+    var thiz = this;
     if (isNotNone(data)) {
         restPost('/api/paper', data, function (res) {
             if (res.code === 0) {
-                // todo: success flush
                 // success icon font: ☑
                 // fail icon font: ☒
-                document.title = '☑ ' + data.title;
-                setTimeout(function () {
-                    document.title = data.title;
-                }, 1000);
+                document.title = data.title;
+                thiz.alertMsg('Saved "' + data.title + '".');
                 if (isFunction(cb)) {
                     cb();
                 }
             } else {
-                alert(res.msg || 'server error');
+                thiz.alertMsg('Cannot save "' + data.title + '".(' + res.msg || 'server error' + ')');
             }
         });
 
         localStorage.setItem(this.cacheId(), data);
+    }
+};
+
+Paper.prototype.alertMsg = function (msg) {
+    var thiz = this;
+    if (isNotBlank(msg)) {
+        thiz.alert.show(msg);
     }
 };
 

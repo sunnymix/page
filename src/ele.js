@@ -129,6 +129,7 @@ Ele.metaProps = [
 
 Ele.styleProps = [
     'position', 'display',
+    'zIndex',
     'left', 'right', 'top', 'bottom',
     'margin', 'marginLeft', 'marginRight', 'marginTop', 'marginBottom',
     'padding', 'paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom',

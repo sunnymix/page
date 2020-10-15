@@ -5,6 +5,7 @@ function Blockop() {
         '<div',
         '    class="blockop"',
         '    style="',
+        '        display: inline-block;',
         '        background-color: #ffffff;',
         '        border: 1px solid #eeeeee;',
         '        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.08);',
