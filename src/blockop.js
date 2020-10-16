@@ -7,7 +7,7 @@
             display: 'inline-block',
             backgroundColor: '#ffffff',
             border: '1px solid #eeeeee',
-            boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.08)'
+            boxShadow: '0px 0px 2px 0px rgba(0, 0, 0, 0.15)'
         });
 
         thiz.actionsEle = new Ele('div', {

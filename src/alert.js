@@ -22,7 +22,7 @@
             padding: '10px',
             minWidth: '200px',
             maxWidth: '300px',
-            boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.08)',
+            boxShadow: '0px 0px 2px 0px rgba(0, 0, 0, 0.15)',
         });
         thiz.pop.append(thiz.ele);
 
