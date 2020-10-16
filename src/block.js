@@ -3,72 +3,72 @@
         var thiz = this;
         thiz.isBlock = true;
         thiz.writer = writer;
-    
+
         thiz.id = uuid();
         var initData = thiz.extractData(data);
-    
+
         thiz.schema = initData.schema;
         thiz.isLock = isTrue(isLock);
-    
+
         thiz.readonly = isTrue(readonly);
         thiz.context = isNotNone(context) ? context : SCHEMA.PAPER;
         thiz.previousBlock = previousBlock;
-    
+
         thiz.initEle(place, initData);
-    
+
         thiz.initBind();
         initEvent(thiz, Block.prototype);
     };
-    
+
     Block.prototype.type = ELE_TYPE.BLOCK;
-    
+
     Block.prototype.initEle = function (place, initData) {
         var thiz = this;
-    
+
         thiz.ele = new Ele('div', {
             id: '.block',
             position: 'relative'
         });
-    
+
         ////// block (schema, actions, box, attach) //////
-    
+
         // schema
         thiz.initSchemaEle(initData);
         thiz.ele.append(thiz.schemaEle);
-    
+
         // actions
         thiz.initActionsEle(initData);
         thiz.ele.append(thiz.actionsEle);
-    
+
         // box
         thiz.initBoxEle(initData);
         thiz.ele.append(thiz.boxEle);
-    
+
         // attach
         thiz.initAttachEle();
         thiz.ele.append(thiz.attachEle);
-    
+
         ////// data //////
-    
+
         thiz.setCheckData(initData.check);
-    
+
         thiz.setAttach(initData.attach);
-    
+
         thiz.initActions();
         thiz.initTask();
-    
+
         thiz.setContentData(initData.text);
         thiz.setPriorityData(initData.priority);
         thiz.setLinkData(initData.link);
         thiz.setHighlightData(initData.highlight);
-    
+
         thiz.loadStyle();
-    
+
         if (isNotNone(place)) {
             $(place).replaceWith(thiz.ele);
         }
     };
-    
+
     Block.prototype.initSchemaEle = function (initData) {
         var thiz = this;
         thiz.schemaEle = new Ele('div', {
@@ -84,7 +84,7 @@
             // transform: 'rotate(90deg)',
         });
     };
-    
+
     Block.prototype.schemaVisible = function () {
         var thiz = this;
         var isHighlight = [SCHEMA.TITLE, SCHEMA.H1, SCHEMA.H2, SCHEMA.H3, SCHEMA.GRID].includes(thiz.schema);
@@ -92,36 +92,36 @@
         var isNotInGrid = !thiz.isGridContext();
         return isHighlight && isEdit && isNotInGrid;
     };
-    
+
     Block.prototype.initBoxEle = function (initData) {
         var thiz = this;
         thiz.boxEle = new Ele('div', {
             id: '.block-box',
             position: 'relative',
         });
-    
+
         // background
         thiz.initBackgroundEle();
         thiz.boxEle.append(thiz.backgroundEle);
-    
+
         // border
         thiz.initBorderEle(initData);
         thiz.boxEle.append(thiz.borderEle);
-    
+
         // tags
         thiz.initTagsEle();
         thiz.boxEle.append(thiz.tagsEle);
-    
+
         // task
         thiz.initTaskEle();
         thiz.boxEle.append(thiz.taskEle);
-    
+
         // link
         thiz.initLinkEle();
         thiz.boxEle.append(thiz.linkEle);
         thiz.link = new Link(thiz.linkEle);
     };
-    
+
     Block.prototype.initBackgroundEle = function () {
         var thiz = this;
         thiz.backgroundEle = new Ele('div', {
@@ -133,55 +133,55 @@
             bottom: 0,
         });
     };
-    
+
     Block.prototype.initBorderEle = function (initData) {
         var thiz = this;
         thiz.borderEle = new Ele('div', {
             id: '.block-border',
             position: 'relative',
         });
-    
+
         // content
         thiz.initContentEle(initData);
         thiz.borderEle.append(thiz.contentEle);
-    
+
         // tail
         thiz.initTailEle(initData);
         thiz.borderEle.append(thiz.tailEle);
-    
+
         new Clearfix(thiz.tailEle);
     };
-    
+
     Block.prototype.initContentEle = function (initData) {
         var thiz = this;
-    
+
         var isReadonlyLink = thiz.readonly && isNotBlank(initData.link);
         var eleType = isReadonlyLink ? 'a' : 'div';
-    
+
         thiz.contentEle = new Ele(eleType, {
             id: '.block-content'
         });
-    
+
         var isEditable = isFalse(thiz.readonly);
         if (isEditable) {
             thiz.contentEle.prop('contenteditable', true);
         }
     };
-    
+
     Block.prototype.initTailEle = function (initData) {
         var thiz = this;
-    
+
         thiz.tailEle = new Ele('div', {
             id: '.block-tail',
             position: 'relative',
             display: 'inline-block',
             float: 'left',
         });
-    
+
         thiz.initLinkIconEle(initData);
         thiz.tailEle.append(thiz.linkIconEle);
     };
-    
+
     Block.prototype.initLinkIconEle = function (initData) {
         var thiz = this;
         thiz.linkIconEle = new Ele('a', {
@@ -197,7 +197,7 @@
             border: '1px solid #0064bd',
             borderRadius: '50%',
         });
-    
+
         var dotEle = new Ele('div', {
             id: '.block-link-dot',
             width: '1px',
@@ -209,7 +209,7 @@
             left: '5px',
         });
         thiz.linkIconEle.append(dotEle);
-    
+
         var stringEle = new Ele('div', {
             id: '.block-link-string',
             width: '1px',
@@ -221,7 +221,7 @@
             left: '5px',
         });
         thiz.linkIconEle.append(stringEle);
-    
+
         var arrowEle = new Ele('div', {
             id: '.block-link-arrow',
             position: 'absolute',
@@ -237,9 +237,9 @@
             borderRadius: '1px',
         });
         // thiz.linkIconEle.append(arrowEle);
-    
+
     };
-    
+
     Block.prototype.initActionsEle = function () {
         var thiz = this;
         thiz.actionsEle = new Ele('div', {
@@ -251,7 +251,7 @@
             right: '-25px',
         });
     };
-    
+
     Block.prototype.initTaskEle = function () {
         var thiz = this;
         thiz.taskEle = new Ele(
@@ -311,11 +311,11 @@
             '    </div>',
             '</div>'
         );
-    
+
         thiz.taskUncheckEle = thiz.taskEle.find('.block-task-uncheck');
         thiz.taskCheckEle = thiz.taskEle.find('.block-task-check');
     };
-    
+
     Block.prototype.initTagsEle = function () {
         var thiz = this;
         thiz.tagsEle = new Ele(
@@ -362,18 +362,18 @@
             '    </div>',
             '</div>',
         );
-    
+
         thiz.priorityTagEle = thiz.tagsEle.find('.block-priority-tag');
         thiz.priorityDataEle = thiz.priorityTagEle.find('.block-priority-data');
     };
-    
+
     Block.prototype.initAttachEle = function () {
         var thiz = this;
         thiz.attachEle = new Ele('div', {
             id: '.block-attach',
             position: 'relative'
         });
-    
+
         thiz.attachBoxEle = new Ele('div', {
             id: '.block-attach-box',
             display: 'block',
@@ -381,7 +381,7 @@
         });
         thiz.attachEle.append(thiz.attachBoxEle);
     };
-    
+
     Block.prototype.initLinkEle = function () {
         var thiz = this;
         thiz.linkEle = new Ele(
@@ -395,34 +395,34 @@
             '</div>',
         );
     };
-    
+
     Block.prototype.initBind = function () {
         var thiz = this;
-    
+
         thiz.ele.on('blur', function (e) {
             thiz.blur();
         });
-    
+
         thiz.ele.on('mousedown', function (e) {
             e.stopPropagation();
             thiz.focus();
         });
-    
+
         thiz.contentEle.on('mousedown', function (e) {
             e.stopPropagation();
             thiz.focus(true);
         });
-    
+
         thiz.ele.on('keydown', function (e) {
             thiz.handleKeydownEvent(e);
         });
-    
+
         thiz.ele.on('paste', function (e) {
             e.preventDefault();
             thiz.handlePasteEvent(e);
         });
     };
-    
+
     Block.prototype.handleKeydownEvent = function (e) {
         var thiz = this;
         if (e.keyCode == KEYCODE.ENTER) {
@@ -434,78 +434,78 @@
                 thiz.enter();
             }
         }
-    
+
         if (e.keyCode == KEYCODE.BACKSPACE) {
             if (thiz.contentEle.text().length == 0) {
                 thiz.remove();
             }
         }
-    
+
         if (e.keyCode == KEYCODE.BACKSPACE
             && isCommandOrControl(e)
             && isShift(e)) {
             e.preventDefault();
             thiz.remove();
         }
-    
+
         if (e.keyCode == KEYCODE.A && isCommandOrControl(e) && isShift(e)) {
             thiz.showAttach();
         }
-    
+
         if (e.keyCode == KEYCODE.B && isCommandOrControl(e) && isShift(e)) {
             e.preventDefault();
             e.stopPropagation();
             thiz.setSchema(SCHEMA.TEXT);
         }
-    
+
         if (e.keyCode == KEYCODE.NUM1 && isCommandOrControl(e)) {
             e.preventDefault();
             e.stopPropagation();
             thiz.setSchema(SCHEMA.H1);
         }
-    
+
         if (e.keyCode == KEYCODE.NUM2 && isCommandOrControl(e)) {
             e.preventDefault();
             e.stopPropagation();
             thiz.setSchema(SCHEMA.H2);
         }
-    
+
         if (e.keyCode == KEYCODE.NUM3 && isCommandOrControl(e)) {
             e.preventDefault();
             e.stopPropagation();
             thiz.setSchema(SCHEMA.H3);
         }
-    
+
         if (e.keyCode == KEYCODE.C && isCommandOrControl(e) && isShift(e)) {
             e.preventDefault();
             e.stopPropagation();
             thiz.setSchema(SCHEMA.CODE);
         }
-    
+
         if (e.keyCode == KEYCODE.G && isCommandOrControl(e) && isShift(e)) {
             e.preventDefault();
             e.stopPropagation();
             thiz.setSchema(SCHEMA.GRID);
         }
-    
+
         if (e.keyCode == KEYCODE.K && isCommandOrControl(e)) {
             e.preventDefault();
             e.stopPropagation();
             thiz.setSchema(SCHEMA.TASK);
         }
-    
+
         if (e.keyCode == KEYCODE.L && isCommandOrControl(e) && isShift(e)) {
             e.preventDefault();
             e.stopPropagation();
             thiz.showLink();
         }
-    
+
         if (e.keyCode == KEYCODE.O && isCommandOrControl(e) && isShift(e)) {
             e.preventDefault();
             e.stopPropagation();
             thiz.setSchema(SCHEMA.QUOTE);
         }
-    
+
         if (e.keyCode == KEYCODE.UP) {
             if (isOption(e)) {
                 e.preventDefault();
@@ -515,7 +515,7 @@
                 thiz.jumpUp();
             }
         }
-    
+
         if (e.keyCode == KEYCODE.DOWN) {
             if (isOption(e)) {
                 e.preventDefault();
@@ -525,41 +525,45 @@
                 thiz.jumpDown();
             }
         }
-    
+
         if (e.keyCode == KEYCODE.C && isCommandAndControl(e)) {
             e.preventDefault();
             thiz.clone();
         }
     };
-    
+
     Block.prototype.handlePasteEvent = function (e) {
         var thiz = this;
-        thiz.trigger('paste', thiz, e);
+        var isCompress = thiz.isTitle();
+        var pasteSingleRow = pastePlainText(e, isCompress);
+        if (isNotTrue(pasteSingleRow)) {
+            thiz.trigger('paste', thiz, e);
+        }
     };
-    
+
     Block.prototype.expandLink = function () {
         var thiz = this;
         thiz.link.expand();
     };
-    
+
     Block.prototype.shrinkLink = function () {
         var thiz = this;
         thiz.link.shrink();
     };
-    
+
     Block.prototype.clone = function () {
         var thiz = this;
         thiz.trigger('clone');
     };
-    
+
     Block.prototype.appendTo = function (place) {
         this.ele.appendTo(place);
     };
-    
+
     Block.prototype.replaceTo = function (place) {
         place.replaceWith(this.ele);
     };
-    
+
     Block.prototype.setSchema = function (schema) {
         var thiz = this;
         if (thiz.isLock) {
@@ -575,7 +579,7 @@
             }
         }
     };
-    
+
     Block.prototype.switchToGrid = function () {
         var thiz = this;
         thiz.contentEle.empty();
@@ -592,7 +596,7 @@
             thiz.trigger('grid.enter', block, writer, cell, row, grid, thiz);
         });
     };
-    
+
     Block.prototype.getGridData = function () {
         var thiz = this;
         var data = '';
@@ -601,7 +605,7 @@
         }
         return data;
     };
-    
+
     Block.prototype.initActions = function () {
         var thiz = this;
         if (thiz.readonly || thiz.isLock) {
@@ -612,7 +616,7 @@
         thiz.opBtn.hide();
         // thiz.opBtn.middle();
         thiz.opBtn.appendTo(thiz.actionsEle);
-    
+
         thiz.ele.on('mouseenter', function (e) {
             thiz.opBtn.show();
             // thiz.expandLink();
@@ -620,18 +624,18 @@
             thiz.opBtn.hide();
             // thiz.shrinkLink();
         });
-    
+
         thiz.opBtn.click(function (e) {
             thiz.trigger('blockop', thiz);
         });
     };
-    
+
     Block.prototype.showAttach = function () {
         var thiz = this;
         var url = prompt('add attachement ...', thiz.getAttachData());
         thiz.setAttach(url);
     };
-    
+
     Block.prototype.initTask = function () {
         var thiz = this;
         thiz.taskEle.on('mouseenter', function (e) {
@@ -642,12 +646,12 @@
             thiz.toggleCheck();
         });
     };
-    
+
     Block.prototype.reload = function () {
         var thiz = this;
         thiz.loadStyle();
     };
-    
+
     Block.prototype.loadStyle = function () {
         var thiz = this;
         var style = new Style(thiz);
@@ -665,7 +669,7 @@
         }
         thiz.applyStyle(style);
     };
-    
+
     Block.prototype.resetPreviousStyle = function (nextBlock) {
         var thiz = this;
         if (isNotNone(nextBlock)
@@ -679,20 +683,20 @@
             }
         }
     };
-    
+
     Block.prototype.applyStyle = function (style) {
         var thiz = this;
         thiz.style = style;
         if (isNotNone(thiz.style)) {
             thiz.style.setPaddingLeft('0px');
             thiz.style.setPaddingRight('0px');
-    
+
             thiz.ele.prop('style', thiz.style.eleStyle(thiz.context));
-    
+
             thiz.borderEle.prop('style', thiz.style.borderStyle(thiz.context));
-    
+
             thiz.contentEle.prop('style', thiz.style.contentStyle(thiz.context));
-    
+
             if (thiz.schemaVisible()) {
                 thiz.schemaEle.css({
                     top: thiz.style.getBoxBaseLineTop()
@@ -700,11 +704,11 @@
             } else {
                 thiz.schemaEle.hide();
             }
-    
+
             thiz.actionsEle.css({
                 top: thiz.style.getBoxBaseLineTop()
             });
-    
+
             if (thiz.isTask()) {
                 thiz.taskEle.css({
                     top: thiz.style.getBaseLineTop(),
@@ -720,12 +724,12 @@
             } else {
                 thiz.taskEle.hide();
             }
-    
+
             thiz.tagsEle.css({
                 left: thiz.style.getTagsLeft(),
                 top: thiz.style.getBaseLineTop()
             });
-    
+
             if (thiz.priority > 0) {
                 var color = thiz.style.getPriorityColor();
                 thiz.priorityTagEle.show()
@@ -737,7 +741,7 @@
                 thiz.priorityTagEle.hide();
                 thiz.priorityDataEle.text(thiz.priority);
             }
-    
+
             if (thiz.isShowLink()) {
                 thiz.linkEle
                     .css({
@@ -750,38 +754,38 @@
                 thiz.linkEle.hide();
                 thiz.linkIconEle.hide();
             }
-    
+
             thiz.backgroundEle.css({
                 left: thiz.style.getBackgroundLeft(),
                 backgroundColor: thiz.style.getBackgroundColor()
             });
-    
+
             thiz.attachEle.css({
                 paddingLeft: thiz.style.contentPaddingLeft
             });
         }
     };
-    
+
     Block.prototype.isFirstBlock = function () {
         var thiz = this;
         return isNotNone(thiz.writer) && thiz.writer.isFirstBlock(thiz.id);
     };
-    
+
     Block.prototype.isLastBlock = function () {
         var thiz = this;
         return isNotNone(thiz.writer) && thiz.writer.isLastBlock(thiz.id);
     };
-    
+
     Block.prototype.blur = function () {
         var thiz = this;
         // thiz.linkEle.hide();
         // thiz.shrinkLink();
     };
-    
+
     Block.prototype.focus = function (keepCursor) {
         var thiz = this;
         var resetCursor = !isTrue(keepCursor);
-    
+
         if (resetCursor
             && !thiz.isGrid()) {
             setTimeout(function () {
@@ -789,58 +793,58 @@
                 setCursorToEnd(thiz.contentEle[0]);
             }, 1);
         }
-    
+
         if (thiz.isShowLink()) {
             // thiz.linkEle.show();
         }
         // thiz.expandLink();
         thiz.trigger('focus', thiz);
     };
-    
+
     Block.prototype.enter = function () {
         var thiz = this;
         thiz.trigger('enter', thiz);
     };
-    
+
     Block.prototype.forceEnter = function () {
         var thiz = this;
         thiz.trigger('forceenter', thiz);
     };
-    
+
     Block.prototype.moveUp = function () {
         var thiz = this;
         thiz.trigger('moveup', thiz);
     };
-    
+
     Block.prototype.moveDown = function () {
         var thiz = this;
         thiz.trigger('movedown', thiz);
     };
-    
+
     Block.prototype.jumpUp = function () {
         var thiz = this;
         if (getCursorPosition(thiz.contentEle[0]) <= 0) {
             thiz.trigger('jumpup', thiz);
         }
     };
-    
+
     Block.prototype.jumpDown = function () {
         var thiz = this;
         if (getCursorPosition(thiz.contentEle[0]) >= thiz.contentEle.text().length) {
             thiz.trigger('jumpdown', thiz);
         }
     };
-    
+
     Block.prototype.getCursorPosition = function () {
         var thiz = this;
         return getCursorPosition(thiz.contentEle[0]);
     };
-    
+
     Block.prototype.setCursorPosition = function (position) {
         var thiz = this;
         setCursor(thiz.contentEle[0], position);
     };
-    
+
     Block.prototype.trimCaretContent = function () {
         var thiz = this;
         if (thiz.isGrid()) {
@@ -857,13 +861,13 @@
         var rightContent = content.substring(caretPos);
         return rightContent;
     };
-    
+
     Block.prototype.remove = function () {
         var thiz = this;
         thiz.ele.remove();
         thiz.trigger('remove', thiz);
     };
-    
+
     Block.prototype.setContentData = function (content) {
         var thiz = this;
         if (thiz.schema === SCHEMA.GRID) {
@@ -872,7 +876,7 @@
             thiz.setContentText(content);
         }
     };
-    
+
     Block.prototype.setContentText = function (text) {
         var thiz = this;
         if (thiz.isCode()) {
@@ -880,7 +884,7 @@
         }
         thiz.contentEle.html(text);
     };
-    
+
     Block.prototype.setGridData = function (content) {
         var thiz = this;
         if (isNone(thiz.grid)) {
@@ -888,7 +892,7 @@
         }
         thiz.grid.setData(content);
     };
-    
+
     Block.prototype.getData = function () {
         var thiz = this;
         var defaultData = thiz.defaultData();
@@ -902,7 +906,7 @@
             highlight: thiz.getHighlightData()
         });
     };
-    
+
     Block.prototype.center = function (isCenter) {
         var thiz = this;
         var textAlign = isFalse(isCenter) ? 'left' : 'center';
@@ -910,7 +914,7 @@
             textAlign: textAlign
         });
     };
-    
+
     Block.prototype.getContentData = function () {
         var thiz = this;
         var data = '';
@@ -921,23 +925,23 @@
         }
         return data;
     };
-    
+
     Block.prototype.getCheckData = function () {
         return this.isCheck() ? 1 : 0;
     };
-    
+
     Block.prototype.isCheck = function () {
         var thiz = this;
         return thiz.check > 0;
     };
-    
+
     Block.prototype.toggleCheck = function () {
         var thiz = this;
         var isCheck = thiz.isCheck();
         thiz.setCheckData(!isCheck);
         thiz.loadStyle();
     };
-    
+
     Block.prototype.setCheckData = function (check) {
         var thiz = this;
         thiz.check = check;
@@ -952,7 +956,7 @@
             }
         }
     };
-    
+
     Block.prototype.defaultData = function () {
         return {
             schema: SCHEMA.TEXT,
@@ -964,7 +968,7 @@
             highlight: 0
         };
     };
-    
+
     // fixme
     Block.prototype.extractData = function (data) {
         var defaultData = this.defaultData();
@@ -985,7 +989,7 @@
         }
         return defaultData;
     };
-    
+
     Block.prototype.setAttach = function (url) {
         var thiz = this;
         if (isNone(url)) {
@@ -998,10 +1002,10 @@
         if (isNotBlank(url)) {
             thiz.attachEle.show();
         } else {
-            thiz.attachEle.hide();   
+            thiz.attachEle.hide();
         }
     };
-    
+
     Block.prototype.getAttachData = function () {
         var thiz = this;
         if (isNotNone(thiz.attach)) {
@@ -1009,7 +1013,7 @@
         }
         return '';
     };
-    
+
     Block.prototype.togglePriority = function (priority) {
         var thiz = this;
         var curPriority = thiz.getPriorityData();
@@ -1017,33 +1021,33 @@
         thiz.setPriorityData(newPriority);
         thiz.applyPriority();
     };
-    
+
     Block.prototype.setPriorityData = function (priority) {
         var thiz = this;
         thiz.priority = priority;
     };
-    
+
     Block.prototype.applyPriority = function () {
         var thiz = this;
         thiz.loadStyle();
     };
-    
+
     Block.prototype.getPriorityData = function () {
         var thiz = this;
         return thiz.priority;
     };
-    
+
     Block.prototype.isShowPriority = function () {
         var thiz = this;
         return thiz.getPriorityData() > 0;
     };
-    
+
     Block.prototype.applyLink = function (link) {
         var thiz = this;
         thiz.setLinkData(link);
         thiz.loadStyle();
     };
-    
+
     Block.prototype.setLinkData = function (link) {
         var thiz = this;
         thiz.link.setData(link);
@@ -1051,23 +1055,23 @@
         thiz.contentEle.prop('target', '_blank');
         thiz.linkIconEle.prop('href', link);
     };
-    
+
     Block.prototype.getLinkData = function () {
         var thiz = this;
         return thiz.link.getData();
     };
-    
+
     Block.prototype.hasLink = function () {
         var thiz = this;
         return isNotBlank(thiz.getLinkData());
     };
-    
+
     Block.prototype.isShowLink = function () {
         var thiz = this;
         var notBlankLink = isNotBlank(thiz.getLinkData());
         return !thiz.isLock && !thiz.readonly && notBlankLink;
     };
-    
+
     Block.prototype.showLink = function () {
         var thiz = this;
         var link = prompt('add link ...', thiz.getLinkData());
@@ -1075,7 +1079,7 @@
             thiz.applyLink(link);
         }
     };
-    
+
     Block.prototype.toggleHighlight = function (light) {
         var thiz = this;
         var curLight = thiz.getHighlightData();
@@ -1086,65 +1090,69 @@
         thiz.setHighlightData(newLight);
         thiz.applyHighlight(newLight);
     };
-    
+
     Block.prototype.setHighlightData = function (highlight) {
         var thiz = this;
         thiz.highlight = highlight;
     };
-    
+
     Block.prototype.applyHighlight = function () {
         var thiz = this;
         thiz.loadStyle();
     };
-    
+
     Block.prototype.getHighlightData = function () {
         var thiz = this;
         var highlight = isNumber(thiz.highlight) ? thiz.highlight : 0;
         return highlight;
     };
-    
+
     Block.prototype.setContentColor = function (color) {
         var thiz = this;
         thiz.contentEle.css({
             color: color || '#000000'
         });
     };
-    
+
     Block.prototype.isText = function () {
         return this.schema === SCHEMA.TEXT;
     };
-    
+
     Block.prototype.isH1 = function () {
         return this.schema === SCHEMA.H1;
     };
-    
+
     Block.prototype.isH2 = function () {
         return this.schema === SCHEMA.H2;
     };
-    
+
     Block.prototype.isH3 = function () {
         return this.schema === SCHEMA.H3;
     };
-    
+
     Block.prototype.isCode = function () {
         return this.schema === SCHEMA.CODE;
     };
-    
+
     Block.prototype.isGrid = function () {
         return this.schema === SCHEMA.GRID;
     };
-    
+
     Block.prototype.isTask = function () {
         return this.schema === SCHEMA.TASK;
     };
-    
+
+    Block.prototype.isTitle = function () {
+        return this.schema === SCHEMA.TITLE;
+    };
+
     Block.prototype.isSameSchema = function (block) {
         return this.schema === block.schema;
     };
-    
+
     Block.prototype.isGridContext = function () {
         return this.context === SCHEMA.GRID;
     };
-    
-    window.Block = Block;    
+
+    window.Block = Block;
 })();

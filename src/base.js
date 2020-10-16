@@ -376,3 +376,19 @@ window.getPasteText = function (e) {
     }
     return text;
 };
+
+window.pastePlainText = function (e, compress) {
+    var pasteText = getPasteText(e).trim();
+
+    if (isTrue(compress)) {
+        pasteText = pasteText.replace(/\n/g, ' ');
+    }
+
+    var singleRow = pasteText.indexOf('\n') < 0;
+
+    if (singleRow) {
+        document.execCommand("insertHTML", false, pasteText);
+    }
+
+    return singleRow;
+};

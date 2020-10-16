@@ -130,13 +130,7 @@ Writer.prototype.handlePasteEvent = function (block, e) {
     var thiz = this;
     if (!thiz.isGridContext()) {
         var pasteText = getPasteText(e).trim();
-        var singleRow = pasteText.indexOf('\n') < 0;
-
-        if (singleRow) {
-            document.execCommand("insertHTML", false, pasteText);
-        } else {
-            thiz.pasteRows(block, pasteText);
-        }
+        thiz.pasteRows(block, pasteText);
     }
 };
 

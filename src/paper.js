@@ -25,7 +25,6 @@ function Paper(p, readonly, fullscreen) {
             '            border: 1px solid #d0d0d0;',
             '            border-radius: 0px;',
             '            padding: ' + thiz.paddingVertical + ' ' + thiz.paddingHorizontal + ';',
-            '            min-height: 800px;',
             '            background-color: #ffffff;',
             '        "',
             '    >',
@@ -43,13 +42,12 @@ function Paper(p, readonly, fullscreen) {
             '        <div ',
             '            class="paper-body"',
             '            style="',
-            // '                padding: 0 20px',
+            '            min-height: 800px;',
             '            "',
             '        >',
             '            <div',
             '                class="paper-writer"',
             '                style="',
-            // '                    padding: 0 15px',
             '                "',
             '            ></div>',
             '        </div>',
@@ -58,6 +56,7 @@ function Paper(p, readonly, fullscreen) {
         ].join('')
     );
     $(p).replaceWith(thiz.ele);
+    thiz.boxEle = thiz.ele.find('.paper-box');
     thiz.bodyEle = thiz.ele.find('.paper-body');
 
     thiz.getPid();
@@ -116,6 +115,7 @@ Paper.prototype.initBind = function () {
     });
     
     thiz.bodyEle.on('mousedown', function (e) {
+        e.preventDefault();
         thiz.focusWriter();
     });
     
