@@ -144,6 +144,7 @@ Ele.styleProps = [
     'color', 'fontSize', 'fontFamily',
     'float',
     'transform',
+    'boxShadow',
 ];
 
 window.Ele = Ele;
