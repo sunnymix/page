@@ -115,7 +115,7 @@ Paper.prototype.initBind = function () {
         // thiz.save(); disable auto save
     });
     
-    thiz.ele.on('mousedown', function (e) {
+    thiz.bodyEle.on('mousedown', function (e) {
         thiz.focusWriter();
     });
     
