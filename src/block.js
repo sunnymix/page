@@ -368,7 +368,10 @@ Block.prototype.initTagsEle = function () {
 
 Block.prototype.initAttachEle = function () {
     var thiz = this;
-    thiz.attachEle = new Ele(
+    thiz.attachEle = new Ele('div', {
+        id: '.block-attach'
+    })
+
         '<div',
         '    class="block-attach"',
         '    style="',
@@ -382,6 +385,12 @@ Block.prototype.initAttachEle = function () {
         '        "></div>',
         '</div>',
     );
+
+    thiz.attachBoxEle = new Ele('div', {
+        id: '.block-attach-box',
+        display: 'block',
+    });
+    thiz.attachEle.append(thiz.attachBoxEle);
 };
 
 Block.prototype.initLinkEle = function () {
@@ -448,6 +457,10 @@ Block.prototype.handleKeydownEvent = function (e) {
         && isShift(e)) {
         e.preventDefault();
         thiz.remove();
+    }
+
+    if (e.keyCode == KEYCODE.A && isCommandOrControl(e) && isShift(e)) {
+        thiz.showAttach();
     }
 
     if (e.keyCode == KEYCODE.B && isCommandOrControl(e) && isShift(e)) {
@@ -626,7 +639,7 @@ Block.prototype.initActions = function () {
 
 Block.prototype.showAttach = function () {
     var thiz = this;
-    var url = prompt('add attachement ...', '');
+    var url = prompt('add attachement ...', thiz.getAttachData());
     thiz.setAttach(url);
 };
 
@@ -986,13 +999,13 @@ Block.prototype.extractData = function (data) {
 
 Block.prototype.setAttach = function (url) {
     var thiz = this;
+    if (isNone(url)) {
+        return;
+    }
     var attachBox = this.attachEle.find('.block-attach-box');
     attachBox.empty();
-    thiz.attach = null;
-    if (isNotEmpty(url)) {
-        thiz.attach = new Attach(url);
-        thiz.attach.htmlTo(attachBox);
-    }
+    thiz.attach = new Attach(url);
+    thiz.attach.htmlTo(attachBox);
 };
 
 Block.prototype.getAttachData = function () {
