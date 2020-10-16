@@ -6,11 +6,17 @@
 
     Alert.prototype.init = function () {
         var thiz = this;
+        thiz.initEle();
+        thiz.initBind();
+    }
+
+    Alert.prototype.initEle = function () {
+        var thiz = this;
         thiz.pop = new Pop();
 
         thiz.ele = new Ele('div', {
             id: '.alert',
-            border: '1px solid #e1e4e8',
+            border: '1px solid #dddddd',
             borderRadius: '1px',
             backgroundColor: '#f6f6f6',
             padding: '10px',
@@ -20,17 +26,30 @@
         thiz.pop.append(thiz.ele);
 
         thiz.pop.fixed();
-        thiz.pop.rightTop();
+        thiz.pop.miniLay();
+    };
+
+    Alert.prototype.initBind = function () {
+        var thiz = this;
+        thiz.ele.on('click', function () {
+            thiz.hide();
+        });
     };
 
     Alert.prototype.show = function (msg) {
         var thiz = this;
         thiz.ele.html(msg);
-        thiz.pop.show();
+        thiz.pop.show(Pop.POS.CENTER_TOP);
         setTimeout(function () {
-            thiz.ele.html('');
-            thiz.pop.hide();
+            // return;
+            thiz.hide();
         }, 1000);
+    };
+
+    Alert.prototype.hide = function () {
+        var thiz = this;
+        thiz.ele.html('');
+        thiz.pop.hide();
     };
 
     window.Alert = Alert;

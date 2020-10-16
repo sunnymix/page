@@ -95,15 +95,50 @@ Pop.prototype.rightTop = function () {
     });
 };
 
-Pop.prototype.show = function (ele) {
+Pop.prototype.centerTop = function () {
+    var thiz = this;
+    thiz.boxEle.css({
+        position: 'absolute',
+        top: '2px',
+    });
+    thiz.boxEle.css({
+        left: '50%',
+        marginLeft: '-' + (thiz.boxEle.width() * 0.5) + 'px',
+    });
+};
+
+Pop.prototype.miniLay = function () {
+    var thiz = this;
+    thiz.ele.css({
+        bottom: 'auto',
+    });
+    thiz.popEle.css({
+        bottom: 'auto',
+    });
+};
+
+Pop.prototype.show = function (positionOrRelativeEle) {
     var thiz = this;
     thiz.ele.show();
-    thiz.beside(ele);
+    if (isNotNone(positionOrRelativeEle)) {
+        if (Pop.POS.CENTER_TOP == positionOrRelativeEle) {
+            thiz.centerTop();
+        } else if (Pop.POS.RIGHT_TOP == positionOrRelativeEle) {
+            thiz.rightTop();
+        } else {
+            thiz.beside(positionOrRelativeEle);
+        }
+    }
 };
 
 Pop.prototype.hide = function () {
     var thiz = this;
     thiz.ele.hide();
+};
+
+Pop.POS = {
+    RIGHT_TOP: 'rightTop',
+    CENTER_TOP: 'centerTop'
 };
 
 window.Pop = Pop;
