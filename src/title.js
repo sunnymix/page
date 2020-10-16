@@ -1,45 +1,47 @@
-function Title(place, readonly) {
-    var thiz = this;
-    
-    thiz.readonly = isTrue(readonly);
+(function () {
+    function Title(place, readonly) {
+        var thiz = this;
 
-    thiz.block = new Block(null, null, {
-        schema: SCHEMA.TITLE,
-        text: ''
-    }, true, thiz.readonly);
-    // thiz.block.setContentColor('#444444');
+        thiz.readonly = isTrue(readonly);
 
-    thiz.block.appendTo(place);
-    // thiz.block.center();
-    thiz.init();
-};
+        thiz.block = new Block(null, null, {
+            schema: SCHEMA.TITLE,
+            text: ''
+        }, true, thiz.readonly);
+        // thiz.block.setContentColor('#444444');
 
-Title.prototype.init = function () {
-    var thiz = this;
-    initEvent(thiz, Title.prototype);
-    thiz.initBind();
-};
+        thiz.block.appendTo(place);
+        // thiz.block.center();
+        thiz.init();
+    };
 
-Title.prototype.initBind = function () {
-    var thiz = this;
-    thiz.block.bind('enter', function (block) {
-        thiz.trigger('enter', thiz);
-    });
-};
+    Title.prototype.init = function () {
+        var thiz = this;
+        initEvent(thiz, Title.prototype);
+        thiz.initBind();
+    };
 
-Title.prototype.type = ELE_TYPE.TITLE;
+    Title.prototype.initBind = function () {
+        var thiz = this;
+        thiz.block.bind('enter', function (block) {
+            thiz.trigger('enter', thiz);
+        });
+    };
 
-Title.prototype.getData = function () {
-    return this.block.getData().text;
-};
+    Title.prototype.type = ELE_TYPE.TITLE;
 
-Title.prototype.setData = function (data) {
-    this.block.setContentData(data || 'Title');
-};
+    Title.prototype.getData = function () {
+        return this.block.getData().text;
+    };
 
-Title.prototype.focus = function () {
-    var thiz = this;
-    thiz.block.focus();
-};
+    Title.prototype.setData = function (data) {
+        this.block.setContentData(data || 'Title');
+    };
 
-window.Title = Title;
+    Title.prototype.focus = function () {
+        var thiz = this;
+        thiz.block.focus();
+    };
+
+    window.Title = Title;
+})();
