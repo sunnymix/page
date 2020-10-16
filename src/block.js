@@ -254,117 +254,97 @@
 
     Block.prototype.initTaskEle = function () {
         var thiz = this;
-        thiz.taskEle = new Ele(
-            '<div',
-            '    class="block-task"',
-            '    style="',
-            '        position: absolute;',
-            '        display: none;',
-            '        left: 0px;',
-            '        top: 2px;',
-            '        width: 16px;',
-            '        height: 16px;',
-            '        border-radius: 50%;',
-            '        cursor: pointer;',
-            '    "',
-            '>',
-            '    <div',
-            '        class="block-task-uncheck"',
-            '        style="',
-            '            position: absolute;',
-            '            left: 0px;',
-            '            right: 0px;',
-            '            top: 0px;',
-            '            bottom: 0px;',
-            '            background-color: #ffffff;',
-            '            border: 1px solid #aaaaaa;',
-            '            border-radius: 50%;',
-            '        "',
-            '    ></div>',
-            '    <div',
-            '        class="block-task-check"',
-            '        style="',
-            '            position: absolute;',
-            '            display: none;',
-            '            left: 0px;',
-            '            right: 0px;',
-            '            top: 0px;',
-            '            bottom: 0px;',
-            '            background-color: #aaaaaa;',
-            '            border-radius: 50%;',
-            '        "',
-            '     >',
-            '        <div',
-            '            class="block-task-check-on"',
-            '            style="',
-            '                position: absolute;',
-            '                left: 5px;',
-            '                top: 6px;',
-            '                border-left: 1px solid #ffffff;',
-            '                border-bottom: 1px solid #ffffff;',
-            '                border-radius: 0px;',
-            '                width: 5px;',
-            '                height: 2px;',
-            '                transform: rotate(-50deg);',
-            '            "',
-            '        ></div>',
-            '    </div>',
-            '</div>'
-        );
 
-        thiz.taskUncheckEle = thiz.taskEle.find('.block-task-uncheck');
-        thiz.taskCheckEle = thiz.taskEle.find('.block-task-check');
+        thiz.taskEle = new Ele('div', {
+            id: '.block-task',
+            position: 'absolute',
+            display: 'none',
+            left: 0,
+            top: '2px',
+            width: '16px',
+            height: '16px',
+            borderRadius: '50%',
+            cursor: 'pointer',
+        });
+
+        thiz.taskUncheckEle = new Ele('div', {
+            id: '.block-task-uncheck',
+            position: 'absolute',
+            display: 'none',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            backgroundColor: '#ffffff',
+            border: '1px solid #aaaaaa',
+            borderRadius: '50%',
+        });
+        thiz.taskEle.append(thiz.taskUncheckEle);
+
+        thiz.taskCheckEle = new Ele('div', {
+            id: '.block-task-check',
+            position: 'absolute',
+            display: 'none',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            backgroundColor: '#aaaaaa',
+            borderRadius: '50%',
+        });
+        thiz.taskEle.append(thiz.taskCheckEle);
+
+        thiz.taskCheckOnEle = new Ele('div', {
+            id: '.block-task-check-on',
+            position: 'absolute',
+            left: '5px',
+            top: '6px',
+            borderLeft: '1px solid #ffffff',
+            borderBottom: '1px solid #ffffff',
+            width: '5px',
+            height: '2px',
+            transform: 'rotate(-50deg)',
+        });
+        thiz.taskCheckEle.append(thiz.taskCheckOnEle);
     };
 
     Block.prototype.initTagsEle = function () {
         var thiz = this;
-        thiz.tagsEle = new Ele(
-            '<div',
-            '    class="block-tags"',
-            '    style="',
-            '        position: absolute;',
-            '        top: 0px;',
-            '        bottom: 0px;',
-            '        left: 0;',
-            '    ">',
-            '    <div',
-            '        class="block-priority-tag"',
-            '        style="',
-            '            position: absolute;',
-            '            display: none;',
-            '            left: 0px;',
-            '            top: 0;',
-            '            width: 20px;',
-            '            height: 16px;',
-            '            line-height: 16px;',
-            '            margin-top: 0;',
-            '            text-align: center;',
-            '            color: #ffffff;',
-            '            border-radius: 1px;',
-            '        "',
-            '    >',
-            '        <div',
-            '            class="block-priority-data"',
-            '            style="',
-            '                position: absolute;',
-            '                left: 0;',
-            '                right: 0;',
-            '                top: 0;',
-            '                bottom: 0;',
-            '                font-size: 12px;',
-            '                font-weight: normal;',
-            '                border-radius: 0px;',
-            '                transform: scale(0.8);',
-            '                word-break: keep-all;',
-            '                white-space: nowrap;',
-            '            "',
-            '        ></div>',
-            '    </div>',
-            '</div>',
-        );
 
-        thiz.priorityTagEle = thiz.tagsEle.find('.block-priority-tag');
-        thiz.priorityDataEle = thiz.priorityTagEle.find('.block-priority-data');
+        thiz.tagsEle = new Ele('div', {
+            id: '.block-tags',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+        });
+
+        thiz.priorityTagEle = new Ele('div', {
+            id: '.block-priority-tag',
+            position: 'absolute',
+            display: 'none',
+            left: 0,
+            top: 0,
+            width: '20px',
+            height: '16px',
+            lineHeight: '16px',
+            marginTop: 0,
+            textAlign: 'center',
+            color: '#ffffff',
+            borderRadius: '1px',
+        });
+        thiz.tagsEle.append(thiz.priorityTagEle);
+
+        thiz.priorityDataEle = new Ele('div', {
+            id: '.block-priority-data',
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            fontSize: Style.SmallFontSize,
+            transform: 'scale(0.8)',
+        });
+        thiz.priorityTagEle.append(thiz.priorityDataEle);
     };
 
     Block.prototype.initAttachEle = function () {
@@ -384,16 +364,11 @@
 
     Block.prototype.initLinkEle = function () {
         var thiz = this;
-        thiz.linkEle = new Ele(
-            '<div',
-            '    class="block-link"',
-            '    style="',
-            '        position: relative;',
-            '        z-index: 1;',
-            '        ;',
-            '    ">',
-            '</div>',
-        );
+        thiz.linkEle = new Ele('div', {
+            id: '.block-link',
+            position: 'relative',
+            zIndex: 1,
+        });
     };
 
     Block.prototype.initBind = function () {
@@ -642,7 +617,9 @@
             // todo
         }).on('mouseleave', function (e) {
             // todo
-        }).on('click', function (e) {
+        }).on('mousedown', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
             thiz.toggleCheck();
         });
     };
