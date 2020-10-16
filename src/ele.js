@@ -138,6 +138,7 @@
         'height', 'minHeight', 'maxHeight',
         'lineHeight',
         'border', 'borderLeft', 'borderRight', 'borderTop', 'borderBottom', 'borderWidth', 'borderColor', 'borderWidth', 'borderStyle',
+        'borderSpacing', 'borderCollapse',
         'borderRadius', // todo
         'cursor',
         'background', 'backgroundColor',
@@ -146,6 +147,8 @@
         'float',
         'transform',
         'boxShadow',
+        'verticalAlign',
+        'overflow', 'overflowX', 'overflowY',
     ];
 
     window.Ele = Ele;
