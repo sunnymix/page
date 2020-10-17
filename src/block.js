@@ -114,7 +114,7 @@
 
         // task
         thiz.initTaskEle();
-        thiz.boxEle.append(thiz.taskEle);
+        thiz.boxEle.append(thiz.task.ele);
 
         // link
         thiz.initLinkEle();
@@ -255,71 +255,12 @@
 
     Block.prototype.initTaskEle = function () {
         var thiz = this;
-
-        thiz.taskEle = new Ele('div', {
-            id: '.block-task',
+        thiz.task = new Check();
+        thiz.task.ele.css({
             position: 'absolute',
-            display: 'none',
             left: 0,
-            top: '2px',
-            width: '16px',
-            height: '16px',
-            borderRadius: '50%',
-            cursor: 'pointer',
-        });
-
-        thiz.taskUncheckEle = new Ele('div', {
-            id: '.block-task-uncheck',
-            position: 'absolute',
-            display: 'none',
-            left: 0,
-            right: 0,
             top: 0,
-            bottom: 0,
-            backgroundColor: '#ffffff',
-            border: '1px solid #aaaaaa',
-            borderRadius: '50%',
         });
-        thiz.taskEle.append(thiz.taskUncheckEle);
-
-        thiz.taskCheckEle = new Ele('div', {
-            id: '.block-task-check',
-            position: 'absolute',
-            display: 'none',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            backgroundColor: '#ffffff',
-            border: '1px solid #aaaaaa',
-            borderRadius: '50%',
-        });
-        thiz.taskEle.append(thiz.taskCheckEle);
-
-        thiz.taskCheckOnEle = new Ele('div', {
-            id: '.block-task-check-on-bg',
-            position: 'absolute',
-            width: '12px',
-            height: '12px',
-            left: '1px',
-            top: '1px',
-            borderRadius: '50%',
-            backgroundColor: '#aaaaaa',
-        });
-        thiz.taskCheckEle.append(thiz.taskCheckOnEle);
-
-        thiz.taskCheckOnEle = new Ele('div', {
-            id: '.block-task-check-on',
-            position: 'absolute',
-            left: '4px',
-            top: '5px',
-            borderLeft: '1px solid #ffffff',
-            borderBottom: '1px solid #ffffff',
-            width: '5px',
-            height: '2px',
-            transform: 'rotate(-50deg)',
-        });
-        thiz.taskCheckEle.append(thiz.taskCheckOnEle);
     };
 
     Block.prototype.initTagsEle = function () {
@@ -624,11 +565,7 @@
 
     Block.prototype.initTask = function () {
         var thiz = this;
-        thiz.taskEle.on('mouseenter', function (e) {
-            // todo
-        }).on('mouseleave', function (e) {
-            // todo
-        }).on('mousedown', function (e) {
+        thiz.task.ele.on('mousedown', function (e) {
             e.preventDefault();
             e.stopPropagation();
             thiz.toggleCheck();
@@ -692,19 +629,13 @@
             });
 
             if (thiz.isTask()) {
-                thiz.taskEle.css({
+                thiz.task.ele.css({
                     top: thiz.style.getBaseLineTop(),
                     left: thiz.style.getTaskLeft()
                 }).show();
-                if (+thiz.check > 0) {
-                    thiz.taskCheckEle.show();
-                    thiz.taskUncheckEle.hide();
-                } else {
-                    thiz.taskCheckEle.hide();
-                    thiz.taskUncheckEle.show();
-                }
+                thiz.task.check(+thiz.check > 0);
             } else {
-                thiz.taskEle.hide();
+                thiz.task.ele.hide();
             }
 
             thiz.tagsEle.css({
@@ -937,13 +868,7 @@
         thiz.check = check;
         // fixme: uniform style render
         if (thiz.isTask()) {
-            if (+check > 0) {
-                thiz.taskCheckEle.show();
-                thiz.taskUncheckEle.hide();
-            } else {
-                thiz.taskCheckEle.hide();
-                thiz.taskUncheckEle.show();
-            }
+            thiz.task.check(+check > 0);
         }
     };
 
