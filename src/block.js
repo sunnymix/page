@@ -176,6 +176,7 @@
             position: 'relative',
             display: 'inline-block',
             float: 'left',
+            marginLeft: '2px',
         });
 
         thiz.initLinkIconEle(initData);
@@ -186,7 +187,7 @@
         var thiz = this;
         thiz.linkIconEle = new Ele('a', {
             id: '.block-link-icon',
-            position: 'absolute',
+            position: 'relative',
             target: '_blank',
             display: 'inline-block',
             padding: 0,
@@ -289,16 +290,29 @@
             right: 0,
             top: 0,
             bottom: 0,
-            backgroundColor: '#aaaaaa',
+            backgroundColor: '#ffffff',
+            border: '1px solid #aaaaaa',
             borderRadius: '50%',
         });
         thiz.taskEle.append(thiz.taskCheckEle);
 
         thiz.taskCheckOnEle = new Ele('div', {
+            id: '.block-task-check-on-bg',
+            position: 'absolute',
+            width: '12px',
+            height: '12px',
+            left: '1px',
+            top: '1px',
+            borderRadius: '50%',
+            backgroundColor: '#aaaaaa',
+        });
+        thiz.taskCheckEle.append(thiz.taskCheckOnEle);
+
+        thiz.taskCheckOnEle = new Ele('div', {
             id: '.block-task-check-on',
             position: 'absolute',
-            left: '5px',
-            top: '6px',
+            left: '4px',
+            top: '5px',
             borderLeft: '1px solid #ffffff',
             borderBottom: '1px solid #ffffff',
             width: '5px',
@@ -587,17 +601,14 @@
             thiz.actionsEle.remove();
             return;
         }
-        thiz.opBtn = new Button('img/ellipsis-v-solid.png', null, 18, 12, 18, null);
+        thiz.opBtn = new Button('img/ellipsis-v-solid.png', null, 20, 16, 20, null);
         thiz.opBtn.hide();
-        // thiz.opBtn.middle();
         thiz.opBtn.appendTo(thiz.actionsEle);
 
         thiz.ele.on('mouseenter', function (e) {
             thiz.opBtn.show();
-            // thiz.expandLink();
         }).on('mouseleave', function (e) {
             thiz.opBtn.hide();
-            // thiz.shrinkLink();
         });
 
         thiz.opBtn.click(function (e) {
@@ -632,9 +643,6 @@
     Block.prototype.loadStyle = function () {
         var thiz = this;
         var style = new Style(thiz);
-        if (thiz.isGridContext()) {
-            style.contentPaddingLeft = '0px';
-        }
         if (isNotNone(thiz.previousBlock)) {
             if (thiz.isSameSchema(thiz.previousBlock)) {
                 if (thiz.isCode()) {
@@ -665,9 +673,6 @@
         var thiz = this;
         thiz.style = style;
         if (isNotNone(thiz.style)) {
-            thiz.style.setPaddingLeft('0px');
-            thiz.style.setPaddingRight('0px');
-
             thiz.ele.prop('style', thiz.style.eleStyle(thiz.context));
 
             thiz.borderEle.prop('style', thiz.style.borderStyle(thiz.context));
@@ -683,7 +688,7 @@
             }
 
             thiz.actionsEle.css({
-                top: thiz.style.getBoxBaseLineTop()
+                top: thiz.style.getActionsTop()
             });
 
             if (thiz.isTask()) {
@@ -759,12 +764,20 @@
         // thiz.shrinkLink();
     };
 
-    Block.prototype.focus = function (keepCursor) {
+    Block.prototype.focus = function (keepCursor, toStart) {
         var thiz = this;
         var resetCursor = !isTrue(keepCursor);
 
-        if (resetCursor
-            && !thiz.isGrid()) {
+        if (thiz.isGrid()) {
+            return;
+        }
+
+        if (isTrue(toStart)) {
+            setTimeout(function () {
+                thiz.contentEle.focus();
+                setCursorToStart(thiz.contentEle[0]);
+            }, 1);
+        } else if (resetCursor) {
             setTimeout(function () {
                 thiz.contentEle.focus();
                 setCursorToEnd(thiz.contentEle[0]);

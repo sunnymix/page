@@ -16,8 +16,8 @@
 
         thiz.paddingTop = '0px';
         thiz.paddingBottom = '6px';
-        thiz.paddingLeft = '10px';
-        thiz.paddingRight = '10px';
+        thiz.paddingLeft = '0px';
+        thiz.paddingRight = '0px';
 
         thiz.borderTop = '0px solid transparent';
         thiz.borderBottom = '0px solid transparent';
@@ -37,8 +37,8 @@
         // content override
         thiz.contentPaddingTop = '0px';
         thiz.contentPaddingBottom = '0px';
-        thiz.contentPaddingLeft = '2px';
-        thiz.contentPaddingRight = '2px';
+        thiz.contentPaddingLeft = '0px';
+        thiz.contentPaddingRight = '0px';
 
         thiz.contentBorderTop = '0px solid transparent';
         thiz.contentBorderBottom = '0px solid transparent';
@@ -47,9 +47,8 @@
         thiz.contentMarginRight = '0px';
 
         // const
-        thiz.taskWidth = 20;
-        thiz.priorityWidth = 25;
-        thiz.linkWidth = 25;
+        thiz.taskWidth = 22;
+        thiz.priorityWidth = 24;
 
         thiz.initStyle();
     };
@@ -371,6 +370,14 @@
         ) + 'px';
     };
 
+    Style.prototype.getActionsTop = function () {
+        var thiz = this;
+        return (
+            parsePxToNum(thiz.getBoxBaseLineTop())
+            - 3
+        ) + 'px';
+    };
+
     Style.prototype.getPriorityColor = function () {
         var thiz = this;
         var priority = thiz.block.getPriorityData();
@@ -487,7 +494,7 @@
             .setBorderBottom('1px', 'solid', '#e1e4e8')
             .setBorderLeft('1px', 'solid', '#e1e4e8')
             .setBorderRight('1px', 'solid', '#e1e4e8')
-            .setBorderRadius('2px')
+            .setBorderRadius('1px')
             .setContentPaddingLeft('5px')
             .setContentPaddingRight('5px')
             .setColor('#24292e')

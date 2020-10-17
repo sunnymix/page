@@ -338,6 +338,10 @@
         setCursor(ele, ele.innerText.length);
     };
 
+    window.setCursorToStart = function (ele) {
+        setCursor(ele, 0);
+    };
+
     window.setCursor = function (ele, position) {
         var range = document.createRange();
         if (ele && ele.firstChild) {
