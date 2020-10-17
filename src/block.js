@@ -248,8 +248,8 @@
             position: 'absolute',
             top: 0,
             bottom: 0,
-            left: '-25px',
-            right: '-25px',
+            left: '-20px',
+            right: '-20px',
         });
     };
 
@@ -538,10 +538,6 @@
 
     Block.prototype.initActions = function () {
         var thiz = this;
-        if (thiz.readonly || thiz.isLock) {
-            thiz.actionsEle.remove();
-            return;
-        }
         thiz.opBtn = new Button('img/ellipsis-v-solid.png', null, 20, 16, 20, null);
         thiz.opBtn.hide();
         thiz.opBtn.appendTo(thiz.actionsEle);
@@ -624,7 +620,16 @@
                 thiz.schemaEle.hide();
             }
 
-            thiz.actionsEle.css({
+            if (thiz.readonly || thiz.isLock) {
+                thiz.actionsEle.remove();
+            } else {
+                thiz.opBtn.style({
+                    position: 'absolute',
+                    top: thiz.style.getActionsTop()
+                });
+            }
+
+            thiz.opBtn.ele.css({
                 top: thiz.style.getActionsTop()
             });
 

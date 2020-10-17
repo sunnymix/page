@@ -37,8 +37,8 @@
         // content override
         thiz.contentPaddingTop = '0px';
         thiz.contentPaddingBottom = '0px';
-        thiz.contentPaddingLeft = '0px';
-        thiz.contentPaddingRight = '0px';
+        thiz.contentPaddingLeft = '5px';
+        thiz.contentPaddingRight = '5px';
 
         thiz.contentBorderTop = '0px solid transparent';
         thiz.contentBorderBottom = '0px solid transparent';
@@ -280,6 +280,7 @@
         var thiz = this;
         return (
             parsePxToNum(thiz.contentMarginLeft)
+            + parsePxToNum(thiz.contentPaddingLeft)
         ) + 'px';
     };
 
@@ -421,6 +422,7 @@
         var thiz = this;
         return (
             parsePxToNum(thiz.getLinkLeft())
+            - parsePxToNum(thiz.contentPaddingLeft)
         ) + 'px';
     };
 

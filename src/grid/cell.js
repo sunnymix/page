@@ -20,7 +20,7 @@
             id: '.grid-cell',
             position: 'relative',
             border: '1px solid #e1e4e8',
-            padding: '0 25px',
+            padding: '0 20px',
             verticalAlign: 'middle',
         });
 

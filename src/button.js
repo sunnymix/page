@@ -193,5 +193,10 @@
         return thiz;
     };
 
+    Button.prototype.style = function (style) {
+        var thiz = this;
+        thiz.ele.css(style);
+    };
+
     window.Button = Button;
 })();
