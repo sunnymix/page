@@ -250,6 +250,7 @@
     Block.prototype.initSelectorEle = function () {
         var thiz = this;
         thiz.selector = new Check();
+        thiz.selector.setPrimaryColor('#28a745');
         thiz.selector.addClass('block-selector').style({
             position: 'absolute',
             left: 0,

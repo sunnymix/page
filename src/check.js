@@ -84,6 +84,22 @@
         });
     };
 
+    Check.prototype.setPrimaryColor = function (color) {
+        var thiz = this;
+        thiz.offEle.css({
+            borderColor: color,
+        });
+
+        thiz.onEle.css({
+            borderColor: color,
+            backgroundColor: color,
+        });
+
+        thiz.onBgEle.css({
+            backgroundColor: color,
+        });
+    };
+
     Check.prototype.show = function () {
         var thiz = this;
         thiz.ele.show();
