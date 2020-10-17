@@ -119,5 +119,13 @@
         thiz.ele.remove();
     };
 
+    Row.prototype.selectStart = function () {
+        var thiz = this;
+        for (var cellIndex = 0; cellIndex < thiz.cells.length; cellIndex++) {
+            var cell = thiz.cells[cellIndex];
+            cell.selectStart();
+        }
+    };
+
     window.Row = Row;
 })();

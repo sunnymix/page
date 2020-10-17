@@ -149,6 +149,7 @@
         'boxShadow',
         'verticalAlign',
         'overflow', 'overflowX', 'overflowY',
+        'userSelect',
     ];
 
     window.Ele = Ele;

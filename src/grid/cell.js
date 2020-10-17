@@ -104,5 +104,10 @@
         thiz.ele.remove();
     };
 
+    Cell.prototype.selectStart = function () {
+        var thiz = this;
+        thiz.writer.selectStart();
+    };
+
     window.Cell = Cell;
 })();

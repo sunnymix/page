@@ -129,5 +129,11 @@
         return thiz;
     };
 
+    Check.prototype.addClass = function (classes) {
+        var thiz = this;
+        thiz.ele.addClass(classes);
+        return thiz;
+    }
+
     window.Check = Check;
 })();

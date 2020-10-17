@@ -123,7 +123,7 @@
         });
 
         newBlock.bind('select.start', function (block) {
-            thiz.selectStart(block);
+            thiz.handleSelectStart(block);
         });
 
         thiz.addBlock(newBlock, previousBlock);
@@ -131,14 +131,31 @@
         return newBlock;
     };
 
-    Writer.prototype.selectStart = function (startBlock) {
+    Writer.prototype.handleSelectStart = function (startBlock) {
         var thiz = this;
         thiz.selecting = true;
+        startBlock.select(true);
+        thiz.selectStart();
+
+        new DragSelect({
+            selectables: document.querySelectorAll('.block-selector'),
+            callback: function (sourceEleArray) {
+                if (sourceEleArray.length > 1) {
+                    for (var i in sourceEleArray) {
+                        var sourceEle = sourceEleArray[i];
+                        $(sourceEle).trigger('mousedown');
+                    }   
+                }
+            }
+        });
+    };
+
+    Writer.prototype.selectStart = function () {
+        var thiz = this;
         for (var i in thiz.blocks) {
             var block = thiz.blocks[i];
             block.selectStart();
         }
-        startBlock.select(true);
     };
 
     Writer.prototype.handlePasteEvent = function (block, e) {

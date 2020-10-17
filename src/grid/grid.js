@@ -350,5 +350,14 @@
         }
     };
 
+    Grid.prototype.selectStart = function () {
+        var thiz = this;
+
+        for (var rowIndex = 0; rowIndex < thiz.rows.length; rowIndex++) {
+            var row = thiz.rows[rowIndex];
+            row.selectStart();
+        }
+    };
+
     window.Grid = Grid;
 })();

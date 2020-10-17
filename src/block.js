@@ -30,15 +30,11 @@
             position: 'relative'
         });
 
-        ////// block (schema, actions, box, attach) //////
+        ////// block //////
 
         // schema
         thiz.initSchemaEle(initData);
         thiz.ele.append(thiz.schemaEle);
-
-        // actions
-        thiz.initActionsEle(initData);
-        thiz.ele.append(thiz.actionsEle);
 
         // box
         thiz.initBoxEle(initData);
@@ -47,6 +43,10 @@
         // attach
         thiz.initAttachEle();
         thiz.ele.append(thiz.attachEle);
+
+        // actions
+        thiz.initActionsEle(initData);
+        thiz.ele.append(thiz.actionsEle);
 
         ////// data //////
 
@@ -81,6 +81,7 @@
             color: '#dddddd',
             body: initData.schema,
             fontSize: Style.SmallFontSize,
+            userSelect: 'none',
         });
     };
 
@@ -221,23 +222,6 @@
             left: '5px',
         });
         thiz.linkIconEle.append(stringEle);
-
-        var arrowEle = new Ele('div', {
-            id: '.block-link-arrow',
-            position: 'absolute',
-            width: '4px',
-            height: '4px',
-            left: '4px',
-            top: '5px',
-            borderStyle: 'solid',
-            borderColor: '#ffffff',
-            borderWidth: '1px 1px 0 0',
-            marginLeft: '-1px',
-            transform: 'rotate(45deg)',
-            borderRadius: '1px',
-        });
-        // thiz.linkIconEle.append(arrowEle);
-
     };
 
     Block.prototype.initActionsEle = function () {
@@ -248,7 +232,7 @@
             top: 0,
             bottom: 0,
             left: '-20px',
-            right: '-20px',
+            width: '20px',
         });
 
         // selector
@@ -266,7 +250,7 @@
     Block.prototype.initSelectorEle = function () {
         var thiz = this;
         thiz.selector = new Check();
-        thiz.selector.style({
+        thiz.selector.addClass('block-selector').style({
             position: 'absolute',
             left: 0,
             top: 0
@@ -284,8 +268,25 @@
     Block.prototype.selectStart = function () {
         var thiz = this;
         thiz.selecting = true;
-        thiz.opBtn.hide();
-        thiz.selector.show();
+        thiz.disableEdit();
+        if (thiz.isGrid()) {
+            thiz.grid.selectStart();
+        }
+    };
+
+    Block.prototype.disableEdit = function () {
+        var thiz = this;
+
+        if (!thiz.isGridContext()) {
+            thiz.opBtn.hide();
+            thiz.selector.show();
+        }
+
+        thiz.contentEle
+            .prop('contenteditable', false)
+            .css({
+                userSelect: 'none'
+            });
     };
 
     Block.prototype.isSelecting = function () {
