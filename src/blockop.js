@@ -35,6 +35,13 @@
     Blockop.prototype.initActions = function () {
         var thiz = this;
         thiz.actionsEle = thiz.ele.find('.blockop-actions');
+
+        var selectorBtn = new Button('img/check-circle.png', null, 36, 36, 18, 18);
+        selectorBtn.border('0 1px 0 0').float('left');
+        selectorBtn.appendTo(thiz.actionsEle);
+        selectorBtn.click(function (e, btn) {
+            thiz.select();
+        });
     
         var priority1Btn = new Button(null, 'P1', 36, 36);
         priority1Btn.border('0 1px 0 0').float('left');
@@ -161,6 +168,12 @@
     Blockop.prototype.toggleHighlight = function (light) {
         var thiz = this;
         thiz.block.toggleHighlight(light);
+        thiz.hide();
+    };
+
+    Blockop.prototype.select = function () {
+        var thiz = this;
+        thiz.block.trigger('select.start', thiz.block);
         thiz.hide();
     };
     

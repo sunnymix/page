@@ -55,9 +55,9 @@
         thiz.setAttach(initData.attach);
 
         thiz.initActions();
-        thiz.initTask();
 
         thiz.setContentData(initData.text);
+        thiz.setCheckData(initData.check);
         thiz.setPriorityData(initData.priority);
         thiz.setLinkData(initData.link);
         thiz.setHighlightData(initData.highlight);
@@ -81,7 +81,6 @@
             color: '#dddddd',
             body: initData.schema,
             fontSize: Style.SmallFontSize,
-            // transform: 'rotate(90deg)',
         });
     };
 
@@ -251,6 +250,52 @@
             left: '-20px',
             right: '-20px',
         });
+
+        // selector
+        thiz.initSelectorEle();
+        thiz.actionsEle.append(thiz.selector.ele);
+    };
+
+    Block.prototype.actionsVisible = function () {
+        var thiz = this;
+        var isEdit = isNotTrue(thiz.readonly);
+        var isNotLock = isNotTrue(thiz.isLock);
+        return isEdit && isNotLock;
+    };
+
+    Block.prototype.initSelectorEle = function () {
+        var thiz = this;
+        thiz.selector = new Check();
+        thiz.selector.style({
+            position: 'absolute',
+            left: 0,
+            top: 0
+        });
+        thiz.selector.hide();
+    };
+
+    Block.prototype.selectorVisible = function () {
+        var thiz = this;
+        var isEdit = isNotTrue(thiz.readonly);
+        var isNotInGrid = !thiz.isGridContext();
+        return isEdit && isNotInGrid;
+    };
+
+    Block.prototype.selectStart = function () {
+        var thiz = this;
+        thiz.selecting = true;
+        thiz.opBtn.hide();
+        thiz.selector.show();
+    };
+
+    Block.prototype.isSelecting = function () {
+        var thiz = this;
+        return isTrue(thiz.selecting);
+    };
+
+    Block.prototype.select = function (isSelect) {
+        var thiz = this;
+        thiz.selector.check(isSelect);
     };
 
     Block.prototype.initTaskEle = function () {
@@ -543,9 +588,13 @@
         thiz.opBtn.appendTo(thiz.actionsEle);
 
         thiz.ele.on('mouseenter', function (e) {
-            thiz.opBtn.show();
+            if (!thiz.isSelecting()) {
+                thiz.opBtn.show();
+            }
         }).on('mouseleave', function (e) {
-            thiz.opBtn.hide();
+            if (!thiz.isSelecting()) {
+                thiz.opBtn.hide();
+            }
         });
 
         thiz.opBtn.click(function (e) {
@@ -557,15 +606,6 @@
         var thiz = this;
         var url = prompt('add attachement ...', thiz.getAttachData());
         thiz.setAttach(url);
-    };
-
-    Block.prototype.initTask = function () {
-        var thiz = this;
-        thiz.task.ele.on('mousedown', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            thiz.toggleCheck();
-        });
     };
 
     Block.prototype.reload = function () {
@@ -612,35 +652,43 @@
 
             thiz.contentEle.prop('style', thiz.style.contentStyle(thiz.context));
 
-            if (thiz.schemaVisible()) {
-                thiz.schemaEle.css({
-                    top: thiz.style.getBoxBaseLineTop()
-                }).show();
-            } else {
-                thiz.schemaEle.hide();
-            }
-
-            if (thiz.readonly || thiz.isLock) {
+            // ------> editor components ------>
+            if (thiz.readonly) {
                 thiz.actionsEle.remove();
+                thiz.schemaEle.remove();
             } else {
+                // actions
+                if (thiz.actionsVisible()) {
+                    thiz.actionsEle.show();
+                } else {
+                    thiz.actionsEle.hide();
+                }
                 thiz.opBtn.style({
                     position: 'absolute',
                     top: thiz.style.getActionsTop()
                 });
+                // schema
+                if (thiz.schemaVisible()) {
+                    thiz.schemaEle.css({
+                        top: thiz.style.getBoxBaseLineTop()
+                    }).show();
+                } else {
+                    thiz.schemaEle.hide();
+                }
+                // selector
+                thiz.selector.style({
+                    top: thiz.style.getBoxBaseLineTop()
+                });
             }
-
-            thiz.opBtn.ele.css({
-                top: thiz.style.getActionsTop()
-            });
+            // <------ editor components <------
 
             if (thiz.isTask()) {
-                thiz.task.ele.css({
+                thiz.task.show().style({
                     top: thiz.style.getBaseLineTop(),
                     left: thiz.style.getTaskLeft()
-                }).show();
-                thiz.task.check(+thiz.check > 0);
+                });
             } else {
-                thiz.task.ele.hide();
+                thiz.task.hide();
             }
 
             thiz.tagsEle.css({
@@ -853,28 +901,19 @@
     };
 
     Block.prototype.getCheckData = function () {
-        return this.isCheck() ? 1 : 0;
+        var thiz = this;
+        return thiz.isCheck() ? 1 : 0;
     };
 
     Block.prototype.isCheck = function () {
         var thiz = this;
-        return thiz.check > 0;
-    };
-
-    Block.prototype.toggleCheck = function () {
-        var thiz = this;
-        var isCheck = thiz.isCheck();
-        thiz.setCheckData(!isCheck);
-        thiz.loadStyle();
+        return thiz.task.isCheck();
     };
 
     Block.prototype.setCheckData = function (check) {
         var thiz = this;
-        thiz.check = check;
-        // fixme: uniform style render
-        if (thiz.isTask()) {
-            thiz.task.check(+check > 0);
-        }
+        var isCheck = check > 0 || isTrue(check);
+        thiz.task.check(isCheck);
     };
 
     Block.prototype.defaultData = function () {

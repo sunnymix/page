@@ -122,9 +122,23 @@
             thiz.handlePasteEvent(block, e);
         });
 
+        newBlock.bind('select.start', function (block) {
+            thiz.selectStart(block);
+        });
+
         thiz.addBlock(newBlock, previousBlock);
 
         return newBlock;
+    };
+
+    Writer.prototype.selectStart = function (startBlock) {
+        var thiz = this;
+        thiz.selecting = true;
+        for (var i in thiz.blocks) {
+            var block = thiz.blocks[i];
+            block.selectStart();
+        }
+        startBlock.select(true);
     };
 
     Writer.prototype.handlePasteEvent = function (block, e) {

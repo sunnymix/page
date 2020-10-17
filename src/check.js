@@ -7,6 +7,7 @@
     Check.prototype.init = function () {
         var thiz = this;
         thiz.initEle();
+        thiz.initBind();
         initEvent(thiz, Check.prototype);
     };
 
@@ -24,13 +25,12 @@
         thiz.offEle = new Ele('div', {
             id: '.check-off',
             position: 'absolute',
-            display: 'none',
             left: 0,
             right: 0,
             top: 0,
             bottom: 0,
             backgroundColor: '#ffffff',
-            border: '1px solid #aaaaaa',
+            border: '1px solid #000000',
             borderRadius: '50%',
         });
         thiz.ele.append(thiz.offEle);
@@ -43,8 +43,8 @@
             right: 0,
             top: 0,
             bottom: 0,
-            backgroundColor: '#aaaaaa',
-            border: '1px solid #aaaaaa',
+            backgroundColor: '#000000',
+            border: '1px solid #000000',
             borderRadius: '50%',
         });
         thiz.ele.append(thiz.onEle);
@@ -57,7 +57,7 @@
             left: '1px',
             top: '1px',
             borderRadius: '50%',
-            backgroundColor: '#aaaaaa',
+            backgroundColor: '#000000',
         });
         thiz.onEle.append(thiz.onBgEle);
 
@@ -70,25 +70,36 @@
             borderBottom: '1px solid #ffffff',
             width: '5px',
             height: '2px',
-            transform: 'rotate(-50deg)',
+            transform: 'rotate(-45deg)',
         });
         thiz.onEle.append(thiz.onDrawEle);
+    };
+
+    Check.prototype.initBind = function () {
+        var thiz = this;
+        thiz.ele.on('mousedown', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            thiz.toggleCheck();
+        });
     };
 
     Check.prototype.show = function () {
         var thiz = this;
         thiz.ele.show();
+        return thiz;
     };
 
     Check.prototype.hide = function () {
         var thiz = this;
         thiz.ele.hide();
+        return thiz;
     };
 
     Check.prototype.check = function (isCheck) {
         var thiz = this;
         if (isNone(isCheck)) {
-            return thiz.onEle.is(':visible');
+            return thiz.isCheck();
         }
         if (isTrue(isCheck)) {
             thiz.onEle.show();
@@ -97,6 +108,25 @@
             thiz.onEle.hide();
             thiz.offEle.show();
         }
+        return thiz;
+    };
+
+    Check.prototype.isCheck = function () {
+        var thiz = this;
+        return thiz.onEle.is(':visible');
+    };
+
+    Check.prototype.toggleCheck = function () {
+        var thiz = this;
+        var isCheck = !thiz.isCheck();
+        thiz.check(isCheck);
+        thiz.trigger('check', isCheck);
+    };
+
+    Check.prototype.style = function (style) {
+        var thiz = this;
+        thiz.ele.css(style);
+        return thiz;
     };
 
     window.Check = Check;

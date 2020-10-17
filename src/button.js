@@ -164,11 +164,13 @@
     Button.prototype.show = function () {
         var thiz = this;
         thiz.ele.show();
+        return thiz;
     };
 
     Button.prototype.hide = function () {
         var thiz = this;
         thiz.ele.hide();
+        return thiz;
     };
 
     Button.prototype.border = function (width) {
@@ -196,6 +198,7 @@
     Button.prototype.style = function (style) {
         var thiz = this;
         thiz.ele.css(style);
+        return thiz;
     };
 
     window.Button = Button;
