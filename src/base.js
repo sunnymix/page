@@ -345,12 +345,13 @@
     window.setCursor = function (ele, position) {
         var range = document.createRange();
         var cursorEle = ele.innerText.length > 0 ? ele.firstChild : ele;
-        if (ele && ele.firstChild) {
+        if (cursorEle) {
             range.setStart(cursorEle, position);
             range.collapse(true);
 
             var sel = window.getSelection();
             sel.removeAllRanges();
+
             sel.addRange(range);
         }
     };

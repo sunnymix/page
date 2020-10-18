@@ -167,8 +167,12 @@
         return this;
     };
 
-    Style.prototype.setBorderRadius = function (borderRadius) {
-        this.borderRadius = borderRadius;
+    Style.prototype.setBorderRadius = function () {
+        var thiz = this;
+        var args = parseFuncArgsToArray(arguments);
+        if (args.length > 0) {
+            thiz.borderRadius = args.join(' ');
+        }
         return this;
     };
 
@@ -503,16 +507,14 @@
     Style.prototype.initCode = function () {
         this
             .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
-            .setBackgroundColor('#ffffff')
+            .setBackgroundColor('#f6f6f6')
             .setMarginLeft('10px')
             .setBorderTop('1px', 'solid', '#e1e4e8')
             .setBorderBottom('1px', 'solid', '#e1e4e8')
             .setBorderLeft('1px', 'solid', '#e1e4e8')
             .setBorderRight('1px', 'solid', '#e1e4e8')
-            .setBorderRadius('1px')
             .setContentPaddingLeft('5px')
             .setContentPaddingRight('5px')
-            .setColor('#24292e')
             ;
     };
 
