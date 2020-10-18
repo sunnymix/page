@@ -346,13 +346,17 @@
         var range = document.createRange();
         var cursorEle = ele.innerText.length > 0 ? ele.firstChild : ele;
         if (cursorEle) {
-            range.setStart(cursorEle, position);
-            range.collapse(true);
+            try {
+                range.setStart(cursorEle, position);
+                range.collapse(true);
 
-            var sel = window.getSelection();
-            sel.removeAllRanges();
+                var sel = window.getSelection();
+                sel.removeAllRanges();
 
-            sel.addRange(range);
+                sel.addRange(range);
+            } catch (err) {
+                console.warn(err);
+            }
         }
     };
 

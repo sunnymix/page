@@ -16,7 +16,6 @@
     Writer.prototype.init = function () {
         var thiz = this;
         initEvent(thiz, Writer.prototype);
-        thiz.focus();
     };
 
     Writer.prototype.type = ELE_TYPE.WRITER;
