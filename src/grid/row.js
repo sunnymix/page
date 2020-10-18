@@ -127,5 +127,13 @@
         }
     };
 
+    Row.prototype.selectStop = function () {
+        var thiz = this;
+        for (var cellIndex = 0; cellIndex < thiz.cells.length; cellIndex++) {
+            var cell = thiz.cells[cellIndex];
+            cell.selectStop();
+        }
+    };
+
     window.Row = Row;
 })();

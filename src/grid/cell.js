@@ -109,5 +109,10 @@
         thiz.writer.selectStart();
     };
 
+    Cell.prototype.selectStop = function () {
+        var thiz = this;
+        thiz.writer.selectStop();
+    };
+
     window.Cell = Cell;
 })();

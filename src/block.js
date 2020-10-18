@@ -270,8 +270,19 @@
         var thiz = this;
         thiz.selecting = true;
         thiz.disableEdit();
+        thiz.select(false);
         if (thiz.isGrid()) {
             thiz.grid.selectStart();
+        }
+    };
+
+    Block.prototype.selectStop = function () {
+        var thiz = this;
+        thiz.selecting = false;
+        thiz.enableEdit();
+        thiz.select(false);
+        if (thiz.isGrid()) {
+            thiz.grid.selectStop();
         }
     };
 
@@ -283,11 +294,30 @@
             thiz.selector.show();
         }
 
-        thiz.contentEle
-            .prop('contenteditable', false)
-            .css({
-                userSelect: 'none'
-            });
+        if (!thiz.isGrid()) {
+            thiz.contentEle
+                .prop('contenteditable', false)
+                .css({
+                    userSelect: 'none'
+                });
+        }
+    };
+
+    Block.prototype.enableEdit = function () {
+        var thiz = this;
+
+        if (!thiz.isGridContext()) {
+            thiz.opBtn.hide();
+            thiz.selector.hide();
+        }
+
+        if (!thiz.isGrid()) {
+            thiz.contentEle
+                .prop('contenteditable', true)
+                .css({
+                    userSelect: 'auto'
+                });
+        }
     };
 
     Block.prototype.isSelecting = function () {
@@ -297,7 +327,15 @@
 
     Block.prototype.select = function (isSelect) {
         var thiz = this;
+        if (isNone(isSelect)) {
+            return isSelect();
+        }
         thiz.selector.check(isSelect);
+    };
+
+    Block.prototype.isSelect = function () {
+        var thiz = this;
+        return thiz.selector.check();
     };
 
     Block.prototype.initTaskEle = function () {

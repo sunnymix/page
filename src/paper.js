@@ -72,6 +72,7 @@
         thiz.initTitle();
         thiz.initWriter();
         thiz.initBlockop();
+        thiz.initSelectAction();
         thiz.initAlert();
         thiz.initBind();
     };
@@ -92,6 +93,9 @@
         thiz.writer.bind('blockop', function (block, writer) {
             thiz.showBlockop(block);
         });
+        thiz.writer.bind('select.start', function (startBlock, writer) {
+            thiz.showSelectAction();
+        });
     };
 
     Paper.prototype.initBlockop = function () {
@@ -103,6 +107,50 @@
         var thiz = this;
         thiz.alert = new Alert();
     };
+
+    Paper.prototype.initSelectAction = function () {
+        var thiz = this;
+        thiz.selectAction = new Action();
+
+        var copyBtn = new Button('img/clone.png', null, 36, 36, 18, 18);
+        copyBtn.border('0 1px 0 0').float('left');
+        copyBtn.click(function (e, btn) {
+            thiz.copy();
+        });
+        thiz.selectAction.append(copyBtn.ele);
+
+        var closeSelectBtn = new Button('img/times-solid.png', null, 36, 36, 18, 18);
+        closeSelectBtn.border('0 0px 0 0').float('left');
+        closeSelectBtn.click(function (e, btn) {
+            thiz.closeSelect();
+        });
+        thiz.selectAction.append(closeSelectBtn.ele);
+
+        new Clearfix(closeSelectBtn.ele);
+    };
+
+    Paper.prototype.showSelectAction = function () {
+        var thiz = this;
+        thiz.selectAction.show();
+    };
+
+    Paper.prototype.closeSelect = function () {
+        var thiz = this;
+        thiz.selectAction.hide();
+        setTimeout(function () {
+            thiz.writer.selectStop();
+        }, 50);
+    };
+
+    Paper.prototype.copy = function () {
+        var thiz = this;
+        
+        var selectBlockArray = thiz.writer.getSelectBlocks();
+        var exportRes = new MarkdownExport().parseBlocks(selectBlockArray);
+        thiz.selectAction.copy(exportRes.join(''));
+
+        thiz.closeSelect();
+    };    
 
     Paper.prototype.initBind = function () {
         var thiz = this;

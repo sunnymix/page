@@ -134,8 +134,8 @@
     Writer.prototype.handleSelectStart = function (startBlock) {
         var thiz = this;
         thiz.selecting = true;
-        startBlock.select(true);
         thiz.selectStart();
+        startBlock.select(true);
 
         new DragSelect({
             selectables: document.querySelectorAll('.block-selector'),
@@ -148,6 +148,8 @@
                 }
             }
         });
+
+        thiz.trigger('select.start', startBlock, thiz);
     };
 
     Writer.prototype.selectStart = function () {
@@ -156,6 +158,27 @@
             var block = thiz.blocks[i];
             block.selectStart();
         }
+    };
+
+    Writer.prototype.getSelectBlocks = function () {
+        var thiz = this;
+        var selectBlockArray = [];
+        for (var i in thiz.blocks) {
+            var block = thiz.blocks[i];
+            if (block.isSelect()) {
+                selectBlockArray.push(block);
+            }
+        }
+        return selectBlockArray;
+    };
+
+    Writer.prototype.selectStop = function () {
+        var thiz = this;
+        for (var i in thiz.blocks) {
+            var block = thiz.blocks[i];
+            block.selectStop();
+        }
+        // todo remove ds when select stop
     };
 
     Writer.prototype.handlePasteEvent = function (block, e) {
