@@ -7,58 +7,69 @@
         thiz.paddingVertical = Style.Paper.paddingY;
         thiz.maxWidth = thiz.fullscreen ? '100%' : '820px';
 
-        thiz.ele = $(
-            [
-                '<div',
-                '    class="paper"',
-                '    style="',
-                '        max-width: ' + thiz.maxWidth + ';',
-                '        border: 1px solid #f9f9f9;',
-                '        border-radius: 0px;',
-                '        margin: 0 auto;',
-                '        position: relative;',
-                '        background-color: #ffffff;',
-                '    "',
-                '>',
-                '    <div',
-                '        class="paper-box"',
-                '        style="',
-                '            border: 1px solid #d0d0d0;',
-                '            border-radius: 0px;',
-                '            padding: ' + thiz.paddingVertical + ' ' + thiz.paddingHorizontal + ';',
-                '            background-color: #ffffff;',
-                '        "',
-                '    >',
-                '        <div',
-                '            class="paper-title"',
-                '            style="',
-                '                position: absolute;',
-                '                left: 60px;',
-                '                right: 60px;',
-                '                top: 10px;',
-                '                z-index: 1;',
-                '                ;',
-                '            "',
-                '        ></div>',
-                '        <div ',
-                '            class="paper-body"',
-                '            style="',
-                '            min-height: 800px;',
-                '            "',
-                '        >',
-                '            <div',
-                '                class="paper-writer"',
-                '                style="',
-                '                "',
-                '            ></div>',
-                '        </div>',
-                '    </div>',
-                '</div>'
-            ].join('')
-        );
+        thiz.ele = new Ele('div', {
+            id: '.paper',
+            position: 'relative',
+            zIndex: 1,
+            padding: '20px',
+        });
+
+        thiz.underEle = new Ele('div', {
+            id: '.paper-under',
+            position: 'absolute',
+        });
+        thiz.ele.append(thiz.underEle);
+
+        thiz.layEle = new Ele('div', {
+            id: '.paper-lay',
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            backgroundColor: '#ffffff',
+        });
+        thiz.ele.append(thiz.layEle);
+
+        thiz.borderEle = new Ele('div', {
+            id: '.paper-border',
+            position: 'relative',
+            maxWidth: thiz.maxWidth,
+            border: '1px solid #f9f9f9',
+            margin: '0 auto',
+            backgroundColor: '#ffffff',
+        });
+        thiz.ele.append(thiz.borderEle);
+
+        thiz.boxEle = new Ele('div', {
+            id: '.paper-box',
+            border: '1px solid #d0d0d0',
+            padding: thiz.paddingVertical + ' ' + thiz.paddingHorizontal,
+            backgroundColor: '#ffffff',
+        });
+        thiz.borderEle.append(thiz.boxEle);
+
+        thiz.titleEle = new Ele('div', {
+            id: '.paper-title',
+            position: 'absolute',
+            left: '60px',
+            top: '10px',
+            zIndex: 1,
+        });
+        thiz.boxEle.append(thiz.titleEle);
+
+        thiz.bodyEle = new Ele('div', {
+            id: '.paper-body',
+            minHeight: '800px'
+        });
+        thiz.boxEle.append(thiz.bodyEle);
+
+        thiz.writerEle = new Ele('div', {
+            id: '.paper-writer',
+        });
+        thiz.bodyEle.append(thiz.writerEle);
+
         $(p).replaceWith(thiz.ele);
-        thiz.boxEle = thiz.ele.find('.paper-box');
-        thiz.bodyEle = thiz.ele.find('.paper-body');
 
         thiz.getPid();
         thiz.init();
@@ -88,7 +99,6 @@
 
     Paper.prototype.initWriter = function () {
         var thiz = this;
-        thiz.writerEle = thiz.ele.find('.paper-writer');
         thiz.writer = new Writer(thiz.writerEle, thiz.readonly);
         thiz.writer.bind('blockop', function (block, writer) {
             thiz.showBlockop(block);
@@ -144,13 +154,14 @@
 
     Paper.prototype.copy = function () {
         var thiz = this;
-        
+
         var selectBlockArray = thiz.writer.getSelectBlocks();
-        var exportRes = new MarkdownExport().parseBlocks(selectBlockArray);
-        thiz.selectAction.copy(exportRes.join(''));
+        var exportRes = new MarkdownExport().parseBlocks(selectBlockArray).join('');
+        console.log(exportRes);
+        thiz.selectAction.copy(exportRes);
 
         thiz.closeSelect();
-    };    
+    };
 
     Paper.prototype.initBind = function () {
         var thiz = this;
@@ -299,7 +310,7 @@
     Paper.prototype.addToolbar = function (toolbar) {
         var thiz = this;
         thiz.toolbar = toolbar;
-        thiz.ele.append(thiz.toolbar.ele);
+        thiz.boxEle.append(thiz.toolbar.ele);
     };
 
     Paper.prototype.getHtmlData = function () {

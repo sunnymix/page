@@ -571,7 +571,7 @@
             '    outline: none;',
             '}',
             'body {',
-            '    padding: 20px;',
+            // '    padding: 20px;',
             '}',
             '@font-face {',
             '    font-family: Code;',
