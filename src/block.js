@@ -655,36 +655,34 @@
 
     Block.prototype.loadStyle = function () {
         var thiz = this;
-        var style = new Style(thiz);
-        if (isNotNone(thiz.previousBlock)) {
-            if (thiz.isSameSchema(thiz.previousBlock)) {
-                if (thiz.isCode()) {
-                    style.setBorderTop(0);
-                    style.setBorderRadius(['0px', '0px', style.borderRadius, style.borderRadius].join(' '));
-                    thiz.previousBlock.resetPreviousStyle(thiz);
-                }
-            }
-        }
-        thiz.applyStyle(style);
+        thiz.style = new Style(thiz);
+        thiz.resetStyle();
+        thiz.applyStyle(thiz.style);
     };
 
-    Block.prototype.resetPreviousStyle = function (nextBlock) {
+    Block.prototype.resetStyle = function () {
         var thiz = this;
-        if (isNotNone(nextBlock)
-            && thiz.isSameSchema(nextBlock)) {
-            if (thiz.isCode()) {
-                var style = $.extend({}, thiz.style);
-                style.setBorderBottom(0);
-                style.setBorderRadius([style.borderRadius, style.borderRadius, '0px', '0px'].join(' '));
-                style.setPaddingBottom('0px');
-                thiz.applyStyle(style);
-            }
+        if (thiz.isTitle()) {
+            return;
+        }
+        var curIndex = thiz.writer.getBlockIndex(thiz.id);
+        if (curIndex == 0) {
+            thiz.style
+                .setPaddingTop(thiz.style.paddingBottom);
+        }
+        if (thiz.writer.hasPreviousSibling(thiz)) {
+            thiz.style.setBorderTop('0px');
+        }
+        if (thiz.writer.hasNextSibling(thiz)) {
+            thiz.style
+                .setBorderBottom('0px')
+                .setPaddingBottom('0px')
+                ;
         }
     };
 
-    Block.prototype.applyStyle = function (style) {
+    Block.prototype.applyStyle = function () {
         var thiz = this;
-        thiz.style = style;
         if (isNotNone(thiz.style)) {
             thiz.ele.prop('style', thiz.style.eleStyle(thiz.context));
 

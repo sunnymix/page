@@ -62,8 +62,10 @@
                 thiz.movedownBlock(block);
             } else {
                 var caretRightContent = block.trimCaretContent();
-                newBlock = thiz.createBlock(block, caretRightContent);
-                newBlock.setSchema(thiz.inheritSchema(block.schema));
+                newBlock = thiz.createBlock(block, {
+                    schema: thiz.inheritSchema(block.schema),
+                    text: caretRightContent
+                });
                 newBlock.focus();
             }
         });
@@ -144,7 +146,7 @@
                     for (var i in sourceEleArray) {
                         var sourceEle = sourceEleArray[i];
                         $(sourceEle).trigger('mousedown');
-                    }   
+                    }
                 }
             }
         });
@@ -230,21 +232,82 @@
         return res;
     };
 
-    Writer.prototype.isGridContext = function () {
-        var thiz = this;
-        return thiz.context == SCHEMA.GRID;
-    };
-
     Writer.prototype.addBlock = function (newBlock, previousBlock) {
+        var thiz = this;
         if (isNotNone(previousBlock)) {
-            var previousIdx = this.getBlockIndex(previousBlock.id);
+            var previousIdx = thiz.getBlockIndex(previousBlock.id);
             if (previousIdx >= 0) {
-                this.blocks.splice(previousIdx + 1, 0, newBlock);
+                thiz.blocks.splice(previousIdx + 1, 0, newBlock);
+                thiz.reloadSiblingBlocks(newBlock);
                 return true;
             }
         }
-        this.blocks.push(newBlock);
+        thiz.blocks.push(newBlock);
+        thiz.reloadSiblingBlocks(newBlock);
         return true;
+    };
+
+    Writer.prototype.reloadSiblingBlocks = function (curBlock) {
+        var thiz = this;
+        var siblingBlocks = thiz.findSiblingBlocks(curBlock);
+        thiz.reloadBlocks(siblingBlocks);
+    };
+
+    Writer.prototype.reloadBlocks = function (blocks) {
+        for (var i in blocks) {
+            var block = blocks[i];
+            block.reload();
+        }
+    };
+
+    Writer.prototype.findSiblingBlocks = function (curBlock) {
+        var thiz = this;
+        var curSchema = curBlock.schema;
+        var curIndex = thiz.getBlockIndex(curBlock.id);
+        var siblingBlocks = [];
+        // previus blocks
+        for (var i = curIndex - 1; i >= 0; i--) {
+            var block = thiz.blocks[i];
+            if (block.schema == curSchema) {
+                siblingBlocks.unshift(block);
+            } else {
+                break;
+            }
+        }
+        // curBlock
+        siblingBlocks.push(curBlock);
+        // nextBlocks
+        for (var i = curIndex + 1; i < thiz.blocks.length; i++) {
+            var block = thiz.blocks[i];
+            if (block.schema == curSchema) {
+                siblingBlocks.push(block);
+            } else {
+                break;
+            }
+        }
+        return siblingBlocks;
+    };
+
+    Writer.prototype.hasPreviousSibling = function (curBlock) {
+        var thiz = this;
+        var curIndex = thiz.getBlockIndex(curBlock.id);
+        var hasSameSchema = false;
+        var previusIndex = curIndex - 1;
+        if (previusIndex >= 0 && previusIndex < thiz.blocks.length) {
+            hasSameSchema = curBlock.schema == thiz.blocks[previusIndex].schema;
+        }
+        return hasSameSchema;
+    };
+
+    Writer.prototype.hasNextSibling = function (curBlock) {
+        var thiz = this;
+        var curIndex = thiz.getBlockIndex(curBlock.id);
+        var hasSameSchema = false;
+        var nextIndex = curIndex + 1;
+        if (nextIndex >= 0 && nextIndex < thiz.blocks.length) {
+            hasSameSchema = curBlock.schema == thiz.blocks[nextIndex].schema;
+        }
+        return hasSameSchema;
     };
 
     Writer.prototype.getBlockIndex = function (id) {
@@ -269,8 +332,12 @@
             return;
         }
 
+        var siblingBlocks = thiz.findSiblingBlocks(block);
+
         thiz.blocks.splice(idx, 1);
         block.ele.remove();
+
+        thiz.reloadBlocks(siblingBlocks);
 
         if (isAutoFocus) {
             if (thiz.blocks.length > 0) {
@@ -359,16 +426,13 @@
         if (isNotEmpty(data)) {
             thiz.ele.empty();
             thiz.blocks = [];
-            var curBlock = null;
+            var previousBlock = null;
             for (var i = 0; i < data.length; i++) {
                 var blockData = data[i];
-                var block = thiz.createBlock(curBlock, blockData);
-                curBlock = block;
+                var block = thiz.createBlock(previousBlock, blockData);
+                previousBlock = block;
             }
-            var firstBlock = thiz.blocks[0];
-            if (isNotNone(firstBlock)) {
-                firstBlock.reload();
-            }
+            // reload first block
         }
     };
 

@@ -321,11 +321,7 @@
 
     Style.prototype.getPaddingTop = function () {
         var thiz = this;
-        var paddingTop = parsePxToNum(thiz.paddingTop);
-        if (paddingTop === 0 && thiz.block.isFirstBlock()) {
-            paddingTop = thiz.paddingBottom;
-        }
-        return paddingTop;
+        return thiz.paddingTop;
     };
 
     Style.prototype.getBackgroundColor = function () {
