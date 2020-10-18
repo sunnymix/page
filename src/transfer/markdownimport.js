@@ -20,7 +20,7 @@
 
     BlockDef.prototype.trimText = function () {
         var thiz = this;
-        if ([SCHEMA.H1, SCHEMA.H2, SCHEMA.H3, SCHEMA.QUOTE].includes(thiz.schema)) {
+        if ([SCHEMA.H1, SCHEMA.H2, SCHEMA.H3, SCHEMA.QUOTE, SCHEMA.TASK].includes(thiz.schema)) {
             thiz.text = thiz.text.trimStart();
         }
     };
