@@ -62,7 +62,7 @@
         paddingY: '60px'
     };
 
-    Style.SiblingSchemas = [SCHEMA.CODE];
+    Style.SiblingSchemas = [SCHEMA.CODE, SCHEMA.QUOTE];
 
     Style.isSiblingSchema = function (schema) {
         return Style.SiblingSchemas.includes(schema);
@@ -227,6 +227,13 @@
         return [
             'cursor: text',
             'position: ' + thiz.position,
+        ].join(';');
+    };
+
+    Style.prototype.boxStyle = function (context) {
+        var thiz = this;
+        return [
+            'position: relative',
             'padding-top: ' + thiz.getPaddingTop(),
             'padding-bottom: ' + thiz.paddingBottom,
             'padding-left: ' + thiz.paddingLeft,
@@ -498,7 +505,6 @@
             .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
             .setBackgroundColor('#ffffff')
             .setMarginLeft('10px')
-            .setMarginRight('0px')
             .setBorderTop('1px', 'solid', '#e1e4e8')
             .setBorderBottom('1px', 'solid', '#e1e4e8')
             .setBorderLeft('1px', 'solid', '#e1e4e8')

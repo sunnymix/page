@@ -86,7 +86,7 @@
 
     Block.prototype.schemaVisible = function () {
         var thiz = this;
-        var isHighlight = true; // [SCHEMA.TITLE, SCHEMA.H1, SCHEMA.H2, SCHEMA.H3, SCHEMA.GRID].includes(thiz.schema);
+        var isHighlight = [SCHEMA.TITLE, SCHEMA.H1, SCHEMA.H2, SCHEMA.H3, SCHEMA.GRID].includes(thiz.schema);
         var isEdit = isNotTrue(thiz.readonly);
         var isNotInGrid = !thiz.isGridContext();
         return isHighlight && isEdit && isNotInGrid;
@@ -96,7 +96,6 @@
         var thiz = this;
         thiz.boxEle = new Ele('div', {
             id: '.block-box',
-            position: 'relative',
         });
 
         // background
@@ -688,6 +687,8 @@
         var thiz = this;
         if (isNotNone(thiz.style)) {
             thiz.ele.prop('style', thiz.style.eleStyle(thiz.context));
+
+            thiz.boxEle.prop('style', thiz.style.boxStyle(thiz.context));
 
             thiz.borderEle.prop('style', thiz.style.borderStyle(thiz.context));
 
