@@ -151,6 +151,11 @@
             }
         });
 
+        thiz.dsSelectorEle = $('.ds-selector');
+        thiz.dsSelectorEle.css({
+            zIndex: 1000
+        })
+
         thiz.trigger('select.start', startBlock, thiz);
     };
 
@@ -180,7 +185,9 @@
             var block = thiz.blocks[i];
             block.selectStop();
         }
-        // todo remove ds when select stop
+        
+        thiz.dsSelectorEle.remove();
+        clearSelection();
     };
 
     Writer.prototype.handlePasteEvent = function (block, e) {
@@ -455,6 +462,11 @@
     Writer.prototype.isLastBlock = function (blockId) {
         var thiz = this;
         return thiz.getBlockIndex(blockId) === thiz.blocks.length - 1;
+    };
+
+    Writer.prototype.isGridContext = function () {
+        var thiz = this;
+        return this.context === SCHEMA.GRID;
     };
 
     window.Writer = Writer;

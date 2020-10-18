@@ -19,7 +19,10 @@
         }
 
         if (isNotNone(opt.style)) {
-            ele.css(opt.style);
+            var style = $.extend({
+                userSelect: 'none',
+            }, opt.style);
+            ele.css(style);
         }
 
         if (isNotNone(opt.props)) {

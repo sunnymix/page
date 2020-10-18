@@ -81,7 +81,6 @@
             color: '#dddddd',
             body: initData.schema,
             fontSize: Style.SmallFontSize,
-            userSelect: 'none',
         });
     };
 

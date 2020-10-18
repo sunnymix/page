@@ -355,6 +355,11 @@
         }
     };
 
+    window.clearSelection = function () {
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+    };
+
     window.newEle = function (type, clazz) {
         var ele = $('<' + type + '>');
         if (isNotBlank(clazz)) {

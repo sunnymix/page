@@ -149,7 +149,7 @@
         thiz.selectAction.hide();
         setTimeout(function () {
             thiz.writer.selectStop();
-        }, 50);
+        }, 1);
     };
 
     Paper.prototype.copy = function () {
