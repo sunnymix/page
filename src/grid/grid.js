@@ -8,16 +8,14 @@
 
     Grid.prototype.init = function () {
         var thiz = this;
+        thiz.initEle();
 
         if (thiz.readonly) {
             return;
         }
-
-        initEvent(thiz, Grid.prototype);
-        thiz.initEle();
         thiz.createActions();
         thiz.initBind();
-
+        initEvent(thiz, Grid.prototype);
     };
 
     Grid.prototype.initEle = function () {

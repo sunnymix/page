@@ -62,7 +62,7 @@
         paddingY: '60px'
     };
 
-    Style.SiblingSchemas = [SCHEMA.CODE, SCHEMA.TASK];
+    Style.SiblingSchemas = [SCHEMA.CODE];
 
     Style.isSiblingSchema = function (schema) {
         return Style.SiblingSchemas.includes(schema);
@@ -278,7 +278,7 @@
             'color: ' + thiz.getContentColor(),
             'text-decoration: none',
             // 'float: ' + (thiz.block.isGrid() ? 'none' : 'left'),
-            // 'background-color: ' + thiz.getContentBackgroundColor()
+            'background-color: ' + thiz.getHighlightColor(),
         ].join(';');
     };
 
@@ -332,13 +332,18 @@
 
     Style.prototype.getBackgroundColor = function () {
         var thiz = this;
+        return thiz.backgroundColor;
+    };
+
+    Style.prototype.getHighlightColor = function () {
+        var thiz = this;
         var color = 'transparent';
         var light = thiz.block.getHighlightData();
         if (thiz.block.getCheckData() > 0) {
             // color = '#f0f0f0';
         }
         if (light > 0) {
-            color = '#ffeeba';
+            color = '#FFFD7D';
         }
         if (light > 1) {
             color = '#cce5ff';
