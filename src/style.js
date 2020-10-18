@@ -62,6 +62,12 @@
         paddingY: '60px'
     };
 
+    Style.SiblingSchemas = [SCHEMA.CODE, SCHEMA.TASK];
+
+    Style.isSiblingSchema = function (schema) {
+        return Style.SiblingSchemas.includes(schema);
+    }
+
     Style.prototype.setFontFamily = function (fontFamily) {
         this.fontFamily = fontFamily;
         return this;
@@ -271,7 +277,7 @@
             'margin-right: ' + thiz.getContentMarginRight(),
             'color: ' + thiz.getContentColor(),
             'text-decoration: none',
-            'float: ' + (thiz.block.isGrid() ? 'none' : 'left'),
+            // 'float: ' + (thiz.block.isGrid() ? 'none' : 'left'),
             // 'background-color: ' + thiz.getContentBackgroundColor()
         ].join(';');
     };

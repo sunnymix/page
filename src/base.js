@@ -344,8 +344,9 @@
 
     window.setCursor = function (ele, position) {
         var range = document.createRange();
+        var cursorEle = ele.innerText.length > 0 ? ele.firstChild : ele;
         if (ele && ele.firstChild) {
-            range.setStart(ele.firstChild, position);
+            range.setStart(cursorEle, position);
             range.collapse(true);
 
             var sel = window.getSelection();

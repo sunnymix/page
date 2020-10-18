@@ -247,9 +247,9 @@
         return true;
     };
 
-    Writer.prototype.reloadSiblingBlocks = function (curBlock) {
+    Writer.prototype.reloadSiblingBlocks = function (curBlock, anySchema, size) {
         var thiz = this;
-        var siblingBlocks = thiz.findSiblingBlocks(curBlock);
+        var siblingBlocks = thiz.findSiblingBlocks(curBlock, anySchema, size);
         thiz.reloadBlocks(siblingBlocks);
     };
 
@@ -260,28 +260,39 @@
         }
     };
 
-    Writer.prototype.findSiblingBlocks = function (curBlock) {
+    Writer.prototype.findSiblingBlocks = function (curBlock, anySchema, size) {
         var thiz = this;
         var curSchema = curBlock.schema;
+        var isAnySchema = isTrue(anySchema);
         var curIndex = thiz.getBlockIndex(curBlock.id);
         var siblingBlocks = [];
         // previus blocks
+        var previousSize = 0;
         for (var i = curIndex - 1; i >= 0; i--) {
             var block = thiz.blocks[i];
-            if (block.schema == curSchema) {
+            if (block.schema == curSchema || isAnySchema) {
                 siblingBlocks.unshift(block);
+                previousSize++;
             } else {
+                break;
+            }
+            if (previousSize >= size) {
                 break;
             }
         }
         // curBlock
         siblingBlocks.push(curBlock);
         // nextBlocks
+        var nextSize = 0;
         for (var i = curIndex + 1; i < thiz.blocks.length; i++) {
             var block = thiz.blocks[i];
-            if (block.schema == curSchema) {
+            if (block.schema == curSchema || isAnySchema) {
                 siblingBlocks.push(block);
+                nextSize++
             } else {
+                break;
+            }
+            if (nextSize >= size) {
                 break;
             }
         }

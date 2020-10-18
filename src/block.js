@@ -147,9 +147,9 @@
 
         // tail
         thiz.initTailEle(initData);
-        thiz.borderEle.append(thiz.tailEle);
+        thiz.contentEle.append(thiz.tailEle);
 
-        new Clearfix(thiz.tailEle);
+        new Clearfix(thiz.contentEle);
     };
 
     Block.prototype.initContentEle = function (initData) {
@@ -175,9 +175,9 @@
             id: '.block-tail',
             position: 'relative',
             display: 'inline-block',
-            float: 'left',
+            float: 'right',
             marginLeft: '2px',
-        });
+        }).prop('contenteditable', false);
 
         thiz.initLinkIconEle(initData);
         thiz.tailEle.append(thiz.linkIconEle);
@@ -592,6 +592,7 @@
                 thiz.switchToGrid();
                 thiz.setContentData('[]');
             }
+            thiz.writer.reloadSiblingBlocks(thiz, true, 1);
         }
     };
 
@@ -670,14 +671,16 @@
             thiz.style
                 .setPaddingTop(thiz.style.paddingBottom);
         }
-        if (thiz.writer.hasPreviousSibling(thiz)) {
-            thiz.style.setBorderTop('0px');
-        }
-        if (thiz.writer.hasNextSibling(thiz)) {
-            thiz.style
-                .setBorderBottom('0px')
-                .setPaddingBottom('0px')
-                ;
+        if (Style.isSiblingSchema(thiz.schema)) {
+            if (thiz.writer.hasPreviousSibling(thiz)) {
+                thiz.style.setBorderTop('0px');
+            }
+            if (thiz.writer.hasNextSibling(thiz)) {
+                thiz.style
+                    .setBorderBottom('0px')
+                    .setPaddingBottom('0px')
+                    ;
+            }
         }
     };
 
@@ -895,6 +898,7 @@
             text = text.replace(/\s/g, '&nbsp;');
         }
         thiz.contentEle.html(text);
+        thiz.contentEle.append(thiz.tailEle);
     };
 
     Block.prototype.setGridData = function (content) {
