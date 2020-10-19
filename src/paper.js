@@ -53,6 +53,7 @@
             id: '.paper-title',
             position: 'absolute',
             left: '60px',
+            right: '60px',
             top: '10px',
             zIndex: 1,
         });

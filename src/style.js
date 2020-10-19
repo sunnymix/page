@@ -34,6 +34,8 @@
         thiz.color = '#000000';
         thiz.backgroundColor = '#ffffff';
 
+        thiz.boxShadow = null;
+
         // content override
         thiz.contentPaddingTop = '0px';
         thiz.contentPaddingBottom = '0px';
@@ -45,6 +47,7 @@
 
         thiz.contentMarginLeft = '0px';
         thiz.contentMarginRight = '0px';
+        thiz.contentTextShadow = '0 0 0 rgba(0, 0, 0, 0.2)';
 
         // const
         thiz.taskWidth = 22;
@@ -236,7 +239,7 @@
 
     Style.prototype.boxStyle = function (context) {
         var thiz = this;
-        return [
+        var style = [
             'position: relative',
             'padding-top: ' + thiz.getPaddingTop(),
             'padding-bottom: ' + thiz.paddingBottom,
@@ -246,12 +249,14 @@
             'margin-bottom: ' + thiz.marginBottom,
             'margin-left: ' + thiz.marginLeft,
             'margin-right: ' + thiz.marginRight,
-        ].join(';');
+        ];
+
+        return style.join(';')
     };
 
     Style.prototype.borderStyle = function () {
         var thiz = this;
-        return [
+        var style = [
             'background-color: ' + thiz.backgroundColor,
             'border-top: ' + thiz.borderTop,
             'border-bottom: ' + thiz.borderBottom,
@@ -259,13 +264,16 @@
             'border-right: ' + thiz.borderRight,
             'border-radius: ' + thiz.borderRadius,
             'padding-bottom: ' + thiz.borderPaddingBottom,
-        ].join(';');
+            (isNotNone(thiz.boxShadow) ? 'box-shadow: ' + thiz.boxShadow : ''),
+        ];
+        
+        return style.join(';');
     };
 
     Style.prototype.contentStyle = function () {
         var thiz = this;
         var isInGrid = thiz.block.isGridContext();
-        return [
+        var style = [
             'word-spacing: 0px',
             'display: ' + (thiz.block.isGrid() ? 'block' : 'inline-block'),
             'word-wrap: ' + (isInGrid ? 'normal' : thiz.wordWrap),
@@ -288,9 +296,11 @@
             'margin-right: ' + thiz.getContentMarginRight(),
             'color: ' + thiz.getContentColor(),
             'text-decoration: none',
-            // 'float: ' + (thiz.block.isGrid() ? 'none' : 'left'),
             'background-color: ' + thiz.getHighlightColor(),
-        ].join(';');
+            (isNotNone(thiz.contentTextShadow) ? 'text-shadow: ' + thiz.contentTextShadow : ''),
+        ];
+        
+        return style.join(';');
     };
 
     Style.prototype.getTaskLeft = function () {
@@ -454,6 +464,11 @@
         return thiz.contentMarginRight;
     };
 
+    Style.prototype.setBoxShadow = function (boxShadow) {
+        var thiz = this;
+        return thiz.boxShadow = boxShadow;
+    };
+
     Style.prototype.initStyle = function () {
         var thiz = this;
         var handers = {};
@@ -507,7 +522,7 @@
     Style.prototype.initCode = function () {
         this
             .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
-            .setBackgroundColor('#f6f6f6')
+            .setBackgroundColor('#f4f4f4')
             .setMarginLeft('10px')
             .setBorderTop('1px', 'solid', '#e1e4e8')
             .setBorderBottom('1px', 'solid', '#e1e4e8')
@@ -515,6 +530,7 @@
             .setBorderRight('1px', 'solid', '#e1e4e8')
             .setContentPaddingLeft('5px')
             .setContentPaddingRight('5px')
+            .setBoxShadow('0 0 1px 0 rgba(0, 0, 0, 0.1)')
             ;
     };
 
