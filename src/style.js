@@ -530,7 +530,7 @@
             .setBorderRight('1px', 'solid', '#e1e4e8')
             .setContentPaddingLeft('5px')
             .setContentPaddingRight('5px')
-            .setBoxShadow('0 0 1px 0 rgba(0, 0, 0, 0.1)')
+            // .setBoxShadow('0 0 1px 0 rgba(0, 0, 0, 0.1)')
             ;
     };
 

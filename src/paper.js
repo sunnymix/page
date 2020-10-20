@@ -274,7 +274,7 @@
                     // success icon font: ☑
                     // fail icon font: ☒
                     document.title = data.title;
-                    thiz.alertMsg('Saved "' + data.title + '".');
+                    thiz.alertMsg(data.title + ' - saved!');
                     if (isFunction(cb)) {
                         cb();
                     }
