@@ -433,7 +433,9 @@
 
         thiz.ele.on('paste', function (e) {
             e.preventDefault();
+            e.stopPropagation();
             thiz.handlePasteEvent(e);
+            return false;
         });
     };
 
