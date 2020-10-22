@@ -74,7 +74,10 @@
             if (block.isGridContext()) {
                 thiz.trigger('enter', block, thiz);
             } else {
-                var newBlock = thiz.createBlock(block);
+                var newBlock = thiz.createBlock(block, {
+                    schema: thiz.inheritSchema(block.schema),
+                    text: ''
+                });
                 newBlock.focus();
             }
         });
