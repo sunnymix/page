@@ -75,7 +75,7 @@
                 thiz.trigger('enter', block, thiz);
             } else {
                 var newBlock = thiz.createBlock(block, {
-                    schema: thiz.inheritSchema(block.schema),
+                    schema: SCHEMA.TEXT,
                     text: ''
                 });
                 newBlock.focus();
