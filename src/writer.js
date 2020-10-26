@@ -56,13 +56,17 @@
         newBlock.bind('enter', function (block) {
             var caretPosition = block.getCursorPosition();
             var newBlock;
+            var newSchema = thiz.inheritSchema(block.schema);
+
             if (caretPosition == 0) {
-                newBlock = thiz.createBlock(block);
+                newBlock = thiz.createBlock(block, {
+                    schema: newSchema
+                });
                 thiz.movedownBlock(block);
             } else {
                 var caretRightContent = block.trimCaretContent();
                 newBlock = thiz.createBlock(block, {
-                    schema: thiz.inheritSchema(block.schema),
+                    schema: newSchema,
                     text: caretRightContent
                 });
                 newBlock.focus();
@@ -187,7 +191,7 @@
             var block = thiz.blocks[i];
             block.selectStop();
         }
-        
+
         thiz.dsSelectorEle.remove();
         clearSelection();
     };
