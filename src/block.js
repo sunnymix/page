@@ -86,7 +86,7 @@
 
     Block.prototype.schemaVisible = function () {
         var thiz = this;
-        var isHighlight = [SCHEMA.TITLE, SCHEMA.H1, SCHEMA.H2, SCHEMA.H3, SCHEMA.GRID].includes(thiz.schema);
+        var isHighlight = [SCHEMA.TITLE, SCHEMA.H1, SCHEMA.H2, SCHEMA.H3].includes(thiz.schema);
         var isEdit = isNotTrue(thiz.readonly);
         var isNotInGrid = !thiz.isGridContext();
         return isHighlight && isEdit && isNotInGrid;
