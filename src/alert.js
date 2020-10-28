@@ -16,12 +16,13 @@
 
         thiz.ele = new Ele('div', {
             id: '.alert',
-            border: '1px solid #eeeeee',
+            border: '1px solid #007bff',
             borderRadius: '1px',
-            backgroundColor: '#ffffff',
+            backgroundColor: '#007bff',
             padding: '10px',
             minWidth: '200px',
             maxWidth: '300px',
+            color: '#ffffff',
             boxShadow: '0px 0px 2px 0px rgba(0, 0, 0, 0.15)',
         });
         thiz.pop.append(thiz.ele);
