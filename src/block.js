@@ -396,7 +396,8 @@
         thiz.attachBoxEle = new Ele('div', {
             id: '.block-attach-box',
             display: 'block',
-            marginTop: '10px',
+            marginTop: '5px',
+            marginBottom: '5px',
         });
         thiz.attachEle.append(thiz.attachBoxEle);
     };
