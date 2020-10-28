@@ -729,7 +729,7 @@
 
             if (thiz.isTask()) {
                 thiz.task.show().style({
-                    top: thiz.style.getBaseLineTop(),
+                    top: thiz.style.getBoxBaseLineTop(),
                     left: thiz.style.getTaskLeft()
                 });
             } else {
