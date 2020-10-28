@@ -100,7 +100,7 @@
         var thiz = this;
         thiz.boxEle.css({
             position: 'absolute',
-            top: '2px',
+            top: '1px',
         });
         thiz.boxEle.css({
             left: '50%',
