@@ -63,14 +63,13 @@
                     schema: newSchema
                 });
                 thiz.movedownBlock(block);
-                block.focus();
             } else {
                 var caretRightContent = block.trimCaretContent();
                 newBlock = thiz.createBlock(block, {
                     schema: newSchema,
                     text: caretRightContent
                 });
-                newBlock.focus();
+                newBlock.focus(false, true);
             }
         });
 
@@ -395,6 +394,7 @@
             var downBlock = this.blocks[toIdx];
             var movedBlock = this.createBlock(downBlock, block.getData());
             this.removeBlock(block, false);
+            movedBlock.focus(false, true);
         }
     };
 
