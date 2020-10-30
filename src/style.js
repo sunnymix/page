@@ -522,12 +522,12 @@
     Style.prototype.initCode = function () {
         this
             .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
-            .setBackgroundColor('#f4f4f4')
+            .setBackgroundColor('#f6f8fa')
             .setMarginLeft('10px')
-            .setBorderTop('1px', 'solid', '#e1e4e8')
-            .setBorderBottom('1px', 'solid', '#e1e4e8')
-            .setBorderLeft('1px', 'solid', '#e1e4e8')
-            .setBorderRight('1px', 'solid', '#e1e4e8')
+            .setBorderTop('1px', 'solid', '#f6f8fa')
+            .setBorderBottom('1px', 'solid', '#f6f8fa')
+            .setBorderLeft('1px', 'solid', '#f6f8fa')
+            .setBorderRight('1px', 'solid', '#f6f8fa')
             .setContentPaddingLeft('5px')
             .setContentPaddingRight('5px')
             // .setBoxShadow('0 0 1px 0 rgba(0, 0, 0, 0.1)')
