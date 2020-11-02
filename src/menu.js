@@ -45,12 +45,12 @@
         thiz.actionsEle = thiz.ele.find('.actions');
         thiz.createActions();
 
-        thiz.fetchPapers();
+        thiz.fetchPages();
 
         thiz.listener = [];
     }
 
-    Menu.prototype.fetchPapers = function (query) {
+    Menu.prototype.fetchPages = function (query) {
         var thiz = this;
 
         var _query = isNotNone(query) ? query : '';
@@ -58,14 +58,14 @@
 
         $.get('/api/papers?query=' + _query, function (res) {
             if (isNotNone(res) && isNotEmpty(res.data)) {
-                var papers = res.data || [];
+                var pages = res.data || [];
 
                 thiz.nodesEle.empty();
                 thiz.nodes = [];
 
-                for (var i = 0; i < papers.length; i++) {
-                    var paper = papers[i];
-                    var node = new Node(thiz.nodesEle, paper);
+                for (var i = 0; i < pages.length; i++) {
+                    var page = pages[i];
+                    var node = new Node(thiz.nodesEle, page);
                     node.bind('click', function (e, node) {
                         thiz.trigger('click');
                         thiz.trigger('hide');
@@ -145,7 +145,7 @@
         var createBtn = new Button('img/plus-solid.png');
         createBtn.appendTo(thiz.actionsEle);
         createBtn.click(function (e, btn) {
-            thiz.createPaper();
+            thiz.createPage();
         });
 
         // clone
@@ -214,7 +214,7 @@
         });
     };
 
-    Menu.prototype.createPaper = function () {
+    Menu.prototype.createPage = function () {
         window.location.hash = '#' + uuid();
         window.location.reload();
     };
@@ -230,7 +230,7 @@
             thiz.throttleSearchFn = throttle(function () {
                 var query = thiz.searchInput.val();
                 if (isNotNone(query)) {
-                    thiz.fetchPapers(query);
+                    thiz.fetchPages(query);
                 }
             }, 200);
         }

@@ -60,7 +60,7 @@
 
     Style.SmallFontSize = (parsePxToNum(Style.BaseFontSize) - 1) + 'px';
 
-    Style.Paper = {
+    Style.Page = {
         paddingX: '60px',
         paddingY: '60px'
     };

@@ -1,8 +1,8 @@
 (function () {
-    function Toolbar(paper) {
+    function Toolbar(page) {
         var thiz = this;
 
-        thiz.paper = paper;
+        thiz.page = page;
         thiz.ele = $([
             '<div',
             '    class="toolbar"',
@@ -151,19 +151,19 @@
 
     Toolbar.prototype.clonePaper = function () {
         var thiz = this;
-        thiz.paper.clone();
+        thiz.page.clone();
         thiz.hideMenu();
     };
 
     Toolbar.prototype.exportHtml = function () {
         var thiz = this;
-        var text = thiz.paper.getHtmlData();
+        var text = thiz.page.getHtmlData();
         thiz.clip.copy(text);
     };
 
     Toolbar.prototype.exportMarkdown = function () {
         var thiz = this;
-        var text = new MarkdownExport().parsePaper(thiz.paper);
+        var text = new MarkdownExport().parsePaper(thiz.page);
         thiz.clip.copy(text);
     };
 

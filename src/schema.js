@@ -1,6 +1,6 @@
 (function () {
     var SCHEMA = {
-        PAPER: 'Paper',
+        PAGE: 'Page',
         TITLE: 'Title',
         TEXT: 'Text',
         H1: 'H1',

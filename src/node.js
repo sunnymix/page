@@ -1,15 +1,15 @@
 (function () {
-    function Node(place, paper) {
+    function Node(place, page) {
         var thiz = this;
 
-        if (isNone(paper)) {
+        if (isNone(page)) {
             return;
         }
 
-        thiz.paper = paper;
+        thiz.page = page;
 
-        thiz.id = paper.pid;
-        thiz.title = paper.title;
+        thiz.id = page.pid;
+        thiz.title = page.title;
 
         thiz.ele = $([
             '<div',

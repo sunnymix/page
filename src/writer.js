@@ -4,7 +4,7 @@
         thiz.isWriter = true;
 
         thiz.readonly = isTrue(readonly);
-        thiz.context = isNotNone(context) ? context : SCHEMA.PAPER;
+        thiz.context = isNotNone(context) ? context : SCHEMA.PAGE;
 
         thiz.ele = $(p);
         thiz.cursor = null;
@@ -232,7 +232,7 @@
     Writer.prototype.inheritSchema = function (blockSchema) {
         var res = blockSchema;
         if ([
-            SCHEMA.PAPER,
+            SCHEMA.PAGE,
             SCHEMA.TEXT,
             SCHEMA.H1,
             SCHEMA.H2,

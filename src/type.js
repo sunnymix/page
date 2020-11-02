@@ -1,6 +1,6 @@
 (function () {
     var ELE_TYPE = {
-        PAPER: 'Paper',
+        PAGE: 'Page',
         TITLE: 'Title',
         WRITER: 'Writer',
         BLOCK: 'Block',
@@ -9,8 +9,8 @@
 
     window.ELE_TYPE = ELE_TYPE;
 
-    window.isPaper = function (e) {
-        return e && e.type && e.type === ELE_TYPE.PAPER;
+    window.isPage = function (e) {
+        return e && e.type && e.type === ELE_TYPE.PAGE;
     };
 
     window.isTitle = function (e) {

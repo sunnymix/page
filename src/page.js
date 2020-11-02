@@ -1,27 +1,27 @@
 (function () {
-    function Paper(p, readonly, fullscreen) {
+    function Page(p, readonly, fullscreen) {
         var thiz = this;
         thiz.readonly = isTrue(readonly);
         thiz.fullscreen = isTrue(fullscreen);
-        thiz.paddingHorizontal = Style.Paper.paddingX;
-        thiz.paddingVertical = Style.Paper.paddingY;
+        thiz.paddingHorizontal = Style.Page.paddingX;
+        thiz.paddingVertical = Style.Page.paddingY;
         thiz.maxWidth = thiz.fullscreen ? '100%' : '820px';
 
         thiz.ele = new Ele('div', {
-            id: '.paper',
+            id: '.page',
             position: 'relative',
             zIndex: 1,
             padding: '20px',
         });
 
         thiz.underEle = new Ele('div', {
-            id: '.paper-under',
+            id: '.page-under',
             position: 'absolute',
         });
         thiz.ele.append(thiz.underEle);
 
         thiz.layEle = new Ele('div', {
-            id: '.paper-lay',
+            id: '.page-lay',
             position: 'absolute',
             left: 0,
             right: 0,
@@ -32,7 +32,7 @@
         thiz.ele.append(thiz.layEle);
 
         thiz.borderEle = new Ele('div', {
-            id: '.paper-border',
+            id: '.page-border',
             position: 'relative',
             maxWidth: thiz.maxWidth,
             border: '1px solid #f9f9f9',
@@ -42,7 +42,7 @@
         thiz.ele.append(thiz.borderEle);
 
         thiz.boxEle = new Ele('div', {
-            id: '.paper-box',
+            id: '.page-box',
             border: '1px solid #d0d0d0',
             padding: thiz.paddingVertical + ' ' + thiz.paddingHorizontal,
             backgroundColor: '#ffffff',
@@ -50,7 +50,7 @@
         thiz.borderEle.append(thiz.boxEle);
 
         thiz.titleEle = new Ele('div', {
-            id: '.paper-title',
+            id: '.page-title',
             position: 'absolute',
             left: '60px',
             right: '60px',
@@ -60,13 +60,13 @@
         thiz.boxEle.append(thiz.titleEle);
 
         thiz.bodyEle = new Ele('div', {
-            id: '.paper-body',
+            id: '.page-body',
             minHeight: '800px'
         });
         thiz.boxEle.append(thiz.bodyEle);
 
         thiz.writerEle = new Ele('div', {
-            id: '.paper-writer',
+            id: '.page-writer',
         });
         thiz.bodyEle.append(thiz.writerEle);
 
@@ -77,9 +77,9 @@
         thiz.loadData();
     }
 
-    Paper.prototype.type = ELE_TYPE.PAPER;
+    Page.prototype.type = ELE_TYPE.PAPER;
 
-    Paper.prototype.init = function () {
+    Page.prototype.init = function () {
         var thiz = this;
         thiz.initTitle();
         thiz.initWriter();
@@ -89,16 +89,16 @@
         thiz.initBind();
     };
 
-    Paper.prototype.initTitle = function () {
+    Page.prototype.initTitle = function () {
         var thiz = this;
-        thiz.titleEle = thiz.ele.find('.paper-title');
+        thiz.titleEle = thiz.ele.find('.page-title');
         thiz.title = new Title(thiz.titleEle, thiz.readonly);
         thiz.title.bind('enter', function (title) {
             thiz.focusWriter();
         });
     };
 
-    Paper.prototype.initWriter = function () {
+    Page.prototype.initWriter = function () {
         var thiz = this;
         thiz.writer = new Writer(thiz.writerEle, thiz.readonly);
         thiz.writer.bind('blockop', function (block, writer) {
@@ -109,17 +109,17 @@
         });
     };
 
-    Paper.prototype.initBlockop = function () {
+    Page.prototype.initBlockop = function () {
         var thiz = this;
         thiz.blockop = new Blockop();
     };
 
-    Paper.prototype.initAlert = function () {
+    Page.prototype.initAlert = function () {
         var thiz = this;
         thiz.alert = new Alert();
     };
 
-    Paper.prototype.initSelectAction = function () {
+    Page.prototype.initSelectAction = function () {
         var thiz = this;
         thiz.selectAction = new Action();
 
@@ -140,12 +140,12 @@
         new Clearfix(closeSelectBtn.ele);
     };
 
-    Paper.prototype.showSelectAction = function () {
+    Page.prototype.showSelectAction = function () {
         var thiz = this;
         thiz.selectAction.show();
     };
 
-    Paper.prototype.closeSelect = function () {
+    Page.prototype.closeSelect = function () {
         var thiz = this;
         thiz.selectAction.hide();
         setTimeout(function () {
@@ -153,7 +153,7 @@
         }, 1);
     };
 
-    Paper.prototype.copy = function () {
+    Page.prototype.copy = function () {
         var thiz = this;
 
         var selectBlockArray = thiz.writer.getSelectBlocks();
@@ -164,7 +164,7 @@
         thiz.closeSelect();
     };
 
-    Paper.prototype.initBind = function () {
+    Page.prototype.initBind = function () {
         var thiz = this;
         $(document).on('keydown', 'body', function (e) {
             if (isSaveAction(e)) {
@@ -182,22 +182,22 @@
 
     };
 
-    Paper.prototype.showBlockop = function (block) {
+    Page.prototype.showBlockop = function (block) {
         var thiz = this;
         thiz.blockop.show(block);
     };
 
-    Paper.prototype.focusWriter = function () {
+    Page.prototype.focusWriter = function () {
         var thiz = this;
         thiz.writer.focus();
     };
 
-    Paper.prototype.focusTitle = function () {
+    Page.prototype.focusTitle = function () {
         var thiz = this;
         thiz.title.focus();
     };
 
-    Paper.prototype.throttleSave = function () {
+    Page.prototype.throttleSave = function () {
         var thiz = this;
 
         if (thiz.readonly) {
@@ -213,11 +213,11 @@
         thiz.throttleSaveFn();
     };
 
-    Paper.prototype.save = function () {
+    Page.prototype.save = function () {
         this.throttleSave();
     };
 
-    Paper.prototype.getData = function () {
+    Page.prototype.getData = function () {
         var thiz = this;
         return {
             pid: this.getPid(),
@@ -226,18 +226,18 @@
         };
     };
 
-    Paper.prototype.getTitleData = function () {
+    Page.prototype.getTitleData = function () {
         var thiz = this;
         var title = thiz.title.getData();
         return isEmpty(title) ? 'Title' : title;
     };
 
-    Paper.prototype.getContentData = function () {
+    Page.prototype.getContentData = function () {
         var thiz = this;
         return thiz.writer.getData();
     };
 
-    Paper.prototype.loadData = function () {
+    Page.prototype.loadData = function () {
         var thiz = this;
 
         var query = 'pid=' + thiz.getPid();
@@ -256,7 +256,7 @@
         });
     };
 
-    Paper.prototype.renderData = function (paperObj) {
+    Page.prototype.renderData = function (paperObj) {
         var thiz = this;
         if (isNotNone(paperObj)) {
             document.title = paperObj.title;
@@ -266,7 +266,7 @@
         thiz.focusTitle();
     }
 
-    Paper.prototype.saveData = function (data, cb) {
+    Page.prototype.saveData = function (data, cb) {
         var thiz = this;
         if (isNotNone(data)) {
             restPost('/api/paper', data, function (res) {
@@ -287,18 +287,18 @@
         }
     };
 
-    Paper.prototype.alertMsg = function (msg) {
+    Page.prototype.alertMsg = function (msg) {
         var thiz = this;
         if (isNotBlank(msg)) {
             thiz.alert.show(msg);
         }
     };
 
-    Paper.prototype.cacheId = function () {
-        return 'paper#' + this.getPid();
+    Page.prototype.cacheId = function () {
+        return 'page#' + this.getPid();
     };
 
-    Paper.prototype.getPid = function () {
+    Page.prototype.getPid = function () {
         var pid = window.location.hash.replace(/^#/, '');
 
         if (pid.length > 0) {
@@ -308,18 +308,18 @@
         window.location.hash = '#' + uuid();
     };
 
-    Paper.prototype.addToolbar = function (toolbar) {
+    Page.prototype.addToolbar = function (toolbar) {
         var thiz = this;
         thiz.toolbar = toolbar;
         thiz.boxEle.append(thiz.toolbar.ele);
     };
 
-    Paper.prototype.getHtmlData = function () {
+    Page.prototype.getHtmlData = function () {
         var thiz = this;
         return thiz.writerEle[0].outerHTML;
     };
 
-    Paper.prototype.clone = function () {
+    Page.prototype.clone = function () {
         var thiz = this;
         var newPid = uuid();
         var data = thiz.getData();
@@ -330,5 +330,5 @@
         });
     };
 
-    window.Paper = Paper;
+    window.Page = Page;
 })();

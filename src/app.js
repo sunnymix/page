@@ -5,14 +5,14 @@ jQuery(function () {
 
     var fullscreen = isNotNone(getSearchParam('fullscreen'));
 
-    var paper = new Paper('.paper', readonly, fullscreen);
+    var page = new Page('.page', readonly, fullscreen);
 
-    var toolbar = new Toolbar(paper);
+    var toolbar = new Toolbar(page);
 
-    paper.addToolbar(toolbar);
+    page.addToolbar(toolbar);
 
     window.onhashchange = function() {
-        paper.loadData();
+        page.loadData();
     };
 
 });
