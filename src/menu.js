@@ -56,7 +56,7 @@
         var _query = isNotNone(query) ? query : '';
         _query = _query.trim();
 
-        $.get('/api/papers?query=' + _query, function (res) {
+        $.get('/api/pages?query=' + _query, function (res) {
             if (isNotNone(res) && isNotEmpty(res.data)) {
                 var pages = res.data || [];
 

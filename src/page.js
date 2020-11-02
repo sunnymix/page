@@ -242,26 +242,26 @@
 
         var query = 'pid=' + thiz.getPid();
 
-        restGet('/api/paper?' + query, function (res) {
+        restGet('/api/page?' + query, function (res) {
             if (res.code === 0) {
                 thiz.renderData(res.data);
             } else {
                 alert(res.msg || 'server error');
-                var paperRaw = localStorage.getItem(thiz.cacheId());
-                if (isNotNone(paperRaw)) {
-                    var paperObj = JSON.parse(paperRaw);
-                    thiz.renderData(paperObj);
+                var pageRaw = localStorage.getItem(thiz.cacheId());
+                if (isNotNone(pageRaw)) {
+                    var pageObj = JSON.parse(pageRaw);
+                    thiz.renderData(pageObj);
                 }
             }
         });
     };
 
-    Page.prototype.renderData = function (paperObj) {
+    Page.prototype.renderData = function (pageObj) {
         var thiz = this;
-        if (isNotNone(paperObj)) {
-            document.title = paperObj.title;
-            thiz.title.setData(paperObj.title);
-            thiz.writer.setData(paperObj.content);
+        if (isNotNone(pageObj)) {
+            document.title = pageObj.title;
+            thiz.title.setData(pageObj.title);
+            thiz.writer.setData(pageObj.content);
         }
         thiz.focusTitle();
     }
@@ -269,7 +269,7 @@
     Page.prototype.saveData = function (data, cb) {
         var thiz = this;
         if (isNotNone(data)) {
-            restPost('/api/paper', data, function (res) {
+            restPost('/api/page', data, function (res) {
                 if (res.code === 0) {
                     // success icon font: ☑
                     // fail icon font: ☒
