@@ -59,7 +59,7 @@
             }
             if (isCreatePaperAction(e)) {
                 e.preventDefault();
-                thiz.menu.createPaper();
+                thiz.menu.createPage();
             }
         });
     };
