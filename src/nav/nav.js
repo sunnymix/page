@@ -52,9 +52,23 @@
             });
     };
 
+    Nav.prototype.focusTab = function (pid) {
+        var thiz = this;
+        
+        for (var i in thiz.tabs) {
+            var tab = thiz.tabs[i];
+            if (tab.eq(pid)) {
+                tab.focus();
+            } else {
+                tab.blur();
+            }
+        }
+    };
+
     Nav.prototype.createTab = function (pid, title) {
         var thiz = this;
-        thiz.doCreateTab(pid, title);
+        var tab = thiz.doCreateTab(pid, title);
+        thiz.focusTab(pid);
         thiz.saveCache();
     };
 
@@ -79,7 +93,7 @@
             newTab.appendTo(thiz.contentEle);
             curTab = newTab;
         }
-        curTab.focus();
+        return curTab;
     };
 
     Nav.prototype.saveCache = function () {

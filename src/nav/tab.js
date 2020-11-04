@@ -70,7 +70,6 @@
             lineHeight: Style.Page.navHeight,
             padding: '0 20px',
             href: '#' + thiz.pid,
-            color: '#333333',
             textDecoration: 'none',
         });
         thiz.contentEle.append(thiz.linkEle);
@@ -88,6 +87,16 @@
 
     Tab.prototype.focus = function () {
         var thiz = this;
+        thiz.linkEle.css({
+            color: '#000000',
+        });
+    };
+
+    Tab.prototype.blur = function () {
+        var thiz = this;
+        thiz.linkEle.css({
+            color: '#888888',
+        });
     };
 
     Tab.prototype.setTitle = function (title) {
