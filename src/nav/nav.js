@@ -8,6 +8,7 @@
         var thiz = this;
         thiz.tabs = [];
         thiz.initEle(place);
+        thiz.loadCache();
     };
 
     Nav.prototype.initEle = function (place) {
@@ -19,10 +20,11 @@
             left: 0,
             right: 0,
             top: 0,
-            height: Style.Page.navHeight,
             backgroundColor: '#ffffff',
             borderBottom: '1px solid #eeeeee',
+            height: Style.Page.navHeight,
             zIndex: '10',
+            overflow: 'hidden',
         });
         place.append(thiz.ele);
 
@@ -35,6 +37,12 @@
     };
 
     Nav.prototype.createTab = function (pid, title) {
+        var thiz = this;
+        thiz.doCreateTab(pid, title);
+        thiz.saveCache();
+    };
+
+    Nav.prototype.doCreateTab = function (pid, title) {
         var thiz = this;
         var idx = thiz.getTabIndex(pid, title);
         var curTab = null;
@@ -53,6 +61,25 @@
             curTab = newTab;
         }
         curTab.focus();
+    };
+
+    Nav.prototype.saveCache = function () {
+        var thiz = this;
+        localStorage.setItem('page-tabs-cache', JSON.stringify(thiz.tabs));
+    };
+
+    Nav.prototype.loadCache = function () {
+        var thiz = this;
+        var tabsJson = localStorage.getItem('page-tabs-cache');
+        if (isNotBlank(tabsJson)) {
+            try {
+                var tabs = JSON.parse(tabsJson);
+                for (var i in tabs) {
+                    var tab = tabs[i];
+                    thiz.doCreateTab(tab.pid, tab.title);
+                }
+            } catch (error) { }
+        }
     };
 
     Nav.prototype.removeTab = function (tab) {

@@ -23,7 +23,7 @@
             '        display: inline-block;',
             '        border: 1px solid transparent;',
             '        border-radius: 0px;',
-            '        opacity: 1;',
+            '        opacity: 0.5;',
             '        cursor: pointer;',
             '        background-color: ' + thiz.background + ';',
             '    "',
@@ -146,17 +146,17 @@
 
         this.ele.on('mouseenter', function (e) {
             thiz.ele.css({
-                background: thiz.backgroundHover
+                // background: thiz.backgroundHover,
                 //boxShadow: '0 0 2px 0 rgba(0, 0, 0, 0.3)',
-                //opacity: 1
+                opacity: 1,
                 //borderColor: '#dddddd'
             });
         }).on('mouseleave', function (e) {
             thiz.ele.css({
-                background: thiz.background
+                // background: thiz.background,
                 //boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)',
-                //opacity: 1
-                //borderColor: 'transparent'
+                opacity: 0.5,
+                //borderColor: 'transparent',
             });
         });
     };
