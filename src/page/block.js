@@ -187,7 +187,7 @@
         thiz.linkIconEle = new Ele('a', {
             id: '.block-link-icon',
             position: 'relative',
-            target: '_blank',
+            // target: '_blank',
             display: 'inline-block',
             padding: 0,
             width: '11px',

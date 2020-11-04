@@ -62,7 +62,8 @@
 
     Style.Page = {
         paddingX: '60px',
-        paddingY: '60px'
+        paddingY: '40px',
+        navHeight: '40px',
     };
 
     Style.SiblingSchemas = [SCHEMA.CODE, SCHEMA.QUOTE];

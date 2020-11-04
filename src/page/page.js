@@ -12,6 +12,7 @@
             position: 'relative',
             zIndex: 1,
             padding: '0px',
+            marginTop: Style.Page.navHeight,
         });
 
         thiz.underEle = new Ele('div', {
@@ -87,6 +88,7 @@
         thiz.initSelectAction();
         thiz.initAlert();
         thiz.initBind();
+        initEvent(thiz, Page.prototype);
     };
 
     Page.prototype.initTitle = function () {
@@ -245,6 +247,7 @@
         restGet('/api/page?' + query, function (res) {
             if (res.code === 0) {
                 thiz.renderData(res.data);
+                thiz.trigger('load', res.data);
             } else {
                 alert(res.msg || 'server error');
                 var pageRaw = localStorage.getItem(thiz.cacheId());

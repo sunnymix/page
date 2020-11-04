@@ -18,7 +18,7 @@
             '>',
             '    <a',
             '        class="link-anchor"',
-            '        target="_blank"',
+            // '        target="_blank"',
             '        style="',
             '            display: inline-block;',
             '            height: 15px;',

@@ -5,6 +5,8 @@ jQuery(function () {
 
     var fullscreen = isNotNone(getSearchParam('fullscreen'));
 
+    var nav = new Nav($('.nav'), readonly, fullscreen);
+
     var page = new Page('.page', readonly, fullscreen);
 
     var toolbar = new Toolbar(page);
@@ -14,5 +16,9 @@ jQuery(function () {
     window.onhashchange = function() {
         page.loadData();
     };
+
+    page.bind('load', function (pageData) {
+        nav.createTab(pageData.pid, pageData.title);
+    });
 
 });
