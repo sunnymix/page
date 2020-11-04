@@ -281,6 +281,7 @@
                     if (isFunction(cb)) {
                         cb();
                     }
+                    thiz.trigger('save', data);
                 } else {
                     thiz.alertMsg('Cannot save "' + data.title + '".(' + res.msg || 'server error' + ')');
                 }
@@ -314,7 +315,6 @@
     Page.prototype.addToolbar = function (toolbar) {
         var thiz = this;
         thiz.toolbar = toolbar;
-        thiz.boxEle.append(thiz.toolbar.ele);
     };
 
     Page.prototype.getHtmlData = function () {

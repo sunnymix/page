@@ -7,7 +7,7 @@
             '    class="input"',
             '    style="',
             '        position: relative;',
-            '        background-color: #f3f3f3;',
+            '        background-color: #ffffff;',
             '        position: relative;',
             '        border: 0px solid green;',
             '        min-width: 40px;',
@@ -56,6 +56,11 @@
     Input.prototype.appendTo = function (place) {
         var thiz = this;
         place.append(thiz.ele);
+    };
+
+    Input.prototype.style = function (style) {
+        var thiz = this;
+        thiz.ele.css(style);
     };
 
     Input.prototype.init = function () {

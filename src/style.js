@@ -62,7 +62,7 @@
 
     Style.Page = {
         paddingX: '60px',
-        paddingY: '40px',
+        paddingY: '50px',
         navHeight: '40px',
     };
 

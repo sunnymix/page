@@ -48,6 +48,9 @@
         var curTab = null;
         if (idx >= 0) {
             var tab = thiz.tabs[idx];
+            
+            tab.setTitle(title);
+
             curTab = tab;
         } else {
             var newTab = new Tab(pid, title);
@@ -82,9 +85,14 @@
         }
     };
 
+    Nav.prototype.updateTab = function (pid, title) {
+        var thiz = this;
+        thiz.createTab(pid, title);
+    };
+
     Nav.prototype.removeTab = function (tab) {
         var thiz = this;
-        var idx = thiz.getTabIndex(tab.pid, tab.title);
+        var idx = thiz.getTabIndex(tab.pid);
 
         if (idx < 0) {
             return;
@@ -94,12 +102,12 @@
         tab.ele.remove();
     };
 
-    Nav.prototype.getTabIndex = function (pid, title) {
+    Nav.prototype.getTabIndex = function (pid) {
         var thiz = this;
         var idx = -1;
         for (var i in thiz.tabs) {
             var tab = thiz.tabs[i];
-            if (tab.eq(pid, title)) {
+            if (tab.eq(pid)) {
                 idx = +i;
                 break;
             }

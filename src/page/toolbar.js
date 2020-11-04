@@ -7,17 +7,14 @@
             '<div',
             '    class="toolbar"',
             '    style="',
-            '        position: absolute;',
+            '        position: fixed;',
             '        top: 0px;',
-            '        left: 0px;',
             '        right: 0px;',
+            '        z-index: 20;',
             '    "',
             '>',
             '    <div',
             '        class="toolbar-box"',
-            '        style="',
-            '            padding: 2px;',
-            '        "',
             '    >',
             '        <div',
             '            class="tools"',
@@ -37,6 +34,8 @@
         thiz.createMenus();
 
         thiz.init();
+
+        $('body').append(thiz.ele);
     }
 
     Toolbar.prototype.init = function () {
@@ -67,7 +66,7 @@
     Toolbar.prototype.initClip = function () {
         var thiz = this;
         thiz.clip = new Clip();
-        thiz.clip.appendTo(thiz.toolsEle);
+        thiz.clip.appendTo($('body'));
     };
 
     Toolbar.prototype.createTools = function () {
@@ -85,13 +84,15 @@
 
     Toolbar.prototype.fullfill = function () {
         this.ele.css({
-            bottom: 0
+            left: 0,
+            bottom: 0,
         });
     };
 
     Toolbar.prototype.noneFill = function () {
         this.ele.css({
-            bottom: 'auto'
+            left: 'auto',
+            bottom: 'auto',
         });
     };
 

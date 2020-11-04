@@ -3,12 +3,13 @@
         var thiz = this;
 
         thiz.pid = pid;
-        thiz.title = title;
 
         thiz.init();
+
+        thiz.setTitle(title);
     }
 
-    Tab.prototype.init = function () {
+    Tab.prototype.init = function (pid, title) {
         var thiz = this;
 
         thiz.initEle();
@@ -32,7 +33,6 @@
         thiz.ele.append(thiz.contentEle);
 
         var closeBtnSize = 18;
-        var closeBtnMargin = ((parsePxToNum(Style.Page.navHeight) - closeBtnSize) / 2) + 'px';
         thiz.closeBtn = new Button('img/times-solid.png', null, closeBtnSize, closeBtnSize, 12, 12);
         thiz.closeBtn.float('left');
         thiz.closeBtn.style({
@@ -55,7 +55,7 @@
             });
 
         thiz.gapEle = new Ele('div', {
-            borderRight: '1px solid #f8f8f8',
+            borderRight: '1px solid #f4f4f4',
             position: 'absolute',
             right: 0,
             top: '1px',
@@ -65,7 +65,6 @@
 
         thiz.linkEle = new Ele('a', {
             id: '.tab-link',
-            body: thiz.title || 'Title',
             display: 'block',
             height: Style.Page.navHeight,
             lineHeight: Style.Page.navHeight,
@@ -82,13 +81,19 @@
         place.append(thiz.ele);
     };
 
-    Tab.prototype.eq = function (pid, title) {
+    Tab.prototype.eq = function (pid) {
         var thiz = this;
-        return pid == thiz.pid || title == thiz.title;
+        return pid == thiz.pid;
     };
 
     Tab.prototype.focus = function () {
         var thiz = this;
+    };
+
+    Tab.prototype.setTitle = function (title) {
+        var thiz = this;
+        thiz.title = title;
+        thiz.linkEle.text(thiz.title);
     };
 
     window.Tab = Tab;

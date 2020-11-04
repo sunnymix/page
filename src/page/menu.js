@@ -6,10 +6,10 @@
             '<div',
             '    style="',
             '        position: absolute;',
-            '        left: 2px;',
-            '        right: 2px;',
-            '        top: 2px;',
-            '        bottom: 2px;',
+            '        left: 0px;',
+            '        right: 0px;',
+            '        top: 0px;',
+            '        bottom: 0px;',
             '        background-color: #ffffff;',
             '        z-index: 2;',
             '        ;',
@@ -20,6 +20,8 @@
             '        style="',
             '            text-align: right;',
             '            padding-right: 0px;',
+            '            height: 40px;',
+            '            border-bottom: 1px solid #eeeeee;',
             '        "',
             '    >',
             '    </div>',
@@ -32,7 +34,7 @@
             '            position: absolute;',
             '            left: 0px;',
             '            right: 0px;',
-            '            top: 80px;',
+            '            top: 41px;',
             '            bottom: 0px;',
             '        "',
             '    ></div>',
@@ -140,6 +142,28 @@
     Menu.prototype.createActions = function () {
         var thiz = this;
 
+        // Search input
+
+        thiz.searchInput = new Input();
+        thiz.searchInput.appendTo(thiz.actionsEle);
+        thiz.searchInput.onSearch(function () {
+            thiz.search();
+        });
+        thiz.searchInput.onUp(function () {
+            thiz.navigate(-1);
+        });
+        thiz.searchInput.onDown(function () {
+            thiz.navigate(1);
+        });
+        thiz.searchInput.onEnter(function () {
+            thiz.openActiveNode();
+        });
+        thiz.searchInput.style({
+            position: 'absolute',
+            left: 0,
+            right: 0,
+        });
+
         // create
 
         var createBtn = new Button('img/plus-solid.png');
@@ -194,23 +218,6 @@
         hideBtn.appendTo(thiz.actionsEle);
         hideBtn.click(function (e, btn) {
             thiz.trigger('hide');
-        });
-
-        // search
-
-        thiz.searchInput = new Input();
-        thiz.searchInput.appendTo(thiz.actionsEle);
-        thiz.searchInput.onSearch(function () {
-            thiz.search();
-        });
-        thiz.searchInput.onUp(function () {
-            thiz.navigate(-1);
-        });
-        thiz.searchInput.onDown(function () {
-            thiz.navigate(1);
-        });
-        thiz.searchInput.onEnter(function () {
-            thiz.openActiveNode();
         });
     };
 

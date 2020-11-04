@@ -15,7 +15,7 @@
             '<div',
             '  class="node"',
             '  style="',
-            '    border-top: 1px solid #eeeeee;',
+            '    border-bottom: 1px solid #eeeeee;',
             '    border-radius: 0px;',
             '  "',
             '  >',

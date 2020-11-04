@@ -21,4 +21,8 @@ jQuery(function () {
         nav.createTab(pageData.pid, pageData.title);
     });
 
+    page.bind('save', function (pageData) {
+        nav.updateTab(pageData.pid, pageData.title);
+    });
+
 });
