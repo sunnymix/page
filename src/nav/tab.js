@@ -31,13 +31,13 @@
         });
         thiz.ele.append(thiz.contentEle);
 
-        var closeBtnSize = 20;
+        var closeBtnSize = 18;
         var closeBtnMargin = ((parsePxToNum(Style.Page.navHeight) - closeBtnSize) / 2) + 'px';
         thiz.closeBtn = new Button('img/times-solid.png', null, closeBtnSize, closeBtnSize, 12, 12);
         thiz.closeBtn.float('left');
         thiz.closeBtn.style({
             position: 'absolute',
-            top: closeBtnMargin,
+            top: '0px',
             right: '0px',
             // borderRadius: '50%',
         });
