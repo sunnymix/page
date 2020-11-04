@@ -333,5 +333,19 @@
         });
     };
 
+    Page.prototype.shrinkNav = function () {
+        var thiz = this;
+        thiz.ele.css({
+            // marginTop: 0,
+        });
+    };
+
+    Page.prototype.expandNav = function () {
+        var thiz = this;
+        thiz.ele.css({
+            // marginTop: Style.Page.navHeight,
+        });
+    };
+
     window.Page = Page;
 })();

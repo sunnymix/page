@@ -9,6 +9,8 @@
         thiz.tabs = [];
         thiz.initEle(place);
         thiz.loadCache();
+        thiz.initBind();
+        initEvent(thiz, Nav.prototype);
     };
 
     Nav.prototype.initEle = function (place) {
@@ -36,6 +38,20 @@
         new Clearfix(thiz.contentEle);
     };
 
+    Nav.prototype.initBind = function () {
+        var thiz = this;
+        thiz.ele
+            .on('mouseenter', function (e) {
+                thiz.trigger('mouseenter', e);
+            })
+            .on('mouseleave', function (e) {
+                thiz.trigger('mouseleave', e);
+            })
+            .on('mousemove', function (e) {
+                thiz.trigger('mousemove', e);
+            });
+    };
+
     Nav.prototype.createTab = function (pid, title) {
         var thiz = this;
         thiz.doCreateTab(pid, title);
@@ -48,7 +64,7 @@
         var curTab = null;
         if (idx >= 0) {
             var tab = thiz.tabs[idx];
-            
+
             tab.setTitle(title);
 
             curTab = tab;
@@ -113,6 +129,24 @@
             }
         }
         return idx;
+    };
+
+    Nav.prototype.shrink = function () {
+        var thiz = this;
+        thiz.ele.css({
+            // height: 0,
+            opacity: '0',
+        });
+        // thiz.ele.fadeOut(50);
+    };
+
+    Nav.prototype.expand = function () {
+        var thiz = this;
+        thiz.ele.css({
+            // height: Style.Page.navHeight,
+            opacity: '1',
+        });
+        // thiz.ele.fadeIn(50);
     };
 
     window.Nav = Nav;

@@ -13,7 +13,7 @@ jQuery(function () {
 
     page.addToolbar(toolbar);
 
-    window.onhashchange = function() {
+    window.onhashchange = function () {
         page.loadData();
     };
 
@@ -24,5 +24,44 @@ jQuery(function () {
     page.bind('save', function (pageData) {
         nav.updateTab(pageData.pid, pageData.title);
     });
+
+    function shrinkNav() {
+        nav.shrink();
+        page.shrinkNav();
+    }
+
+    function expandNav() {
+        nav.expand();
+        page.expandNav();
+    }
+
+    var navShrinkTimer;
+    var throttleExpandNav = throttle(function (isAutoShrink) {
+        return false;
+
+        expandNav();
+
+        clearTimeout(navShrinkTimer);
+
+        if (isTrue(isAutoShrink)) {
+            navShrinkTimer = setTimeout(function () {
+                shrinkNav();
+            }, 2000);
+        }
+    }, 100);
+
+    $(window).on('scroll', function () {
+        throttleExpandNav(true);
+    });
+
+    nav.bind('mouseenter', function () {
+        throttleExpandNav(false);
+    });
+
+    nav.bind('mouseleave', function () {
+        throttleExpandNav(true);
+    });
+
+    throttleExpandNav(true);
 
 });
