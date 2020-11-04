@@ -1,7 +1,7 @@
 (function () {
     function Tab(pid, title) {
         var thiz = this;
-        
+
         thiz.pid = pid;
         thiz.title = title;
 
@@ -31,19 +31,28 @@
         });
         thiz.ele.append(thiz.contentEle);
 
-        var closeBtnSize = 24;
+        var closeBtnSize = 20;
         var closeBtnMargin = ((parsePxToNum(Style.Page.navHeight) - closeBtnSize) / 2) + 'px';
         thiz.closeBtn = new Button('img/times-solid.png', null, closeBtnSize, closeBtnSize, 12, 12);
         thiz.closeBtn.float('left');
         thiz.closeBtn.style({
-            marginTop: closeBtnMargin,
-            marginRight: closeBtnMargin,
-            borderRadius: '50%',
+            position: 'absolute',
+            top: closeBtnMargin,
+            right: '0px',
+            // borderRadius: '50%',
         });
         thiz.closeBtn.appendTo(thiz.ele);
         thiz.closeBtn.click(function () {
             thiz.trigger('remove', thiz);
         });
+        thiz.closeBtn.hide();
+        thiz.ele
+            .on('mouseenter', function () {
+                thiz.closeBtn.show();
+            })
+            .on('mouseleave', function () {
+                thiz.closeBtn.hide();
+            });
 
         thiz.gapEle = new Ele('div', {
             borderRight: '1px solid #f8f8f8',
@@ -60,7 +69,7 @@
             display: 'block',
             height: Style.Page.navHeight,
             lineHeight: Style.Page.navHeight,
-            padding: '0 10px',
+            padding: '0 20px',
             href: '#' + thiz.pid,
             color: '#333333',
             textDecoration: 'none',
