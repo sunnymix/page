@@ -19,6 +19,7 @@
             left: 0,
             right: 0,
             top: 0,
+            height: Style.Page.navHeight,
             backgroundColor: '#ffffff',
             borderBottom: '1px solid #eeeeee',
             zIndex: '10',
@@ -42,11 +43,28 @@
             curTab = tab;
         } else {
             var newTab = new Tab(pid, title);
+
+            newTab.bind('remove', function (tab) {
+                thiz.removeTab(tab);
+            });
+
             thiz.tabs.push(newTab);
             newTab.appendTo(thiz.contentEle);
             curTab = newTab;
         }
         curTab.focus();
+    };
+
+    Nav.prototype.removeTab = function (tab) {
+        var thiz = this;
+        var idx = thiz.getTabIndex(tab.pid, tab.title);
+
+        if (idx < 0) {
+            return;
+        }
+
+        thiz.tabs.splice(idx, 1);
+        tab.ele.remove();
     };
 
     Nav.prototype.getTabIndex = function (pid, title) {
