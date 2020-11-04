@@ -11,7 +11,7 @@
             id: '.page',
             position: 'relative',
             zIndex: 1,
-            padding: '20px',
+            padding: '0px',
         });
 
         thiz.underEle = new Ele('div', {
@@ -35,7 +35,7 @@
             id: '.page-border',
             position: 'relative',
             maxWidth: thiz.maxWidth,
-            border: '1px solid #f9f9f9',
+            border: '0px solid #f9f9f9',
             margin: '0 auto',
             backgroundColor: '#ffffff',
         });
@@ -43,7 +43,7 @@
 
         thiz.boxEle = new Ele('div', {
             id: '.page-box',
-            border: '1px solid #d0d0d0',
+            border: '0px solid #d0d0d0',
             padding: thiz.paddingVertical + ' ' + thiz.paddingHorizontal,
             backgroundColor: '#ffffff',
         });
