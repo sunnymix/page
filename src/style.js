@@ -66,6 +66,17 @@
         navHeight: '40px',
     };
 
+    Style.Tab = {
+        normal: {
+            color: '#888888',
+            textShadow: '0 0 0 transparent',
+        },
+        active: {
+            color: '#000000',
+            textShadow: '0 0 5px rgba(0, 0, 0, 0.2)',
+        },
+    };
+
     Style.SiblingSchemas = [SCHEMA.CODE, SCHEMA.QUOTE];
 
     Style.isSiblingSchema = function (schema) {

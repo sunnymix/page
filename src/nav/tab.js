@@ -13,6 +13,7 @@
         var thiz = this;
 
         thiz.initEle();
+        thiz.blur();
 
         initEvent(thiz, Tab.prototype);
     };
@@ -71,7 +72,6 @@
             padding: '0 20px',
             href: '#' + thiz.pid,
             textDecoration: 'none',
-            color: '#888888',
         });
         thiz.contentEle.append(thiz.linkEle);
     };
@@ -89,17 +89,13 @@
     Tab.prototype.focus = function () {
         var thiz = this;
         thiz.active = true;
-        thiz.linkEle.css({
-            color: '#000000',
-        });
+        thiz.linkEle.css(Style.Tab.active);
     };
 
     Tab.prototype.blur = function () {
         var thiz = this;
         thiz.active = false;
-        thiz.linkEle.css({
-            color: '#888888',
-        });
+        thiz.linkEle.css(Style.Tab.normal);
     };
 
     Tab.prototype.setTitle = function (title) {
