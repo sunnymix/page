@@ -50,11 +50,46 @@
             .on('mousemove', function (e) {
                 thiz.trigger('mousemove', e);
             });
+
+        $(document).on('keydown', 'body', function (e) {
+            if (isCloseAction(e)) {
+                e.preventDefault();
+                e.stopPropagation();
+                thiz.closeTab();
+            }
+        });
+    };
+
+    Nav.prototype.closeTab = function () {
+        var thiz = this;
+        var idx = thiz.getFocusIndex();
+
+        if (idx < 0) {
+            return;
+        }
+
+        var tab = thiz.tabs[idx];
+        tab.ele.remove();
+        thiz.tabs.splice(idx, 1);
+
+        var activeIdx = idx - 1;
+        var activePid = null;
+        if (activeIdx >= 0) {
+            var activeTab = thiz.tabs[activeIdx];
+            activePid = activeTab.pid;
+        }
+        
+        thiz.loadPid(activePid);
+    };
+
+    Nav.prototype.loadPid = function (pid) {
+        window.location.hash = '#' + (pid || uuid());
+        window.location.reload();
     };
 
     Nav.prototype.focusTab = function (pid) {
         var thiz = this;
-        
+
         for (var i in thiz.tabs) {
             var tab = thiz.tabs[i];
             if (tab.eq(pid)) {
@@ -138,6 +173,19 @@
         for (var i in thiz.tabs) {
             var tab = thiz.tabs[i];
             if (tab.eq(pid)) {
+                idx = +i;
+                break;
+            }
+        }
+        return idx;
+    };
+
+    Nav.prototype.getFocusIndex = function (pid) {
+        var thiz = this;
+        var idx = -1;
+        for (var i in thiz.tabs) {
+            var tab = thiz.tabs[i];
+            if (isTrue(tab.active)) {
                 idx = +i;
                 break;
             }

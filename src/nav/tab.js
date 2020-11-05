@@ -32,7 +32,7 @@
         });
         thiz.ele.append(thiz.contentEle);
 
-        var closeBtnSize = 18;
+        var closeBtnSize = 14;
         thiz.closeBtn = new Button('img/times-solid.png', null, closeBtnSize, closeBtnSize, 12, 12);
         thiz.closeBtn.float('left');
         thiz.closeBtn.style({
@@ -71,6 +71,7 @@
             padding: '0 20px',
             href: '#' + thiz.pid,
             textDecoration: 'none',
+            color: '#888888',
         });
         thiz.contentEle.append(thiz.linkEle);
     };
@@ -87,6 +88,7 @@
 
     Tab.prototype.focus = function () {
         var thiz = this;
+        thiz.active = true;
         thiz.linkEle.css({
             color: '#000000',
         });
@@ -94,6 +96,7 @@
 
     Tab.prototype.blur = function () {
         var thiz = this;
+        thiz.active = false;
         thiz.linkEle.css({
             color: '#888888',
         });

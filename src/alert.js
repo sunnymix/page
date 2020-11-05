@@ -20,7 +20,7 @@
             borderRadius: '1px',
             backgroundColor: '#007bff',
             padding: '10px',
-            minWidth: '200px',
+            minWidth: '40px',
             maxWidth: '300px',
             color: '#ffffff',
             boxShadow: '0px 0px 2px 0px rgba(0, 0, 0, 0.15)',

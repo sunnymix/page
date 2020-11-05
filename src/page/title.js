@@ -35,7 +35,7 @@
     };
 
     Title.prototype.setData = function (data) {
-        this.block.setContentData(data || 'Title');
+        this.block.setContentData(data || '');
     };
 
     Title.prototype.focus = function () {

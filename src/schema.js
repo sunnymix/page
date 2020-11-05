@@ -9,7 +9,8 @@
         CODE: 'Code',
         GRID: 'Grid',
         TASK: 'Task',
-        QUOTE: 'Quote'
+        QUOTE: 'Quote',
+        REFER: 'Refer',
     };
 
     window.SCHEMA = SCHEMA;

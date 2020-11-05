@@ -447,7 +447,7 @@
 
     Writer.prototype.setData = function (data) {
         var thiz = this;
-        if (isNotEmpty(data)) {
+        if (isNotNone(data)) {
             thiz.ele.empty();
             thiz.blocks = [];
             var previousBlock = null;

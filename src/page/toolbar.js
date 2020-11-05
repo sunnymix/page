@@ -51,12 +51,10 @@
             if (isShowMenuAction(e)) {
                 e.preventDefault();
                 thiz.showMenu();
-            }
-            if (isEscapeAction(e)) {
+            } else if (isEscapeAction(e)) {
                 e.preventDefault();
                 thiz.hideMenu();
-            }
-            if (isCreatePaperAction(e)) {
+            } else if (isCreatePaperAction(e)) {
                 e.preventDefault();
                 thiz.menu.createPage();
             }

@@ -267,7 +267,7 @@
             'padding-bottom: ' + thiz.borderPaddingBottom,
             (isNotNone(thiz.boxShadow) ? 'box-shadow: ' + thiz.boxShadow : ''),
         ];
-        
+
         return style.join(';');
     };
 
@@ -300,7 +300,7 @@
             'background-color: ' + thiz.getHighlightColor(),
             (isNotNone(thiz.contentTextShadow) ? 'text-shadow: ' + thiz.contentTextShadow : ''),
         ];
-        
+
         return style.join(';');
     };
 
@@ -488,6 +488,10 @@
     };
 
     Style.prototype.initTitle = function () {
+        this
+            .setFontWeight('bold')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
+            ;
     };
 
     Style.prototype.initText = function () {
@@ -499,7 +503,7 @@
     Style.prototype.initH1 = function () {
         this
             .setFontWeight('bold')
-            .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
             // .setBorderBottom('2px', 'solid', '#e1e4e8')
             ;
     };
@@ -507,7 +511,7 @@
     Style.prototype.initH2 = function () {
         this
             .setFontWeight('bold')
-            .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 1) + 'px')
             // .setBorderBottom('1px', 'solid', '#e1e4e8')
             ;
     }

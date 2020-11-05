@@ -86,7 +86,7 @@
 
     Block.prototype.schemaVisible = function () {
         var thiz = this;
-        var isHighlight = [SCHEMA.TITLE, SCHEMA.H1, SCHEMA.H2, SCHEMA.H3].includes(thiz.schema);
+        var isHighlight = [SCHEMA.REFER, SCHEMA.TITLE, SCHEMA.H1, SCHEMA.H2, SCHEMA.H3].includes(thiz.schema);
         var isEdit = isNotTrue(thiz.readonly);
         var isNotInGrid = !thiz.isGridContext();
         return isHighlight && isEdit && isNotInGrid;
@@ -521,6 +521,12 @@
             e.preventDefault();
             e.stopPropagation();
             thiz.setSchema(SCHEMA.QUOTE);
+        }
+
+        if (e.keyCode == KEYCODE.E && isCommandOrControl(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            thiz.setSchema(SCHEMA.REFER);
         }
 
         if (e.keyCode == KEYCODE.UP) {
@@ -1059,6 +1065,16 @@
         thiz.contentEle.prop('href', link);
         thiz.contentEle.prop('target', '_blank');
         thiz.linkIconEle.prop('href', link);
+
+        if (thiz.isGrid()) {
+            return;
+        }
+
+        if (isBlank(thiz.getContentData())) {
+            thiz.setContentText(link);
+        }
+        
+        // TODO: Refer Schema
     };
 
     Block.prototype.getLinkData = function () {
@@ -1157,6 +1173,14 @@
 
     Block.prototype.isGridContext = function () {
         return this.context === SCHEMA.GRID;
+    };
+
+    Block.prototype.isQuote = function () {
+        return this.schema === SCHEMA.QUOTE;
+    };
+
+    Block.prototype.isRefer = function () {
+        return this.schema === SCHEMA.REFER;
     };
 
     window.Block = Block;

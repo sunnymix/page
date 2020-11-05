@@ -1,5 +1,5 @@
 (function () {
-    function Page(p, readonly, fullscreen) {
+    function Page(place, readonly, fullscreen) {
         var thiz = this;
         thiz.readonly = isTrue(readonly);
         thiz.fullscreen = isTrue(fullscreen);
@@ -55,7 +55,7 @@
             position: 'absolute',
             left: '60px',
             right: '60px',
-            top: '10px',
+            top: '20px',
             zIndex: 1,
         });
         thiz.boxEle.append(thiz.titleEle);
@@ -71,7 +71,7 @@
         });
         thiz.bodyEle.append(thiz.writerEle);
 
-        $(p).replaceWith(thiz.ele);
+        $(place).replaceWith(thiz.ele);
 
         thiz.getPid();
         thiz.init();
@@ -199,7 +199,7 @@
         thiz.title.focus();
     };
 
-    Page.prototype.throttleSave = function () {
+    Page.prototype.throttleSave = function (cb) {
         var thiz = this;
 
         if (thiz.readonly) {
@@ -207,16 +207,16 @@
         }
 
         if (isNone(thiz.throttleSaveFn)) {
-            thiz.throttleSaveFn = throttle(function () {
-                thiz.saveData(thiz.getData());
+            thiz.throttleSaveFn = throttle(function (cb) {
+                thiz.saveData(thiz.getData(), cb);
             }, 100);
         }
 
-        thiz.throttleSaveFn();
+        thiz.throttleSaveFn(cb);
     };
 
-    Page.prototype.save = function () {
-        this.throttleSave();
+    Page.prototype.save = function (cb) {
+        this.throttleSave(cb);
     };
 
     Page.prototype.getData = function () {
@@ -231,7 +231,7 @@
     Page.prototype.getTitleData = function () {
         var thiz = this;
         var title = thiz.title.getData();
-        return isEmpty(title) ? 'Title' : title;
+        return isEmpty(title) ? '' : title;
     };
 
     Page.prototype.getContentData = function () {
@@ -271,13 +271,11 @@
 
     Page.prototype.saveData = function (data, cb) {
         var thiz = this;
-        if (isNotNone(data)) {
+        if (isNotNone(data) && isNotBlank(data.title)) {
             restPost('/api/page', data, function (res) {
                 if (res.code === 0) {
-                    // success icon font: ☑
-                    // fail icon font: ☒
                     document.title = data.title;
-                    thiz.alertMsg(data.title + ' - saved!');
+                    thiz.alertMsg('Saved!');
                     if (isFunction(cb)) {
                         cb();
                     }

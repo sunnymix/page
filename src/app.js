@@ -18,7 +18,9 @@ jQuery(function () {
     };
 
     page.bind('load', function (pageData) {
-        nav.createTab(pageData.pid, pageData.title);
+        if (isNotNone(pageData)) {
+            nav.createTab(pageData.pid, pageData.title);
+        }
     });
 
     page.bind('save', function (pageData) {
