@@ -12,7 +12,6 @@
             position: 'relative',
             zIndex: 1,
             padding: '0px',
-            marginTop: Style.Page.navHeight,
         });
 
         thiz.underEle = new Ele('div', {
@@ -328,20 +327,6 @@
         data.title += '-Copy';
         thiz.saveData(data, function () {
             window.location.hash = '#' + data.pid;
-        });
-    };
-
-    Page.prototype.shrinkNav = function () {
-        var thiz = this;
-        thiz.ele.css({
-            // marginTop: 0,
-        });
-    };
-
-    Page.prototype.expandNav = function () {
-        var thiz = this;
-        thiz.ele.css({
-            // marginTop: Style.Page.navHeight,
         });
     };
 

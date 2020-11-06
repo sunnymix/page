@@ -26,14 +26,8 @@
             // height: Style.Page.navHeight,
             zIndex: '10',
             overflow: 'hidden',
-            overflowX: 'auto',
         });
         place.append(thiz.ele);
-
-        thiz.bodyEle = new Ele('div', {
-            id: '.nav-body',
-        });
-        // thiz.ele.append(thiz.bodyEle);
 
         thiz.contentEle = new Ele('div', {
             id: '.nav-content',
@@ -49,9 +43,15 @@
         var thiz = this;
         thiz.ele
             .on('mouseenter', function (e) {
+                thiz.ele.css({
+                    overflowX: 'auto',
+                });
                 thiz.trigger('mouseenter', e);
             })
             .on('mouseleave', function (e) {
+                thiz.ele.css({
+                    overflowX: 'hidden',
+                });
                 thiz.trigger('mouseleave', e);
             })
             .on('mousemove', function (e) {
@@ -85,7 +85,7 @@
             var activeTab = thiz.tabs[activeIdx];
             activePid = activeTab.pid;
         }
-        
+
         thiz.loadPid(activePid);
     };
 

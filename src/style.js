@@ -58,6 +58,8 @@
 
     Style.BaseFontSize = '13px';
 
+    Style.ScrollbarSize = '6px';
+
     Style.SmallFontSize = (parsePxToNum(Style.BaseFontSize) - 1) + 'px';
 
     Style.Page = {
@@ -598,6 +600,7 @@
             '    font-family: "PingFang SC", Aria;',
             '    font-size: ' + Style.BaseFontSize + ';',
             '    background-color: #ffffff;',
+            '    padding-top: ' + (parsePxToNum(Style.Page.navHeight) + parsePxToNum(Style.Page.ScrollbarSize)) + 'px',
             '}',
             'ol, ul {',
             '    list-style: none;',
@@ -621,6 +624,19 @@
             '    font-family: Code;',
             '    src: local(SFMono-Regular), local(RobotoMono-Regular);',
             '}',
+            // '::-webkit-scrollbar {',
+            // '    height: ' + (parsePxToNum(Style.ScrollbarSize) * 1) + 'px;',
+            // '    width: ' + Style.ScrollbarSize + ';',
+            // '}',
+            // '::-webkit-scrollbar-track {',
+            // '    background: #ffffff;',
+            // '}',
+            // '::-webkit-scrollbar-thumb {',
+            // '    background: #dddddd;',
+            // '}',
+            // '::-webkit-scrollbar-thumb:hover {',
+            // '    background: #aaaaaa;',
+            // '}',
             '</style>'
         ].join(''));
     };
