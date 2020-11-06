@@ -23,19 +23,26 @@
             right: 0,
             top: 0,
             backgroundColor: '#ffffff',
-            borderBottom: '1px solid #eeeeee',
-            height: Style.Page.navHeight,
+            // height: Style.Page.navHeight,
             zIndex: '10',
             overflow: 'hidden',
+            overflowX: 'auto',
         });
         place.append(thiz.ele);
 
+        thiz.bodyEle = new Ele('div', {
+            id: '.nav-body',
+        });
+        // thiz.ele.append(thiz.bodyEle);
+
         thiz.contentEle = new Ele('div', {
             id: '.nav-content',
+            display: 'flex',
+            borderBottom: '1px solid #eeeeee',
         });
         thiz.ele.append(thiz.contentEle);
 
-        new Clearfix(thiz.contentEle);
+        // new Clearfix(thiz.contentEle);
     };
 
     Nav.prototype.initBind = function () {

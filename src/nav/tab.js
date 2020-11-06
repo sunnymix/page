@@ -24,7 +24,7 @@
         thiz.ele = new Ele('div', {
             id: '.tab',
             position: 'relative',
-            float: 'left',
+            flexShrink: '0',
         });
 
         thiz.contentEle = new Ele('div', {

@@ -153,6 +153,8 @@
         'verticalAlign',
         'overflow', 'overflowX', 'overflowY',
         'userSelect',
+        'flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'alignItems', 'alignContent',
+        'order', 'flexGrow', 'flexShrink', 'flexBasis', 'flex', 'alignSelf',
     ];
 
     window.Ele = Ele;
