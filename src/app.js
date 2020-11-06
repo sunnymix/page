@@ -19,6 +19,7 @@ jQuery(function () {
 
     page.bind('load', function (pageData) {
         if (isNotNone(pageData)) {
+            $('body, html').scrollTop(0);
             nav.createTab(pageData.pid, pageData.title);
         }
     });
