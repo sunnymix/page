@@ -51,9 +51,4 @@ jQuery(function () {
 
     throttleExpandNav(false);
 
-    $(window).on('beforeunload', function (e) {
-        e.preventDefault();
-        return 'Really quit?';
-    });
-
 });
