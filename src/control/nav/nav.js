@@ -23,7 +23,7 @@
             right: 0,
             top: 0,
             backgroundColor: '#ffffff',
-            // height: Style.Page.navHeight,
+            borderBottom: '1px solid #eeeeee',
             zIndex: '10',
             overflow: 'hidden',
         });
@@ -32,7 +32,6 @@
         thiz.contentEle = new Ele('div', {
             id: '.nav-content',
             display: 'flex',
-            borderBottom: '1px solid #eeeeee',
         });
         thiz.ele.append(thiz.contentEle);
 
