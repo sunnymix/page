@@ -199,7 +199,7 @@
     Writer.prototype.handlePasteEvent = function (block, e) {
         var thiz = this;
         if (!thiz.isGridContext()) {
-            var pasteText = getPasteText(e).trim();
+            var pasteText = getPasteText(e);
             thiz.pasteRows(block, pasteText);
         }
     };

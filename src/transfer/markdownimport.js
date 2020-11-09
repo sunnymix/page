@@ -79,7 +79,7 @@
         var cellTextArray = contentRowText.split('|');
         var cellDataArray = [];
         for (var i in cellTextArray) {
-            var cellText = cellTextArray[i].trim();
+            var cellText = cellTextArray[i];
             var cellData = thiz.parseGridCell(cellText);
             cellDataArray.push(cellData);
         }
