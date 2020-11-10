@@ -379,14 +379,12 @@
         if (thiz.block.getCheckData() > 0) {
             // color = '#f0f0f0';
         }
-        if (light > 0) {
-            color = '#FFFD7D';
-        }
-        if (light > 1) {
-            color = '#cce5ff';
-        }
-        if (light > 2) {
+        if (light == 1) {
+            color = '#b8e994';
+        } else if (light == 2) {
             color = '#f8d7da';
+        } else if (light == 3) {
+            color = '#fffd7d';
         }
         return color;
     };

@@ -243,7 +243,7 @@
 
         var query = 'pid=' + thiz.getPid();
 
-        restGet('http://page.me/api/page?' + query, function (res) {
+        restGet(ApiHost + '/api/page?' + query, function (res) {
             if (res.code === 0) {
                 thiz.renderData(res.data);
                 thiz.trigger('load', res.data);
@@ -271,7 +271,7 @@
     Page.prototype.saveData = function (data, cb) {
         var thiz = this;
         if (isNotNone(data) && isNotBlank(data.title)) {
-            restPost('http://page.me/api/page', data, function (res) {
+            restPost(ApiHost + '/api/page', data, function (res) {
                 if (res.code === 0) {
                     document.title = data.title;
                     thiz.alertMsg('Saved!');
