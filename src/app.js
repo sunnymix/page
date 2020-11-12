@@ -50,5 +50,4 @@ jQuery(function () {
     }, 100);
 
     throttleExpandNav(false);
-
 });

@@ -8,6 +8,7 @@
         var thiz = this;
         thiz.tabs = [];
         thiz.initEle(place);
+        thiz.loadPinTabs();
         thiz.loadCache();
         thiz.initBind();
         initEvent(thiz, Nav.prototype);
@@ -140,6 +141,16 @@
     Nav.prototype.saveCache = function () {
         var thiz = this;
         localStorage.setItem('page-tabs-cache', JSON.stringify(thiz.tabs));
+    };
+
+    Nav.prototype.loadPinTabs = function () {
+        var thiz = this;
+        if (isNotEmpty(pinTabs)) {
+            for (var i in pinTabs) {
+                var pidAndTitle = pinTabs[i].split(':');
+                thiz.doCreateTab(pidAndTitle[0], pidAndTitle[1]);
+            }
+        }
     };
 
     Nav.prototype.loadCache = function () {

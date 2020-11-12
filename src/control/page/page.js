@@ -159,7 +159,6 @@
 
         var selectBlockArray = thiz.writer.getSelectBlocks();
         var exportRes = new MarkdownExport().parseBlocks(selectBlockArray).join('');
-        console.log(exportRes);
         thiz.selectAction.copy(exportRes);
 
         thiz.closeSelect();

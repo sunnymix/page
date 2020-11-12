@@ -106,7 +106,8 @@
         if (!thiz.isSameSchema(data, previousData)) {
             res.push('```\n');
         }
-        res.push(data.text + '\n');
+        var fixText = data.text.replace(/\s/g, ' ');
+        res.push(fixText + '\n');
         if (!thiz.isSameSchema(data, nextData)) {
             res.push('```\n\n');
         }
