@@ -448,15 +448,34 @@
     Writer.prototype.setData = function (data) {
         var thiz = this;
         if (isNotNone(data)) {
+            clearTimeout(thiz.setDataChunksTimer);
+            
             thiz.ele.empty();
             thiz.blocks = [];
+            
+            var chunks = data.chunk(5);
+            thiz.setDataChunks(thiz, chunks);
+        }
+    };
+
+    Writer.prototype.setDataChunks = function (writer, chunks) {
+        if (isNotEmpty(chunks)) {
+            var chunk = chunks[0];
+            writer.setDataChunk(writer, chunk);
+            writer.setDataChunksTimer = setTimeout(function () {
+                writer.setDataChunks(writer, chunks.slice(1));
+            }, 20);
+        }
+    };
+
+    Writer.prototype.setDataChunk = function (writer, chunk) {
+        if (isNotEmpty(chunk)) {
             var previousBlock = null;
-            for (var i = 0; i < data.length; i++) {
-                var blockData = data[i];
-                var block = thiz.createBlock(previousBlock, blockData);
+            for (var i = 0; i < chunk.length; i++) {
+                var blockData = chunk[i];
+                var block = writer.createBlock(previousBlock, blockData);
                 previousBlock = block;
             }
-            // reload first block
         }
     };
 
