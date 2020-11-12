@@ -147,7 +147,7 @@
         var thiz = this;
         if (isNotEmpty(pinTabs)) {
             for (var i in pinTabs) {
-                var pidAndTitle = pinTabs[i].split(':');
+                var pidAndTitle = pinTabs[i].split(',');
                 thiz.doCreateTab(pidAndTitle[0], pidAndTitle[1]);
             }
         }
