@@ -23,7 +23,7 @@
             '        display: inline-block;',
             '        border: 1px solid transparent;',
             '        border-radius: 0px;',
-            '        opacity: 0.5;',
+            '        opacity: 0.3;',
             '        cursor: pointer;',
             '        background-color: ' + thiz.background + ';',
             '    "',
@@ -155,7 +155,7 @@
             thiz.ele.css({
                 // background: thiz.background,
                 //boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)',
-                opacity: 0.5,
+                opacity: 0.3,
                 //borderColor: 'transparent',
             });
         });
