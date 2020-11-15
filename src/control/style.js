@@ -503,7 +503,7 @@
     Style.prototype.initTitle = function () {
         this
             .setFontWeight('bold')
-            .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
             ;
     };
 
@@ -516,7 +516,7 @@
     Style.prototype.initH1 = function () {
         this
             .setFontWeight('bold')
-            .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
             // .setBorderBottom('2px', 'solid', '#e1e4e8')
             ;
     };
@@ -524,7 +524,7 @@
     Style.prototype.initH2 = function () {
         this
             .setFontWeight('bold')
-            .setFontSize((parsePxToNum(Style.BaseFontSize) + 1) + 'px')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
             // .setBorderBottom('1px', 'solid', '#e1e4e8')
             ;
     }
