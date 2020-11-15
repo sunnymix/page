@@ -1090,7 +1090,7 @@
     Block.prototype.isShowLink = function () {
         var thiz = this;
         var notBlankLink = isNotBlank(thiz.getLinkData());
-        return !thiz.isLock && !thiz.readonly && notBlankLink;
+        return !thiz.isLock && notBlankLink;
     };
 
     Block.prototype.showLink = function () {
