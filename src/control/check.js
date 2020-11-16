@@ -6,6 +6,7 @@
 
     Check.prototype.init = function () {
         var thiz = this;
+        thiz.size = 14;
         thiz.initEle();
         thiz.initBind();
         initEvent(thiz, Check.prototype);
@@ -16,8 +17,8 @@
         thiz.ele = new Ele('div', {
             id: '.check',
             position: 'relative',
-            width: '16px',
-            height: '16px',
+            width: thiz.size + 'px',
+            height: thiz.size + 'px',
             borderRadius: '50%',
             cursor: 'pointer',
         });
@@ -30,7 +31,7 @@
             top: 0,
             bottom: 0,
             backgroundColor: '#ffffff',
-            border: '1px solid #000000',
+            border: '2px solid #999999',
             borderRadius: '50%',
         });
         thiz.ele.append(thiz.offEle);
@@ -43,23 +44,10 @@
             right: 0,
             top: 0,
             bottom: 0,
-            backgroundColor: '#000000',
-            border: '1px solid #000000',
+            backgroundColor: '#999999',
             borderRadius: '50%',
         });
         thiz.ele.append(thiz.onEle);
-
-        thiz.onBgEle = new Ele('div', {
-            id: '.check-on-bg',
-            position: 'absolute',
-            width: '12px',
-            height: '12px',
-            left: '1px',
-            top: '1px',
-            borderRadius: '50%',
-            backgroundColor: '#000000',
-        });
-        thiz.onEle.append(thiz.onBgEle);
 
         thiz.onDrawEle = new Ele('div', {
             id: '.check-on-draw',
@@ -70,7 +58,7 @@
             borderBottom: '1px solid #ffffff',
             width: '5px',
             height: '2px',
-            transform: 'rotate(-45deg)',
+            transform: 'rotate(-50deg)',
         });
         thiz.onEle.append(thiz.onDrawEle);
     };
@@ -92,10 +80,6 @@
 
         thiz.onEle.css({
             borderColor: color,
-            backgroundColor: color,
-        });
-
-        thiz.onBgEle.css({
             backgroundColor: color,
         });
     };
