@@ -35,8 +35,6 @@
             display: 'flex',
         });
         thiz.ele.append(thiz.contentEle);
-
-        // new Clearfix(thiz.contentEle);
     };
 
     Nav.prototype.initBind = function () {

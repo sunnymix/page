@@ -29,17 +29,15 @@
 
         thiz.contentEle = new Ele('div', {
             id: '.tab-content',
-            float: 'left'
         });
         thiz.ele.append(thiz.contentEle);
 
         var closeBtnSize = 14;
         thiz.closeBtn = new Button('img/times-solid.png', null, closeBtnSize, closeBtnSize, 12, 12);
-        thiz.closeBtn.float('left');
         thiz.closeBtn.style({
             position: 'absolute',
             top: '0px',
-            right: '0px',
+            left: '0px',
             // borderRadius: '50%',
         });
         thiz.closeBtn.appendTo(thiz.ele);
