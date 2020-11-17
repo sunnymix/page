@@ -19,7 +19,6 @@
             position: 'relative',
             width: thiz.size + 'px',
             height: thiz.size + 'px',
-            borderRadius: '50%',
             cursor: 'pointer',
         });
 
@@ -32,7 +31,7 @@
             bottom: 0,
             backgroundColor: '#ffffff',
             border: '2px solid #999999',
-            borderRadius: '50%',
+            borderRadius: '1px',
         });
         thiz.ele.append(thiz.offEle);
 
@@ -45,7 +44,7 @@
             top: 0,
             bottom: 0,
             backgroundColor: '#999999',
-            borderRadius: '50%',
+            borderRadius: '1px',
         });
         thiz.ele.append(thiz.onEle);
 
@@ -53,11 +52,11 @@
             id: '.check-on-draw',
             position: 'absolute',
             left: '4px',
-            top: '5px',
+            top: '4px',
             borderLeft: '1px solid #ffffff',
             borderBottom: '1px solid #ffffff',
-            width: '5px',
-            height: '2px',
+            width: '6px',
+            height: '3px',
             transform: 'rotate(-50deg)',
         });
         thiz.onEle.append(thiz.onDrawEle);

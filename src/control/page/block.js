@@ -102,13 +102,13 @@
         thiz.initBackgroundEle();
         thiz.boxEle.append(thiz.backgroundEle);
 
-        // border
-        thiz.initBorderEle(initData);
-        thiz.boxEle.append(thiz.borderEle);
-
         // tags
         thiz.initTagsEle();
         thiz.boxEle.append(thiz.tagsEle);
+
+        // border
+        thiz.initBorderEle(initData);
+        thiz.boxEle.append(thiz.borderEle);
 
         // task
         thiz.initTaskEle();
@@ -361,15 +361,16 @@
             id: '.block-priority-tag',
             position: 'absolute',
             display: 'none',
-            left: 0,
-            top: 0,
-            width: '20px',
-            height: '16px',
-            lineHeight: '16px',
+            left: '-16px',
+            top: '-8px',
+            width: '14px',
+            height: '14px',
+            lineHeight: '14px',
             marginTop: 0,
             textAlign: 'center',
             color: '#ffffff',
-            borderRadius: '1px',
+            borderRadius: '50%',
+            zIndex: 0,
         });
         thiz.tagsEle.append(thiz.priorityTagEle);
 
@@ -753,7 +754,7 @@
                     .css({
                         backgroundColor: color
                     });
-                thiz.priorityDataEle.text('P' + thiz.priority);
+                thiz.priorityDataEle.text(thiz.priority);
             } else {
                 thiz.priorityTagEle.hide();
                 thiz.priorityDataEle.text(thiz.priority);

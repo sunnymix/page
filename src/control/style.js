@@ -335,14 +335,6 @@
         ) + 'px';
     };
 
-    Style.prototype.getLinkLeft = function () {
-        var thiz = this;
-        return (
-            parsePxToNum(thiz.getTagsLeft())
-            + (thiz.block.isShowPriority() ? thiz.priorityWidth : 0)
-        ) + 'px';
-    };
-
     Style.prototype.getContentPaddingLeft = function () {
         var thiz = this;
         return thiz.contentPaddingLeft;
@@ -463,7 +455,7 @@
     Style.prototype.getContentMarginLeft = function () {
         var thiz = this;
         return (
-            parsePxToNum(thiz.getLinkLeft())
+            parsePxToNum(thiz.getTagsLeft())
             - parsePxToNum(thiz.contentPaddingLeft)
         ) + 'px';
     };
