@@ -74,8 +74,8 @@
 
     Style.Tab = {
         normal: {
-            color: '#888888',
-            fontWeight: 'normal',
+            color: '#999999',
+            fontWeight: 'bold',
             // textShadow: '0 0 0 transparent',
         },
         active: {
