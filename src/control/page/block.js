@@ -108,6 +108,10 @@
         thiz.initBorderEle(initData);
         thiz.boxEle.append(thiz.borderEle);
 
+        // indent
+        thiz.initIndentEle();
+        thiz.boxEle.append(thiz.indentEle);
+
         // task
         thiz.initTaskEle();
         thiz.boxEle.append(thiz.task.ele);
@@ -120,6 +124,48 @@
         thiz.initLinkEle();
         thiz.boxEle.append(thiz.linkEle);
         thiz.link = new Link(thiz.linkEle);
+    };
+
+    Block.prototype.initIndentEle = function () {
+        var thiz = this;
+        
+        thiz.indentEle = new Ele('div', {
+            id: '.block-indent',
+            position: 'absolute',
+            left: 6,
+            top: 0,
+            bottom: 0,
+        });
+
+        thiz.indent1Ele = new Ele('div', {
+            id: '.block-indent1',
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            borderLeft: '2px solid rgba(0, 0, 0, 0.05)'
+        });
+        thiz.indentEle.append(thiz.indent1Ele);
+
+        thiz.indent2Ele = new Ele('div', {
+            id: ".block-indent2",
+            position: 'absolute',
+            left: '10px',
+            top: 0,
+            bottom: 0,
+            borderLeft: '2px solid rgba(0, 0, 0, 0.05)'
+        });
+        thiz.indentEle.append(thiz.indent2Ele);
+
+        thiz.indent3Ele = new Ele('div', {
+            id: ".block-indent3",
+            position: 'absolute',
+            left: '20px',
+            top: 0,
+            bottom: 0,
+            borderLeft: '2px solid rgba(0, 0, 0, 0.05)'
+        });
+        thiz.indentEle.append(thiz.indent3Ele);
     };
 
     Block.prototype.initBackgroundEle = function () {
@@ -799,7 +845,48 @@
             thiz.attachEle.css({
                 paddingLeft: thiz.style.contentPaddingLeft
             });
+
+            thiz.applyIndentStyle();
         }
+    };
+
+    Block.prototype.applyIndentStyle = function () {
+        var thiz = this;
+        var indentValue = thiz.getIndentValue();
+
+        thiz.indent1Ele.hide();
+        thiz.indent2Ele.hide();
+        thiz.indent3Ele.hide();
+        
+        if (indentValue > 0) {
+            // thiz.indent1Ele.show();
+        }
+
+        if (indentValue > 1) {
+            thiz.indent2Ele.show();
+        }
+
+        if (indentValue > 2) {
+            // thiz.indent3Ele.show();
+        }
+    };
+
+    Block.prototype.getIndentValue = function () {
+        var thiz = this;
+        
+        var indentValueMap = {};
+        indentValueMap[SCHEMA.REFER] = 0;
+        indentValueMap[SCHEMA.TITLE] = 0;
+        indentValueMap[SCHEMA.H1] = 0;
+        indentValueMap[SCHEMA.H2] = 1;
+        indentValueMap[SCHEMA.H3] = 2;
+        indentValueMap[SCHEMA.TEXT] = 3;
+        indentValueMap[SCHEMA.CODE] = 3;
+        indentValueMap[SCHEMA.GRID] = 3;
+        indentValueMap[SCHEMA.TASK] = 3;
+        indentValueMap[SCHEMA.QUOTE] = 3;
+
+        return indentValueMap[thiz.schema] || 0;
     };
 
     Block.prototype.isFirstBlock = function () {

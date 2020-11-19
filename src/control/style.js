@@ -47,7 +47,7 @@
         thiz.contentBorderTop = '0px solid transparent';
         thiz.contentBorderBottom = '0px solid transparent';
 
-        thiz.contentBackgroundColor = '#ffffff';
+        thiz.contentBackgroundColor = 'transparent';
 
         thiz.contentMarginLeft = '0px';
         thiz.contentMarginRight = '0px';
@@ -507,10 +507,11 @@
         var thiz = this;
         var handers = {};
         handers[SCHEMA.TITLE] = thiz.initTitle;
-        handers[SCHEMA.TEXT] = thiz.initText;
         handers[SCHEMA.H1] = thiz.initH1;
         handers[SCHEMA.H2] = thiz.initH2;
         handers[SCHEMA.H3] = thiz.initH3;
+        handers[SCHEMA.TEXT] = thiz.initText;
+        handers[SCHEMA.GRID] = thiz.initGrid;
         handers[SCHEMA.CODE] = thiz.initCode;
         handers[SCHEMA.TASK] = thiz.initTask;
         handers[SCHEMA.QUOTE] = thiz.initQuote;
@@ -523,20 +524,14 @@
     Style.prototype.initTitle = function () {
         this
             .setFontWeight('bold')
-            .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
-            ;
-    };
-
-    Style.prototype.initText = function () {
-        this
-            .setContentMarginLeft('30px')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
             ;
     };
 
     Style.prototype.initH1 = function () {
         this
             .setFontWeight('bold')
-            .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
             // .setBorderBottom('2px', 'solid', '#e1e4e8')
             ;
     };
@@ -544,7 +539,7 @@
     Style.prototype.initH2 = function () {
         this
             .setFontWeight('bold')
-            .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 1) + 'px')
             // .setBorderBottom('1px', 'solid', '#e1e4e8')
             .setContentMarginLeft('10px')
             ;
@@ -559,11 +554,23 @@
             ;
     };
 
+    Style.prototype.initText = function () {
+        this
+            .setContentMarginLeft('30px')
+            ;
+    };
+
+    Style.prototype.initGrid = function () {
+        this
+            .setContentMarginLeft('30px')
+            ;
+    };
+
     Style.prototype.initCode = function () {
         this
             .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
             .setBackgroundColor('#f6f8fa')
-            .setMarginLeft('10px')
+            .setMarginLeft('30px')
             .setBorderTop('1px', 'solid', '#f6f8fa')
             .setBorderBottom('1px', 'solid', '#f6f8fa')
             .setBorderLeft('1px', 'solid', '#f6f8fa')
