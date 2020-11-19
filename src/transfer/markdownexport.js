@@ -4,6 +4,8 @@
         thiz.init();
     }
 
+    var blockGap = '\n';
+
     MarkdownExport.prototype.init = function () {
         var thiz = this;
     };
@@ -82,22 +84,22 @@
 
     MarkdownExport.prototype.parseTextBlock = function (data) {
         var thiz = this;
-        return thiz.parseTextContent(data) + '\n\n';
+        return thiz.parseTextContent(data) + blockGap;
     };
 
     MarkdownExport.prototype.parseH1Block = function (data) {
         var thiz = this;
-        return '# ' + thiz.parseTextContent(data) + '\n\n';
+        return '# ' + thiz.parseTextContent(data) + blockGap;
     };
 
     MarkdownExport.prototype.parseH2Block = function (data) {
         var thiz = this;
-        return '## ' + thiz.parseTextContent(data) + '\n\n';
+        return '## ' + thiz.parseTextContent(data) + blockGap;
     };
 
     MarkdownExport.prototype.parseH3Block = function (data) {
         var thiz = this;
-        return '### ' + thiz.parseTextContent(data) + '\n\n';
+        return '### ' + thiz.parseTextContent(data) + 'blockGap';
     };
 
     MarkdownExport.prototype.parseCodeBlock = function (data, previousData, nextData) {
@@ -109,7 +111,7 @@
         var fixText = data.text.replace(/\s/g, ' ');
         res.push(fixText + '\n');
         if (!thiz.isSameSchema(data, nextData)) {
-            res.push('```\n\n');
+            res.push('```' + blockGap);
         }
         return res.join('');
     };
@@ -150,7 +152,7 @@
                     rowsRes.push(gapRes);
                 }
             }
-            res = rowsRes.join('\n') + '\n\n';
+            res = rowsRes.join('\n') + blockGap;
         }
         return res;
     };
@@ -158,12 +160,12 @@
     MarkdownExport.prototype.parseTaskBlock = function (data) {
         var thiz = this;
         var check = (data.check === 1) ? 'x' : ' ';
-        return '[' + check + '] ' + thiz.parseTextContent(data) + '\n\n';
+        return '[' + check + '] ' + thiz.parseTextContent(data) + blockGap;
     };
 
     MarkdownExport.prototype.parseQuoteBlock = function (data) {
         var thiz = this;
-        return '> ' + thiz.parseTextContent(data) + '\n\n';
+        return '> ' + thiz.parseTextContent(data) + blockGap;
     };
 
     MarkdownExport.prototype.parseBlockAttach = function (data) {
@@ -171,7 +173,7 @@
         var attach = data.attach;
         var res = '';
         if (isNotEmpty(attach)) {
-            res = '![attach](' + attach + ')\n\n';
+            res = '![attach](' + attach + ')' + blockGap;
         }
         return res;
     };
