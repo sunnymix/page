@@ -143,7 +143,9 @@
             left: 0,
             top: 0,
             bottom: 0,
-            borderLeft: '2px solid rgba(0, 0, 0, 0.05)'
+            width: '2px',
+            backgroundColor: 'rgba(0, 0, 0, 0.08)',
+            borderRadius: '4px',
         });
         thiz.indentEle.append(thiz.indent1Ele);
 
@@ -153,7 +155,8 @@
             left: '10px',
             top: 0,
             bottom: 0,
-            borderLeft: '2px solid rgba(0, 0, 0, 0.05)'
+            width: '2px',
+            backgroundColor: 'rgba(0, 0, 0, 0.08)',
         });
         thiz.indentEle.append(thiz.indent2Ele);
 
@@ -163,7 +166,8 @@
             left: '20px',
             top: 0,
             bottom: 0,
-            borderLeft: '2px solid rgba(0, 0, 0, 0.05)'
+            width: '2px',
+            backgroundColor: 'rgba(0, 0, 0, 0.08)',
         });
         thiz.indentEle.append(thiz.indent3Ele);
     };
@@ -857,6 +861,10 @@
         thiz.indent1Ele.hide();
         thiz.indent2Ele.hide();
         thiz.indent3Ele.hide();
+
+        if (thiz.isGridContext()) {
+            return;
+        }
         
         if (indentValue > 0) {
             // thiz.indent1Ele.show();

@@ -532,7 +532,6 @@
         this
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
-            // .setBorderBottom('2px', 'solid', '#e1e4e8')
             ;
     };
 
@@ -540,7 +539,6 @@
         this
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 1) + 'px')
-            // .setBorderBottom('1px', 'solid', '#e1e4e8')
             .setContentMarginLeft('10px')
             ;
     }
@@ -549,7 +547,6 @@
         this
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 0) + 'px')
-            // .setBorderBottom('1px', 'dashed', '#e1e4e8')
             .setContentMarginLeft('20px')
             ;
     };
@@ -569,15 +566,11 @@
     Style.prototype.initCode = function () {
         this
             .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
-            .setBackgroundColor('#f6f8fa')
-            .setMarginLeft('30px')
-            .setBorderTop('1px', 'solid', '#f6f8fa')
-            .setBorderBottom('1px', 'solid', '#f6f8fa')
-            .setBorderLeft('1px', 'solid', '#f6f8fa')
-            .setBorderRight('1px', 'solid', '#f6f8fa')
-            .setContentPaddingLeft('5px')
-            .setContentPaddingRight('5px')
-            // .setBoxShadow('0 0 1px 0 rgba(0, 0, 0, 0.1)')
+            .setContentMarginLeft('30px')
+            .setContentPaddingLeft('15px')
+            .setContentPaddingRight('15px')
+            .setFontSize(Style.SmallFontSize)
+            .setColor('#666666')
             ;
     };
 
