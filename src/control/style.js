@@ -585,6 +585,8 @@
             .setContentBorderLeft('2px', 'solid', '#e1e4e8')
             .setContentBackgroundColor('#f8f8f8')
             .setContentMarginLeft('35px')
+            .setContentPaddingLeft('15px')
+            .setContentPaddingRight('15px')
             ;
     };
 

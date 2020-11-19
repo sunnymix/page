@@ -246,7 +246,6 @@
             SCHEMA.H2,
             SCHEMA.H3,
             SCHEMA.GRID,
-            SCHEMA.QUOTE,
         ].includes(blockSchema)) {
             res = SCHEMA.TEXT;
         }
