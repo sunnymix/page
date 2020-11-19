@@ -104,10 +104,6 @@
         thiz.initBackgroundEle();
         thiz.boxEle.append(thiz.backgroundEle);
 
-        // tags
-        thiz.initTagsEle();
-        thiz.boxEle.append(thiz.tagsEle);
-
         // border
         thiz.initBorderEle(initData);
         thiz.boxEle.append(thiz.borderEle);
@@ -115,6 +111,10 @@
         // task
         thiz.initTaskEle();
         thiz.boxEle.append(thiz.task.ele);
+
+        // tags
+        thiz.initTagsEle();
+        thiz.boxEle.append(thiz.tagsEle);
 
         // link
         thiz.initLinkEle();
@@ -363,11 +363,11 @@
             id: '.block-priority-tag',
             position: 'absolute',
             display: 'none',
-            left: '-16px',
-            top: '-8px',
-            width: '14px',
-            height: '14px',
-            lineHeight: '14px',
+            left: '0px',
+            top: '-12px',
+            width: '12px',
+            height: '12px',
+            lineHeight: '12px',
             marginTop: 0,
             textAlign: 'center',
             color: '#ffffff',

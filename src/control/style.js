@@ -42,8 +42,12 @@
         thiz.contentPaddingLeft = '5px';
         thiz.contentPaddingRight = '5px';
 
+        thiz.contentBorderLeft = '0px solid transparent';
+        thiz.contentBorderRight = '0px solid transparent';
         thiz.contentBorderTop = '0px solid transparent';
         thiz.contentBorderBottom = '0px solid transparent';
+
+        thiz.contentBackgroundColor = '#ffffff';
 
         thiz.contentMarginLeft = '0px';
         thiz.contentMarginRight = '0px';
@@ -170,6 +174,22 @@
         return thiz;
     };
 
+    Style.prototype.setContentBorderLeft = function (size, style, color) {
+        var thiz = this;
+        thiz.contentBorderLeft = size + ' ' +
+            (style || 'solid') + ' ' +
+            (color || thiz.color);
+        return thiz;
+    };
+
+    Style.prototype.setContentBorderRight = function (size, style, color) {
+        var thiz = this;
+        thiz.contentBorderRight = size + ' ' +
+            (style || 'solid') + ' ' +
+            (color || thiz.color);
+        return thiz;
+    };
+
     Style.prototype.setContentBorderTop = function (size, style, color) {
         var thiz = this;
         thiz.contentBorderTop = size + ' ' +
@@ -184,6 +204,12 @@
             (style || 'solid') + ' ' +
             (color || thiz.color);
         return this;
+    };
+
+    Style.prototype.setContentBackgroundColor = function (contentBackgroundColor) {
+        var thiz = this;
+        thiz.contentBackgroundColor = contentBackgroundColor;
+        return thiz;
     };
 
     Style.prototype.setBorderRadius = function () {
@@ -305,6 +331,8 @@
             'padding-bottom: ' + thiz.contentPaddingBottom,
             'padding-left: ' + thiz.getContentPaddingLeft(),
             'padding-right: ' + thiz.getContentPaddingRight(),
+            'border-left: ' + thiz.contentBorderLeft,
+            'border-right: ' + thiz.contentBorderRight,
             'border-top: ' + thiz.contentBorderTop,
             'border-bottom: ' + thiz.getContentBorderBottom(),
             'border-radius: 0px',
@@ -366,7 +394,7 @@
 
     Style.prototype.getHighlightColor = function () {
         var thiz = this;
-        var color = 'transparent';
+        var color = thiz.contentBackgroundColor;
         var light = thiz.block.getHighlightData();
         if (thiz.block.getCheckData() > 0) {
             // color = '#f0f0f0';
@@ -501,7 +529,7 @@
 
     Style.prototype.initText = function () {
         this
-            .setContentMarginLeft('10px')
+            .setContentMarginLeft('30px')
             ;
     };
 
@@ -518,6 +546,7 @@
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
             // .setBorderBottom('1px', 'solid', '#e1e4e8')
+            .setContentMarginLeft('10px')
             ;
     }
 
@@ -526,6 +555,7 @@
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 0) + 'px')
             // .setBorderBottom('1px', 'dashed', '#e1e4e8')
+            .setContentMarginLeft('20px')
             ;
     };
 
@@ -546,14 +576,15 @@
 
     Style.prototype.initTask = function () {
         this
-            .setContentMarginLeft('10px')
+            .setContentMarginLeft('30px')
             ;
     };
 
     Style.prototype.initQuote = function () {
         this
-            .setBorderLeft('2px', 'solid', '#e1e4e8')
-            .setContentMarginLeft('8px')
+            .setContentBorderLeft('2px', 'solid', '#e1e4e8')
+            .setContentBackgroundColor('#f8f8f8')
+            .setContentMarginLeft('35px')
             ;
     };
 
