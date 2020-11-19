@@ -42,6 +42,12 @@
             && isCommandOrControl(e);
     };
 
+    window.isCopyAction = function (e) {
+        return e.keyCode === KEYCODE.C
+            && isCommandOrControl(e)
+            && !isShift(e);
+    };
+
     window.isShowMenuAction = function (e) {
         return e.keyCode === KEYCODE.F
             && isCommandOrControl(e) && isShift(e);
