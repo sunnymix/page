@@ -30,6 +30,8 @@
             position: 'relative'
         });
 
+        thiz.ele.prop('id', thiz.id);
+
         ////// block //////
 
         // schema
@@ -433,6 +435,10 @@
             thiz.handleKeydownEvent(e);
         });
 
+        thiz.ele.on('keyup', function (e) {
+            thiz.handleKeyupEvnet(e);
+        });
+
         thiz.ele.on('paste', function (e) {
             e.preventDefault();
             e.stopPropagation();
@@ -466,8 +472,16 @@
             thiz.remove();
         }
 
-        if (e.keyCode == KEYCODE.A && isCommandOrControl(e) && isShift(e)) {
-            thiz.showAttach();
+        if (e.keyCode == KEYCODE.A) {
+            if (isCommandOrControl(e)) {
+                if (isShift(e)) {
+                    thiz.showAttach();
+                } else {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    thiz.selectAll();
+                }
+            }
         }
 
         if (e.keyCode == KEYCODE.B && isCommandOrControl(e) && isShift(e)) {
@@ -554,6 +568,10 @@
             e.preventDefault();
             thiz.clone();
         }
+    };
+
+    Block.prototype.handleKeyupEvnet = function (e) {
+        var thiz = this;
     };
 
     Block.prototype.handlePasteEvent = function (e) {
@@ -1074,7 +1092,7 @@
         if (isBlank(thiz.getContentData())) {
             thiz.setContentText(link);
         }
-        
+
         // TODO: Refer Schema
     };
 
@@ -1134,6 +1152,29 @@
         thiz.contentEle.css({
             color: color || '#000000'
         });
+    };
+
+    Block.prototype.isSelectedAll = function () {
+        var thiz = this;
+        return getSelectedText().indexOf(thiz.getContentData()) >= 0;
+    };
+
+    Block.prototype.selectAll = function () {
+        var thiz = this;
+        if (thiz.isSelectedAll()) {
+            // TODO
+            // window.getSelection().selectAllChildren($('.page-writer')[0]);
+
+            var writer = $('.page-writer')[0];
+            var div = document.createRange();
+            div.setStartBefore(writer);
+            div.setEndAfter(writer);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(div);
+        } else {
+            selectText(thiz.contentEle[0]);
+            thiz.trigger('selectall', thiz);
+        }
     };
 
     Block.prototype.isText = function () {

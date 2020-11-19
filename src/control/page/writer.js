@@ -134,6 +134,14 @@
             thiz.handleSelectStart(block);
         });
 
+        newBlock.bind('selectextend', function (block) {
+            // FIXME
+            var nextBlock = thiz.getNextBlock(block.id);
+            if (isNotNone(nextBlock)) {
+                selectEles([block.contentEle[0], nextBlock.contentEle[0]]);
+            }
+        });
+
         thiz.addBlock(newBlock, previousBlock);
 
         return newBlock;
@@ -449,10 +457,10 @@
         var thiz = this;
         if (isNotNone(data)) {
             clearTimeout(thiz.setDataChunksTimer);
-            
+
             thiz.ele.empty();
             thiz.blocks = [];
-            
+
             var chunks = data.chunk(5);
             thiz.setDataChunks(thiz, chunks);
         }
@@ -493,6 +501,19 @@
         var thiz = this;
         return this.context === SCHEMA.GRID;
     };
+
+    Writer.prototype.getNextBlock = function (blockId) {
+        var thiz = this;
+        var nextBlock = null;
+
+        var idx = thiz.getBlockIndex(blockId);
+        var nextIdx = idx + 1;
+        if (nextIdx < thiz.blocks.length) {
+            nextBlock = thiz.blocks[nextIdx];
+        }
+
+        return nextBlock;
+    }
 
     window.Writer = Writer;
 })();

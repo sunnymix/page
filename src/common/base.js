@@ -409,6 +409,50 @@
         return singleRow;
     };
 
+    window.getSelectedText = function () {
+        var text = "";
+        if (window.getSelection) {
+            text = window.getSelection().toString();
+        }
+        return text;
+    };
+
+    window.selectText = function (ele) {
+        if (window.getSelection) {
+            var range = document.createRange()
+            var cursorEle = ele.innerText.length > 0 ? ele.firstChild : ele;
+            range.setStart(cursorEle, 0);
+            range.setEnd(cursorEle, ele.innerText.length);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        }
+    };
+
+    window.selectEles = function (eles) {
+        if (window.getSelection) {
+            var ranges = [];
+
+            for (var i in eles) {
+                var ele = eles[i];
+                var cursorEle = ele.innerText.length > 0 ? ele.firstChild : ele;
+                
+                var range = document.createRange()
+                range.setStart(cursorEle, 0);
+                range.setEnd(cursorEle, ele.innerText.length);
+
+                ranges.push(range);
+            }
+
+            var winSelection = window.getSelection();
+            winSelection.removeAllRanges();
+            
+            for (var i in ranges) {
+                var range = ranges[i];
+                winSelection.addRange(range);
+            }
+        }
+    };
+
     Object.defineProperty(Array.prototype, 'chunk', {
         value: function (chunkSize) {
             var array = this;
