@@ -142,9 +142,28 @@
             }
         });
 
+        newBlock.bind('backspace', function (block) {
+            thiz.backspaceBlock(block);
+        });
+
         thiz.addBlock(newBlock, previousBlock);
 
         return newBlock;
+    };
+
+    Writer.prototype.backspaceBlock = function (block) {
+        var thiz = this;
+        var previousBlock = thiz.getPreviousBlock(block.id);
+        if (isNotNone(previousBlock)) {
+            if (!previousBlock.isGrid() && !block.isGrid()) {
+                var previousText = previousBlock.getContentData();
+                var currentText = block.getContentData();
+                var newPreviousText = previousText + currentText;
+                previousBlock.setContentData(newPreviousText);
+                block.remove();
+                previousBlock.focusPosition(previousText.length);
+            }
+        }
     };
 
     Writer.prototype.handleSelectStart = function (startBlock) {
@@ -501,18 +520,34 @@
         return this.context === SCHEMA.GRID;
     };
 
+    Writer.prototype.getBlockByIndex = function (index) {
+        var thiz = this;
+        var block = null;
+        if (index >= 0 && index < thiz.blocks.length) {
+            block = thiz.blocks[index];
+        }
+        return block;
+    };
+
     Writer.prototype.getNextBlock = function (blockId) {
         var thiz = this;
         var nextBlock = null;
 
         var idx = thiz.getBlockIndex(blockId);
-        var nextIdx = idx + 1;
-        if (nextIdx < thiz.blocks.length) {
-            nextBlock = thiz.blocks[nextIdx];
-        }
+        nextBlock = thiz.getBlockByIndex(idx + 1);
 
         return nextBlock;
-    }
+    };
+
+    Writer.prototype.getPreviousBlock = function (blockId) {
+        var thiz = this;
+        var previousBlock = null;
+
+        var idx = thiz.getBlockIndex(blockId);
+        previousBlock = thiz.getBlockByIndex(idx - 1);
+
+        return previousBlock;
+    };
 
     window.Writer = Writer;
 })();

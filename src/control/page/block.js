@@ -510,9 +510,7 @@
         }
 
         if (e.keyCode == KEYCODE.BACKSPACE) {
-            if (thiz.contentEle.text().length == 0) {
-                thiz.remove();
-            }
+            thiz.backspace();
         }
 
         if (e.keyCode == KEYCODE.BACKSPACE
@@ -617,6 +615,19 @@
         if (e.keyCode == KEYCODE.C && isCommandAndControl(e)) {
             e.preventDefault();
             thiz.clone();
+        }
+    };
+
+    Block.prototype.backspace = function () {
+        var thiz = this;
+
+        if (thiz.contentEle.text().length == 0) {
+            thiz.remove();
+        } else {
+            var cursorPos = thiz.getCursorPosition();
+            if (cursorPos <= 0) {
+                thiz.trigger('backspace', thiz);
+            }
         }
     };
 
@@ -938,6 +949,21 @@
         }
         // thiz.expandLink();
         thiz.trigger('focus', thiz);
+    };
+
+    Block.prototype.focusPosition = function (position) {
+        var thiz = this;
+
+        if (thiz.isGrid()) {
+            return;
+        }
+
+        setTimeout(function () {
+            thiz.contentEle.focus();
+            setTimeout(function () {
+                setCursor(thiz.contentEle[0], position);
+            }, 1);
+        }, 1);
     };
 
     Block.prototype.enter = function () {
