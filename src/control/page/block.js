@@ -128,7 +128,7 @@
 
     Block.prototype.initIndentEle = function () {
         var thiz = this;
-        
+
         thiz.indentEle = new Ele('div', {
             id: '.block-indent',
             position: 'absolute',
@@ -525,9 +525,11 @@
                 if (isShift(e)) {
                     thiz.showAttach();
                 } else {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    thiz.selectAll();
+                    if (!thiz.isTitle()) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        thiz.selectOn();
+                    }
                 }
             }
         }
@@ -876,7 +878,7 @@
         if (thiz.isGridContext()) {
             return;
         }
-        
+
         if (indentValue > 0) {
             // thiz.indent1Ele.show();
         }
@@ -892,7 +894,7 @@
 
     Block.prototype.getIndentValue = function () {
         var thiz = this;
-        
+
         var indentValueMap = {};
         indentValueMap[SCHEMA.REFER] = 0;
         indentValueMap[SCHEMA.TITLE] = 0;
@@ -1280,22 +1282,15 @@
         return getSelectedText().indexOf(thiz.getContentData()) >= 0;
     };
 
-    Block.prototype.selectAll = function () {
+    Block.prototype.selectOn = function () {
         var thiz = this;
-        if (thiz.isSelectedAll()) {
-            // TODO
-            // window.getSelection().selectAllChildren($('.page-writer')[0]);
-
-            var writer = $('.page-writer')[0];
-            var div = document.createRange();
-            div.setStartBefore(writer);
-            div.setEndAfter(writer);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(div);
-        } else {
-            selectText(thiz.contentEle[0]);
-            thiz.trigger('selectall', thiz);
-        }
+        // if (thiz.isSelectedAll()) {
+        //     thiz.trigger('selectextend', thiz);
+        // } else {
+        //     selectText(thiz.contentEle[0]);
+        //     thiz.trigger('selectall', thiz);
+        // }
+        thiz.trigger('selecton', thiz);
     };
 
     Block.prototype.isText = function () {

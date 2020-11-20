@@ -453,6 +453,10 @@
         }
     };
 
+    window.deepCopy = function (obj) {
+        return $.extend({}, obj);
+    };
+
     Object.defineProperty(Array.prototype, 'chunk', {
         value: function (chunkSize) {
             var array = this;
