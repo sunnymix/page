@@ -199,12 +199,23 @@
         var thiz = this;
         var sel = window.getSelection();
         if (sel && isNotNone(sel.baseNode)) {
-            var baseEle = $(sel.baseNode);
-            var texts = [];
-            baseEle.find('.block-content').each(function () {
-                texts.push($(this).text().replace(/\s/g, ' '));
-            });
-            var text = texts.join('\n');
+            var node = sel.baseNode;
+            var ele = $(node);
+            var nodeType = ele[0].nodeType;
+            var text = '';
+
+            var isText = nodeType == 3;
+
+            if (isText) {
+                text = ele[0].data;
+            } else {
+                var texts = [];
+                ele.find('.block-content').each(function () {
+                    texts.push($(this).text().replace(/\s/g, ' '));
+                });
+                text = texts.join('\n');
+            }
+
             thiz.clip.copy(text);
         }
     };
