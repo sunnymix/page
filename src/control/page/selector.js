@@ -102,7 +102,7 @@
                 }
             }
         } else {
-            blocks = [block];
+            blocks = thiz.writer.blocks;
         }
         return blocks;
     };

@@ -188,7 +188,6 @@
 
         thiz.bodyEle.on('mousedown', function (e) {
             e.preventDefault();
-            thiz.focusWriter();
         });
     };
 
