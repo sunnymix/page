@@ -479,7 +479,7 @@
             thiz.ele.empty();
             thiz.blocks = [];
 
-            var chunks = data.chunk(5);
+            var chunks = data.chunk(10);
             thiz.setDataChunks(thiz, chunks);
         }
     };
@@ -490,7 +490,7 @@
             writer.setDataChunk(writer, chunk);
             writer.setDataChunksTimer = setTimeout(function () {
                 writer.setDataChunks(writer, chunks.slice(1));
-            }, 20);
+            }, 10);
         }
     };
 

@@ -202,7 +202,7 @@
             var baseEle = $(sel.baseNode);
             var texts = [];
             baseEle.find('.block-content').each(function () {
-                texts.push($(this).text());
+                texts.push($(this).text().replace(/\s/g, ' '));
             });
             var text = texts.join('\n');
             thiz.clip.copy(text);

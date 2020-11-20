@@ -347,10 +347,18 @@
         return style.join(';');
     };
 
+    Style.prototype.wrapContentMarginLeft = function () {
+        var thiz = this;
+        if (thiz.block.isGridContext()) {
+            return '0px';
+        }
+        return thiz.contentMarginLeft;
+    };
+
     Style.prototype.getTaskLeft = function () {
         var thiz = this;
         return (
-            parsePxToNum(thiz.contentMarginLeft)
+            parsePxToNum(thiz.wrapContentMarginLeft())
             + parsePxToNum(thiz.contentPaddingLeft)
         ) + 'px';
     };
@@ -528,6 +536,8 @@
             ;
     };
 
+    Style.contentMarginGap = 10;
+
     Style.prototype.initH1 = function () {
         this
             .setFontWeight('bold')
@@ -537,54 +547,54 @@
 
     Style.prototype.initH2 = function () {
         this
+            .setContentMarginLeft((Style.contentMarginGap * 1) + 'px')
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 1) + 'px')
-            .setContentMarginLeft('10px')
             ;
     }
 
     Style.prototype.initH3 = function () {
         this
+            .setContentMarginLeft((Style.contentMarginGap * 2) + 'px')
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 0) + 'px')
-            .setContentMarginLeft('20px')
             ;
     };
 
     Style.prototype.initText = function () {
         this
-            .setContentMarginLeft('30px')
+            .setContentMarginLeft((Style.contentMarginGap * 3) + 'px')
             ;
     };
 
     Style.prototype.initGrid = function () {
         this
-            .setContentMarginLeft('30px')
+            .setContentMarginLeft((Style.contentMarginGap * 3) + 'px')
             ;
     };
 
     Style.prototype.initCode = function () {
         this
+            .setContentMarginLeft((Style.contentMarginGap * 3) + 'px')
             .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
-            .setContentMarginLeft('30px')
             .setContentPaddingLeft('15px')
             .setContentPaddingRight('15px')
             .setFontSize(Style.SmallFontSize)
-            .setColor('#666666')
+            .setColor('#032f62')
             ;
     };
 
     Style.prototype.initTask = function () {
         this
-            .setContentMarginLeft('30px')
+            .setContentMarginLeft((Style.contentMarginGap * 3) + 'px')
             ;
     };
 
     Style.prototype.initQuote = function () {
         this
+            .setContentMarginLeft((Style.contentMarginGap * 3 + 5) + 'px')
             .setContentBorderLeft('2px', 'solid', '#e1e4e8')
             .setContentBackgroundColor('#f8f8f8')
-            .setContentMarginLeft('35px')
             .setContentPaddingLeft('15px')
             .setContentPaddingRight('15px')
             ;
@@ -621,6 +631,9 @@
             '    display: block;',
             '}',
             'body {',
+            '    overflow: auto scroll;',
+            '}',
+            'body {',
             '    line-height: 1;',
             '    font-family: "PingFang SC", Aria;',
             '    font-size: ' + Style.BaseFontSize + ';',
@@ -650,7 +663,7 @@
             '    src: local(SFMono-Regular), local(RobotoMono-Regular);',
             '}',
             '::-webkit-scrollbar {',
-            '    height: ' + (parsePxToNum(Style.ScrollbarSize) * 1) + 'px;',
+            '    height: ' + Style.ScrollbarSize + ';',
             '    width: ' + Style.ScrollbarSize + ';',
             '}',
             '::-webkit-scrollbar-track {',
