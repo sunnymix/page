@@ -13,15 +13,61 @@
         thiz.init();
     };
 
+    Writer.prototype.type = ELE_TYPE.WRITER;
+
     Writer.prototype.init = function () {
         var thiz = this;
+        thiz.selector = new Selector(thiz.ele);
+        thiz.initEle();
+        thiz.initBind();
         initEvent(thiz, Writer.prototype);
     };
 
-    Writer.prototype.type = ELE_TYPE.WRITER;
+    Writer.prototype.initEle = function () {
+        var thiz = this;
+        thiz.initClip();
+    };
+
+    Writer.prototype.initClip = function () {
+        var thiz = this;
+        thiz.clip = new Clip();
+        thiz.clip.appendTo($('body'));
+    };
 
     Writer.prototype.initBind = function () {
         var thiz = this;
+        $(document).on('keydown', 'body', function (e) {
+            if (isCopyAction(e)) {
+                e.preventDefault();
+                e.stopPropagation();
+                thiz.copyText();
+            }
+        });
+    };
+
+    Writer.prototype.copyText = function () {
+        var thiz = this;
+        var sel = window.getSelection();
+        if (sel && isNotNone(sel.baseNode)) {
+            var node = sel.baseNode;
+            var ele = $(node);
+            var nodeType = ele[0].nodeType;
+            var text = '';
+
+            var isText = nodeType == 3;
+
+            if (isText) {
+                text = ele[0].data;
+            } else {
+                var texts = [];
+                ele.find('.block-content').each(function () {
+                    texts.push($(this).text().replace(/\s/g, ' '));
+                });
+                text = texts.join('\n');
+            }
+
+            thiz.clip.copy(text);
+        }
     };
 
     Writer.prototype.focus = function () {
