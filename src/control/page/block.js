@@ -349,7 +349,7 @@
             thiz.contentEle
                 .prop('contenteditable', false)
                 .css({
-                    userSelect: 'none'
+                    // userSelect: 'none'
                 });
         }
     };
@@ -366,7 +366,7 @@
             thiz.contentEle
                 .prop('contenteditable', true)
                 .css({
-                    userSelect: 'auto'
+                    // userSelect: 'auto'
                 });
         }
     };

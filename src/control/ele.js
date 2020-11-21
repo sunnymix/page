@@ -20,7 +20,7 @@
 
         if (isNotNone(opt.style)) {
             var style = $.extend({
-                userSelect: 'none',
+                // userSelect: 'none',
             }, opt.style);
             ele.css(style);
         }
