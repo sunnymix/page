@@ -137,15 +137,16 @@
             bottom: 0,
         });
 
+        var indentSize = '1px';
+        var indentColor = 'rgba(0, 0, 0, 0.1)';
+
         thiz.indent1Ele = new Ele('div', {
             id: '.block-indent1',
             position: 'absolute',
             left: 0,
             top: 0,
             bottom: 0,
-            width: '2px',
-            backgroundColor: 'rgba(0, 0, 0, 0.08)',
-            borderRadius: '4px',
+            borderLeft: indentSize + ' solid ' + indentColor,
         });
         thiz.indentEle.append(thiz.indent1Ele);
 
@@ -155,8 +156,7 @@
             left: '10px',
             top: 0,
             bottom: 0,
-            width: '2px',
-            backgroundColor: 'rgba(0, 0, 0, 0.08)',
+            borderLeft: indentSize + ' dashed ' + indentColor,
         });
         thiz.indentEle.append(thiz.indent2Ele);
 
@@ -166,8 +166,8 @@
             left: '20px',
             top: 0,
             bottom: 0,
-            width: '2px',
-            backgroundColor: 'rgba(0, 0, 0, 0.08)',
+            width: indentSize,
+            borderLeft: indentSize + ' solid ' + indentColor,
         });
         thiz.indentEle.append(thiz.indent3Ele);
     };
@@ -245,8 +245,8 @@
             width: '11px',
             height: '11px',
             lineHeight: '11px',
-            backgroundColor: '#0064bd',
-            border: '1px solid #0064bd',
+            backgroundColor: '#00b389',
+            border: '1px solid #00b389',
             borderRadius: '50%',
         });
 
@@ -884,7 +884,7 @@
         }
 
         if (indentValue > 1) {
-            thiz.indent2Ele.show();
+            // thiz.indent2Ele.show();
         }
 
         if (indentValue > 2) {
@@ -899,13 +899,13 @@
         indentValueMap[SCHEMA.REFER] = 0;
         indentValueMap[SCHEMA.TITLE] = 0;
         indentValueMap[SCHEMA.H1] = 0;
-        indentValueMap[SCHEMA.H2] = 1;
-        indentValueMap[SCHEMA.H3] = 2;
-        indentValueMap[SCHEMA.TEXT] = 3;
-        indentValueMap[SCHEMA.CODE] = 3;
-        indentValueMap[SCHEMA.GRID] = 3;
-        indentValueMap[SCHEMA.TASK] = 3;
-        indentValueMap[SCHEMA.QUOTE] = 3;
+        indentValueMap[SCHEMA.H2] = 0;
+        indentValueMap[SCHEMA.H3] = 1;
+        indentValueMap[SCHEMA.TEXT] = 2;
+        indentValueMap[SCHEMA.CODE] = 2;
+        indentValueMap[SCHEMA.GRID] = 2;
+        indentValueMap[SCHEMA.TASK] = 2;
+        indentValueMap[SCHEMA.QUOTE] = 2;
 
         return indentValueMap[thiz.schema] || 0;
     };

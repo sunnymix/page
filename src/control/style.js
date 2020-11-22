@@ -7,15 +7,17 @@
         thiz.wordBreak = 'break-all';
         thiz.position = 'relative';
 
+        thiz.textAlign = 'left';
+
         thiz.fontFamily = ''; //'Noto Serif SC';
         thiz.fontWeight = 'normal';
         thiz.fontSize = Style.BaseFontSize;
 
-        thiz.minHeight = '22px';
-        thiz.lineHeight = '22px';
+        thiz.minHeight = '20px';
+        thiz.lineHeight = '20px';
 
         thiz.paddingTop = '0px';
-        thiz.paddingBottom = '6px';
+        thiz.paddingBottom = '10px';
         thiz.paddingLeft = '0px';
         thiz.paddingRight = '0px';
 
@@ -39,8 +41,8 @@
         // content override
         thiz.contentPaddingTop = '0px';
         thiz.contentPaddingBottom = '0px';
-        thiz.contentPaddingLeft = '5px';
-        thiz.contentPaddingRight = '5px';
+        thiz.contentPaddingLeft = '0px';
+        thiz.contentPaddingRight = '0px';
 
         thiz.contentBorderLeft = '0px solid transparent';
         thiz.contentBorderRight = '0px solid transparent';
@@ -89,12 +91,21 @@
 
     Style.isSiblingSchema = function (schema) {
         return Style.SiblingSchemas.includes(schema);
-    }
+    };
+
+    Style.prototype.setTextAlign = function (textAlign) {
+        this.textAlign = textAlign;
+        return this;
+    };
+
+    Style.prototype.getTextAlign = function (textAlign) {
+        return this.textAlign;
+    };
 
     Style.prototype.setFontFamily = function (fontFamily) {
         this.fontFamily = fontFamily;
         return this;
-    }
+    };
 
     Style.prototype.setFontWeight = function (fontWeight) {
         this.fontWeight = fontWeight;
@@ -306,6 +317,7 @@
             'border-right: ' + thiz.borderRight,
             'border-radius: ' + thiz.borderRadius,
             'padding-bottom: ' + thiz.borderPaddingBottom,
+            'text-align: ' + thiz.textAlign,
             (isNotNone(thiz.boxShadow) ? 'box-shadow: ' + thiz.boxShadow : ''),
         ];
 
@@ -465,12 +477,7 @@
     };
 
     Style.prototype.getContentColor = function () {
-        var thiz = this;
-        var color = thiz.color;
-        if (thiz.block.hasLink()) {
-            color = '#0064bd';
-        }
-        return color;
+        return this.color;
     };
 
     Style.prototype.getContentBorderBottom = function () {
@@ -480,7 +487,7 @@
         //     color = '#655e5e';
         //     return '1px dashed ' + color;
         // }
-        return '0 none';
+        return thiz.contentBorderBottom;
     };
 
     Style.prototype.setContentMarginLeft = function (contentMarginLeft) {
@@ -531,8 +538,10 @@
 
     Style.prototype.initTitle = function () {
         this
+            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
+            .setTextAlign('center')
             ;
     };
 
@@ -540,14 +549,18 @@
 
     Style.prototype.initH1 = function () {
         this
+            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
+            .setContentBorderBottom('2px', 'solid', '#00b389')
+            .setTextAlign('center')
+            .setColor('#00b389')
             ;
     };
 
     Style.prototype.initH2 = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * 1) + 'px')
+            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 1) + 'px')
             ;
@@ -555,7 +568,7 @@
 
     Style.prototype.initH3 = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * 2) + 'px')
+            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 0) + 'px')
             ;
@@ -563,19 +576,19 @@
 
     Style.prototype.initText = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * 3) + 'px')
+            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
             ;
     };
 
     Style.prototype.initGrid = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * 3) + 'px')
+            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
             ;
     };
 
     Style.prototype.initCode = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * 3) + 'px')
+            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
             .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
             .setContentPaddingLeft('15px')
             .setContentPaddingRight('15px')
@@ -586,13 +599,13 @@
 
     Style.prototype.initTask = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * 3) + 'px')
+            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
             ;
     };
 
     Style.prototype.initQuote = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * 3 + 5) + 'px')
+            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue() + 5) + 'px')
             .setContentBorderLeft('2px', 'solid', '#e1e4e8')
             .setContentBackgroundColor('#f8f8f8')
             .setContentPaddingLeft('15px')
