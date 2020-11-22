@@ -192,7 +192,13 @@
             position: 'relative',
         });
 
-        thiz.initBodyEle(initData);
+        thiz.bodyEle = new Ele('div', {
+            id: '.block-body'
+        });
+
+        thiz.initBodyTableEle(initData);
+        thiz.bodyEle.append(thiz.bodyTableEle);
+        
         thiz.borderEle.append(thiz.bodyEle);
 
         // // content
@@ -206,17 +212,21 @@
         // new Clearfix(thiz.contentEle);
     };
 
-    Block.prototype.initBodyEle = function (initData) {
+    Block.prototype.initBodyTableEle = function (initData) {
         var thiz = this;
-        thiz.bodyEle = new Ele('table', {
-            id: '.block-body',
+        thiz.bodyTableEle = new Ele('table', {
+            id: '.block-body-table',
             display: 'inline-block',
+            border: '0px none',
+            borderSpacing: 0,
+            borderCollapse: 'collapse',
+            width: 'auto',
         });
 
         thiz.bodyRowEle = new Ele('tr', {
             id: '.block-body-row',
         });
-        thiz.bodyEle.append(thiz.bodyRowEle);
+        thiz.bodyTableEle.append(thiz.bodyRowEle);
 
         thiz.bodyContentEle = new Ele('td', {
             id: '.block-body-content',
@@ -815,6 +825,8 @@
             thiz.boxEle.prop('style', thiz.style.boxStyle(thiz.context));
 
             thiz.borderEle.prop('style', thiz.style.borderStyle(thiz.context));
+
+            thiz.bodyEle.prop('style', thiz.style.bodyStyle(thiz.context));
 
             thiz.contentEle.prop('style', thiz.style.contentStyle(thiz.context));
 

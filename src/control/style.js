@@ -324,21 +324,10 @@
         return style.join(';');
     };
 
-    Style.prototype.contentStyle = function () {
+    Style.prototype.bodyStyle = function () {
         var thiz = this;
         var isInGrid = thiz.block.isGridContext();
         var style = [
-            'word-spacing: 0px',
-            'display: ' + (thiz.block.isGrid() ? 'block' : 'inline-block'),
-            'word-wrap: ' + (isInGrid ? 'normal' : thiz.wordWrap),
-            'word-break: ' + (isInGrid ? 'keep-all' : thiz.wordBreak),
-            'position: ' + this.position,
-            'font-family: ' + this.fontFamily,
-            'font-weight: ' + this.fontWeight,
-            'font-size: ' + this.fontSize,
-            'min-width: 1px',
-            'min-height: ' + this.minHeight,
-            'line-height: ' + this.lineHeight,
             'padding-top: ' + thiz.contentPaddingTop,
             'padding-bottom: ' + thiz.contentPaddingBottom,
             'padding-left: ' + thiz.getContentPaddingLeft(),
@@ -350,6 +339,26 @@
             'border-radius: 0px',
             'margin-left: ' + thiz.getContentMarginLeft(),
             'margin-right: ' + thiz.getContentMarginRight(),
+            'background-color: ' + thiz.contentBackgroundColor,
+            (isNotNone(thiz.contentTextShadow) ? 'text-shadow: ' + thiz.contentTextShadow : ''),
+        ];
+
+        return style.join(';');
+    };
+
+    Style.prototype.contentStyle = function () {
+        var thiz = this;
+        var isInGrid = thiz.block.isGridContext();
+        var style = [
+            'word-spacing: 0px',
+            'word-wrap: ' + (isInGrid ? 'normal' : thiz.wordWrap),
+            'word-break: ' + (isInGrid ? 'keep-all' : thiz.wordBreak),
+            'font-family: ' + this.fontFamily,
+            'font-weight: ' + this.fontWeight,
+            'font-size: ' + this.fontSize,
+            'min-width: 1px',
+            'min-height: ' + this.minHeight,
+            'line-height: ' + this.lineHeight,
             'color: ' + thiz.getContentColor(),
             'text-decoration: none',
             'background-color: ' + thiz.getHighlightColor(),
@@ -606,7 +615,7 @@
 
     Style.prototype.initQuote = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue() + 5) + 'px')
+            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
             .setContentBorderLeft('2px', 'solid', '#e1e4e8')
             .setContentBackgroundColor('#f8f8f8')
             .setContentPaddingLeft('15px')
