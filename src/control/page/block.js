@@ -192,15 +192,47 @@
             position: 'relative',
         });
 
-        // content
+        thiz.initBodyEle(initData);
+        thiz.borderEle.append(thiz.bodyEle);
+
+        // // content
+        // thiz.initContentEle(initData);
+        // thiz.borderEle.append(thiz.contentEle);
+
+        // // tail
+        // thiz.initTailEle(initData);
+        // thiz.contentEle.append(thiz.tailEle);
+
+        // new Clearfix(thiz.contentEle);
+    };
+
+    Block.prototype.initBodyEle = function (initData) {
+        var thiz = this;
+        thiz.bodyEle = new Ele('table', {
+            id: '.block-body',
+            display: 'inline-block',
+        });
+
+        thiz.bodyRowEle = new Ele('tr', {
+            id: '.block-body-row',
+        });
+        thiz.bodyEle.append(thiz.bodyRowEle);
+
+        thiz.bodyContentEle = new Ele('td', {
+            id: '.block-body-content',
+            verticalAlign: 'top',
+        });
         thiz.initContentEle(initData);
-        thiz.borderEle.append(thiz.contentEle);
+        thiz.bodyContentEle.append(thiz.contentEle);
+        thiz.bodyRowEle.append(thiz.bodyContentEle);
 
-        // tail
+        thiz.bodyTailEle = new Ele('td', {
+            id: '.block-body-tail',
+            verticalAlign: 'top',
+        });
         thiz.initTailEle(initData);
-        thiz.contentEle.append(thiz.tailEle);
-
-        new Clearfix(thiz.contentEle);
+        thiz.bodyTailEle.append(thiz.tailEle);
+        thiz.bodyRowEle.append(thiz.bodyTailEle);
     };
 
     Block.prototype.initContentEle = function (initData) {
@@ -1051,7 +1083,7 @@
             text = text.replace(/\s/g, '&nbsp;');
         }
         thiz.contentEle.html(text);
-        thiz.contentEle.append(thiz.tailEle);
+        // thiz.contentEle.append(thiz.tailEle);
     };
 
     Block.prototype.setGridData = function (content) {
