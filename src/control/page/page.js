@@ -226,7 +226,7 @@
 
     Page.prototype.focusWriter = function () {
         var thiz = this;
-        thiz.writer.focus();
+        thiz.writer.focusStart();
     };
 
     Page.prototype.focusTitle = function () {

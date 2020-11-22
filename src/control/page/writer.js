@@ -35,10 +35,19 @@
         });
     };
 
-    Writer.prototype.focus = function () {
+    Writer.prototype.focusEnd = function () {
+        this.focus(false);
+    };
+
+    Writer.prototype.focusStart = function () {
+        this.focus(true);
+    };
+
+    Writer.prototype.focus = function (startOrEnd) {
         var thiz = this;
         if (isNotEmpty(thiz.blocks)) {
-            thiz.blocks[thiz.blocks.length - 1].focus();
+            var idx = isTrue(startOrEnd) ? 0 : thiz.blocks.length - 1;
+            thiz.blocks[idx].focus();
         } else {
             if (isFunction(thiz.createBlock)) {
                 var newBlock = thiz.createBlock();

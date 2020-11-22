@@ -540,8 +540,9 @@
         this
             .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
             .setFontWeight('bold')
-            .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 3) + 'px')
             .setTextAlign('center')
+            .setColor('#00b389')
             ;
     };
 
@@ -552,9 +553,9 @@
             .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
-            .setContentBorderBottom('2px', 'solid', '#00b389')
             .setTextAlign('center')
             .setColor('#00b389')
+            .setContentBorderBottom('2px', 'solid', '#00b389')
             ;
     };
 

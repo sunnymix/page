@@ -245,9 +245,10 @@
             width: '11px',
             height: '11px',
             lineHeight: '11px',
-            backgroundColor: '#00b389',
-            border: '1px solid #00b389',
+            backgroundColor: '#999999',
+            border: '1px solid #999999',
             borderRadius: '50%',
+            // boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)',
         });
 
         var dotEle = new Ele('div', {
