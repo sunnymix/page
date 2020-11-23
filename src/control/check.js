@@ -30,7 +30,7 @@
             top: '0px',
             bottom: '0px',
             backgroundColor: '#ffffff',
-            border: '2px solid #999999',
+            border: '2px solid #444444',
             borderRadius: '1px',
         });
         thiz.ele.append(thiz.offEle);
@@ -43,7 +43,7 @@
             right: '0px',
             top: '0px',
             bottom: '0px',
-            backgroundColor: '#999999',
+            backgroundColor: '#444444',
             borderRadius: '1px',
         });
         thiz.ele.append(thiz.onEle);

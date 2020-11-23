@@ -13,8 +13,8 @@
         thiz.fontWeight = 'normal';
         thiz.fontSize = Style.BaseFontSize;
 
-        thiz.minHeight = '20px';
-        thiz.lineHeight = '20px';
+        thiz.minHeight = '18px';
+        thiz.lineHeight = '18px';
 
         thiz.paddingTop = '0px';
         thiz.paddingBottom = '10px';
@@ -38,6 +38,24 @@
 
         thiz.boxShadow = null;
 
+        // ------> body ------>
+
+        thiz.bodyPaddingTop = '0px';
+        thiz.bodyPaddingBottom = '0px';
+        thiz.bodyPaddingLeft = '0px';
+        thiz.bodyPaddingRight = '0px';
+
+        thiz.bodyBorderTop = '0 none';
+        thiz.bodyBorderBottom = '0 none';
+        thiz.bodyBorderLeft = '0 none';
+        thiz.bodyBorderRight = '0 none';
+
+        thiz.bodyBackgroundColor = 'transparent';
+
+        // <------ body <------
+
+        // ------> content ------>
+
         // content override
         thiz.contentPaddingTop = '0px';
         thiz.contentPaddingBottom = '0px';
@@ -53,7 +71,8 @@
 
         thiz.contentMarginLeft = '0px';
         thiz.contentMarginRight = '0px';
-        thiz.contentTextShadow = '0 0 0 rgba(0, 0, 0, 0.2)';
+
+        // <------ content <------
 
         // const
         thiz.taskWidth = 22;
@@ -87,7 +106,7 @@
         },
     };
 
-    Style.SiblingSchemas = [SCHEMA.CODE, SCHEMA.QUOTE];
+    Style.SiblingSchemas = [SCHEMA.CODE, SCHEMA.QUOTE, SCHEMA.TASK];
 
     Style.isSiblingSchema = function (schema) {
         return Style.SiblingSchemas.includes(schema);
@@ -328,19 +347,16 @@
         var thiz = this;
         var isInGrid = thiz.block.isGridContext();
         var style = [
-            'padding-top: ' + thiz.contentPaddingTop,
-            'padding-bottom: ' + thiz.contentPaddingBottom,
-            'padding-left: ' + thiz.getContentPaddingLeft(),
-            'padding-right: ' + thiz.getContentPaddingRight(),
-            'border-left: ' + thiz.contentBorderLeft,
-            'border-right: ' + thiz.contentBorderRight,
-            'border-top: ' + thiz.contentBorderTop,
-            'border-bottom: ' + thiz.getContentBorderBottom(),
-            'border-radius: 0px',
-            'margin-left: ' + thiz.getContentMarginLeft(),
-            'margin-right: ' + thiz.getContentMarginRight(),
-            'background-color: ' + thiz.contentBackgroundColor,
-            (isNotNone(thiz.contentTextShadow) ? 'text-shadow: ' + thiz.contentTextShadow : ''),
+            'padding-top: ' + thiz.bodyPaddingTop,
+            'padding-bottom: ' + thiz.bodyPaddingBottom,
+            'padding-left: ' + thiz.getBodyPaddingLeft(),
+            'padding-right: ' + thiz.getBodyPaddingRight(),
+            'border-left: ' + thiz.bodyBorderLeft,
+            'border-right: ' + thiz.bodyBorderRight,
+            'border-top: ' + thiz.bodyBorderTop,
+            'border-bottom: ' + thiz.bodyBorderBottom,
+            'margin-left: ' + thiz.getBodyMarginLeft(),
+            'background-color: ' + thiz.bodyBackgroundColor,
         ];
 
         return style.join(';');
@@ -350,6 +366,20 @@
         var thiz = this;
         var isInGrid = thiz.block.isGridContext();
         var style = [
+            // layout:
+            'padding-top: ' + thiz.contentPaddingTop,
+            'padding-bottom: ' + thiz.contentPaddingBottom,
+            'padding-left: ' + thiz.getContentPaddingLeft(),
+            'padding-right: ' + thiz.getContentPaddingRight(),
+            'border-left: ' + thiz.contentBorderLeft,
+            'border-right: ' + thiz.contentBorderRight,
+            'border-top: ' + thiz.contentBorderTop,
+            'border-bottom: ' + thiz.contentBorderBottom,
+            'border-radius: 0px',
+            'margin-left: ' + thiz.getContentMarginLeft(),
+            'margin-right: ' + thiz.getContentMarginRight(),
+            'background-color: ' + thiz.getHighlightColor(),
+            // text:
             'word-spacing: 0px',
             'word-wrap: ' + (isInGrid ? 'normal' : thiz.wordWrap),
             'word-break: ' + (isInGrid ? 'keep-all' : thiz.wordBreak),
@@ -361,35 +391,39 @@
             'line-height: ' + this.lineHeight,
             'color: ' + thiz.getContentColor(),
             'text-decoration: none',
-            'background-color: ' + thiz.getHighlightColor(),
-            (isNotNone(thiz.contentTextShadow) ? 'text-shadow: ' + thiz.contentTextShadow : ''),
         ];
 
         return style.join(';');
     };
 
-    Style.prototype.wrapContentMarginLeft = function () {
+    Style.prototype.wrapBodyMarginLeft = function () {
         var thiz = this;
         if (thiz.block.isGridContext()) {
             return '0px';
         }
-        return thiz.contentMarginLeft;
+        return thiz.bodyMarginLeft;
     };
 
     Style.prototype.getTaskLeft = function () {
         var thiz = this;
         return (
-            parsePxToNum(thiz.wrapContentMarginLeft())
-            + parsePxToNum(thiz.contentPaddingLeft)
+            parsePxToNum(thiz.wrapBodyMarginLeft())
         ) + 'px';
     };
 
     Style.prototype.getTagsLeft = function () {
-        var thiz = this;
         return (
-            parsePxToNum(thiz.getTaskLeft())
-            + (thiz.block.isTask() ? thiz.taskWidth : 0)
+            parsePxToNum(this.getTaskLeft())
+            + (this.block.isTask() ? this.taskWidth : 0)
         ) + 'px';
+    };
+
+    Style.prototype.getBodyPaddingLeft = function () {
+        return this.bodyPaddingLeft;
+    };
+
+    Style.prototype.getBodyPaddingRight = function () {
+        return this.bodyPaddingRight;
     };
 
     Style.prototype.getContentPaddingLeft = function () {
@@ -489,27 +523,24 @@
         return this.color;
     };
 
-    Style.prototype.getContentBorderBottom = function () {
-        var thiz = this;
-        var color = 'transparent';
-        // if (thiz.block.hasLink()) {
-        //     color = '#655e5e';
-        //     return '1px dashed ' + color;
-        // }
-        return thiz.contentBorderBottom;
+    Style.prototype.setBodyMarginLeft = function (bodyMarginLeft) {
+        this.bodyMarginLeft = bodyMarginLeft;
+        return this;
     };
 
     Style.prototype.setContentMarginLeft = function (contentMarginLeft) {
         this.contentMarginLeft = contentMarginLeft;
         return this;
-    }
+    };
+
+    Style.prototype.getBodyMarginLeft = function () {
+        return (
+            parsePxToNum(this.getTagsLeft())
+        ) + 'px';
+    };
 
     Style.prototype.getContentMarginLeft = function () {
-        var thiz = this;
-        return (
-            parsePxToNum(thiz.getTagsLeft())
-            - parsePxToNum(thiz.contentPaddingLeft)
-        ) + 'px';
+        return this.contentMarginLeft;
     };
 
     Style.prototype.setContentMarginRight = function (contentMarginRight) {
@@ -547,21 +578,21 @@
 
     Style.prototype.initTitle = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
+            .setBodyMarginLeft((Style.bodyMarginGap * this.block.getIndentValue()) + 'px')
             .setFontWeight('bold')
-            .setFontSize((parsePxToNum(Style.BaseFontSize) + 3) + 'px')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 6) + 'px')
             .setTextAlign('center')
             .setColor('#00b389')
             ;
     };
 
-    Style.contentMarginGap = 10;
+    Style.bodyMarginGap = 10;
 
     Style.prototype.initH1 = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
+            .setBodyMarginLeft((Style.bodyMarginGap * this.block.getIndentValue()) + 'px')
             .setFontWeight('bold')
-            .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
             .setTextAlign('center')
             .setColor('#00b389')
             .setContentBorderBottom('2px', 'solid', '#00b389')
@@ -570,15 +601,15 @@
 
     Style.prototype.initH2 = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
+            .setBodyMarginLeft((Style.bodyMarginGap * this.block.getIndentValue()) + 'px')
             .setFontWeight('bold')
-            .setFontSize((parsePxToNum(Style.BaseFontSize) + 1) + 'px')
+            .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
             ;
     }
 
     Style.prototype.initH3 = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
+            .setBodyMarginLeft((Style.bodyMarginGap * this.block.getIndentValue()) + 'px')
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 0) + 'px')
             ;
@@ -586,19 +617,19 @@
 
     Style.prototype.initText = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
+            .setBodyMarginLeft((Style.bodyMarginGap * this.block.getIndentValue()) + 'px')
             ;
     };
 
     Style.prototype.initGrid = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
+            .setBodyMarginLeft((Style.bodyMarginGap * this.block.getIndentValue()) + 'px')
             ;
     };
 
     Style.prototype.initCode = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
+            .setBodyMarginLeft((Style.bodyMarginGap * this.block.getIndentValue()) + 'px')
             .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
             .setContentPaddingLeft('15px')
             .setContentPaddingRight('15px')
@@ -609,13 +640,13 @@
 
     Style.prototype.initTask = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
+            .setBodyMarginLeft((Style.bodyMarginGap * this.block.getIndentValue()) + 'px')
             ;
     };
 
     Style.prototype.initQuote = function () {
         this
-            .setContentMarginLeft((Style.contentMarginGap * this.block.getIndentValue()) + 'px')
+            .setBodyMarginLeft((Style.bodyMarginGap * this.block.getIndentValue()) + 'px')
             .setContentBorderLeft('2px', 'solid', '#e1e4e8')
             .setContentBackgroundColor('#f8f8f8')
             .setContentPaddingLeft('15px')

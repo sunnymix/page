@@ -287,8 +287,8 @@
             width: '11px',
             height: '11px',
             lineHeight: '11px',
-            backgroundColor: '#999999',
-            border: '1px solid #999999',
+            backgroundColor: '#444444',
+            border: '1px solid #444444',
             borderRadius: '50%',
             // boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)',
         });
@@ -905,7 +905,7 @@
             });
 
             thiz.attachEle.css({
-                paddingLeft: thiz.style.contentPaddingLeft
+                paddingLeft: thiz.style.getBodyMarginLeft(),
             });
 
             thiz.applyIndentStyle();
