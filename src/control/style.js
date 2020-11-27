@@ -539,6 +539,39 @@
         ) + 'px';
     };
 
+    Style.prototype.setBodyBorderLeft = function (size, style, color) {
+        this.bodyBorderLeft = size + ' ' +
+            (style || 'solid') + ' ' +
+            (color || thiz.color);
+        return this;
+    };
+
+    Style.prototype.setBodyBorderRight = function (size, style, color) {
+        this.bodyBorderRight = size + ' ' +
+            (style || 'solid') + ' ' +
+            (color || thiz.color);
+        return this;
+    };
+
+    Style.prototype.setBodyBorderTop = function (size, style, color) {
+        this.bodyBorderTop = size + ' ' +
+            (style || 'solid') + ' ' +
+            (color || thiz.color);
+        return this;
+    };
+
+    Style.prototype.setBodyBorderRight = function (size, style, color) {
+        this.bodyBorderRight = size + ' ' +
+            (style || 'solid') + ' ' +
+            (color || thiz.color);
+        return this;
+    };
+
+    Style.prototype.setBodyBackgroundColor = function (bodyBackgroundColor) {
+        this.bodyBackgroundColor = bodyBackgroundColor;
+        return this;
+    };
+
     Style.prototype.getContentMarginLeft = function () {
         return this.contentMarginLeft;
     };
@@ -647,8 +680,8 @@
     Style.prototype.initQuote = function () {
         this
             .setBodyMarginLeft((Style.bodyMarginGap * this.block.getIndentValue()) + 'px')
-            .setContentBorderLeft('2px', 'solid', '#e1e4e8')
-            .setContentBackgroundColor('#f8f8f8')
+            .setBodyBorderLeft('2px', 'solid', '#e1e4e8')
+            .setBodyBackgroundColor('#f8f8f8')
             .setContentPaddingLeft('15px')
             .setContentPaddingRight('15px')
             ;
