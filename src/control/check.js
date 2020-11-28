@@ -7,6 +7,7 @@
     Check.prototype.init = function () {
         var thiz = this;
         thiz.size = 14;
+        thiz.borderWidth = 2;
         thiz.initEle();
         thiz.initBind();
         initEvent(thiz, Check.prototype);
@@ -25,12 +26,10 @@
         thiz.offEle = new Ele('div', {
             id: '.check-off',
             position: 'absolute',
-            left: '0px',
-            right: '0px',
-            top: '0px',
-            bottom: '0px',
+            width: (thiz.size - (thiz.borderWidth * 2)) + 'px',
+            height: (thiz.size - (thiz.borderWidth * 2)) + 'px',
             backgroundColor: '#ffffff',
-            border: '2px solid #444444',
+            border: thiz.borderWidth + 'px solid #444444',
             borderRadius: '1px',
         });
         thiz.ele.append(thiz.offEle);
@@ -39,10 +38,8 @@
             id: '.check-on',
             position: 'absolute',
             display: 'none',
-            left: '0px',
-            right: '0px',
-            top: '0px',
-            bottom: '0px',
+            width: thiz.size + 'px',
+            height: thiz.size + 'px',
             backgroundColor: '#444444',
             borderRadius: '1px',
         });
@@ -51,8 +48,8 @@
         thiz.onDrawEle = new Ele('div', {
             id: '.check-on-draw',
             position: 'absolute',
-            left: '4px',
-            top: '4px',
+            marginLeft: '4px',
+            marginTop: '4px',
             borderLeft: '1px solid #ffffff',
             borderBottom: '1px solid #ffffff',
             width: '6px',
