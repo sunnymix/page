@@ -209,7 +209,7 @@
         // thiz.initTailEle(initData);
         // thiz.contentEle.append(thiz.tailEle);
 
-        // new Clearfix(thiz.contentEle);
+        new Clearfix(thiz.bodyTableEle);
     };
 
     Block.prototype.initBodyTableEle = function (initData) {
@@ -221,6 +221,7 @@
             borderSpacing: 0,
             borderCollapse: 'collapse',
             width: 'auto',
+            float: 'left',
         });
 
         thiz.bodyRowEle = new Ele('tr', {
