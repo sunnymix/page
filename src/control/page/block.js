@@ -198,7 +198,7 @@
 
         thiz.initBodyTableEle(initData);
         thiz.bodyEle.append(thiz.bodyTableEle);
-        
+
         thiz.borderEle.append(thiz.bodyEle);
 
         // // content
@@ -806,12 +806,18 @@
         }
         if (Style.isSiblingSchema(thiz.schema)) {
             if (thiz.writer.hasPreviousSibling(thiz)) {
-                thiz.style.setBodyBorderTop('0px');
+                thiz.style
+                    .setBodyBorderTop('0px')
+                    .setBodyBorderTopLeftRadius('0px')
+                    .setBodyBorderTopRightRadius('0px')
+                    ;
             }
             if (thiz.writer.hasNextSibling(thiz)) {
                 thiz.style
-                    .setBodyBorderBottom('0px')
                     .setPaddingBottom('0px')
+                    .setBodyBorderBottom('0px')
+                    .setBodyBorderBottomLeftRadius('0px')
+                    .setBodyBorderBottomRightRadius('0px')
                     ;
             }
         }

@@ -52,6 +52,8 @@
 
         thiz.bodyBackgroundColor = 'transparent';
 
+        thiz.bodyBorderRadius = '0px 0px 0px 0px';
+
         // <------ body <------
 
         // ------> content ------>
@@ -344,19 +346,19 @@
     };
 
     Style.prototype.bodyStyle = function () {
-        var thiz = this;
-        var isInGrid = thiz.block.isGridContext();
+        var isInGrid = this.block.isGridContext();
         var style = [
-            'padding-top: ' + thiz.bodyPaddingTop,
-            'padding-bottom: ' + thiz.bodyPaddingBottom,
-            'padding-left: ' + thiz.getBodyPaddingLeft(),
-            'padding-right: ' + thiz.getBodyPaddingRight(),
-            'border-left: ' + thiz.bodyBorderLeft,
-            'border-right: ' + thiz.bodyBorderRight,
-            'border-top: ' + thiz.bodyBorderTop,
-            'border-bottom: ' + thiz.bodyBorderBottom,
-            'margin-left: ' + thiz.getBodyMarginLeft(),
-            'background-color: ' + thiz.bodyBackgroundColor,
+            'padding-top: ' + this.bodyPaddingTop,
+            'padding-bottom: ' + this.bodyPaddingBottom,
+            'padding-left: ' + this.getBodyPaddingLeft(),
+            'padding-right: ' + this.getBodyPaddingRight(),
+            'border-left: ' + this.bodyBorderLeft,
+            'border-right: ' + this.bodyBorderRight,
+            'border-top: ' + this.bodyBorderTop,
+            'border-bottom: ' + this.bodyBorderBottom,
+            'margin-left: ' + this.getBodyMarginLeft(),
+            'background-color: ' + this.bodyBackgroundColor,
+            'border-radius: ' + this.bodyBorderRadius,
         ];
 
         return style.join(';');
@@ -572,6 +574,50 @@
         return this;
     };
 
+    Style.prototype.setBodyBorderRadius = function (radius) {
+        if (isNotBlank(radius)) {
+            var radiusSet = radius.replace(/\s+/g, ' ').split(' ');
+            var lastValue = radiusSet[radiusSet.length - 1];
+            var radiusSetMaxSize = 4;
+            for (var i = radiusSet.length; i < radiusSetMaxSize; i++) {
+                radiusSet.push(lastValue)
+            }
+            this.bodyBorderRadius = radiusSet.join(' ');
+        }
+        return this;
+    };
+
+    // radiusSet = [topLeft, topRight, bottomRight, bottomLeft]
+    Style.prototype.setBodyBorderRadiusByIndex = function (index, radius) {
+        var radiusSet = this.bodyBorderRadius.replace(/\s+/g, ' ').split(' ');
+        if (radiusSet.length != 4) {
+            throw 'Invalid BodyBorderRadius value: ' + this.bodyBorderRadius;
+        }
+        radiusSet[index] = radius;
+        this.bodyBorderRadius = radiusSet.join(' ');
+        return this;
+    };
+
+    Style.prototype.setBodyBorderTopLeftRadius = function (radius) {
+        this.setBodyBorderRadiusByIndex(0, radius);
+        return this;
+    };
+
+    Style.prototype.setBodyBorderTopRightRadius = function (radius) {
+        this.setBodyBorderRadiusByIndex(1, radius);
+        return this;
+    };
+
+    Style.prototype.setBodyBorderBottomRightRadius = function (radius) {
+        this.setBodyBorderRadiusByIndex(2, radius);
+        return this;
+    };
+
+    Style.prototype.setBodyBorderBottomLeftRadius = function (radius) {
+        this.setBodyBorderRadiusByIndex(3, radius);
+        return this;
+    };
+
     Style.prototype.getContentMarginLeft = function () {
         return this.contentMarginLeft;
     };
@@ -666,6 +712,7 @@
             .setBodyBorderTop('1px', 'solid', '#e1e4e8')
             .setBodyBorderBottom('1px', 'solid', '#e1e4e8')
             .setBodyBackgroundColor('#f8f8f8')
+            .setBodyBorderRadius('2px')
             .setContentPaddingLeft('4px')
             .setContentPaddingRight('4px')
             .setFontSize(Style.SmallFontSize)
