@@ -806,11 +806,11 @@
         }
         if (Style.isSiblingSchema(thiz.schema)) {
             if (thiz.writer.hasPreviousSibling(thiz)) {
-                thiz.style.setBorderTop('0px');
+                thiz.style.setBodyBorderTop('0px');
             }
             if (thiz.writer.hasNextSibling(thiz)) {
                 thiz.style
-                    .setBorderBottom('0px')
+                    .setBodyBorderBottom('0px')
                     .setPaddingBottom('0px')
                     ;
             }

@@ -542,28 +542,28 @@
     Style.prototype.setBodyBorderLeft = function (size, style, color) {
         this.bodyBorderLeft = size + ' ' +
             (style || 'solid') + ' ' +
-            (color || thiz.color);
+            (color || this.color);
         return this;
     };
 
     Style.prototype.setBodyBorderRight = function (size, style, color) {
         this.bodyBorderRight = size + ' ' +
             (style || 'solid') + ' ' +
-            (color || thiz.color);
+            (color || this.color);
         return this;
     };
 
     Style.prototype.setBodyBorderTop = function (size, style, color) {
         this.bodyBorderTop = size + ' ' +
             (style || 'solid') + ' ' +
-            (color || thiz.color);
+            (color || this.color);
         return this;
     };
 
-    Style.prototype.setBodyBorderRight = function (size, style, color) {
-        this.bodyBorderRight = size + ' ' +
+    Style.prototype.setBodyBorderBottom = function (size, style, color) {
+        this.bodyBorderBottom = size + ' ' +
             (style || 'solid') + ' ' +
-            (color || thiz.color);
+            (color || this.color);
         return this;
     };
 
@@ -582,30 +582,27 @@
     };
 
     Style.prototype.getContentMarginRight = function () {
-        var thiz = this;
-        return thiz.contentMarginRight;
+        return this.contentMarginRight;
     };
 
     Style.prototype.setBoxShadow = function (boxShadow) {
-        var thiz = this;
-        return thiz.boxShadow = boxShadow;
+        return this.boxShadow = boxShadow;
     };
 
     Style.prototype.initStyle = function () {
-        var thiz = this;
         var handers = {};
-        handers[SCHEMA.TITLE] = thiz.initTitle;
-        handers[SCHEMA.H1] = thiz.initH1;
-        handers[SCHEMA.H2] = thiz.initH2;
-        handers[SCHEMA.H3] = thiz.initH3;
-        handers[SCHEMA.TEXT] = thiz.initText;
-        handers[SCHEMA.GRID] = thiz.initGrid;
-        handers[SCHEMA.CODE] = thiz.initCode;
-        handers[SCHEMA.TASK] = thiz.initTask;
-        handers[SCHEMA.QUOTE] = thiz.initQuote;
-        var handler = handers[thiz.block.schema];
+        handers[SCHEMA.TITLE] = this.initTitle;
+        handers[SCHEMA.H1] = this.initH1;
+        handers[SCHEMA.H2] = this.initH2;
+        handers[SCHEMA.H3] = this.initH3;
+        handers[SCHEMA.TEXT] = this.initText;
+        handers[SCHEMA.GRID] = this.initGrid;
+        handers[SCHEMA.CODE] = this.initCode;
+        handers[SCHEMA.TASK] = this.initTask;
+        handers[SCHEMA.QUOTE] = this.initQuote;
+        var handler = handers[this.block.schema];
         if (isFunction(handler)) {
-            handler.call(thiz);
+            handler.call(this);
         }
     };
 
@@ -664,8 +661,13 @@
         this
             .setBodyMarginLeft((Style.bodyMarginGap * this.block.getIndentValue()) + 'px')
             .setFontFamily('Code, Cousine, Menlo, Monospaced, Consolas, Monaco')
-            .setContentPaddingLeft('15px')
-            .setContentPaddingRight('15px')
+            .setBodyBorderLeft('1px', 'solid', '#e1e4e8')
+            .setBodyBorderRight('1px', 'solid', '#e1e4e8')
+            .setBodyBorderTop('1px', 'solid', '#e1e4e8')
+            .setBodyBorderBottom('1px', 'solid', '#e1e4e8')
+            .setBodyBackgroundColor('#f8f8f8')
+            .setContentPaddingLeft('4px')
+            .setContentPaddingRight('4px')
             .setFontSize(Style.SmallFontSize)
             .setColor('#666666')
             ;
