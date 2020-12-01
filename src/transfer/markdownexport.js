@@ -99,7 +99,7 @@
 
     MarkdownExport.prototype.parseH3Block = function (data) {
         var thiz = this;
-        return '### ' + thiz.parseTextContent(data) + 'blockGap';
+        return '### ' + thiz.parseTextContent(data) + blockGap;
     };
 
     MarkdownExport.prototype.parseCodeBlock = function (data, previousData, nextData) {
