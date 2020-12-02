@@ -1098,11 +1098,11 @@
 
     Block.prototype.setContentText = function (text) {
         var thiz = this;
-        if (thiz.isCode()) {
-            text = text.replace(/\s/g, '&nbsp;');
-        }
-        thiz.contentEle.html(text);
-        // thiz.contentEle.append(thiz.tailEle);
+        // Do not use jQuery::html(), or jQuery::text()
+        // - jQuery::html() will transfer ESC chars, 
+        // e.g. &timestamp would be transfered to xtamp
+        // - jQuery::text() could not set space char correctly
+        thiz.contentEle[0].innerText = text;
     };
 
     Block.prototype.setGridData = function (content) {
