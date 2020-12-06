@@ -716,7 +716,7 @@
             .setContentPaddingLeft('4px')
             .setContentPaddingRight('4px')
             .setFontSize(Style.SmallFontSize)
-            .setColor('#666666')
+            .setColor('#444444')
             ;
     };
 
