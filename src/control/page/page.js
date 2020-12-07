@@ -352,7 +352,8 @@
 
     Page.prototype.getHtmlData = function () {
         var thiz = this;
-        return thiz.writerEle[0].outerHTML;
+        // return thiz.writerEle[0].outerHTML;
+        return thiz.bodyEle[0].outerHTML;
     };
 
     Page.prototype.clone = function () {

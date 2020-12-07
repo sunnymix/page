@@ -146,7 +146,7 @@
         'cursor',
         'background', 'backgroundColor',
         'textDecoration', 'textAlign',
-        'color', 'fontSize', 'fontFamily',
+        'color', 'fontSize', 'fontFamily', 'fontWeight',
         'float',
         'transform',
         'boxShadow',

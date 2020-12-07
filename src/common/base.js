@@ -457,6 +457,37 @@
         return $.extend({}, obj);
     };
 
+    window.createWrapEle = function () {
+        var eles = parseFuncArgsToArray(arguments);
+        var tableEle = null;
+
+        if (isNotEmpty(eles)) {
+            tableEle = new Ele('table', {
+                id: '.namecard-table',
+                border: '0px none',
+                borderSpacing: 0,
+                borderCollapse: 'collapse',
+                width: 'auto',
+            });
+    
+            var rowEle = new Ele('tr', {
+            });
+            tableEle.append(rowEle);
+
+            for (var i in eles) {
+                var ele = eles[i];
+
+                var tdEle = new Ele('td', {
+                });
+                rowEle.append(tdEle);
+    
+                tdEle.append(ele);
+            }
+        }
+
+        return tableEle;
+    };
+
     Object.defineProperty(Array.prototype, 'chunk', {
         value: function (chunkSize) {
             var array = this;
