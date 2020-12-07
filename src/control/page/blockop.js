@@ -84,6 +84,13 @@
         highlight3Btn.click(function (e, btn) {
             thiz.toggleHighlight(3);
         });
+
+        var contentBtn = new Button(null, '···', 36, null);
+        contentBtn.border('0 1px 0 0').float('left');
+        contentBtn.appendTo(thiz.actionsEle);
+        contentBtn.click(function (e, btn) {
+            thiz.setContentData();
+        });
     
         var cloneBtn = new Button('img/clone.png', null, 36, 36, 18, 18);
         cloneBtn.border('0 1px 0 0').float('left');
@@ -150,6 +157,16 @@
     Blockop.prototype.link = function () {
         var thiz = this;
         thiz.block.showLink();
+        thiz.hide();
+    };
+
+    Blockop.prototype.setContentData = function () {
+        var thiz = this;
+        var currentContent = thiz.block.getContentData() || '';
+        var newContent = prompt('Set Content Data...', currentContent);
+        if (isNotNone(newContent)) {
+            thiz.block.setContentData(newContent);
+        }
         thiz.hide();
     };
     
