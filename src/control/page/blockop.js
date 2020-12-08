@@ -85,6 +85,13 @@
             thiz.toggleHighlight(3);
         });
 
+        var textSchemaBtn = new Button(null, 'T', 36, null);
+        textSchemaBtn.border('0 1px 0 0').float('left');
+        textSchemaBtn.appendTo(thiz.actionsEle);
+        textSchemaBtn.click(function (e, btn) {
+            thiz.textSchema();
+        });
+
         var contentBtn = new Button(null, '···', 36, null);
         contentBtn.border('0 1px 0 0').float('left');
         contentBtn.appendTo(thiz.actionsEle);
@@ -167,6 +174,12 @@
         if (isNotNone(newContent)) {
             thiz.block.setContentData(newContent);
         }
+        thiz.hide();
+    };
+
+    Blockop.prototype.textSchema = function () {
+        var thiz = this;
+        thiz.block.setSchema(SCHEMA.TEXT);
         thiz.hide();
     };
     

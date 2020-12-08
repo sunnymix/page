@@ -733,6 +733,9 @@
                 thiz.setContentData('[]');
             } else if (thiz.isNamecard()) {
                 thiz.setContentData(currentContent);
+            } else {
+                thiz.contentEle.prop('contenteditable', true);
+                thiz.setContentData(currentContent);
             }
             thiz.writer.reloadSiblingBlocks(thiz, true, 1);
         }
