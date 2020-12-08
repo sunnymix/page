@@ -1001,7 +1001,7 @@
         var thiz = this;
         var resetCursor = !isTrue(keepCursor);
 
-        if (thiz.isGrid()) {
+        if (thiz.isNotFocusable()) {
             return;
         }
 
@@ -1427,6 +1427,14 @@
 
     Block.prototype.isRefer = function () {
         return this.schema === SCHEMA.REFER;
+    };
+
+    Block.prototype.isFocusable = function () {
+        return !this.isNotFocusable();
+    };
+
+    Block.prototype.isNotFocusable = function () {
+        return [SCHEMA.GRID, SCHEMA.NAMECARD].indexOf(this.schema) >= 0;
     };
 
     window.Block = Block;
