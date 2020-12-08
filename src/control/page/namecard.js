@@ -1,13 +1,13 @@
 (function () {
-    function Namecard() {
-        this.init();
+    function Namecard(writer, block, data) {
+        this.init(data);
     }
 
-    Namecard.prototype.init = function () {
-        this.initEle();
+    Namecard.prototype.init = function (data) {
+        this.initEle(data);
     };
 
-    Namecard.prototype.initEle = function () {
+    Namecard.prototype.initEle = function (data) {
         var thiz = this;
 
         thiz.ele = new Ele('div', {
@@ -19,7 +19,7 @@
         });
         thiz.ele.append(thiz.contentEle);
 
-        thiz.initData();
+        thiz.setData(data);
     };
 
     Namecard.prototype.defaultData = function () {
@@ -36,26 +36,17 @@
         };
     };
 
-    Namecard.prototype.initData = function () {
+    Namecard.prototype.getData = function () {
         var thiz = this;
-        var data = thiz.defaultData();
-        var cachData = localStorage.getItem('page-namecard-cache');
-        if (isNotBlank(cachData)) {
-            try {
-                var cachDataObj = JSON.parse(cachData);
-                if (isNotNone(cachDataObj)) {
-                    $.extend(data, cachDataObj);
-                }
-            } catch (error) { }
-        }
-        thiz.setData(data);
+        return JSON.stringify(thiz.data || '{}');
     };
 
     Namecard.prototype.setData = function (data) {
         var thiz = this;
-        if (isNotNone(data)) {
-            thiz.applyData(data);
-        }
+        var obj = parseObject(data);
+        var newData = $.extend(thiz.defaultData(), obj);
+        thiz.data = newData;
+        thiz.applyData(thiz.data);
     };
 
     Namecard.prototype.applyData = function (data) {

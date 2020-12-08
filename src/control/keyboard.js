@@ -103,4 +103,10 @@
     window.isEnterKey = function (e) {
         return e.keyCode === KEYCODE.ENTER;
     };
+
+    window.isNamecardAction = function (e) {
+        return e.keyCode === KEYCODE.P
+            && isCommandOrControl(e)
+            && isShift(e);
+    };
 })();

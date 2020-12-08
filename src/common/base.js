@@ -253,6 +253,18 @@
         return 0;
     };
 
+    window.parseObject = function (data) {
+        var res = null;
+        if (isObject(data)) {
+            res = data;
+        } else if (isString(data)) {
+            try {
+                res = JSON.parse(data);
+            } catch (err) {}
+        }
+        return res;
+    };
+
     window.findEleIndex = function (p) {
         var index = -1;
         var ele = $(p);

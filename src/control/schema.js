@@ -11,6 +11,7 @@
         GRID: 'Grid',
         TASK: 'Task',
         QUOTE: 'Quote',
+        NAMECARD: 'Namecard',
     };
 
     window.SCHEMA = SCHEMA;

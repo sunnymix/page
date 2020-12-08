@@ -662,6 +662,11 @@
             e.preventDefault();
             thiz.clone();
         }
+
+        if (isNamecardAction(e)) {
+            e.preventDefault();
+            thiz.setSchema(SCHEMA.NAMECARD);
+        }
     };
 
     Block.prototype.backspace = function () {
@@ -718,13 +723,16 @@
         if (thiz.isLock) {
             return;
         }
+        var currentContent = thiz.getContentData();
         if (isNotEmpty(schema)) {
             thiz.schema = schema;
             thiz.schemaEle.text(thiz.schema);
             thiz.loadStyle();
-            if (schema === SCHEMA.GRID) {
+            if (thiz.isGrid()) {
                 thiz.switchToGrid();
                 thiz.setContentData('[]');
+            } else if (thiz.isNamecard()) {
+                thiz.setContentData(currentContent);
             }
             thiz.writer.reloadSiblingBlocks(thiz, true, 1);
         }
@@ -745,6 +753,14 @@
         thiz.grid.bind('enter', function (block, writer, cell, row, grid) {
             thiz.trigger('grid.enter', block, writer, cell, row, grid, thiz);
         });
+    };
+
+    Block.prototype.switchToNamecard = function (content) {
+        var thiz = this;
+        thiz.contentEle.empty();
+        thiz.contentEle.prop('contenteditable', false);
+        thiz.namecard = new Namecard(thiz.writer, thiz, content);
+        thiz.contentEle.append(thiz.namecard.ele);
     };
 
     Block.prototype.getGridData = function () {
@@ -1089,8 +1105,10 @@
 
     Block.prototype.setContentData = function (content) {
         var thiz = this;
-        if (thiz.schema === SCHEMA.GRID) {
+        if (thiz.isGrid()) {
             thiz.setGridData(content);
+        } else if (thiz.isNamecard()) {
+            thiz.setNamecardData(content);
         } else {
             thiz.setContentText(content);
         }
@@ -1111,6 +1129,15 @@
             thiz.switchToGrid();
         }
         thiz.grid.setData(content);
+    };
+
+    Block.prototype.setNamecardData = function (content) {
+        var thiz = this;
+        if (isNone(thiz.namecard)) {
+            thiz.switchToNamecard(content);
+        } else {
+            thiz.namecard.setData(content);
+        }
     };
 
     Block.prototype.getData = function () {
@@ -1140,6 +1167,8 @@
         var data = '';
         if (thiz.schema === SCHEMA.GRID) {
             data = thiz.getGridData();
+        } else if (thiz.schema === SCHEMA.NAMECARD && isNotNone(thiz.namecard)) {
+            data = thiz.namecard.getData();
         } else {
             data = thiz.contentEle.text();
         }
@@ -1367,6 +1396,10 @@
 
     Block.prototype.isGrid = function () {
         return this.schema === SCHEMA.GRID;
+    };
+
+    Block.prototype.isNamecard = function () {
+        return this.schema === SCHEMA.NAMECARD;
     };
 
     Block.prototype.isTask = function () {
