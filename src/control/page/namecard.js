@@ -54,15 +54,16 @@
 
         thiz.contentEle.empty();
 
+        var gapHeight = '10px';
         var lineHeight = '18px';
-        var primaryColor = '#99cc00';
+        var primaryColor = '#46797b';
+        var secondaryColor = '#333333';
 
         var newGap = function () {
             return new Ele('div', {
                 body: ' ',
                 fontSize: '12px',
-                height: lineHeight,
-                lineHeight: lineHeight,
+                height: gapHeight,
             });
         };
 
@@ -70,7 +71,7 @@
             return new Ele('div', {
                 body: '&nbsp;',
                 fontSize: '12px',
-                fontWeight: 'bold',
+                fontWeight: 'normal',
                 color: primaryColor,
                 height: lineHeight,
                 lineHeight: lineHeight,
@@ -78,27 +79,17 @@
         };
 
         thiz.greetingEle = new Ele('div', {
-            body: data.greeting,
-            fontSize: '12px',
-            height: lineHeight,
-            lineHeight: lineHeight,
-            borderTop: '2px solid #b5c4df',
-            paddingTop: lineHeight,
-        });
-        thiz.greetingWrapEle = createWrapEle(thiz.greetingEle);
-        thiz.contentEle.append(thiz.greetingWrapEle);
-
-        thiz.contentEle.append(newGap());
-
-        thiz.titleEle = new Ele('div', {
             body: data.title,
-            fontSize: '16px',
+            fontSize: '14px',
             fontWeight: 'bold',
             height: lineHeight,
             lineHeight: lineHeight,
+            borderTop: '2px solid #b5c4df',
+            color: secondaryColor,
+            paddingTop: gapHeight,
         });
-        thiz.titleWrapEle = createWrapEle(thiz.titleEle);
-        thiz.contentEle.append(thiz.titleWrapEle);
+        thiz.greetingWrapEle = createWrapEle(thiz.greetingEle);
+        thiz.contentEle.append(thiz.greetingWrapEle);
 
         thiz.contentEle.append(newGap());
 
@@ -118,11 +109,12 @@
             fontSize: '12px',
             height: lineHeight,
             lineHeight: lineHeight,
+            color: secondaryColor,
         });
         thiz.phoneWrapEle = createWrapEle(new Ele('div', {
             body: 'T:',
             fontSize: '12px',
-            fontWeight: 'bold',
+            fontWeight: 'normal',
             color: primaryColor,
             height: lineHeight,
             lineHeight: lineHeight,
@@ -134,11 +126,12 @@
             fontSize: '12px',
             height: lineHeight,
             lineHeight: lineHeight,
+            color: secondaryColor,
         });
         thiz.mailWrapEle = createWrapEle(new Ele('div', {
             body: 'M:',
             fontSize: '12px',
-            fontWeight: 'bold',
+            fontWeight: 'normal',
             color: primaryColor,
             height: lineHeight,
             lineHeight: lineHeight,
@@ -150,11 +143,12 @@
             fontSize: '12px',
             height: lineHeight,
             lineHeight: lineHeight,
+            color: secondaryColor,
         });
         thiz.websiteWrapEle = createWrapEle(new Ele('div', {
             body: 'W:',
             fontSize: '12px',
-            fontWeight: 'bold',
+            fontWeight: 'normal',
             color: primaryColor,
             height: lineHeight,
             lineHeight: lineHeight,
@@ -187,6 +181,7 @@
                     fontSize: '12px',
                     height: lineHeight,
                     lineHeight: lineHeight,
+                    color: secondaryColor,
                 });
 
                 var headquarterWrapEle = createWrapEle(
@@ -213,6 +208,7 @@
             fontSize: '12px',
             height: lineHeight,
             lineHeight: lineHeight,
+            color: secondaryColor,
         }));
         thiz.contentEle.append(thiz.hightlightContentEle);
 

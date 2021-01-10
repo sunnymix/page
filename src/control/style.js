@@ -33,7 +33,7 @@
         thiz.marginLeft = '0px';
         thiz.marginRight = '0px';
 
-        thiz.color = '#000000';
+        thiz.color = '#333333';
         thiz.backgroundColor = '#ffffff';
 
         thiz.boxShadow = null;
@@ -658,7 +658,6 @@
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 6) + 'px')
             .setTextAlign('center')
-            .setColor('#00b389')
             ;
     };
 
@@ -670,8 +669,6 @@
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 4) + 'px')
             .setTextAlign('center')
-            .setColor('#00b389')
-            .setContentBorderBottom('2px', 'solid', '#00b389')
             ;
     };
 
@@ -680,6 +677,9 @@
             .setBodyMarginLeft((Style.bodyMarginGap * this.block.getIndentValue()) + 'px')
             .setFontWeight('bold')
             .setFontSize((parsePxToNum(Style.BaseFontSize) + 2) + 'px')
+            .setTextAlign('center')
+            .setColor('#00b389')
+            .setContentBorderBottom('2px', 'solid', '#00b389')
             ;
     }
 
