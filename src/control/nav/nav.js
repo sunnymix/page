@@ -180,6 +180,8 @@
 
         thiz.tabs.splice(idx, 1);
         tab.ele.remove();
+
+        thiz.saveCache();
     };
 
     Nav.prototype.getTabIndex = function (pid) {
