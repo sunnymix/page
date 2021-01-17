@@ -285,11 +285,12 @@
                 thiz.trigger('load', res.data);
             } else {
                 alert(res.msg || 'server error');
-                var pageRaw = localStorage.getItem(thiz.cacheId());
-                if (isNotNone(pageRaw)) {
-                    var pageObj = JSON.parse(pageRaw);
-                    thiz.renderData(pageObj);
-                }
+                // Load from localStorage:
+                // var pageRaw = localStorage.getItem(thiz.cacheId());
+                // if (isNotNone(pageRaw)) {
+                //     var pageObj = JSON.parse(pageRaw);
+                //     thiz.renderData(pageObj);
+                // }
             }
         });
     };
@@ -320,7 +321,7 @@
                 }
             });
 
-            localStorage.setItem(this.cacheId(), data);
+            // localStorage.setItem(this.cacheId(), data);
         }
     };
 
