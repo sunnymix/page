@@ -83,7 +83,7 @@
         thiz.initStyle();
     };
 
-    Style.BaseFontSize = '13px';
+    Style.BaseFontSize = '12px';
 
     Style.ScrollbarSize = '6px';
 
